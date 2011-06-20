@@ -1,0 +1,469 @@
+=============================================================================#
+          MAIN SETTINGS AND OPTIONS
+=============================================================================#
+ Options: ALL,FollowSymLinks,Includes,IncludesNOEXEC,SymLinksIfOwnerMatch
+##########
+
+## MAIN DEFAULTS ###
+Options +ExecCGI -Indexes
+DirectoryIndex index.html index.htm index.php
+DefaultLanguage en-US
+AddDefaultCharset UTF-8
+ServerSignature Off
+
+## ENVIRONMENT VARIABLES ###
+SetEnv PHPRC /webroot/includes
+SetEnv TZ America/Indianapolis
+SetEnv SERVER_ADMIN webmaster@domain.tld
+
+## MIME TYPES ###
+AddType video/x-flv .flv
+AddType application/x-shockwave-flash .swf
+AddType image/x-icon .ico
+
+## FORCE FILE TO DOWNLOAD INSTEAD OF APPEAR IN BROWSER ###
+-> http://www.htaccesselite.com/htaccess/addtype-addhandler-action-vf6.html
+AddType application/octet-stream .mov .mp3 .zip
+
+## ERRORDOCUMENTS ###
+
+-> http://askapache.com/htaccess/apache-status-code-headers-errordocument.html
+
+======== 1xx
+ErrorDocument 100 /error-100/
+ErrorDocument 101 /error-101/
+ErrorDocument 102 /error-102/
+======== 2xx
+ErrorDocument 200 /error-200/
+ErrorDocument 201 /error-201/
+ErrorDocument 202 /error-202/
+ErrorDocument 203 /error-203/
+ErrorDocument 204 /error-204/
+ErrorDocument 205 /error-205/
+ErrorDocument 206 /error-206/
+ErrorDocument 207 /error-207/
+======== 4xx
+ErrorDocument 400 /error-400/
+ErrorDocument 401 /error-401/
+ErrorDocument 402 /error-402/
+ErrorDocument 403 /error-403/
+ErrorDocument 404 /error-404/
+ErrorDocument 405 /error-405/
+ErrorDocument 406 /error-406/
+ErrorDocument 407 /error-407/
+ErrorDocument 408 /error-408/
+ErrorDocument 409 /error-409/
+ErrorDocument 410 /error-410/
+ErrorDocument 411 /error-411/
+ErrorDocument 412 /error-412/
+ErrorDocument 413 /error-413/
+ErrorDocument 414 /error-414/
+ErrorDocument 415 /error-415/
+ErrorDocument 416 /error-416/
+ErrorDocument 417 /error-417/
+ErrorDocument 418 /error-418/
+ErrorDocument 419 /error-419/
+ErrorDocument 420 /error-420/
+ErrorDocument 421 /error-421/
+ErrorDocument 422 /error-422/
+ErrorDocument 423 /error-423/
+ErrorDocument 424 /error-424/
+ErrorDocument 425 /error-425/
+ErrorDocument 426 /error-426/
+======== 5xx
+ErrorDocument 500 /error-500/
+ErrorDocument 501 /error-501/
+ErrorDocument 502 /error-502/
+ErrorDocument 503 /error-503/
+ErrorDocument 504 /error-504/
+ErrorDocument 505 /error-505/
+ErrorDocument 506 /error-506/
+ErrorDocument 507 /error-507/
+ErrorDocument 508 /error-508/
+ErrorDocument 509 /error-509/
+ErrorDocument 510 /error-510/
+
+AddLanguage aa .aa # Afar
+AddLanguage ab .ab # Abkhazian
+AddLanguage af .af # Afrikaans
+AddLanguage am .am # Amharic
+AddLanguage ar .ar # Arabic
+AddLanguage as .as # Assamese
+AddLanguage ay .ay # Aymara
+AddLanguage az .az # Azerbaijani
+AddLanguage ba .ba # Bashkir
+AddLanguage be .be # Byelorussian
+AddLanguage bg .bg # Bulgarian
+AddLanguage bh .bh # Bihari
+AddLanguage bi .bi # Bislama
+AddLanguage bn .bn # Bengali; Bangla
+AddLanguage bo .bo # Tibetan
+AddLanguage br .br # Breton
+AddLanguage ca .ca # Catalan
+AddLanguage co .co # Corsican
+AddLanguage cs .cs # Czech
+AddLanguage cy .cy # Welsh
+AddLanguage da .da # Danish
+AddLanguage de .de # German
+AddLanguage dz .dz # Bhutani
+AddLanguage el .el # Greek
+AddLanguage en .en # English
+AddLanguage eo .eo # Esperanto
+AddLanguage es .es # Spanish
+AddLanguage et .et # Estonian
+AddLanguage eu .eu # Basque
+AddLanguage fa .fa # Persian
+AddLanguage fi .fi # Finnish
+AddLanguage fj .fj # Fiji
+AddLanguage fo .fo # Faeroese
+AddLanguage fr .fr # French
+AddLanguage fy .fy # Frisian
+AddLanguage ga .ga # Irish
+AddLanguage gd .gd # Scots Gaelic
+AddLanguage gl .gl # Galician
+AddLanguage gn .gn # Guamni
+AddLanguage gu .gu # Gujarati
+AddLanguage ha .ha # Hausa
+AddLanguage he .he # Hebrew
+AddLanguage hi .hi # Hindi
+AddLanguage hr .hr # Croatian
+AddLanguage hu .hu # Hungarian
+AddLanguage hy .hy # Armenian
+AddLanguage ia .ia # Interlingua
+AddLanguage id .id # Indonesian
+AddLanguage ie .ie # lnteriingue
+AddLanguage ik .ik # Knupiak
+AddLanguage is .is # Icelandic
+AddLanguage it .it # Italian
+AddLanguage iu .iu # Inuktitut (Eskimo)
+AddLanguage ja .ja # Japanese
+AddLanguage jw .jw # Javanese
+AddLanguage ka .ka # Georgian
+AddLanguage kk .kk # Kazakh
+AddLanguage kl .kl # Greaenlandic
+AddLanguage km .km # Cambodian
+AddLanguage kn .kn # Kannada
+AddLanguage ko .ko # Korean
+AddLanguage ks .ks # Kashmiri
+AddLanguage ku .ku # Kurdish
+AddLanguage ky .ky # Kirghiz
+AddLanguage la .la # Latin
+AddLanguage ln .ln # Lingala
+AddLanguage lo .lo # Laothian
+AddLanguage lt .lt # Lithuainnian
+AddLanguage lv .lv # Latvian, Lettish
+AddLanguage mg .mg # Malagasy
+AddLanguage mi .mi # Maori
+AddLanguage mk .mk # Macedonian
+AddLanguage ml .ml # Malayalam
+AddLanguage mn .mn # Mongolian
+AddLanguage mo .mo # Moldavian
+AddLanguage mr .mr # Marathi
+AddLanguage ms .ms # Malay
+AddLanguage mt .mt # Maltese
+AddLanguage my .my # Burmese
+AddLanguage na .na # Nauru
+AddLanguage ne .ne # Nepali
+AddLanguage nl .nl # Dutch
+AddLanguage no .no # Norwegian
+AddLanguage oc .oc # Occitan
+AddLanguage om .om # (Afan) Oromo
+AddLanguage or .or # Oriya
+AddLanguage pa .pa # Punjabi
+AddLanguage pl .po # Polish (use .po instead .pl to avoid problems with perl files)
+AddLanguage ps .ps # Pashto, Pushto
+AddLanguage pt .pt # Portuguese
+AddLanguage qu .qu # Ouechua
+AddLanguage rm .rm # Rhaeto-Romance
+AddLanguage rn .rn # Kirundi
+AddLanguage ro .ro # Romanian
+AddLanguage ru .ru # Russian
+AddLanguage rw .rw # Kinya, Rwanda
+AddLanguage sa .sa # Sanskrit
+AddLanguage sd .sd # Sindhi
+AddLanguage sg .sg # Sangro
+AddLanguage sh .sh # Serbo-Croatian
+AddLanguage si .si # Singhalese
+AddLanguage sk .sk # Slovak
+AddLanguage sl .sl # Slovenian
+AddLanguage sm .sm # Samoan
+AddLanguage sn .sn # Shona
+AddLanguage so .so # Somali
+AddLanguage sq .sq # Albanian
+AddLanguage sr .sr # Serbian
+AddLanguage ss .ss # Siswati
+AddLanguage st .st # Sesotho
+AddLanguage su .su # Sundanese
+AddLanguage sv .sv # Swedish
+AddLanguage sw .sw # Swahili
+AddLanguage ta .ta # Tamil
+AddLanguage te .te # Tegulu
+AddLanguage tg .tg # Tajik
+AddLanguage th .th # Thai
+AddLanguage ti .ti # Tigrinya
+AddLanguage tk .tk # Turkmen
+AddLanguage tl .tl # Tagalog
+AddLanguage tn .tn # Setswana
+AddLanguage to .to # Tonga
+AddLanguage tr .tr # Turkish
+AddLanguage ts .ts # Tsonga
+AddLanguage tt .tt # Tatar
+AddLanguage tw .tw # Twi
+AddLanguage ug .ug # Uigur
+AddLanguage uk .uk # Ukrainian
+AddLanguage ur .ur # Urdu
+AddLanguage uz .uz # Uzbek
+AddLanguage vi .vi # Vietnamese
+AddLanguage vo .vo # Volapuek
+AddLanguage wo .wo # Wolof
+AddLanguage xh .xh # Xhosa
+AddLanguage yi .yi # Yiddish
+AddLanguage yo .yo # Yoruba
+AddLanguage za .za # Zhuang
+AddLanguage zh .zh # Chinese
+AddLanguage zu .zu # Zulu
+
+=============================================================================#
+          SCRIPTING, ACTION, ADDHANDLER
+=============================================================================#
+ Handlers be builtin, included in a module, or added with Action directive
+ default-handler: default, handles static content (core)
+      send-as-is: Send file with HTTP headers (mod_asis)
+      cgi-script: treat file as CGI script (mod_cgi)
+       imap-file: Parse as an imagemap rule file (mod_imap)
+     server-info: Get server config info (mod_info)
+   server-status: Get server status report (mod_status)
+        type-map: type map file for content negotiation (mod_negotiation)
+  fastcgi-script: treat file as fastcgi script (mod_fastcgi)
+##########
+
+-> http://www.askapache.com/php/custom-phpini-tips-and-tricks.html
+
+## PARSE AS CGI ###
+AddHandler cgi-script .cgi .pl .spl
+
+## RUN PHP AS APACHE MODULE ###
+AddHandler application/x-httpd-php .php .htm
+
+## RUN PHP AS CGI ###
+AddHandler php-cgi .php .htm
+
+## CGI PHP WRAPPER FOR CUSTOM PHP.INI ###
+AddHandler phpini-cgi .php .htm
+Action phpini-cgi /cgi-bin/php5-custom-ini.cgi
+
+## FAST-CGI SETUP WITH PHP-CGI WRAPPER FOR CUSTOM PHP.INI ###
+AddHandler fastcgi-script .fcgi
+AddHandler php-cgi .php .htm
+Action php-cgi /cgi-bin/php5-wrapper.fcgi
+
+## CUSTOM PHP CGI BINARY SETUP ###
+AddHandler php-cgi .php .htm
+Action php-cgi /cgi-bin/php.cgi
+
+## PROCESS SPECIFIC FILETYPES WITH CGI-SCRIPT ###
+Action image/gif /cgi-bin/img-create.cgi
+
+## CREATE CUSTOM HANDLER FOR SPECIFIC FILE EXTENSIONS ###
+AddHandler custom-processor .ssp
+Action custom-processor /cgi-bin/myprocessor.cgi
+
+=============================================================================#
+          HEADERS, CACHING AND OPTIMIZATION
+=============================================================================#
+-> http://www.htaccesselite.com/htaccess/cache-control-http-headers-vt65.html
+      300   5 M
+     2700  45 M
+     3600   1 H
+    54000  15 H
+    86400   1 D
+   518400   6 D
+   604800   1 W
+  1814400   3 W
+  2419200   1 M
+ 26611200  11 M
+ 29030400   1 Y (never expire)
+##########
+
+### HEADER CACHING ####
+-> http://www.askapache.com/htaccess/speed-up-sites-with-htaccess-caching.html
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico)$">
+   Header set Cache-Control "max-age=2592000"
+</FilesMatch>
+<FilesMatch "\.(js|css|pdf|swf)$">
+   Header set Cache-Control "max-age=604800"
+</FilesMatch>
+<FilesMatch "\.(html|htm|txt)$">
+   Header set Cache-Control "max-age=600"
+</FilesMatch>
+<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+   Header unset Cache-Control
+</FilesMatch>
+
+## ALTERNATE EXPIRES CACHING ###
+-> htaccesselite.com/d/use-htaccess-to-speed-up-your-site-discussion-vt67.html
+ExpiresActive On
+ExpiresDefault A604800
+ExpiresByType image/x-icon A2592000
+ExpiresByType application/x-javascript A2592000
+ExpiresByType text/css A2592000
+ExpiresByType text/html A300
+<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+   ExpiresActive Off
+</FilesMatch>
+
+## META HTTP-EQUIV REPLACEMENTS ###
+<FilesMatch "\.(html|htm|php)$">
+   Header set imagetoolbar "no"
+</FilesMatch>
+
+=============================================================================#
+          REWRITES AND REDIRECTS
+=============================================================================#
+ REQUEST METHODS: GET,POST,PUT,DELETE,CONNECT,OPTIONS,PATCH,PROPFIND,
+                  PROPPATCH,MKCOL,COPY,MOVE,LOCK,UNLOCK
+##########
+
+## REWRITE DEFAULTS ###
+RewriteEngine On
+RewriteBase /
+
+## REQUIRE SUBDOMAIN ###
+RewriteCond %{HTTP_HOST} !^$
+RewriteCond %{HTTP_HOST} !^subdomain\.domain\.tld$ [NC]
+RewriteRule ^/(.*)$ http://subdomain.domain.tld/$1 [L,R=301]
+
+## SEO REWRITES ###
+RewriteRule ^(.*)/ve/(.*)$    $1/voluntary-employee/$2 [L,R=301]
+RewriteRule ^(.*)/hsa/(.*)$     $1/health-saving-account/$2 [L,R=301]
+
+## WORDPRESS ###
+RewriteCond %{REQUEST_FILENAME} !-f    # Existing File
+RewriteCond %{REQUEST_FILENAME} !-d    # Existing Directory
+RewriteRule . /index.php [L]
+
+## ALTERNATIVE ANTI-HOTLINKING ###
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://(subdomain\.)?domain.tld/.*$ [NC]
+RewriteRule ^.*\.(bmp|tif|gif|jpg|jpeg|jpe|png)$ - [F]
+
+## REDIRECT HOTLINKERS ###
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://(subdomain\.)?domain.tld/.*$ [NC]
+RewriteRule ^.*\.(bmp|tif|gif|jpg|jpeg|jpe|png)$ http://google.com [R]
+
+## DENY REQUEST BASED ON REQUEST METHOD ###
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|OPTIONS|HEAD)$ [NC]
+RewriteRule ^.*$ - [F]
+
+## REDIRECT UPLOADS ###
+RewriteCond %{REQUEST_METHOD} ^(PUT|POST)$ [NC]
+RewriteRule ^(.*)$ /cgi-bin/form-upload-processor.cgi?p=$1 [L,QSA]
+
+## REQUIRE SSL EVEN WHEN MOD_SSL IS NOT LOADED ###
+RewriteCond %{HTTPS} !=on [NC]
+RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+
+### ALTERNATATIVE TO USING ERRORDOCUMENT ###
+-> http://www.htaccesselite.com/d/htaccess-errordocument-examples-vt11.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /error.php [L]
+
+## SEO REDIRECTS ###
+Redirect 301 /2006/oldfile.html http://subdomain.domain.tld/newfile.html
+RedirectMatch 301 /o/(.*)$ http://subdomain.domain.tld/s/dl/$1
+
+=============================================================================#
+          AUTHENTICATION AND SECURITY
+=============================================================================#
+ http://www.htaccesselite.com/htaccess/basic-authentication-example-vt17.html
+
+ Require (user|group|valid-user) (username|groupname)
+##########
+
+## BASIC PASSWORD PROTECTION ###
+AuthType basic
+AuthName "prompt"
+AuthUserFile /.htpasswd
+AuthGroupFile /dev/null
+Require valid-user
+
+## ALLOW FROM IP OR VALID PASSWORD ###
+Require valid-user
+Allow from 192.168.1.23
+Satisfy Any
+
+## PROTECT FILES ###
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+## PREVENT HOTLINKING ###
+SetEnvIfNoCase Referer "^http://subdomain.domain.tld/" good
+SetEnvIfNoCase Referer "^$" good
+<FilesMatch "\.(png|jpg|jpeg|gif|bmp|swf|flv)$">
+   Order Deny,Allow
+   Deny from all
+   Allow from env=good
+   ErrorDocument 403 http://www.google.com/intl/en_ALL/images/logo.gif
+   ErrorDocument 403 /images/you_bad_hotlinker.gif
+</FilesMatch>
+
+## LIMIT UPLOAD FILE SIZE TO PROTECT AGAINST DOS ATTACK ###
+LimitRequestBody 10240000 #bytes, 0-2147483647(2GB)
+
+=============================================================================#
+          SSL SECURITY
+=============================================================================#
+-> http://www.askapache.com/htaccess/ssl-example-usage-in-htaccess.html
+##########
+
+## MOST SECURE WAY TO REQUIRE SSL ###
+-> http://www.askapache.com/htaccess/apache-ssl-in-htaccess-examples.html
+SSLOptions +StrictRequire
+SSLRequireSSL
+SSLRequire %{HTTP_HOST} eq "domain.tld"
+ErrorDocument 403 https://domain.tld
+
+=============================================================================#
+          SITE UNDER CONSTRUCTION
+=============================================================================#
+ Heres some awesome htaccess to use when you are developing a site
+##########
+
+## COMBINED DEVELOPER HTACCESS CODE-USE THIS ###
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|js|css|pdf|swf|html|htm|txt)$">
+   Header set Cache-Control "max-age=5"
+</FilesMatch>
+AuthType basic
+AuthName "Ooops! Temporarily Under Construction..."
+AuthUserFile /.htpasswd
+AuthGroupFile /dev/null
+Require valid-user           # password prompt for everyone else
+Order Deny,Allow
+Deny from all
+Allow from 192.168.64.5      # Your, the developers IP address
+Allow from w3.org            # css/xhtml check jigsaw.w3.org/css-validator/
+Allow from googlebot.com     # Allows google to crawl your pages
+Satisfy Any                  # no password required if host/ip is Allowed
+
+## DONT HAVE TO EMPTY CACHE OR RELOAD TO SEE CHANGES ###
+ExpiresDefault A5 #If using mod_expires
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|js|css|pdf|swf|html|htm|txt)$">
+   Header set Cache-Control "max-age=5"
+</FilesMatch>
+
+## ALLOW ACCESS WITH PASSWORD OR NO PASSWORD FOR SPECIFIC IP/HOSTS ###
+AuthType basic
+AuthName "Ooops! Temporarily Under Construction..."
+AuthUserFile /.htpasswd
+AuthGroupFile /dev/null
+Require valid-user           # password prompt for everyone else
+Order Deny,Allow
+Deny from all
+Allow from 192.168.64.5      # Your, the developers IP address
+Allow from w3.org            # css/xhtml check jigsaw.w3.org/css-validator/
+Allow from googlebot.com     # Allows google to crawl your pages
+Satisfy Any                  # no password required if host/ip is Allowed

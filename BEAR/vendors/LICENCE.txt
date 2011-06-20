@@ -1,0 +1,6 @@
+
+Each software's licence files are bundled in each software's folders, as LICENCE.txt or README.
+"debuglib for PHP5" was licenced by Mr.Thomas Schüßler in 23 July 2008.
+
+同梱のソフトウエアのライセンスはそれぞれのフォルダにあるLICENCE.txtまたはREADMEに記載されています。
+「debuglib for PHP5」はライセンスファイルはありませんが2008/07/23にThomas Schüßler氏より使用許諾許可してもらっています。

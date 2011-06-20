@@ -1,0 +1,41 @@
+BEAR
+
+Copyright (c) 2008, Akihito Koriyama <koriyama@users.sourceforge.jp>
+All rights reserved.
+http://www.bear-project.net/
+$HeadURL: http://bear-project.googlecode.com/svn/trunk/docs/LICENCE.txt $
+
+Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+       this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+      this list of conditions and the following disclaimer in the documentation 
+      and/or other materials provided with the distribution.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+（参考日本語訳）
+
+ソースコード形式かバイナリ形式か、変更するかしないかを問わず、以下の条件を満たす場合に限り、
+再頒布および使用が許可されます。
+
+    * ソースコードを再頒布する場合、上記の著作権表示、本条件一覧、および下記免責条項を含めること。
+    * バイナリ形式で再頒布する場合、頒布物に付属のドキュメント等の資料に、上記の著作権表示、
+      本条件一覧、および下記免責条項を含めること。
+
+本ソフトウェアは、著作権者およびコントリビューターによって「現状のまま」提供されており、明示黙示を問わず、
+商業的な使用可能性、および特定の目的に対する適合性に関する暗黙の保証も含め、またそれに限定されない、
+いかなる保証もありません。著作権者もコントリビューターも、事由のいかんを問わず、損害発生の原因いかんを問わず、
+かつ責任の根拠が契約であるか厳格責任であるか（過失その他の）不法行為であるかを問わず、仮にそのような損害が発生する
+可能性を知らされていたとしても、本ソフトウェアの使用によって発生した（代替品または代用サービスの調達、使用の喪失、
+データの喪失、利益の喪失、業務の中断も含め、またそれに限定されない）直接損害、間接損害、偶発的な損害、特別損害、
+懲罰的損害、または結果損害について、一切責任を負わないものとします。 
+

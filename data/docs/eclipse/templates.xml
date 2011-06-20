@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?><templates><template autoinsert="true" context="newPhp" deleted="false" description="新規ページphp" enabled="true" name="[BEAR]  ページ">&lt;?php&#13;
+/**&#13;
+ * App&#13;
+ *&#13;
+ * @package    App&#13;
+ * @subpackage Page&#13;
+ */&#13;
+require_once 'App.php';&#13;
+&#13;
+/**&#13;
+ * Untitled&#13;
+ *&#13;
+ * &lt;pre&gt;Enter description here...&#13;
+ * &lt;/pre&gt;&#13;
+ *&#13;
+ * @package    App&#13;
+ * @subpackage Page&#13;
+ * @author     $$Author:$$&#13;
+ * @version    SVN: Release: $$Id:$$&#13;
+ */&#13;
+class Index extends App_Page&#13;
+{&#13;
+    /**&#13;
+     * コンストラクタ&#13;
+     *&#13;
+     *  @param $$config 設定&#13;
+     */&#13;
+    public function __constract(array $$args)&#13;
+    {&#13;
+         parent::__construct($$config);&#13;
+    }&#13;
+    &#13;
+    /**&#13;
+     * Init&#13;
+     * &#13;
+     * @param $$args 引数&#13;
+     * &#13;
+     * @return void&#13;
+     */&#13;
+    public function onInit(array $$args)&#13;
+    {&#13;
+    }&#13;
+&#13;
+    /**&#13;
+     * Output&#13;
+     * &#13;
+     * @return void&#13;
+     */&#13;
+    public function onOutput()&#13;
+    {&#13;
+        $$this-&gt;display();&#13;
+    }&#13;
+&#13;
+    /**&#13;
+     * Action&#13;
+     * &#13;
+     * @param array $$submit サブミット値&#13;
+     * &#13;
+     * @return void&#13;
+     */&#13;
+    public function onAction(array $$submit)&#13;
+    {&#13;
+    }&#13;
+}&#13;
+&#13;
+BEAR_Main::run('Index');</template><template autoinsert="true" context="newPhp" deleted="false" description="新規リソースコンテンツクラス" enabled="true" name="[BEAR]  リソース">&lt;?php
+/**
+ * @package App
+ * @subpackage Rresource
+ */
+
+/**
+ * Untetiled リソース
+ * 
+ * &lt;pre&gt;Description here...
+ * &lt;/pre&gt;
+ * 
+ * @package     App
+ * @subpackage  Rresource
+ * @author      $$Author:$$
+ * @version     $$Id$$
+ * 
+ */
+class App_Resource_Untitled extends App_Vo
+{
+    /**
+     * コンストラクタ
+     *
+     *  @param $$config 設定
+     */
+    public function __constract(array $$args)
+    {
+         parent::__construct($$config);
+    }
+    
+    /**
+     * テーブル名
+     * 
+     * @var string
+     */
+    private $$_table = "user";
+
+    /**
+     * 作成
+     * 
+     * @param array $$values
+     * 
+     * @return integer id or error
+     */
+    public function onCreate(array $$values)
+    {
+        //db
+        /* @var $$extended MDB2_Extended */
+        $$values['created'] = _BEAR_DATETIME; //現在時刻
+        $$this-&gt;_db-&gt;autoExecute($$this-&gt;_table, $$values, MDB2_AUTOQUERY_INSERT);
+        $$id = $$db-&gt;lastInsertId($$this-&gt;_table);
+        return $$id;
+    }
+
+    /**
+     * 変更
+     * 
+     * @param array $$values
+     * 
+     * @return integer id or error
+     */
+    public function onUpdate(array $$values)
+    {
+        $$values['updated_at'] = _BEAR_DATETIME;
+        /* @var $$extended MDB2_Extended */
+        $$where = 'id = ' . $$db-&gt;quote($$values['id'], 'integer');
+        $$result = $$this-&gt;_db-&gt;autoExecute($$this-&gt;_table, $$values, MDB2_AUTOQUERY_UPDATE, $$where);
+        return $$result;
+    }
+
+    /**
+     * 読み込み
+     * 
+     * @param array $$values
+     * 
+     * @return array
+     */
+    public function onRead(array $$values)
+    {
+        //assert &amp; mapping
+        $$where = isset($$values['id']) ? ' WHERE id = ' . $$db-&gt;quote($$values['id'], 'integer') : "";
+        $$sql = "SELECT * FROM {$$this-&gt;_table}{$$where}";
+        if (isset($$values['id'])) {
+            $$result = $$this-&gt;_db-&gt;queryRow($$sql);
+        } else {
+            $$result = $$this-&gt;_db-&gt;queryAll($$sql);
+        }
+        return $$result;
+    }
+
+    /**
+     * 削除
+     * 
+     * @param array $$values
+     * 
+     * @return MDB2_Result
+     */
+    public function onDelete(array $$values)
+    {
+        $$values['deleted_at'] = _BEAR_DATETIME;
+        /* @var $$extended MDB2_Extended */
+        $$where = 'id = ' . $$db-&gt;quote($$values['id'], 'integer');
+        $$result = $$this-&gt;_db-&gt;autoExecute($$this-&gt;_table, $$values, MDB2_AUTOQUERY_UPDATE, $$where);
+        return $$result;
+    }
+}</template><template autoinsert="true" context="php" deleted="false" description="QuickFormのサンプルです" enabled="true" name="[BEAR] Quickform">$$form-&gt;BEAR::dependency('BEAR_Form, array('formName' =&gt; 'form'));&#13;
+//デフォルト値&#13;
+$$form-&gt;setDefaults($$defaults);&#13;
+//コンスタント(再入力時も一定の値）&#13;
+$$form-&gt;setConstants(array('agree' =&gt; true));&#13;
+//テキスト&#13;
+$$form-&gt;addElement('text', 'title', $$label, 'size=10 maxlength=20');&#13;
+$$form-&gt;addElement('text', 'title', $$label, 'size=10 maxlength=20 istyle="3" mode="alphabet"');&#13;
+$$form-&gt;addElement('textarea', 'body', $$label, 'rows=4 cols=10');&#13;
+//セレクトリスト&#13;
+$$_selects = array('windows' =&gt; 'Windows','linux' =&gt; 'Linux','mac' =&gt; 'Mac');&#13;
+$$form-&gt;addElement('select', 'os', null, $$_selects);&#13;
+//ラジオボタン&#13;
+$$radios[] = &amp;HTML_QuickForm::createElement('radio', $$name, $$label, '男性', 0);&#13;
+$$radios[] = &amp;HTML_QuickForm::createElement('radio', $$name, $$label, '女性', 1);&#13;
+$$form-&gt;addGroup($$radios, 'gender', '性別', ' ');&#13;
+//$$form-&gt;addGroup($$_radio, 'gender', $$label, $$separator);&#13;
+//チェックボックス&#13;
+$$checks[] = &amp;HTML_QuickForm::createElement('checkbox');&#13;
+//チェックボックス（連想配列キー付き）&#13;
+$$checks[] = &amp;HTML_QuickForm::createElement('checkbox', 'key_A', null, 'label_A');&#13;
+$$checks[] = &amp;HTML_QuickForm::createElement('checkbox', 'key_B', null, 'label_B');&#13;
+$$form-&gt;addGroup($$checks, 'AB', null, array('&amp;nbsp;', '&lt;br /&gt;'));&#13;
+//グループルール&#13;
+$$form-&gt;addGroupRule('abcd', '少なくとも２つはチェックしてください', 'required', null, 2);&#13;
+//アドバンスチェックボックス&#13;
+$$adv_checks[] = &amp;HTML_QuickForm::createElement('advcheckbox', 'student', '', '学生', null, array(false, 1));&#13;
+$$adv_checks[] = &amp;HTML_QuickForm::createElement('advcheckbox', 'officeworker', '', '会社員', null, array(false, 2));&#13;
+$$adv_checks[] = &amp;HTML_QuickForm::createElement('advcheckbox', 'others', '', 'その他', null, array(false, 99));&#13;
+$$form-&gt;addGroup($$adv_checks, 'job', '', array('&amp;nbsp', '&lt;br&gt;'));&#13;
+//日付&#13;
+$$option = array(&#13;
+'language' =&gt; 'en',&#13;
+'format'    =&gt; 'Y/m/d/H/i',&#13;
+'minYear'   =&gt; date("Y"),&#13;
+'maxYear'   =&gt; date("Y") + 5&#13;
+);&#13;
+$$form-&gt;addElement('date', 'publish_time', NULL, $$option);&#13;
+//フィルター&#13;
+$$form-&gt;applyFilter('__ALL__', 'trim');&#13;
+$$form-&gt;applyFilter('__ALL__', 'strip_tags');&#13;
+$$form-&gt;applyFilter('__ALL__', 'removeEmoji');&#13;
+//ルール&#13;
+$$form-&gt;addRule('blognm','&lt;font color=red&gt;入力してください&lt;/font&gt;&lt;br&gt;', 'required');&#13;
+$$form-&gt;setJsWarnings('必須項目を入力してください。','');&#13;
+$$form-&gt;addRule('zip','郵便番号を正しく入力してください', 'regex', '/^[0-9]{3}\-[0-9]{4}$$/', 'client');&#13;
+//フォームルール&#13;
+$$form-&gt;addFormRule( 'userExists');&#13;
+function userExists($$form){&#13;
+    //エラー&#13;
+    $$result = array('user'=&gt;"{$$form['user_id']}ユーザーは存在します");&#13;
+    //エラーなし&#13;
+    $$result = true;&#13;
+    return $$result;&#13;
+}&#13;
+</template><template autoinsert="true" context="newPhp" deleted="false" description="Smartyのブロックプラグイン関数です" enabled="true" name="[BEAR] Smarty blockプラグイン">&lt;?php&#13;
+/**&#13;
+ * @package    App&#13;
+ * @subpackage Smarty&#13;
+ */&#13;
+&#13;
+/**&#13;
+ * App sample block plugin&#13;
+ *&#13;
+ * &lt;pre&gt;Enter description here...&#13;
+ * &lt;/pre&gt;&#13;
+ *&#13;
+ * @author  ${user}&#13;
+ * @version $$Id:$$&#13;
+ * @since   ${date}　${time}&#13;
+ * &#13;
+ * @param array&#13;
+ *  + key1: unknown_type&#13;
+ *  + key2: unknown_type&#13;
+ * @param string $$params&#13;
+ * @param string $$content&#13;
+ * @param object $$smarty object&#13;
+ * &#13;
+ * @return string&#13;
+ */&#13;
+function smarty_block_sample($$params, $$content, &amp;$$smarty)&#13;
+{&#13;
+    return $$result;&#13;
+}</template><template autoinsert="true" context="newPhp" deleted="false" description="Smartyのモディファイアー関数ファイルです" enabled="true" name="[BEAR] Smartyモディファイアー">&lt;?php&#13;
+/**&#13;
+ * @package    App&#13;
+ * @subpackage Smarty&#13;
+ */&#13;
+&#13;
+/**&#13;
+ * Smarty sample modifier&#13;
+ *&#13;
+ * &lt;pre&gt;Description here...&#13;
+ * &lt;/pre&gt;&#13;
+ *&#13;
+ * &lt;code&gt;&#13;
+ * {$$name|sample:"size=16 maxlength=32"}&#13;
+ * &lt;/code&gt;&#13;
+ *&#13;
+ * @author  $$Author:${user}$$&#13;
+ * @version $$Id:${date}${time}$$&#13;
+ *&#13;
+ * @param string $$string&#13;
+ * @param string $$option&#13;
+ * &#13;
+ * @return unknown&#13;
+ */&#13;
+function smarty_modifier_sample($$string, $$option)&#13;
+{&#13;
+    $$result = $$string;&#13;
+    return $$result;&#13;
+}</template><template autoinsert="true" context="phpdoc" deleted="false" description="add the user as author" enabled="true" id="org.eclipse.php.ui.editor.templates.phpdoc.author" name="author">@author ${user}
+</template><template autoinsert="true" context="php" deleted="false" description="リソースを取得します" enabled="true" name="bres リソース取得">$$params = array('uri' =&gt; $$uri, 'values' =&gt; $$values, 'options'=&gt;$$options);
+$$this-&gt;_resource-&gt;read($$params)-&gt;set();
+</template></templates>

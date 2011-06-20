@@ -1,0 +1,51 @@
+# App @DATE@
+# <Change Here>
+# 0:Live >1:Debug
+SetEnv bearmode 1
+php_value include_path "@APP-DIR@:@BEAR-DIR@:@VENDORS-PEAR-DIR@:@PEAR-DIR@:."
+# </Change Here>
+
+# BEAR
+# error report level
+php_value display_errors 1
+php_value error_reporting 2047
+php_value log_errors 1
+php_value ignore_repeated_errors 1
+php_value html_errors 0
+php_value track_errors 1
+# mbstring
+php_value mbstring.language Japanese
+php_value mbstring.http_input none
+php_value mbstring.http_output none
+php_value mbstring.input_encoding pass
+php_value mbstring.internal_encoding UTF-8
+php_value mbstring.language Japanese
+php_value mbstring.script_encoding UTF-8
+php_value mbstring.substitute_character none
+php_value mbstring.encoding_translation 0
+# output
+php_value magic_quotes_gpc 0
+php_value output_buffering 1
+php_value output_handler none
+php_value default_charset none
+# session
+php_value session.name _s
+php_value session.use_trans_sid 1
+php_value session.use_only_cookies 0
+php_value session.auto_start 0
+php_value session.gc_maxlifetime 2440
+php_value session.cookie_lifetime 0
+php_value session.gc_probability 1
+php_value session.gc_divisor 100
+#time zone
+php_value date.timezone Asia/Tokyo
+
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteCond %{HTTP_USER_AGENT} "^DoCoMo"
+#RewriteCond %{QUERY_STRING} ^$
+#RewriteRule ^(.*?)$ http://yoursite.com/$1?guid=ON [R=302,L]
+#RewriteCond %{HTTP_USER_AGENT} ^DoCoMo.*
+#RewriteCond %{QUERY_STRING} !guid=ON
+#RewriteRule ^(.*)$ http://yoursite.com/$1?%{QUERY_STRING}&guid=ON [L]
+#</IfModule>

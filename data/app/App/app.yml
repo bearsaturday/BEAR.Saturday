@@ -1,0 +1,72 @@
+# 全クラス共通
+core:
+  debug: false
+  # 基本情報
+  info:
+    id: 'app'
+    version: 0.0.1
+
+BEAR_Cache:
+  # int  キャッシュアダプター 0 なし | 1 PEAR::Cache_Lite | 2 MEMCACHE | 3 APC
+  adaptor: 1
+  # path: dsn | file path | memcache host(s)
+  #   - localhost
+
+BEAR_Session:
+  # mixed アダプター 0 なし | 1 File | 2 DB | 3 memchache
+  adaptor: 0
+  # string セッションキーにつけるプリフィックス
+  prefix: ''
+  # path: dsn | session file path | memcache host(s)
+  path: '/tmp/sess'
+  #int アイドル時間
+  idle  : 3600
+  #callback タイムアウトコールバックページメソッド
+  #callback: 'onSessionTimeout'
+  #int エクスパイア時間
+  expire: 0
+  #int expire_callback
+  #expire_callback: 'onSessionExpire'
+  #GC時間 (86400 = 24h)
+  gc_max_lifetime: 86400
+
+BEAR_Emoji:
+  submit: 'entity'
+
+BEAR_Form:
+  # メソッド
+  method: 'post'
+  # アトリビュート
+  attributes: null
+  
+BEAR_Page_Ajax:
+  # double submit cookieチェック
+  security_check: false
+
+BEAR_Agent:
+  ua_inject: 'BEAR_Agent_Ua'
+
+BEAR_Agent_Adaptor_Apple:
+  content_type: 'application/xhtml+xml'
+
+BEAR_View:
+  adaptor: 'BEAR_View_Adaptor_Smarty'
+  ua_sniffing: false
+  path: '/App/views/'
+
+Panda:
+  http_tpl: 'App/views/pages/_panda/http.php'
+
+App_Main:
+  # UAコード
+  ua: 'Default'
+  # インジェクター
+  injector: 'onInject'
+  # Page::onShutdown()有効化
+  enable_onshutdown: false
+  
+App_Db:
+  dsn:
+    default: 'mysql://root:@localhost/bear_demo'
+    slave  : 'mysql://root:@localhost/bear_demo'
+    test   : 'mysql://root:@localhost/bear_demo'

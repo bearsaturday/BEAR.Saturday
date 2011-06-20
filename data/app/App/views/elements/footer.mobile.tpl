@@ -1,0 +1,1 @@
+<div style="color:#003399;background:#E5ECF9;text-align:center;font-size:x-small">(c) BEAR App</div>

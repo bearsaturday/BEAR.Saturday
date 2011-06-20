@@ -1,0 +1,91 @@
+pre {
+	
+}
+
+br {
+	clear: both;
+}
+
+:focus {
+	outline: 0;
+}
+
+form {
+	padding: 0px;
+	margin: 0px;
+}
+
+input.cmdline {
+	border: none;
+	border: 1px;
+	font-family: monospace;
+	padding: 0px;
+	margin: 0px;
+	width: 80%;
+	font-size: 14px;
+}
+
+table.inputtable {
+	width: 100%;
+	vertical-align: top;
+}
+
+td.inputtd {
+	width: 100%;
+}
+
+#input {
+	margin-left: 8px;
+	overflow: hidden;
+}
+
+#output {
+	margin-left: 8px;
+	margin-top: 8px;
+	font-family: monospace;
+	font-size: 14px;
+}
+
+.info {
+	color: #090;
+	font-size: 14px;
+}
+
+#input table {
+	padding: 0px;
+	margin: 0px;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	font-size: 14px;
+}
+
+#input td {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top;
+	font-family: monospace;
+}
+
+.help td {
+	padding-right: 25px;
+}
+
+form input[type="submit"] {
+	display: none;
+}
+
+#prompt {
+	display: inline;
+	white-space: nowrap;
+	padding: 0px;
+	margin: 0px;
+	font-family: monospace;
+}
+
+img {
+	border: none;
+}
+
+.example {
+	color: grey;
+}

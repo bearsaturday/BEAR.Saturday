@@ -1,0 +1,89 @@
+@CHARSET "UTF-8";
+
+form {
+	margin: 0;
+	padding: 0;
+	min-width: 500px;
+	max-width: 600px;
+	width: 560px;
+}
+
+form fieldset {
+	clear: both;
+	float: left;
+	border: 0;
+	margin: 0;
+	width: 100%;
+}
+
+form fieldset.hidden {
+	border: 0;
+}
+
+form fieldset legend {
+	white-space: nowrap;
+	background-color: #CCCCCC;
+	font-weight: bold;
+	width: 100%;
+	padding: 1px;
+	display: block;
+}
+
+form fieldset ol {
+	margin: 0;
+	padding: 0;
+}
+
+form fieldset li {
+	display: block;
+	list-style: none;
+	margin: 0;
+	clear: both;
+}
+
+form label {
+	margin: 0 0 0 5px;
+}
+
+form label.element {
+	display: block;
+	float: left;
+	width: 150px;
+	padding: 0;
+	margin: 5px 0 0 0;
+	font-weight: bold;
+	text-align: right;
+}
+
+form input,form textarea,form select {
+	width: auto;
+}
+
+form textarea {
+	overflow: auto;
+}
+
+form br {
+	clear: left;
+}
+
+form div.element {
+	display: inline;
+	float: left;
+	margin: 5px 0 0 10px;
+	padding: 0;
+}
+
+form li.reqnote {
+	font-size: 80%;
+	margin: 5px 0 0 10px;
+}
+
+form span.error,form span.required {
+	color: red;
+}
+
+form .error {
+	border: 1px solid red;
+	padding: 5px;
+}

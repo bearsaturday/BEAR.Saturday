@@ -1,0 +1,184 @@
+@CHARSET "UTF-8";
+
+div1.bear-resource-template {
+	border: medium solid green;
+	border-style: dashed;
+	float: left;
+	padding: 10px 10px 25px 10px;
+	background: #eee;
+	border: 30px solid #fff;
+	-moz-box-shadow: 0px 2px 15px #333;
+	position: relative;
+}
+
+div.bear-resource-template {
+	border: 1px dashed green;
+	position: relative;
+}
+
+div.bear-resource-label {
+	color: black;
+	background-color: #FEF49C;
+	padding: 4px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+}
+
+span.bear-resource-values {
+	color: Maroon;
+}
+
+div.bear-resource-label a {
+	color: blue;
+	text-decoration: underline;
+}
+
+div.bear-resource-label a:hover {
+	color: blue;
+	text-decoration: none;
+}
+
+div.bear-resource-info-label {
+	background-color: #FEF0FF;
+	color: #444444;
+	font-family: Lucida Grande, Verdana, Sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0 4px;
+}
+
+div#bear_badge {
+	font-size: 9px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	text-align: right;
+}
+
+div#bear_badge a.bear_page_edit {
+	padding: 5px 3px 3px 3px;
+	background-color: gray;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px solid #dddddd;
+}
+
+div#bear_badge a.bear_resource {
+	padding: 5px 3px 3px 3px;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px solid #dddddd;
+}
+
+div#bear_badge a.bear_badge {
+	padding: 5px 3px 3px 3px;
+	font: bold 8pt Verdana;
+	border: 1px solid #dddddd;
+}
+
+div#bear_badge a.bear_info {
+	padding: 5px 3px 3px 3px;
+	background-color: gray;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px solid #ddddd;
+}
+
+div#bear_badge a.bear_resource_none {
+	padding: 5px 3px 3px 3px;
+	background-color: grey;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px solid #ddddd;
+}
+
+div#bear_badge a.bear_resource_box {
+	padding: 5px 3px 3px 3px;
+	background-color: green;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px dashed green;
+}
+
+div#bear_badge a.bear_resource_body {
+	padding: 5px 3px 3px 3px;
+	background-color: blue;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px solid #ddddd;
+}
+
+div#bear_badge a.bear_resource_html {
+	padding: 5px 3px 3px 3px;
+	background-color: forestgreen;
+	color: white;
+	font: bold 8pt Verdana;
+	border: 1px solid #ddddd;
+}
+
+.hl-all {
+	background-color: black
+}
+
+.hl-main {
+	font-family: monospace;
+}
+
+.hl-default {
+	color: #;
+}
+
+.hl-code {
+	color: #7f7f33;
+}
+
+.hl-brackets {
+	color: #009966;
+}
+
+.hl-comment {
+	color: #7F7F7F;
+}
+
+.hl-quotes {
+	color: #00007F;
+}
+
+.hl-string {
+	color: #7F0000;
+}
+
+.hl-identifier {
+	color: #000000;
+}
+
+.hl-reserved {
+	color: #7F007F;
+}
+
+.hl-inlinedoc {
+	color: #0000FF;
+}
+
+.hl-var {
+	color: #0066FF;
+}
+
+.hl-url {
+	color: #FF0000;
+}
+
+.hl-special {
+	color: #0000FF;
+}
+
+.hl-number {
+	color: #007F00;
+}
+
+.hl-inlinetags {
+	color: #FF0000;
+}

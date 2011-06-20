@@ -1,0 +1,39 @@
+#
+# bear.yml - BEAR Config
+#
+App_Main:
+  ua: 'Default'
+  enable_ua_sniffing: false
+  enable_onshutdown: false
+  exit_on_end: true
+
+BEAR_Page_Ajax:
+  security_check: true
+
+BEAR_Form:
+  formName: 'form'
+  method: 'post'
+  action: ''
+  target: ''
+  attributes: null
+  callback: false
+
+BEAR_View:
+  adaptor: 'BEAR_View_Adaptor_Smarty'
+  ua_sniffing: false
+  path: '/App/views/'
+
+BEAR_Emoji:
+  submit: 'entity'
+
+BEAR_Cache_Adapter_Memcache:
+  port: '11211'
+  
+Panda:
+  on_fatal_error: Panda/Template/fatal.html
+  http_tpl: Panda/Template/http.php
+  firephp: true
+  catch_fatal: false
+  catch_strict: true
+  path: '/'
+  edit: 2

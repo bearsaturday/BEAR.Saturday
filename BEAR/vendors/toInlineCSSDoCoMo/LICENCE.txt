@@ -1,0 +1,34 @@
+    /**
+3    * HTML_CSS_Mobile.php
+4    *
+5    * @author Daichi Kamemoto <daikame@gmail.com>
+6    */
+7   /**
+8    * The MIT License
+9    *
+10   * Copyright (c) 2008 Daichi Kamemoto <daikame@gmail.com>
+11   *
+12   * Permission is hereby granted, free of charge, to any person obtaining a copy
+13   * of this software and associated documentation files (the "Software"), to deal
+14   * in the Software without restriction, including without limitation the rights
+15   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+16   * copies of the Software, and to permit persons to whom the Software is
+17   * furnished to do so, subject to the following conditions:
+18   *
+19   * The above copyright notice and this permission notice shall be included in
+20   * all copies or substantial portions of the Software.
+21   *
+22   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+23   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+24   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+25   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+26   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+27   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+28   * THE SOFTWARE.
+29   */
+
+toInlineCSSDoCoMo
+2008/07/09
+http://blog.asial.co.jp/411
+
+Daichi Kamemoto <daikame@gmail.com>氏作成　

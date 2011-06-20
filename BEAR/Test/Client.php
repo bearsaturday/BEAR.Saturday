@@ -1,0 +1,128 @@
+<?php
+/**
+ * BEAR
+ *
+ * PHP versions 5
+ *
+ * @category  BEAR
+ * @package	  BEAR_Test
+ * @author    Akihito Koriyama <koriyama@bear-project.net>
+ * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @license   http://opensource.org/licenses/bsd-license.php BSD
+ * @version   SVN: Release: @package_version@ $Id:$$
+ * @link      http://www.bear-project.net/
+ */
+
+/**
+ * BEAR
+ *
+ * @category  BEAR
+ * @package   BEAR_Test
+ * @author    Akihito Koriyama <koriyama@bear-project.net>
+ * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @license   http://opensource.org/licenses/bsd-license.php BSD
+ * @version   Release: @package_version@
+ * @link      http://www.bear-project.net/
+ *
+ * @Singleton
+ */
+class BEAR_Test_Client extends HTTP_Request2
+{
+    /**
+     * Http client
+     *
+     * @var \HTTP_Request2
+     * @see http://pear.php.net/manual/en/package.http.http-client.http-client.http-client.php
+     */
+    public $request;
+
+    /**
+     * Http responce
+     *
+     * @var HTTP_Request2_Response
+     * @see http://pear.php.net/manual/en/package.http.http-request2.intro.php
+     */
+    public $reqponce;
+
+    /**
+     * Http request
+     *
+     * @param string $method
+     * @param string $url
+     * @param array  $submit
+     * @param string $formName
+     *
+     * @return HTTP_Request2_Response
+     */
+    public function request($method, $url, array $submit = array(), $formName = 'form')
+    {
+        $this->request = new HTTP_Request2;
+        $url = new Net_URL2($url);
+        $this->request->setMethod($method);
+        if ($submit) {
+            $submit = array_merge(array('_token' => '0dc59902014b6', '_qf__' . $formName => ''), $submit);
+        }
+        if ($submit && $method === 'POST') {
+            $this->request->addPostParameter($submit);
+        }
+        if ($submit && $method === 'GET') {
+            $url->setQueryVariables($submit);
+        }
+        $this->request->setUrl($url);
+        $this->response = $this->request->send();
+        return $this;
+    }
+
+    /**
+     * Get form log
+     *
+     * @return array
+     */
+    public function getFormLog()
+    {
+        $header = $this->response->getHeader();
+        $formInfo = json_decode($header['x-bear-form-log'], true);
+        $result = isset($formInfo[0]) ? $formInfo[0] : null;
+        return $result;
+    }
+
+    /**
+     * Get is valid submit
+     *
+     * @return bool
+     */
+    public function isValidSubmit()
+    {
+        $formLog = $this->getFormLog();
+        $result = (isset($formLog['valid']) && $formLog['valid'] === true) ?
+        true : false;
+        return $result;
+    }
+
+
+    /**
+     * Get form errors
+     *
+     * @return array
+     */
+    public function getFormErrors()
+    {
+        $formLog = $this->getFormLog();
+        $result = isset($formLog['errors']) ? $formLog['errors'] : array();
+        return $result;
+    }
+
+    /**
+     * Get resource request log
+     *
+     * @return array<string>
+     */
+    public function getResourceRequestLog()
+    {
+        $header = $this->response->getHeader();
+        $result = isset($header['x-bear-resource-log']) ?
+            json_decode($header['x-bear-resource-log'], true) : array();
+        return $result;
+    }
+
+}

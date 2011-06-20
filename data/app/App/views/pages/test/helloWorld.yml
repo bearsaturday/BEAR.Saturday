@@ -1,0 +1,23 @@
+default:
+  metas: |
+    <meta name="keywords" content="keywords1, keywords2, keywords3" />
+    <meta name="description" content="Describe here..." />
+    <meta name="robots" content="index" />
+    <link rel="alternate" type="application/rss+xml" title="Example RSS Channel" href="index.rss" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <script type="text/javascript" src="/js/default.js"></script>
+  title:  BEAR App
+  header: elements/main_header.tpl
+  footer: <hr><div align="center">(C) 2008-2011 BEAR</div>
+mobile:
+    metas: |
+      <meta name="keywords" content="keywords1, keywords2, keywords3" />
+      <meta name="description" content="Describe here..." />
+      <meta name="robots" content="index" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+    title: Appﾓﾊﾞｲﾙ
+    color:
+      a:
+        link:    00000ff
+        visited: ff0000
+layout:default.tpl

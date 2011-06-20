@@ -1,0 +1,8 @@
+[auto-props]
+*.php = svn:keywords=Id Date Author Rev URL
+*.tpl = svn:keywords=Id Date Author Rev URL
+*.txt = svn:keywords=Id Date Author Rev URL
+*.js = svn:keywords=Id Date Author Rev URL
+*.css = svn:keywords=Id Date Author Rev URL
+*.sql = svn:keywords=Id Date Author Rev URL
+*.sh = svn:eol-style=native;svn:executable
