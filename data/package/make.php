@@ -51,7 +51,7 @@ $packagexml->setOptions(array('filelistgenerator' => 'file',
 'exceptions' => array('BEAR/BEAR/bin/bear.sh' => 'script'),
 'installexceptions' => array('BEAR/BEAR/bin/bear.sh' => '/'),
 'installas' => array('BEAR/BEAR/bin/bear.sh' => 'bear'),
-'dir_roles' => array('data'=>'data', 'bin'=>'script', 'inc'=>'php'),
+'dir_roles' => array('data'=>'data', 'bin'=>'script', 'vendors'=>'php'),
       'simpleoutput' => true));
 
 
@@ -119,7 +119,8 @@ $packagexml->addPackageDepWithChannel('optional', 'PHP_CodeSniffer', 'pear.php.n
 // $packagexml->addGlobalReplacement('package-info', '@PEAR-VER@', 'version');
 */
 $packagexml->addGlobalReplacement('pear-config', '@PEAR-DIR@', 'php_dir');
-//$packagexml->addGlobalReplacement('pear-config', '@DATA-DIR@', 'data_dir');
+$package->addGlobalReplacement('package-info', '@package_version@', 'version');
+$packagexml->addGlobalReplacement('pear-config', '@DATA-DIR@', 'data_dir');
 $packagexml->addGlobalReplacement('pear-config', '@PHP-BIN@', 'bin_dir');
 
 
