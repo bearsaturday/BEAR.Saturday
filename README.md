@@ -13,12 +13,12 @@ BEAR(Saturday) is only supported on PHP 5.2 and up.
 
 Install BEAR
 -------------
-$ pear channel-discover pear.bear-project.net
+$ pear channel-discover pear.bear-project.net  
 $ pear install bear/BEAR-beta
 
 Create Project
 -------------
-$ bear init-app bearapp.name
+$ bear init-app bearapp.name  
 $ ln -s bearapp.name/htdocs /path/to/vhost_dir
 
 
