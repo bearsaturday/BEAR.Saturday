@@ -5,16 +5,7 @@ require_once 'BEAR.php';
 require_once 'Tree.php';
 
 include 'BEAR/Page/Header/Interface.php';
-$db = BEAR::dependency('BEAR_Log')->getPageLogDb();
-if (isset($_GET['id'])) {
-    $stmt = $db->prepare("SELECT log FROM pagelog WHERE ROWID = :id");
-    $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
-} else {
-    $stmt = $db->prepare("SELECT log FROM pagelog where ROWID = last_insert_rowid()");
-}
-$stmt->execute();
-$log = $stmt->fetchAll();
-$pageLog = unserialize($log[0]['log']);
+$pageLog = BEAR::dependency('BEAR_Log')->getPageLog($_GET);
 // ファイル情報を取得
 $logFile = _BEAR_APP_HOME . '/logs/page.log';
 spl_autoload_unregister(array('BEAR', 'onAutoload'));
