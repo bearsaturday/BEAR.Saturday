@@ -3,9 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>BEAR Edit</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
-<script src="/__panda/js/jquery-1.6.1.js" type="text/javascript" s></script>
+<script src="/__panda/js/jquery-1.6.1.js" type="text/javascript" charset="utf-8"></script>
 <script src="/__panda/js/jquery.keybind/jquery.keybind.js" type="text/javascript" charset="utf-8"></script>
 <script src="/__panda/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="/__panda/js/ace/theme-eclipse.js" type="text/javascript" charset="utf-8"></script>
@@ -32,6 +31,7 @@
   <div id="container_id1"></div>
   <div id="container_id2"></div>
   <div id="container_id3"></div>
+  <div id="container_id"></div>
 </div>
   <div id="mainContent">
     <div id="editor" style="position:absolute; left:200px; background-color:white; color:gray; width: 1000px; height: 95%; border: 1px solid black; "></div>

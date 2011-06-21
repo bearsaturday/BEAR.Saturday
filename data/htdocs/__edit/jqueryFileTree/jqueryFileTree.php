@@ -21,28 +21,36 @@ $root = _BEAR_EDIT_ROOT_PATH;
 
 $_POST['dir'] = urldecode($_POST['dir']);
 
-if( file_exists($root . $_POST['dir']) ) {
-	$files = scandir($root . $_POST['dir']);
-	natcasesort($files);
-	if( count($files) > 2 ) { /* The 2 accounts for . and .. */
-		echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
-		// All dirs
-		foreach( $files as $file ) {
-			if( file_exists($root . $_POST['dir'] . $file) && $file != '.' && $file != '..' && is_dir($root . $_POST['dir'] . $file) ) {
-				if (substr($file, 0, 1) !== '.') {
-				echo "<li 'class=\"directory collapsed\"><a onclick=\"folder_select('" . htmlspecialchars($_POST['dir'] . $file) . "');\" href=\"#\" rel=\"" . htmlspecialchars($_POST['dir'] . $file) . "/\">" . htmlspecialchars($file) . "</a></li>";
-				}
-			}
-		}
-		// All files
-		foreach( $files as $file ) {
-			if( file_exists($root . $_POST['dir'] . $file) && $file != '.' && $file != '..' && !is_dir($root . $_POST['dir'] . $file) ) {
-				$ext = preg_replace('/^.*\./', '', $file);
-				if (substr($file, 0, 1) !== '.') {
-				echo "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"" . htmlspecialchars($_POST['dir'] . $file) . "\">" . htmlspecialchars($file) . "</a></li>";
-				}
-			}
-		}
-		echo "</ul>";
-	}
+if (!(file_exists($root . $_POST['dir'])) ) {
+    FB::warn('NO DIR');
+} else {
+    FB::warn('YES DIR');
+}
+$dir = $root . $_POST['dir'];
+fb::warn($dir);
+$files = scandir($dir);
+fb::warn($files);
+natcasesort($files);
+if( count($files) > 2 ) { /* The 2 accounts for . and .. */
+    echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
+    // All dirs
+    foreach( $files as $file ) {
+        if( file_exists($root . $_POST['dir'] . $file) && $file != '.' && $file != '..' && is_dir($root . $_POST['dir'] . $file) ) {
+            if ((substr($file, 0, 1) !== '.') && (substr($file, 0, 2) !== '__')) {
+                $html =  "<li class=\"directory collapsed\"><a onclick=\"folder_select('" . htmlspecialchars($_POST['dir'] . $file) . "');\" href=\"#\" rel=\"" . htmlspecialchars($_POST['dir'] . $file) . "/\">" . htmlspecialchars($file) . "</a></li>";
+                echo $html;
+                FB::dump($html);
+            }
+        }
+    }
+    // All files
+    foreach( $files as $file ) {
+        if( file_exists($root . $_POST['dir'] . $file) && $file != '.' && $file != '..' && !is_dir($root . $_POST['dir'] . $file) ) {
+            $ext = preg_replace('/^.*\./', '', $file);
+            if (substr($file, 0, 1) !== '.') {
+                echo "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"" . htmlspecialchars($_POST['dir'] . $file) . "\">" . htmlspecialchars($file) . "</a></li>";
+            }
+        }
+    }
+    echo "</ul>";
 }

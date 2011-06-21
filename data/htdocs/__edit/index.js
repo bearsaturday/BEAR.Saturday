@@ -15,8 +15,8 @@ function addTree(container, path, is_dir, label) {
 		root : path,
 		script : script,
 		folderEvent : 'click',
-		expandSpeed : 150,
-		collapseSpeed : 150,
+		expandSpeed : 75,
+		collapseSpeed : 75,
 		multiFolder : true
 	}, function(path) {
 		load(path);

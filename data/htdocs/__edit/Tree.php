@@ -23,7 +23,6 @@ class BEAR_Tree
     public function tree($placeholder, $path, $label)
     {
         if (is_array($path)) {
-            FB::dump($placeholder, $path);
             $isDir = 'false';
             foreach ($path as &$file) {
                 if (strpos($file, _BEAR_EDIT_ROOT_PATH, 0) === 0) {
@@ -32,7 +31,6 @@ class BEAR_Tree
             }
             $path = serialize($path);
         } else {
-            FB::dump($placeholder, $path);
             $isDir = 'true';
             if (strpos($path, _BEAR_EDIT_ROOT_PATH, 0) === 0) {
                 $path = substr($path, strlen(_BEAR_EDIT_ROOT_PATH));
@@ -47,6 +45,6 @@ class BEAR_Tree
      */
     public function exec($initialOpeningFile)
     {
-        echo "$(document).ready( function() {{$this->_cmd};load(\"$initialOpeningFile\")});";
+        echo "$(document).ready( function() {{$this->_cmd}load(\"$initialOpeningFile\")});";
     }
 }
