@@ -646,19 +646,27 @@ class BEAR_Dev_Shell extends BEAR_Base
             die("[ERROR] htaccss missing error = [$htacessPath]\n");
         }
         // symlink
-        $bearDevFrom = "$pearDataPath/BEAR/data/htdocs/__bear";
-        $bearDevTo = "{$path}/htdocs/__bear";
-        $result = symlink($bearDevFrom, $bearDevTo);
-        if (!$result) {
-            print("[ERROR] Symlink error [{$bearDevFrom}] to [{$bearDevTo}]\n");
+        $from = "$pearDataPath/BEAR/data/htdocs/__bear";
+        $to = "{$path}/htdocs/__bear";
+        $result = symlink($from, $to);
+        if ($result === false) {
+            rmdir($to);
+            echo "Please make symlink manually.\n'ln -s {$from} {$to}'\n";
         }
-        $pandaFrom = "$pearDataPath/Panda/data/htdocs/__panda";
-        $pandaTo = "{$path}/htdocs/__panda";
-        $result = symlink($pandaFrom, $pandaTo);
-        if (!$result) {
-            print("[ERROR] Symlink error [{$pandaFrom}] to [{$pandaTo}]\n");
+        $from = "$pearDataPath/BEAR/data/htdocs/__edit";
+        $to = "{$path}/htdocs/__edit";
+        $result = symlink($from, $to);
+        if ($result === false) {
+            rmdir($to);
+            echo "Please make symlink manually.\n'ln -s {$from} {$to}'\n";
         }
-        unset($result);
+        $from = "$pearDataPath/Panda/data/htdocs/__panda";
+        $to = "{$path}/htdocs/__panda";
+        $result = symlink($from, $to);
+        if ($result === false) {
+            rmdir($to);
+            echo "Please make symlink manually.\n'ln -s {$from} {$to}'\n";
+        }
         // 置換
         $files = array($htacessPath);
         $ignoreline = array("#", ":");

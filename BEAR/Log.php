@@ -58,14 +58,6 @@ class BEAR_Log extends BEAR_Base
     private $_fbKeys = array('onInit');
 
     /**
-     * Constructor
-     */
-    //    public function __construct(array $config)
-    //    {
-    //        parent::__construct($config);
-    //    }
-
-    /**
      * アプリケーションログを記録
      *
      * <pre>
@@ -157,17 +149,15 @@ class BEAR_Log extends BEAR_Base
     {
         $db = $this->getPageLogDb();
         $log = $this->shutdownDebug();
-        $serializedLog = serialize($log);
-        $stmt = $db->prepare("INSERT INTO pagelog(log) VALUES(:log)");
-        $stmt->bindParam(":log", $serializedLog);
-        $stmt->execute();
-        // keep latest 50 log
-        $db->query("DELETE FROM pagelog WHERE rowid IN (SELECT rowid FROM pagelog ORDER BY rowid LIMIT -1 OFFSET 50");
-        $result = $db->query('SELECT last_insert_rowid() from pagelog')->fetch();
-        $id = $result[0];
+        $log = sqlite_escape_string(serialize($log));
+        $sql = "INSERT INTO pagelog(log) VALUES('{$log}')";
+        $db->queryExec($sql);
+        $id = $db->lastInsertRowid();
         $ob = ob_get_clean();
         $ob = str_replace('@@@log_id@@@', $id, $ob);
         echo $ob;
+        // keep only
+        $db->query("DELETE FROM pagelog WHERE rowid IN (SELECT rowid FROM pagelog ORDER BY rowid LIMIT -1 OFFSET 100");
     }
 
     /**
@@ -177,20 +167,39 @@ class BEAR_Log extends BEAR_Base
      */
     public function getPageLogDb()
     {
-        $dsn = 'sqlite:' . _BEAR_APP_HOME . '/logs/pagelog.sq3';
-        $db = new PDO($dsn);
-        if (!$db) {
+        $file = _BEAR_APP_HOME . '/logs/pagelog.sq3';
+        $db = new SQLiteDatabase($file);
+        if ($db === false) {
             throw new BEAR_Exception('sqlite error');
         }
         $sql = <<<____SQL
-CREATE TABLE IF NOT EXISTS pagelog (
+CREATE TABLE pagelog (
 	 "log" text NOT NULL
 );
 ____SQL;
-        $db->exec($sql);
+        $db->queryExec($sql);
         return $db;
     }
 
+    /**
+     * Get page log
+     *
+     * @param array $get $_GET
+     */
+    public function getPageLog(array $get)
+    {
+        $db = $this->getPageLogDb();
+        if (isset($get['id'])) {
+            //    $rowid = sqlite
+            $rowid = sqlite_escape_string($get['id']);
+            $result = $db->query("SELECT log FROM pagelog WHERE rowid = {$rowid}");
+        } else {
+            $result = $db->query("SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1");
+        }
+        $log = $result->fetchAll();
+        $pageLog = unserialize($log[0]['log']);
+        return $pageLog;
+    }
     /**
      * スクリプトシャットダウン時のログ処理
      *

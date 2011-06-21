@@ -12,17 +12,7 @@ require_once 'App.php';
 require_once 'BEAR/Util.php';
 ini_set('unserialize_callback_func', '');
 spl_autoload_unregister(array('BEAR', 'onAutoLoad'));
-@$pageLog = unserialize(file_get_contents(_BEAR_APP_HOME . '/logs/page.log'));
-$db = BEAR::dependency('BEAR_Log')->getPageLogDb();
-if (isset($_GET['id'])) {
-    $stmt = $db->prepare("SELECT log FROM pagelog WHERE rowid = :id");
-    $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
-} else {
-    $stmt = $db->prepare("SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1");
-}
-$stmt->execute();
-$log = $stmt->fetchAll();
-$pageLog = unserialize($log[0]['log']);
+$pageLog = BEAR::dependency('BEAR_Log')->getPageLog($_GET);
 switch ($_GET['var']) {
     case 'page' :
         $log = $pageLog['page'];
