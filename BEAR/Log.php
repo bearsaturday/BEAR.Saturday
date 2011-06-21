@@ -191,9 +191,9 @@ ____SQL;
      */
     public function getPageLog(array $get)
     {
-
-        if (!class_exists("SQLiteDatabase",false)) {
+        if (!class_exists("SQLiteDatabase", false)) {
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
+            include_once 'BEAR/Util.php';
             $pageLog = file_exists($pageLogPath) ?
             BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
             return $pageLog;
@@ -210,6 +210,7 @@ ____SQL;
         $pageLog = unserialize($log[0]['log']);
         return $pageLog;
     }
+
     /**
      * スクリプトシャットダウン時のログ処理
      *
