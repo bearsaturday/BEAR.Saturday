@@ -141,7 +141,11 @@ class BEAR_Log extends BEAR_Base
     public static function onShutdownDebug()
     {
         $bearLog = BEAR::dependency('BEAR_Log');
-        $bearLog->shutdonwnDbDebug();
+        if (class_exists("SQLiteDatabase",false)) {
+            $bearLog->shutdonwnDbDebug();
+        } else {
+            $bearLog->shutdownDebug(false);
+        }
     }
 
     /**
@@ -204,7 +208,7 @@ ____SQL;
      * @ignore
      * @throws BEAR_Log_Exception
      */
-    public function shutdownDebug()
+    public function shutdownDebug($return = true)
     {
         if (PHP_SAPI === 'cli') {
             return;
@@ -222,12 +226,6 @@ ____SQL;
                 return;
             }
             $log = array();
-            //　ajaxログ
-            //            $ajax = BEAR::dependency('BEAR_Page_Ajax');
-            //            if ($ajax->isAjaxRequest()) {
-            //                $this->_onShutdownDebugAjax();
-            //                return;
-            //            }
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
             if (file_exists($pageLogPath) && !is_writable($pageLogPath)) {
                 // 書き込み権限のエラー
@@ -264,7 +262,11 @@ ____SQL;
             }
             $reg = BEAR_Util::getObjectVarsRecursive(BEAR::getAll());
             $log['reg'] = $reg;
-            return $log;
+            if ($return === true) {
+                return $log;
+            } else {
+                file_put_contents($pageLogPath, serialize($log));
+            }
         } catch(Exception $e) {
             throw $e;
         }
