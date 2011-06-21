@@ -137,6 +137,9 @@ class BEAR_Log extends BEAR_Base
             $bearLog->shutdonwnDbDebug();
         } else {
             $bearLog->shutdownDebug(false);
+            $ob = ob_get_clean();
+            $ob = str_replace('?id=@@@log_id@@@', '?nosqlite', $ob);
+            echo $ob;
         }
     }
 
@@ -188,6 +191,13 @@ ____SQL;
      */
     public function getPageLog(array $get)
     {
+
+        if (!class_exists("SQLiteDatabase",false)) {
+            $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
+            $pageLog = file_exists($pageLogPath) ?
+            BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
+            return $pageLog;
+        }
         $db = $this->getPageLogDb();
         if (isset($get['id'])) {
             //    $rowid = sqlite
