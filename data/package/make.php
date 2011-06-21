@@ -119,7 +119,7 @@ $packagexml->addPackageDepWithChannel('optional', 'PHP_CodeSniffer', 'pear.php.n
 // $packagexml->addGlobalReplacement('package-info', '@PEAR-VER@', 'version');
 */
 $packagexml->addGlobalReplacement('pear-config', '@PEAR-DIR@', 'php_dir');
-$package->addGlobalReplacement('package-info', '@package_version@', 'version');
+$packagexml->addGlobalReplacement('package-info', '@package_version@', 'version');
 $packagexml->addGlobalReplacement('pear-config', '@DATA-DIR@', 'data_dir');
 $packagexml->addGlobalReplacement('pear-config', '@PHP-BIN@', 'bin_dir');
 
