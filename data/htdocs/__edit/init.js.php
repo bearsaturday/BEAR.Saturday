@@ -5,10 +5,8 @@ require_once 'BEAR.php';
 require_once 'Tree.php';
 
 include 'BEAR/Page/Header/Interface.php';
-$pageLog = BEAR::dependency('BEAR_Log')->getPageLog($_GET);
-// ファイル情報を取得
-$logFile = _BEAR_APP_HOME . '/logs/page.log';
 spl_autoload_unregister(array('BEAR', 'onAutoload'));
+$pageLog = BEAR::dependency('BEAR_Log')->getPageLog($_GET);
 $includeFiles = $pageLog['include'];
 $files = array('page' => array(), 'ro' => array(), 'app' => array());
 foreach ($includeFiles as $includeFile) {
