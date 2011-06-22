@@ -80,11 +80,6 @@ class BEAR_Dev_Shell extends BEAR_Base
     const CMD_CLEAR_ALL = 'clear-all';
 
     /**
-     * ドキュメント作成コマンド
-     */
-    const CMD_MAKE_DOC = 'make-doc';
-
-    /**
      * リソース1アイテム最大表示幅
      */
     const STRING_LENGTH = 300;
@@ -131,7 +126,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         );
         $subCmd->addOption(
             'file',
-        array('short_name' => '-g',
+        array('short_name' => '-a',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.')
@@ -166,7 +161,7 @@ class BEAR_Dev_Shell extends BEAR_Base
                 'short_name' => '-f',
                 'long_name' => '--format',
                 'action' => 'StoreString',
-                'description' => 'default | table | php | json | printa ')
+                'description' => 'default | table | php | json | csv | printa ')
         );
         $subCmd->addArgument(
             'uri',
@@ -196,7 +191,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         );
         $subCmd->addOption(
             'file',
-        array('short_name' => '-g',
+        array('short_name' => '-a',
                   'long_name' => '--file',
                   'action' => 'StoreString',
                   'description' => 'load arguments file.'
@@ -249,15 +244,6 @@ class BEAR_Dev_Shell extends BEAR_Base
                       self::CMD_SHOW_APP,
                       array('description' => 'show application path.')
                       );
-                      // make appdoc
-                      $subCmd = $parser->addCommand(
-                      self::CMD_MAKE_DOC,
-                      array('description' => 'make application documents.')
-                      );
-                      $subCmd->addArgument(
-                'path',
-                      array('description' => 'output document path')
-                      );
                   }
                   //exec
                   try {
@@ -294,12 +280,6 @@ class BEAR_Dev_Shell extends BEAR_Base
                               $this->_checkAppExists();
                               $this->clearCache();
                               $this->clearLog();
-                              break;
-                          case self::CMD_MAKE_DOC :
-                              $path = $this->_command->command->args['path'];
-                              $path = $this->_makeFullPath($path);
-                              $this->_checkAppExists($path);
-                              $this->makeDoc($path);
                               break;
                           case self::CMD_CREATE :
                           case self::CMD_READ :
