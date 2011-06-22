@@ -23,4 +23,5 @@ if (function_exists('xhprof_enable')) {
     xhprof_enable(XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
     //xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
     register_shutdown_function(array('BEAR_Dev_Profile', 'stop'), BEAR_Dev_Profile::XHGUI);
+    $bearMode = 0;
 }
