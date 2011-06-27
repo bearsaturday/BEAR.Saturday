@@ -673,7 +673,6 @@ abstract class BEAR_Page extends BEAR_Base
     public function setPrototypeRo()
     {
         static $_registerResourceOnShutdown = false;
-
         // initでsetされたroをバリューに
         $stackedRos = BEAR::dependency('BEAR_Ro_Prototype')->popAll();
         foreach ($stackedRos as $item) {
