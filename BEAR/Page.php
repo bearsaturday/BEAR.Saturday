@@ -349,8 +349,8 @@ abstract class BEAR_Page extends BEAR_Base
     {
         $config = $this->_config;
         if (isset($this->_config['enable_ua_sniffing']) && $this->_config['enable_ua_sniffing'] === true) {
-            $adaptor = BEAR::dependency('BEAR_Agent_Adaptor_' . $this->_config['ua'], array('ua' => $this->_config['ua']));
-            $agentConfig = $adaptor->getConfig();
+            $adapter = BEAR::dependency('BEAR_Agent_Adaptor_' . $this->_config['ua'], array('ua' => $this->_config['ua']));
+            $agentConfig = $adapter->getConfig();
             $config['agent_config'] = $agentConfig;
             $config['enable_ua_sniffing'] = true;
         } else {

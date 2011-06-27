@@ -48,7 +48,7 @@ class App
         switch ($bearMode) {
             case 1 :
                 //debug mode (cache disabled)
-                $app['BEAR_Cache']['adaptor'] = 0;
+                $app['BEAR_Cache']['adapter'] = 0;
             case 2 :
                 //debug mode (cache enabled)
                 $app['core']['debug'] = true;

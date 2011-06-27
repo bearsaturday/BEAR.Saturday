@@ -144,7 +144,7 @@ class BEAR_Agent extends BEAR_Base
      *
      * Net_UserAgent_Mobile agentMobile
      * string               _ua UAコード
-     * mixed                adaptor エージェントアダプター
+     * mixed                adapter エージェントアダプター
      * </pre>
      *
      * @return void
@@ -159,9 +159,9 @@ class BEAR_Agent extends BEAR_Base
         call_user_func(array($injectUa, 'inject'), $agent, $this->_config);
         $this->_config['ua'] = $this->_ua;
         try {
-            $this->adaptor = BEAR::dependency('BEAR_Agent_Adaptor_' . $this->_ua, $this->_config);
+            $this->adapter = BEAR::dependency('BEAR_Agent_Adaptor_' . $this->_ua, $this->_config);
         } catch (Exception $e) {
-            $this->adaptor = BEAR::dependency('BEAR_Agent_Adaptor_Default', $this->_config);
+            $this->adapter = BEAR::dependency('BEAR_Agent_Adaptor_Default', $this->_config);
         }
     }
 
@@ -256,8 +256,8 @@ class BEAR_Agent extends BEAR_Base
      */
     public function getAgentRole()
     {
-        $adaptorConfig = $this->adaptor->getConfig();
-        return $adaptorConfig['role'];
+        $adapterConfig = $this->adapter->getConfig();
+        return $adapterConfig['role'];
     }
 
     /**

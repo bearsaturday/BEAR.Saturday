@@ -19,10 +19,10 @@
  * <pre>
  * ビルトインアダプター
  *
- * 0 ADAPTOR_NONE      キャッシュなし
- * 1 ADAPTOR_CACHELITE PEAR::Cache_Lite
- * 2 ADAPTOR_MEMCACHE  MEMCACHE
- * 3 ADAPTOR_APC       APC
+ * 0 ADAPTER_NONE      キャッシュなし
+ * 1 ADAPTER_CACHELITE PEAR::Cache_Lite
+ * 2 ADAPTER_MEMCACHE  MEMCACHE
+ * 3 ADAPTER_APC       APC
  * </pre>
  *
  * @category  BEAR
@@ -34,7 +34,7 @@
  * @link      http://www.bear-project.net/
  * @see       PECL::Memcache, PEAR::Cache_Lite
  *
- * @config mixed adaptor キャッシュアダプター,intならビルトイン、stringならユーザー定義クラス
+ * @config mixed adapter キャッシュアダプター,intならビルトイン、stringならユーザー定義クラス
  */
 class BEAR_Cache extends BEAR_Factory
 {
@@ -42,22 +42,22 @@ class BEAR_Cache extends BEAR_Factory
     /**
      * キャッシュなし
      */
-    const ADAPTOR_NONE = 0;
+    const ADAPTER_NONE = 0;
 
     /**
      * Cache_Lite
      */
-    const ADAPTOR_CACHELITE = 1;
+    const ADAPTER_CACHELITE = 1;
 
     /**
      * memcahced
      */
-    const ADAPTOR_MEMCACHE = 2;
+    const ADAPTER_MEMCACHE = 2;
 
     /**
      * APC
      */
-    const ADAPTOR_APC = 3;
+    const ADAPTER_APC = 3;
 
     /**
      * キャッシュライフタイム無期限
@@ -110,19 +110,19 @@ class BEAR_Cache extends BEAR_Factory
      */
     public function factory()
     {
-        switch ($this->_config['adaptor']) {
-            case self::ADAPTOR_MEMCACHE :
+        switch ($this->_config['adapter']) {
+            case self::ADAPTER_MEMCACHE :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Memcache', $this->_config);
                 break;
-            case self::ADAPTOR_CACHELITE :
+            case self::ADAPTER_CACHELITE :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Lite', $this->_config);
                 break;
-            case self::ADAPTOR_APC :
+            case self::ADAPTER_APC :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Apc', $this->_config);
                 break;
             default :
-                if (is_string($this->_config['adaptor'])) {
-                    self::$_instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adaptor']);
+                if (is_string($this->_config['adapter'])) {
+                    self::$_instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adapter']);
                     break;
                 }
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Void', $this->_config);
