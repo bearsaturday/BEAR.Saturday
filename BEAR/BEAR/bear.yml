@@ -19,7 +19,7 @@ BEAR_Form:
   callback: false
 
 BEAR_View:
-  adaptor: 'BEAR_View_Adapter_Smarty'
+  adapter: 'BEAR_View_Adapter_Smarty'
   ua_sniffing: false
   path: '/App/views/'
 
