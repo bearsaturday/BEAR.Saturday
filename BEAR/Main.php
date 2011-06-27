@@ -347,12 +347,12 @@ class BEAR_Main extends BEAR_Base
         $app = BEAR::get('app');
         // セッションスタート
         if ($this->_config['enable_ua_sniffing'] === true) {
-            $adapterConfig = $this->_agent->adapter->getConfig();
-            //            ini_set('session.use_trans_sid', $adapterConfig['session_trans_sid']);
-            if ($adapterConfig['enable_session'] && $app['BEAR_Session']['adapter'] != 0) {
+            $adaptorConfig = $this->_agent->adaptor->getConfig();
+            //            ini_set('session.use_trans_sid', $adaptorConfig['session_trans_sid']);
+            if ($adaptorConfig['enable_session'] && $app['BEAR_Session']['adaptor'] != 0) {
                 BEAR::dependency('BEAR_Session')->start();
             }
-        } elseif ($app['BEAR_Session']['adapter'] != 0) {
+        } elseif ($app['BEAR_Session']['adaptor'] != 0) {
             BEAR::dependency('BEAR_Session')->start();
         }
 

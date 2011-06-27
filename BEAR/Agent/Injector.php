@@ -38,7 +38,7 @@ class BEAR_Agent_Injector implements BEAR_Injector_Interface
     {
         $agent = BEAR::dependency('BEAR_Agent');
         $ua = $agent->getUa();
-        $config = $agent->adapter->getConfig();
+        $config = $agent->adaptor->getConfig();
         $role = $config['role'];
         foreach ($role as $agent) {
             $method = 'onInject' . $agent;

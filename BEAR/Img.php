@@ -29,7 +29,7 @@
  *
  * @instance singleton
  *
- * @config mixed adapter イメージアダプター　stringならイメージアダプタークラス
+ * @config mixed adaptor イメージアダプター　stringならイメージアダプタークラス
  *
  */
 class BEAR_Img extends BEAR_Factory
@@ -44,17 +44,17 @@ class BEAR_Img extends BEAR_Factory
     /**
      * GD
      */
-    const ADAPTER_GD = '1';
+    const ADAPTOR_GD = '1';
 
     /**
      * iMagick
      */
-    const ADAPTER_MAGICK = '2';
+    const ADAPTOR_MAGICK = '2';
 
     /**
      * Cairo
      */
-    const ADAPTER_CAIRO = '3';
+    const ADAPTOR_CAIRO = '3';
 
     /**
      * テンポラリーファイル作成場所
@@ -133,7 +133,7 @@ class BEAR_Img extends BEAR_Factory
      * 指定の画像エンジンで画像処理オブジェクトを返します
      * </pre>
      *
-     * @param string $adapter self::ADAPTER_GD | self::ADAPTER_MAGICK | self::ADAPTER_CAIRO
+     * @param string $adapter self::ADAPTOR_GD | self::ADAPTOR_MAGICK | self::ADAPTOR_CAIRO
      *
      * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      * @throws BEAR_Img_Exception
@@ -144,20 +144,20 @@ class BEAR_Img extends BEAR_Factory
             return self::$_instance;
         }
         PEAR::registerShutdownFunc(array('BEAR_Img', 'onShutdown'));
-        $adapter = $this->_config['adapter'];
-        switch ($this->_config['adapter']) {
-            case self::ADAPTER_GD :
+        $adapter = $this->_config['adaptor'];
+        switch ($this->_config['adaptor']) {
+            case self::ADAPTOR_GD :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
-            case self::ADAPTER_MAGICK :
+            case self::ADAPTOR_MAGICK :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
                 break;
-            case self::ADAPTER_CAIRO :
+            case self::ADAPTOR_CAIRO :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
                 break;
             default :
                 if (is_string($adapter)) {
-                    self::$_instance = BEAR::dependency('App_Img_Adapter_' . $this->_config['adapter']);
+                    self::$_instance = BEAR::dependency('App_Img_Adapter_' . $this->_config['adaptor']);
                     break;
                 }
                 $options = array('config' => $this->_config);
@@ -174,7 +174,7 @@ class BEAR_Img extends BEAR_Factory
      * GDでjpegを読み込み、Cairoで文字を合成、GDでGIF出力などのように使えます。
      * </pre>
      *
-     * @param string $adapter self::ADAPTER_GD | self::ADAPTER_MAGICK | self::ADAPTER_CAIRO
+     * @param string $adapter self::ADAPTOR_GD | self::ADAPTOR_MAGICK | self::ADAPTOR_CAIRO
      *
      * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      */
@@ -186,13 +186,13 @@ class BEAR_Img extends BEAR_Factory
         self::$deleteFiles[] = $tmpFile;
         //イメージインスタンス
         switch ($adapter) {
-            case self::ADAPTER_GD :
+            case self::ADAPTOR_GD :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
-            case self::ADAPTER_MAGICK :
+            case self::ADAPTOR_MAGICK :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
                 break;
-            case self::ADAPTER_CAIRO :
+            case self::ADAPTOR_CAIRO :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
                 break;
             default :

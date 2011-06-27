@@ -23,7 +23,7 @@
  * Example. 画像のリサイズ表示
  *</pre>
  * <code>
- *  $img = BEAR_Img::getInstance(BEAR_Img::ADAPTER_MAGICK);
+ *  $img = BEAR_Img::getInstance(BEAR_Img::ADAPTOR_MAGICK);
  *  $img->load('http://www.bear-project.net/images/eye.jpg');
  *  $img->resize(320,240);
  *  $img->show('jpeg');
@@ -33,7 +33,7 @@
  * Example. iMagickオブジェクトを直接操作
  *</pre>
  * <code>
- *  $img = BEAR_Img::getInstance(BEAR_Img::ADAPTER_MAGICK);
+ *  $img = BEAR_Img::getInstance(BEAR_Img::ADAPTOR_MAGICK);
  *  $img->load('http://www.bear-project.net/images/eye.jpg');
  *  $img->resize(320,240);
  *  // 木炭画エフェクト

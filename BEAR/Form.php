@@ -499,12 +499,12 @@ class BEAR_Form extends BEAR_Factory
         $result = array();
         foreach (self::$formNames as $formName) {
             $renderConfig = self::$_renderConfig[$formName];
-            $adapter = isset($renderConfig['adapter']) ? $renderConfig['adapter'] : self::RENDERER_APP;
+            $adaptor = isset($renderConfig['adaptor']) ? $renderConfig['adaptor'] : self::RENDERER_APP;
             $form = BEAR::get('BEAR_Form_' . $formName);
             $formErrors = false;
             $callback = (isset($renderConfig['callback']) &&
             is_callable($renderConfig['callback'], false)) ? $renderConfig['callback'] : false;
-            switch ($adapter) {
+            switch ($adaptor) {
                 case self::RENDERER_APP :
                     // DHTMLRulesTablelessレンダラ
                     //単数フォーム(App_Form_Renderer_優先)

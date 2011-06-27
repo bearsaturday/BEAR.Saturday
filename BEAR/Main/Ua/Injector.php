@@ -45,6 +45,6 @@ class BEAR_Main_Ua_Injector implements BEAR_Injector_Interface
         $object->setConfig('ua', $agent->getUa());
         $object->setConfig('enable_ua_sniffing', true);
         //エージェント依存サブミット（絵文字、コード）
-        $agent->adapter->submit();
+        $agent->adaptor->submit();
     }
 }

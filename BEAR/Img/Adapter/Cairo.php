@@ -34,10 +34,10 @@
  * Example 2. 画像とテキストを合成してiMagickを使用してJPEG表示
  *
  * <code>
- *       $img = BEAR_Img::getInstance(BEAR_Img::ADAPTER_MAGICK);
+ *       $img = BEAR_Img::getInstance(BEAR_Img::ADAPTOR_MAGICK);
  *       $file = _BEAR_APP_HOME . '/htdocs/eye.png';
  *       $img->load($file);
- *       $img = BEAR_Img::changeInstance(BEAR_Img::ADAPTER_CAIRO);
+ *       $img = BEAR_Img::changeInstance(BEAR_Img::ADAPTOR_CAIRO);
  *       $img->addImage('http://www.christmastail.com/picbbs/icon/016.png', 50, 50);
  *       $img->addText('フェリクス星雲NGC7293, 通称「神の目」', 0, 80, 24,
  *         BEAR_Img::CENTER, array(200, 200, 200), array(100,128,128),
