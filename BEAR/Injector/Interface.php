@@ -38,5 +38,5 @@ interface BEAR_Injector_Interface
      *
      * @return void
      */
-    public static function inject(&$object, $config);
+    public static function inject($object, $config);
 }

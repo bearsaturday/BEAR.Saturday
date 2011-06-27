@@ -36,7 +36,7 @@ class BEAR_Main_Ua_Injector implements BEAR_Injector_Interface
      *
      * @return void
      */
-    public static function inject(&$object, $config)
+    public static function inject($object, $config)
     {
         $userAgent = isset($config['http_user_agent']) ? $config['http_user_agent'] :
             (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');

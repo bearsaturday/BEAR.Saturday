@@ -40,7 +40,7 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
      * @return void
      * @see http://code.google.com/p/bear-project/wiki/agent
      */
-    public static function inject(&$object, $config)
+    public static function inject($object, $config)
     {
         if (!isset($config['user_agent'])) {
             $object->setService('_ua', BEAR_Agent::UA_DEFAULT);

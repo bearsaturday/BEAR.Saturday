@@ -34,7 +34,7 @@ class BEAR_Agent_Injector implements BEAR_Injector_Interface
      *
      * @return void
      */
-    public static function inject(&$object, $config)
+    public static function inject($object, $config)
     {
         $agent = BEAR::dependency('BEAR_Agent');
         $ua = $agent->getUa();
