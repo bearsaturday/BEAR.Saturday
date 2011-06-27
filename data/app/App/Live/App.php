@@ -1,6 +1,8 @@
 <?php
 /**
- * App for live
+ * Live App
+ *
+ * optimaized for fastest boot.
  *
  * @category  BEAR
  * @package   BEAR.app
