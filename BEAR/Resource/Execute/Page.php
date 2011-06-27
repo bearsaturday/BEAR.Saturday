@@ -74,10 +74,16 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             $pageFile = str_replace('/', DIRECTORY_SEPARATOR, $pageRawPath) . '.php';
             BEAR_Main::includePage($pageFile);
         }
+        if (!class_exists($pageClass, false)) {
+            throw new $this->_exception("Page class[$pageClass] is not exist.");
+        }
         $pageConfig = array('resource_id' => $pageClass, 'mode' => BEAR_Page::CONFIG_MODE_RESOURCE);
         $pageOptions = $this->_config['options'];
         if (isset($this->_config['options']['page'])) {
             $pageConfig = array_merge($pageConfig, (array)$this->_config['options']['page']);
+        }
+        if (isset($pageConfig['ua'])) {
+            $pageConfig['enable_ua_sniffing'] = true;
         }
         $page = BEAR::factory($pageClass, $pageConfig, $pageOptions);
         $method = ($this->_config['method'] === 'read') ? 'onInit' : 'onAction';
