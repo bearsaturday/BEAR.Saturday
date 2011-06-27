@@ -23,7 +23,8 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
         restore_error_handler();
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
         restore_exception_handler();
-        $this->_resource = BEAR::dependency('BEAR_Resource');
+        $this->_resource = new BEAR_Resource(array());
+        $this->_resource->onInject();
         $this->_query = new BEAR_Test_Query;
     }
 
@@ -152,7 +153,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
             'options' => array(
                 'output' => 'html',
                 'page' => 2
-            )
+        )
         );
         $html = $this->_resource->read($params)->getBody();
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content ul li.blog');
