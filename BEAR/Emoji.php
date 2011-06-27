@@ -96,9 +96,9 @@ class BEAR_Emoji extends BEAR_Base
     /**
      * エージェントコード
      *
-     * @var unknown_type
+     * @var string
      */
-    private static $_ua;
+    private $_ua;
 
     /**
      * 絵文字変換テーブル1
