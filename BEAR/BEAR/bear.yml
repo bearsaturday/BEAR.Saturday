@@ -28,6 +28,10 @@ BEAR_Emoji:
 
 BEAR_Cache_Adapter_Memcache:
   port: '11211'
+
+BEAR_Smarty:
+  caching: 0
+  cache_lifetime: 1
   
 Panda:
   on_fatal_error: Panda/Template/fatal.html

@@ -79,12 +79,11 @@ class BEAR_Smarty extends BEAR_Factory
         $smarty->plugins_dir = array('plugins',
             'App/smarty/plugins/',
             'BEAR/Smarty/plugins/');
-        $smarty->caching = 1;
+        $smarty->caching = $this->_config['caching'];
+        $smarty->cache_lifetime = $this->_config['cache_lifetime'];
         $smarty->compile_check = false;
         // デバックモード
         if ($this->_config['debug']) {
-            // テンプレートキャッシュなし
-            $smarty->caching = 0;
             // テンプレートキャッシュは常に再生成
             $smarty->force_compile = true;
         }
