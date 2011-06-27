@@ -31,7 +31,7 @@
  *
  * @Singleton
  *
- * @config mixed    adaptor  アダプター
+ * @config mixed    adapter  アダプター
  * @config string   path     ファイルパス(file) または DSN(DB)
  * @config int      idle     アイドル時間（秒）
  * @config int      expire   タイムアウト（秒）
@@ -95,7 +95,7 @@ class BEAR_Session extends BEAR_Base
         static $hasStarted = false;
 
         if ($hasStarted !== false
-            || $this->_config['adaptor'] === self::ADAPTOR_NONE
+            || $this->_config['adapter'] === self::ADAPTOR_NONE
         ) {
             return;
         }
@@ -140,7 +140,7 @@ class BEAR_Session extends BEAR_Base
             HTTP_Session2::setGcMaxLifeTime($this->_config['gc_max_lifetime']);
         }
         // セッションスタート
-        $this->_log->log('Session Start', array('id' => session_id(), 'module' => session_module_name() . '/' . $this->_config['adaptor']));
+        $this->_log->log('Session Start', array('id' => session_id(), 'module' => session_module_name() . '/' . $this->_config['adapter']));
     }
 
     /**
@@ -154,7 +154,7 @@ class BEAR_Session extends BEAR_Base
     private function _setAdpator(array $config)
     {
         //セッションハンドラ初期化
-        switch ($config['adaptor']) {
+        switch ($config['adapter']) {
             case self::ADAPTOR_MEMCACHE :
                 ini_set("session.save_handler", 'memcache');
                 ini_set("session.save_path", $config['path']);
@@ -177,7 +177,7 @@ class BEAR_Session extends BEAR_Base
             default :
                 // error
                 $msg = 'Invalid Session Engine.';
-                $info = array('adaptor' => $config['adaptor']);
+                $info = array('adapter' => $config['adapter']);
                 throw $this->_exception($msg, array('info' => $info));
         }
     }

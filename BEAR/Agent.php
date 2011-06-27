@@ -20,8 +20,8 @@
  * UAコードの確定やUAコードに応じたAgentアダプターをセットします。
  * 確定したUAコードはUAスニッフィングやUA別のインジェクター等に用いられます。
  * UAコードはBEARの自動判別の他に$config['ua_inject']に外部インジェクタークラスを指定してアプリケーションがUAコードをインジェクトすることがあります。
- * BEAR_Agent_Adaptor_(UAコード）でUAアダプタークラスが用意されてないものはグローバルレジストリに先にセットしておきます。
- * AgentアダプターはBEAR_Agent_Adaptor_*で定義されUAの継承関係や、ビューの時のconfigを設定します。
+ * BEAR_Agent_Adapter_(UAコード）でUAアダプタークラスが用意されてないものはグローバルレジストリに先にセットしておきます。
+ * AgentアダプターはBEAR_Agent_Adapter_*で定義されUAの継承関係や、ビューの時のconfigを設定します。
  * </pre>
  *
  * @category  BEAR
@@ -144,7 +144,7 @@ class BEAR_Agent extends BEAR_Base
      *
      * Net_UserAgent_Mobile agentMobile
      * string               _ua UAコード
-     * mixed                adaptor エージェントアダプター
+     * mixed                adapter エージェントアダプター
      * </pre>
      *
      * @return void
@@ -159,9 +159,9 @@ class BEAR_Agent extends BEAR_Base
         call_user_func(array($injectUa, 'inject'), $agent, $this->_config);
         $this->_config['ua'] = $this->_ua;
         try {
-            $this->adaptor = BEAR::dependency('BEAR_Agent_Adaptor_' . $this->_ua, $this->_config);
+            $this->adapter = BEAR::dependency('BEAR_Agent_Adapter_' . $this->_ua, $this->_config);
         } catch (Exception $e) {
-            $this->adaptor = BEAR::dependency('BEAR_Agent_Adaptor_Default', $this->_config);
+            $this->adapter = BEAR::dependency('BEAR_Agent_Adapter_Default', $this->_config);
         }
     }
 
@@ -256,8 +256,8 @@ class BEAR_Agent extends BEAR_Base
      */
     public function getAgentRole()
     {
-        $adaptorConfig = $this->adaptor->getConfig();
-        return $adaptorConfig['role'];
+        $adapterConfig = $this->adapter->getConfig();
+        return $adapterConfig['role'];
     }
 
     /**

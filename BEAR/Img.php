@@ -29,7 +29,7 @@
  *
  * @instance singleton
  *
- * @config mixed adaptor イメージアダプター　stringならイメージアダプタークラス
+ * @config mixed adapter イメージアダプター　stringならイメージアダプタークラス
  *
  */
 class BEAR_Img extends BEAR_Factory
@@ -144,8 +144,8 @@ class BEAR_Img extends BEAR_Factory
             return self::$_instance;
         }
         PEAR::registerShutdownFunc(array('BEAR_Img', 'onShutdown'));
-        $adapter = $this->_config['adaptor'];
-        switch ($this->_config['adaptor']) {
+        $adapter = $this->_config['adapter'];
+        switch ($this->_config['adapter']) {
             case self::ADAPTOR_GD :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
@@ -157,11 +157,11 @@ class BEAR_Img extends BEAR_Factory
                 break;
             default :
                 if (is_string($adapter)) {
-                    self::$_instance = BEAR::dependency('App_Img_Adapter_' . $this->_config['adaptor']);
+                    self::$_instance = BEAR::dependency('App_Img_Adapter_' . $this->_config['adapter']);
                     break;
                 }
                 $options = array('config' => $this->_config);
-                throw $this->_exception('Invalid Image Adaptor', $options);
+                throw $this->_exception('Invalid Image Adapter', $options);
         }
         return self::$_instance;
     }
@@ -178,7 +178,7 @@ class BEAR_Img extends BEAR_Factory
      *
      * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      */
-    public static function changeAdaptor($adapter)
+    public static function changeAdapter($adapter)
     {
         //保存
         $tmpFile = self::$_instance->getTmpFileName();
@@ -204,14 +204,14 @@ class BEAR_Img extends BEAR_Factory
     }
 
     /**
-     * changeAdaptorのエイリアス
+     * changeAdapterのエイリアス
      *
      * @return void
      * @deprecated
      */
     public static function changeInstance($adapter)
 	{
-        self::changeAdaptor($adapter);
+        self::changeAdapter($adapter);
     }
 
     /**

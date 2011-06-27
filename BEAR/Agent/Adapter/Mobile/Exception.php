@@ -6,7 +6,7 @@
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -15,17 +15,17 @@
  */
 
 /**
- * BEAR_Agent_Adaptor_Mobile_Exception
+ * BEAR_Agent_Adapter_Mobile_Exception
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    Release: @package_version@ $Id:$
  * @link       http://www.bear-project.net
  */
-class BEAR_Agent_Adaptor_Mobile_Exception extends BEAR_Exception
+class BEAR_Agent_Adapter_Mobile_Exception extends BEAR_Exception
 {
 }

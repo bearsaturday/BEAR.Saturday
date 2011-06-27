@@ -15,7 +15,7 @@
  */
 
 /**
- * BEAR_View_Adaptor_Smarty_Exception
+ * BEAR_View_Adapter_Smarty_Exception
  *
  * @category  BEAR
  * @package   BEAR_Smarty
@@ -25,6 +25,6 @@
  * @version   SVN: Release: @package_version@ $Id:$ Exception.php 889 2009-09-16 00:22:54Z koriyama@bear-project.net $
  * @link      http://www.bear-project.net/
  */
-class BEAR_View_Adaptor_Smarty_Exception extends BEAR_Exception
+class BEAR_View_Adapter_Smarty_Exception extends BEAR_Exception
 {
 }

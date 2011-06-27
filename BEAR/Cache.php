@@ -34,7 +34,7 @@
  * @link      http://www.bear-project.net/
  * @see       PECL::Memcache, PEAR::Cache_Lite
  *
- * @config mixed adaptor キャッシュアダプター,intならビルトイン、stringならユーザー定義クラス
+ * @config mixed adapter キャッシュアダプター,intならビルトイン、stringならユーザー定義クラス
  */
 class BEAR_Cache extends BEAR_Factory
 {
@@ -110,7 +110,7 @@ class BEAR_Cache extends BEAR_Factory
      */
     public function factory()
     {
-        switch ($this->_config['adaptor']) {
+        switch ($this->_config['adapter']) {
             case self::ADAPTOR_MEMCACHE :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Memcache', $this->_config);
                 break;
@@ -121,8 +121,8 @@ class BEAR_Cache extends BEAR_Factory
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Apc', $this->_config);
                 break;
             default :
-                if (is_string($this->_config['adaptor'])) {
-                    self::$_instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adaptor']);
+                if (is_string($this->_config['adapter'])) {
+                    self::$_instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adapter']);
                     break;
                 }
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Void', $this->_config);

@@ -26,7 +26,7 @@
  *
  * @Singleton
  *
- * @config string adaptor     ビューアダプタークラス
+ * @config string adapter     ビューアダプタークラス
  * @config bool   ua_sniffing UAスニッフィング？
  */
 class BEAR_View extends BEAR_Factory
@@ -51,7 +51,7 @@ class BEAR_View extends BEAR_Factory
     public function factory()
     {
         $options = $this->_config['enable_ua_sniffing'] ? array('injector' => 'onInjectUaSniffing') : array();
-        // 'BEAR_View_Smarty_Adaptor' as default
-        return BEAR::factory($this->_config['adaptor'], $this->_config, $options);
+        // 'BEAR_View_Smarty_Adapter' as default
+        return BEAR::factory($this->_config['adapter'], $this->_config, $options);
     }
 }

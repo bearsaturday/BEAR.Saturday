@@ -26,7 +26,7 @@
  * @version    Release: @package_version@ $Id: File.php 2557 2011-06-15 15:49:51Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net
  */
-class BEAR_Resource_Execute_File extends BEAR_Resource_Execute_Adaptor
+class BEAR_Resource_Execute_File extends BEAR_Resource_Execute_Adapter
 {
     /**
      * リソースリクエスト実行

@@ -31,7 +31,7 @@
  * @version    Release: @package_version@ $Id: Mock.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net
  */
-class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adaptor
+class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adapter
 {
 
     /**

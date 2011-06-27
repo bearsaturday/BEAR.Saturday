@@ -6,7 +6,7 @@
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -19,14 +19,14 @@
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    Release: @package_version@ $Id:$
  * @link       http://www.bear-project.net
  */
-abstract class BEAR_Agent_Adaptor_Mobile extends BEAR_Agent_Adaptor_Default
+abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 {
     /**
      * 携帯サ絵文字ポート対応なし
@@ -96,7 +96,7 @@ abstract class BEAR_Agent_Adaptor_Mobile extends BEAR_Agent_Adaptor_Default
      *
      * @return void
      * @ignore
-     * @throws BEAR_Agent_Adaptor_Mobile_Exception
+     * @throws BEAR_Agent_Adapter_Mobile_Exception
      */
     public function UTF8(&$value)
     {

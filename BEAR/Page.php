@@ -296,7 +296,7 @@ abstract class BEAR_Page extends BEAR_Base
             $pager = (array)BEAR::get('pager');
             $this->set('pager', $pager);
         }
-        $this->_pageRo = $this->_viewAdaptor()->display($tplName, $options);
+        $this->_pageRo = $this->_viewAdapter()->display($tplName, $options);
         $this->_outputHttp($this->_pageRo);
     }
 
@@ -331,7 +331,7 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function fetch($tplName = null)
     {
-        return $this->_viewAdaptor()->fetch($tplName);
+        return $this->_viewAdapter()->fetch($tplName);
     }
 
     /**
@@ -343,14 +343,14 @@ abstract class BEAR_Page extends BEAR_Base
      * UAスニッフィングがtrueならエージェント
      * </pre>
      *
-     * @return BEAR_View_Adaptor
+     * @return BEAR_View_Adapter
      */
-    protected function _viewAdaptor()
+    protected function _viewAdapter()
     {
         $config = $this->_config;
         if (isset($this->_config['enable_ua_sniffing']) && $this->_config['enable_ua_sniffing'] === true) {
-            $adaptor = BEAR::dependency('BEAR_Agent_Adaptor_' . $this->_config['ua'], array('ua' => $this->_config['ua']));
-            $agentConfig = $adaptor->getConfig();
+            $adapter = BEAR::dependency('BEAR_Agent_Adapter_' . $this->_config['ua'], array('ua' => $this->_config['ua']));
+            $agentConfig = $adapter->getConfig();
             $config['agent_config'] = $agentConfig;
             $config['enable_ua_sniffing'] = true;
         } else {

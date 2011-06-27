@@ -5,7 +5,7 @@
  * PHP versions 5
  *
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -18,7 +18,7 @@
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -33,7 +33,7 @@
  * @config bool   agent_filter      フィルター処理?
  * @config string output_encode     出力時の文字コード
  */
-abstract class BEAR_Agent_Adaptor extends BEAR_Base
+abstract class BEAR_Agent_Adapter extends BEAR_Base
 {
     /**
      * 携帯絵文字サブミット無変換

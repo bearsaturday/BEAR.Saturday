@@ -24,7 +24,7 @@
  * @version   SVN: Release: @package_version@ $Id:$ Query.php 1021 2009-10-13 04:04:08Z koriyama@bear-project.net $
  * @link      http://www.bear-project.net/
  */
-abstract class BEAR_View_Adaptor extends BEAR_Base
+abstract class BEAR_View_Adapter extends BEAR_Base
 {
     /**
      * テンプレート名の取得

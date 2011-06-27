@@ -41,7 +41,7 @@ abstract class BEAR_Cache_Adapter extends BEAR_Base
     /**
      * アダプター
      *
-     * @var BEAR_Cache_Adaptor
+     * @var BEAR_Cache_Adapter
      */
     protected $_adapter;
 

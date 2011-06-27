@@ -26,7 +26,7 @@
  * @version    Release: @package_version@ $Id:$
  * @link       http://@link_url@
  */
-class App_Resource_Execute_App extends BEAR_Resource_Execute_Adaptor
+class App_Resource_Execute_App extends BEAR_Resource_Execute_Adapter
 {
     /**
      * Constructor

@@ -6,7 +6,7 @@
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -15,18 +15,18 @@
  */
 
 /**
- * BEAR_Agent_Adaptor_Interface
+ * BEAR_Agent_Adapter_Interface
  *
  * @category   BEAR
  * @package    BEAR_Agent
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    Release: @package_version@ $Id:$
  * @link       http://www.bear-project.net
  */
-interface BEAR_Agent_Adaptor_Interface
+interface BEAR_Agent_Adapter_Interface
 {
     /**
      * サブミット処理

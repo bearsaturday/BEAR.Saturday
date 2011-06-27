@@ -6,7 +6,7 @@
  *
  * @category   BEAR
  * @package    BEAR_View
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -15,11 +15,11 @@
  */
 
 /**
- * PHPビューアダプター
+ * Smartyビューアダプター
  *
  * @category   BEAR
  * @package    BEAR_View
- * @subpackage Adaptor
+ * @subpackage Adapter
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
@@ -33,7 +33,7 @@
  * @config   array  agent_config UAスニッフィング用設定
  * @optional string agent_config UA設定
  */
-class BEAR_View_Adaptor_Php extends BEAR_View_Adaptor implements BEAR_View_Interface
+class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_Interface
 {
     /**
      * ページバリュー
@@ -80,6 +80,13 @@ class BEAR_View_Adaptor_Php extends BEAR_View_Adaptor implements BEAR_View_Inter
      */
     public function onInject()
     {
+        if (!isset($this->_config['ua'])) {
+            $this->_config['ua'] = '';
+        }
+        $smartyConfig = array('ua' => $this->_config['ua']);
+        $this->_smarty = BEAR::dependency('BEAR_Smarty', $smartyConfig);
+        $this->set($this->_config['values']);
+        $this->_log = BEAR::dependency('BEAR_Log');
     }
 
     /**
@@ -91,6 +98,11 @@ class BEAR_View_Adaptor_Php extends BEAR_View_Adaptor implements BEAR_View_Inter
      */
     public function onInjectUaSniffing()
     {
+        $this->onInject();
+        $this->_config['values']['agent'] = $this->_config['agent_config'];
+        $this->_enableJs = $this->_config['agent_config']['enable_js'];
+        $this->_role = $this->_config['agent_config']['role'];
+        $this->_emoji = BEAR::dependency('BEAR_Emoji');
     }
 
     /**
@@ -118,32 +130,31 @@ class BEAR_View_Adaptor_Php extends BEAR_View_Adaptor implements BEAR_View_Inter
     public function display($tplName = null, array $options = array())
     {
         // Pageバリューアサイン
-//        extract($this->_values, EXTR_OVERWRITE);
-//
-//        // フォームアサイン
-//        $forms = BEAR_Form::renderForms($this->_smarty, $this->_config['ua'], $this->_enableJs);
-//        // テンプレート
-//        $viewInfo = $this->_getViewInfo($tplName, $this->_role, 'php');
-//        var_dump($viewInfo);
-//        $this->_smarty->assign('layout', $viewInfo['layout_value']);
-//        if (isset($options['layout'])) {
-//            $layoutfile = 'layouts/' . $options['layout'];
-//        } elseif (isset($viewInfo['layout_file'])) {
-//            $layoutfile = $viewInfo['layout_file'];
-//        } else {
-//            $layoutfile = null;
-//        }
-//        if (isset($layoutfile)) {
-//            $this->_smarty->assign('content_for_layout', $this->fetch($viewInfo['page_template']));
-//            $finalPath = $layoutfile;
-//        } else {
-//            // レイアウトなしのそのままフェッチ
-//            $finalPath = $viewInfo['page_template'];
-//        }
-//        $html = $this->fetch($finalPath);
-//        $ro = $this->_getRo($html);
-//        // 使用テンプレートのログ
-//        $this->_log->log('view', $viewInfo);
+        $this->_smarty->assign($this->_values);
+        // フォームアサイン
+        $forms = BEAR_Form::renderForms($this->_smarty, $this->_config['ua'], $this->_enableJs);
+        $this->_smarty->assign($forms);
+        // テンプレート
+        $viewInfo = $this->_getViewInfo($tplName, $this->_role, 'tpl');
+        $this->_smarty->assign('layout', $viewInfo['layout_value']);
+        if (isset($options['layout'])) {
+            $layoutfile = 'layouts/' . $options['layout'];
+        } elseif (isset($viewInfo['layout_file'])) {
+            $layoutfile = $viewInfo['layout_file'];
+        } else {
+            $layoutfile = null;
+        }
+        if (isset($layoutfile)) {
+            $this->_smarty->assign('content_for_layout', $this->fetch($viewInfo['page_template']));
+            $finalPath = $layoutfile;
+        } else {
+            // レイアウトなしのそのままフェッチ
+            $finalPath = $viewInfo['page_template'];
+        }
+        $html = $this->fetch($finalPath);
+        $ro = $this->_getRo($html);
+        // 使用テンプレートのログ
+        $this->_log->log('view', $viewInfo);
         return $ro;
     }
 

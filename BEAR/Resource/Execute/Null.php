@@ -26,7 +26,7 @@
  * @version    Release: @package_version@ $Id: Null.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net
  */
-class BEAR_Resource_Execute_Null extends BEAR_Resource_Execute_Adaptor
+class BEAR_Resource_Execute_Null extends BEAR_Resource_Execute_Adapter
 {
     /**
      * リソースリクエスト実行

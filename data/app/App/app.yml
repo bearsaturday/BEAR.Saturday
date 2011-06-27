@@ -8,13 +8,13 @@ core:
 
 BEAR_Cache:
   # int  キャッシュアダプター 0 なし | 1 PEAR::Cache_Lite | 2 MEMCACHE | 3 APC
-  adaptor: 1
+  adapter: 1
   # path: dsn | file path | memcache host(s)
   #   - localhost
 
 BEAR_Session:
   # mixed アダプター 0 なし | 1 File | 2 DB | 3 memchache
-  adaptor: 0
+  adapter: 0
   # string セッションキーにつけるプリフィックス
   prefix: ''
   # path: dsn | session file path | memcache host(s)
@@ -46,11 +46,11 @@ BEAR_Page_Ajax:
 BEAR_Agent:
   ua_inject: 'BEAR_Agent_Ua'
 
-BEAR_Agent_Adaptor_Apple:
+BEAR_Agent_Adapter_Apple:
   content_type: 'application/xhtml+xml'
 
 BEAR_View:
-  adaptor: 'BEAR_View_Adaptor_Smarty'
+  adapter: 'BEAR_View_Adapter_Smarty'
   ua_sniffing: false
   path: '/App/views/'
 
