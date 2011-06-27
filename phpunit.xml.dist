@@ -23,14 +23,14 @@
   <filter>
       <blacklist>
         <file>BEAR/BEAR/bin/bear.php</file>
-        <directory>BEAR/inc</directory>
+        <directory>BEAR/vendors</directory>
       </blacklist>
     <whitelist addUncoveredFilesFromWhitelist="false">
       <file>BEAR.php</file>
       <directory suffix=".php">BEAR</directory>
       <exclude>
         <file>BEAR/BEAR/bin/bear.php</file>
-        <directory>BEAR/inc</directory>
+        <directory>BEAR/vendors</directory>
       </exclude>
     </whitelist>
   </filter>
