@@ -1,5 +1,10 @@
 <?php
+
 include 'v.php';
+
+restore_error_handler();
+error_reporting(E_ALL);
+
 
 // set path
 $bearPath = realpath(__DIR__ . '/../');
