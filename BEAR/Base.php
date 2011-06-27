@@ -97,7 +97,11 @@ abstract class BEAR_Base implements BEAR_Base_Interface
     public function getConfig($key = null)
     {
         if (isset($key)) {
-            return $this->_config[$key];
+            if (isset($this->_config[$key])) {
+                return $this->_config[$key];
+            } else {
+                return null;
+            }
         } else {
             return $this->_config;
         }
