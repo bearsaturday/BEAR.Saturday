@@ -77,6 +77,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      */
     public function invoke($obj, array $values)
     {
+        $result = array();
         $this->_config['object'] = $obj;
         $this->_config['values'] = $values;
         $this->_config['entry_values'] = $values;
@@ -126,7 +127,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
                 $this->_config['values'] = $result;
             }
         }
-        if ((PEAR::isError($result) | $isException)) {
+        if (isset($result) && (PEAR::isError($result) | $isException)) {
             if (isset($this->_config['aspects'][self::ADVICE_THROWING])) {
                 foreach ($this->_config['aspects'][self::ADVICE_THROWING] as $adviceClass) {
                     $this->_adviceValidation($adviceClass, 'BEAR_Aspect_Throwing_Interface');
