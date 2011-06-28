@@ -45,8 +45,8 @@ class BEAR_Resource_Execute_File extends BEAR_Resource_Execute_Adapter
             $config = array('info' => compact('method'), 'code' => 400);
             throw new BEAR_Resource_Execute_Exception('Method "read" is only allowed with static file', $config);
         }
-        // valuesでheaderが指定されてると一行目はキーに
-        $noHeader = !(is_array($result)) || ((isset($this->_config['values']['header']) && ($this->_config['values']['header'] === false )));
+        // valuesでheader=trueが指定されてると一行目はキーに
+        $noHeader = (is_array($result)) || ((isset($this->_config['values']['header']) && ((bool)$this->_config['values']['header'] === true )));
         if (!$noHeader) {
             $index = array_shift($result);
             $array = array();
