@@ -107,8 +107,7 @@ class BEAR_Ro_Debug extends BEAR_Base
         $result .= '<span class="bear-resource-values">' . $labelVaules . '</span>';
         $result .= '<span class="bear-resource-links">' . $linkLabel . '</span>';
         $result .= '' . " + (" . '';
-        $result .= '<span><a border="0" target="' . $config['options']['template'] .
-        '" title="' . $config['options']['template'] .'" href="/__panda/edit/?file=';
+        $result .= '<span><a border="0" title="' . $config['options']['template'] .'" href="/__panda/edit/?file=';
         $result .= (_BEAR_APP_HOME . $this->_config['path'] . 'elements/' .
         $config['options']['template'] . '.tpl') . '">';
         $result .= $config['options']['template'] . '</a>)</span>';
