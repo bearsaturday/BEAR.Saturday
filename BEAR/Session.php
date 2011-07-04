@@ -42,22 +42,22 @@ class BEAR_Session extends BEAR_Base
     /**
      * セッション不使用
      */
-    const ADAPTOR_NONE = 0;
+    const ADAPTER_NONE = 0;
 
     /**
      * ファイルセッション（クラスター不可）
      */
-    const ADAPTOR_FILE = 1;
+    const ADAPTER_FILE = 1;
 
     /**
      * DBセッション
      */
-    const ADAPTOR_DB = 2;
+    const ADAPTER_DB = 2;
 
     /**
      * memchacheセッション
      */
-    const ADAPTOR_MEMCACHE = 3;
+    const ADAPTER_MEMCACHE = 3;
 
     /**
      * セッショントークン
@@ -95,7 +95,7 @@ class BEAR_Session extends BEAR_Base
         static $hasStarted = false;
 
         if ($hasStarted !== false
-            || $this->_config['adapter'] === self::ADAPTOR_NONE
+            || $this->_config['adapter'] === self::ADAPTER_NONE
         ) {
             return;
         }
@@ -155,11 +155,11 @@ class BEAR_Session extends BEAR_Base
     {
         //セッションハンドラ初期化
         switch ($config['adapter']) {
-            case self::ADAPTOR_MEMCACHE :
+            case self::ADAPTER_MEMCACHE :
                 ini_set("session.save_handler", 'memcache');
                 ini_set("session.save_path", $config['path']);
                 break;
-            case self::ADAPTOR_DB :
+            case self::ADAPTER_DB :
                 // DSN を指定します
                 $config = array(
             'dsn' => $config['path'],
@@ -167,12 +167,12 @@ class BEAR_Session extends BEAR_Base
             'autooptimize' => true);
                 HTTP_Session2::setContainer('MDB2', $config);
                 break;
-            case self::ADAPTOR_FILE :
+            case self::ADAPTER_FILE :
                 if (isset($config['path']) && file_exists($config['path'])) {
                     ini_set("session.save_path", $config['path']);
                 }
                 break;
-            case self::ADAPTOR_NONE :
+            case self::ADAPTER_NONE :
                 break;
             default :
                 // error
