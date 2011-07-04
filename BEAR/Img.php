@@ -90,7 +90,7 @@ class BEAR_Img extends BEAR_Factory
      *
      * @var array
      */
-    protected static $deleteFiles;
+    public static $deleteFiles;
 
     /**
      * Constructor
