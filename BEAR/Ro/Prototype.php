@@ -270,7 +270,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      */
     public function requestOnShutdown()
     {
-        BEAR::dependency('BEAR_Ro_Shutdown')->set($this);
+        BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($this);
         return $this;
     }
 

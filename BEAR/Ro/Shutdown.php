@@ -79,4 +79,21 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
     {
         BEAR::dependency(__CLASS__)->request();
     }
+
+    /**
+     * Register shutdown function once.
+     *
+     * @return BEAR_Ro_Shutdown
+     */
+    public function register()
+    {
+        $done = false;
+
+        if ($done === true) {
+            return $this;
+        }
+        $done = true;
+        register_shutdown_function(array(__CLASS__, 'onShutdown'));
+        return $this;
+    }
 }
