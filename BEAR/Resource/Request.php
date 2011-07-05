@@ -166,7 +166,9 @@ class BEAR_Resource_Request extends BEAR_Base
     private function _actionPostProcess(BEAR_Ro &$ro)
     {
         $body = $ro->getBody();
-        $options = $this->_config['options'];
+            $Info = array();
+            $info['totalItems'] = count($body);
+            $options = $this->_config['options'];
         // ページャーリザルト処理
         if (PEAR::isError($body) || !$body) {
             return;
@@ -181,9 +183,16 @@ class BEAR_Resource_Request extends BEAR_Base
             $info['page_numbers'] = array('current' => $pager->pager->getCurrentPageID(),
             'total' => $pager->pager->numPages());
             list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
-            $ro->setLink(BEAR_Resource::LINK_PAGER, $pager->getLinks());
+            $links = $pager->getLinks();
+            $ro->setLink(BEAR_Resource::LINK_PAGER, $links);
             $ro->setHeaders($info);
-        }
+
+            $info['page_numbers'] = array('current' => $pager->pager->getCurrentPageID(),
+                        'total' => $pager->pager->numPages());
+            list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
+            $info['limit'] = $info['to'] - $info['from'] + 1;
+            $pager->setPagerLinks($links, $info);
+         }
         // コールバックオプション 1
         if (isset($options['callback'])) {
             if (is_callable($options['callback'])) {
