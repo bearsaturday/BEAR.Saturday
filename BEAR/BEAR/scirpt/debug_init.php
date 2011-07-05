@@ -68,7 +68,7 @@ if ($exit === true) {
 // デバック用キャッシュクリア
 if (isset($_GET['_cc'])) {
     BEAR_Util::clearAllCache(true);
-    $this->exitMain();
+	exit();
 }
 
 // log

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 /**
  * BEARリソースソケットサーバー
@@ -20,7 +21,7 @@
 
 require_once '../App.php';
 // BEARサーバースタート
-$server = new BEAR_Resource_Server();
+$server = new BEAR_Resource_Server(array());
 $port = 13754;
 $isFork = false;
 $handlerName = 'BEAR_Resource_Server_Handler';

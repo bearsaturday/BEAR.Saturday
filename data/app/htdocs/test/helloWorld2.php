@@ -46,7 +46,6 @@ class Page_Test_HelloWorld2 extends App_Page
      */
     public function onInit(array $args)
     {
-        $uri = 'Test/User';
         $params = array(
             'uri' => 'Test/User',
             'values' => array('id' => $args['id']),
