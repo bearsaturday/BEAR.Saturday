@@ -356,6 +356,7 @@ abstract class BEAR_Page extends BEAR_Base
         } else {
             $config = array();
             $config['enable_ua_sniffing'] = false;
+            $config['ua'] = 'Default';
         }
         $config['values'] = $this->_values;
         $config['ro'] = $this->_ro;
