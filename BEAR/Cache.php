@@ -19,10 +19,10 @@
  * <pre>
  * ビルトインアダプター
  *
- * 0 ADAPTOR_NONE      キャッシュなし
- * 1 ADAPTOR_CACHELITE PEAR::Cache_Lite
- * 2 ADAPTOR_MEMCACHE  MEMCACHE
- * 3 ADAPTOR_APC       APC
+ * 0 ADAPTER_NONE      キャッシュなし
+ * 1 ADAPTER_CACHELITE PEAR::Cache_Lite
+ * 2 ADAPTER_MEMCACHE  MEMCACHE
+ * 3 ADAPTER_APC       APC
  * </pre>
  *
  * @category  BEAR
@@ -42,22 +42,22 @@ class BEAR_Cache extends BEAR_Factory
     /**
      * キャッシュなし
      */
-    const ADAPTOR_NONE = 0;
+    const ADAPTER_NONE = 0;
 
     /**
      * Cache_Lite
      */
-    const ADAPTOR_CACHELITE = 1;
+    const ADAPTER_CACHELITE = 1;
 
     /**
      * memcahced
      */
-    const ADAPTOR_MEMCACHE = 2;
+    const ADAPTER_MEMCACHE = 2;
 
     /**
      * APC
      */
-    const ADAPTOR_APC = 3;
+    const ADAPTER_APC = 3;
 
     /**
      * キャッシュライフタイム無期限
@@ -111,13 +111,13 @@ class BEAR_Cache extends BEAR_Factory
     public function factory()
     {
         switch ($this->_config['adapter']) {
-            case self::ADAPTOR_MEMCACHE :
+            case self::ADAPTER_MEMCACHE :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Memcache', $this->_config);
                 break;
-            case self::ADAPTOR_CACHELITE :
+            case self::ADAPTER_CACHELITE :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Lite', $this->_config);
                 break;
-            case self::ADAPTOR_APC :
+            case self::ADAPTER_APC :
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Apc', $this->_config);
                 break;
             default :

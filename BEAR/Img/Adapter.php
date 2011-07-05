@@ -122,6 +122,7 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
     public function deleteFile($file)
     {
         static $cnt = 0;
+
         BEAR_Img::$deleteFiles[$cnt] = $file;
         $cnt++;
     }

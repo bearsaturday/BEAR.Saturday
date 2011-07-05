@@ -112,12 +112,12 @@ $packagexml->addPackageDepWithChannel('required', 'HTML_CSS', 'pear.php.net', '1
 $packagexml->addPackageDepWithChannel('required', 'Net_Server', 'pear.php.net', '1.0.2');
 $packagexml->addPackageDepWithChannel('required', 'FirePHPCore', 'pear.firephp.org', '0.3.1');
 $packagexml->addPackageDepWithChannel('required', 'Services_JSON', 'pear.php.net', '1.0.2');
+*/
 // optional (for developper)
 $packagexml->addPackageDepWithChannel('optional', 'PEAR_PackageFileManager2', 'pear.php.net', '1.0.0');
 $packagexml->addPackageDepWithChannel('optional', 'PhpDocumentor', 'pear.php.net', '1.4.2');
 $packagexml->addPackageDepWithChannel('optional', 'PHP_CodeSniffer', 'pear.php.net', '1.1.0');
 // $packagexml->addGlobalReplacement('package-info', '@PEAR-VER@', 'version');
-*/
 $packagexml->addGlobalReplacement('pear-config', '@PEAR-DIR@', 'php_dir');
 $packagexml->addGlobalReplacement('package-info', '@package_version@', 'version');
 $packagexml->addGlobalReplacement('pear-config', '@DATA-DIR@', 'data_dir');

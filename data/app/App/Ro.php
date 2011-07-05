@@ -59,11 +59,10 @@ class App_Ro extends BEAR_Ro
             $config = array('dsn' => $dsn, 'options' => $options);
             $this->_db = BEAR::factory('BEAR_Mdb2', $config);
             $this->_queryConfig = array(
-                'db' => &$this->_db,
-                'ro' => &$this,
+                'db' => $this->_db,
+                'ro' => $this,
                 'table' => $this->_table,
                 'pager' => 0,
-                'perPage' => 10,
                 'options' => array('accesskey' => true)
             );
         } else {
@@ -73,8 +72,8 @@ class App_Ro extends BEAR_Ro
             $this->_db = BEAR::factory('BEAR_Mdb2', $config);
             $this->_db->loadModule('Extended');
             $this->_queryConfig = array(
-                'db' => &$this->_db,
-                'ro' => &$this,
+                'db' => $this->_db,
+                'ro' => $this,
                 'table' => $this->_table
             );
         }

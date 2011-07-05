@@ -44,17 +44,17 @@ class BEAR_Img extends BEAR_Factory
     /**
      * GD
      */
-    const ADAPTOR_GD = '1';
+    const ADAPTER_GD = '1';
 
     /**
      * iMagick
      */
-    const ADAPTOR_MAGICK = '2';
+    const ADAPTER_MAGICK = '2';
 
     /**
      * Cairo
      */
-    const ADAPTOR_CAIRO = '3';
+    const ADAPTER_CAIRO = '3';
 
     /**
      * テンポラリーファイル作成場所
@@ -90,7 +90,7 @@ class BEAR_Img extends BEAR_Factory
      *
      * @var array
      */
-    protected static $deleteFiles;
+    public static $deleteFiles;
 
     /**
      * Constructor
@@ -133,7 +133,7 @@ class BEAR_Img extends BEAR_Factory
      * 指定の画像エンジンで画像処理オブジェクトを返します
      * </pre>
      *
-     * @param string $adapter self::ADAPTOR_GD | self::ADAPTOR_MAGICK | self::ADAPTOR_CAIRO
+     * @param string $adapter self::ADAPTER_GD | self::ADAPTER_MAGICK | self::ADAPTER_CAIRO
      *
      * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      * @throws BEAR_Img_Exception
@@ -146,13 +146,13 @@ class BEAR_Img extends BEAR_Factory
         PEAR::registerShutdownFunc(array('BEAR_Img', 'onShutdown'));
         $adapter = $this->_config['adapter'];
         switch ($this->_config['adapter']) {
-            case self::ADAPTOR_GD :
+            case self::ADAPTER_GD :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
-            case self::ADAPTOR_MAGICK :
+            case self::ADAPTER_MAGICK :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
                 break;
-            case self::ADAPTOR_CAIRO :
+            case self::ADAPTER_CAIRO :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
                 break;
             default :
@@ -174,7 +174,7 @@ class BEAR_Img extends BEAR_Factory
      * GDでjpegを読み込み、Cairoで文字を合成、GDでGIF出力などのように使えます。
      * </pre>
      *
-     * @param string $adapter self::ADAPTOR_GD | self::ADAPTOR_MAGICK | self::ADAPTOR_CAIRO
+     * @param string $adapter self::ADAPTER_GD | self::ADAPTER_MAGICK | self::ADAPTER_CAIRO
      *
      * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      */
@@ -186,13 +186,13 @@ class BEAR_Img extends BEAR_Factory
         self::$deleteFiles[] = $tmpFile;
         //イメージインスタンス
         switch ($adapter) {
-            case self::ADAPTOR_GD :
+            case self::ADAPTER_GD :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
-            case self::ADAPTOR_MAGICK :
+            case self::ADAPTER_MAGICK :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
                 break;
-            case self::ADAPTOR_CAIRO :
+            case self::ADAPTER_CAIRO :
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
                 break;
             default :

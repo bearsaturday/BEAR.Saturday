@@ -51,7 +51,7 @@ class App_Ro_Untitled extends BEAR_Ro
      */
     public function onCreate($values)
     {
-        $extended = &$this->_db->extended;
+        $extended = $this->_db->extended;
         /** @param $extended MDB2_Extended */
         $values['created_at'] = _BEAR_DATETIME; //現在時刻
         $result = $extended->autoExecute($this->_table, $values, MDB2_AUTOQUERY_INSERT);
@@ -73,8 +73,7 @@ class App_Ro_Untitled extends BEAR_Ro
      */
     public function onUpdate($values)
     {
-        assert(isset($values['user']));
-        $extended = & $this->_db->extended;
+        $extended = $this->_db->extended;
         $values['updated_at'] = _BEAR_DATETIME;
         /* @var $extended MDB2_Extended */
         $where = 'id = ' . $this->_db->quote($values['id'], 'integer');
@@ -129,7 +128,7 @@ class App_Ro_Untitled extends BEAR_Ro
      */
     public function onDelete($values)
     {
-        $extended = & $this->_db->extended;
+        $extended = $this->_db->extended;
         $values['deleted_at'] = _BEAR_DATETIME;
         /* @var $extended MDB2_Extended */
         $where = 'id = ' . $this->_db->quote($values['id'], 'integer');

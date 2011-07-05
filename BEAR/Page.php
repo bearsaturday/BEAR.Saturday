@@ -693,11 +693,7 @@ abstract class BEAR_Page extends BEAR_Base
                     $this->set($key, $ro);
                     break;
                 case  'shutdown':
-                    if ($_registerResourceOnShutdown === false) {
-                        $_registerResourceOnShutdown = true;
-                        register_shutdown_function(array('BEAR_Ro_Shutdown', 'onShutdown'));
-                    }
-                    BEAR::dependency('BEAR_Ro_Shutdown')->set($prototypeRo);
+                    BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($prototypeRo);
                     break;
                 case  'value':
                 default:

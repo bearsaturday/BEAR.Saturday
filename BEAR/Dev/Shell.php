@@ -10,7 +10,7 @@
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
+ * @version    SVN: Release: 0.9.0RC4 $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
  * @link      http://www.bear-project.net/
  */
 
@@ -23,7 +23,7 @@
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    Release: @package_version@ $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
+ * @version    Release: 0.9.0RC4 $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net
  */
 class BEAR_Dev_Shell extends BEAR_Base
@@ -580,7 +580,7 @@ class BEAR_Dev_Shell extends BEAR_Base
      */
     private function _initApp($path, $pearc='')
     {
-        $bearPath = dirname(dirname(dirname(__FILE__)));
+        $bearPath = _BEAR_BEAR_HOME;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             throw Exception("Windows is not supported for init-app, copy data/app instaed.\n");
             exit();
@@ -654,11 +654,9 @@ class BEAR_Dev_Shell extends BEAR_Base
         error_reporting(0);
         $snr = new File_SearchReplace('@APP-DIR@', $path, $files, "$path/htdocs/", false, $ignoreline);
         $snr->doSearch();
-        $snr = new File_SearchReplace('@BEAR-DIR@', $bearPath, $files, "$path/htdocs/", false, $ignoreline);
+        $snr = new File_SearchReplace('@VENDORS-PEAR-DIR@', "$bearPath/BEAR/vendors/PEAR", $files, "$path/htdocs/", false, $ignoreline);
         $snr->doSearch();
-        $snr = new File_SearchReplace('@VENDORS-PEAR-DIR@', "$bearPath/vendors/PEAR", $files, "$path/htdocs/", false, $ignoreline);
-        $snr->doSearch();
-        $snr = new File_SearchReplace('@PEAR-DIR@', $pearPath, $files, "$path/htdocs/", false, $ignoreline);
+        $snr = new File_SearchReplace('/opt/local/lib/php', $pearPath, $files, "$path/htdocs/", false, $ignoreline);
         $snr->doSearch();
         error_reporting($err);
         //mv htaccess.txt .htaccess
