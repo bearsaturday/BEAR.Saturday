@@ -132,7 +132,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         }
         $this->getImageInfo();
         //アニメGIF
-        if ($this->adapter->getNumberImages($this->image) >= 2) {
+        if ($this->adapter->getNumberImages() >= 2) {
             $this->_isAnimGif = true;
             $this->_animGifFile = $file;
         }
@@ -149,7 +149,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      *
      * @return void
      */
-    public function header()
+    public function header($format = null, $expire = null)
     {
         $linenum = $filename = '';
         if (headers_sent($filename, $linenum)) {
