@@ -47,7 +47,7 @@ class BEAR_Resource_Execute_File extends BEAR_Resource_Execute_Adapter
         }
         // valuesでheader=trueが指定されてると一行目はキーに
         $noHeader = (is_array($result)) || ((isset($this->_config['values']['header']) && ((bool)$this->_config['values']['header'] === true )));
-        if (!$noHeader) {
+        if (!$noHeader && is_array($result)) {
             $index = array_shift($result);
             $array = array();
             foreach ($result as $value) {
