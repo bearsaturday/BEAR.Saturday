@@ -198,7 +198,6 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         }
         cairo_move_to($this->image, $x, $y + $size);
         cairo_text_path($this->image, $text);
-        //        cairo_show_text($this->image, "日本語はどうだ!");
         //テキスト中身
         if ($colorOne) {
             $colorOneZero = $colorOne[0] / 255;
@@ -211,9 +210,9 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         cairo_fill_preserve($this->image);
         //テキストボーダー
         if ($colorTwo) {
-            $colorTwoZero = $colorOne[0] / 255;
-            $colorTwoOne = $colorOne[1] / 255;
-            $colorTwoTwo = $colorOne[2] / 255;
+            $colorTwoZero = $colorTwo[0] / 255;
+            $colorTwoOne = $colorTwo[1] / 255;
+            $colorTwoTwo = $colorTwo[2] / 255;
             cairo_set_source_rgba($this->image, $colorTwoZero, $colorTwoOne, $colorTwoTwo, $textAlpha);
         } else {
             cairo_set_source_rgba($this->image, 0, 0, 1, $textAlpha);
