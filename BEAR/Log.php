@@ -171,16 +171,20 @@ class BEAR_Log extends BEAR_Base
     public function getPageLogDb()
     {
         $file = _BEAR_APP_HOME . '/logs/pagelog.sq3';
-        $db = new SQLiteDatabase($file);
-        if ($db === false) {
-            throw new BEAR_Exception('sqlite error');
-        }
-        $sql = <<<____SQL
+        if (file_exists($file) === false) {
+            $db = new SQLiteDatabase($file);
+            $sql = <<<____SQL
 CREATE TABLE pagelog (
 	 "log" text NOT NULL
 );
 ____SQL;
-        $db->queryExec($sql);
+            $db->queryExec($sql);
+        } else {
+            $db = new SQLiteDatabase($file);
+        }
+        if ($db === false) {
+            throw new BEAR_Exception('sqlite error');
+        }
         return $db;
     }
 
@@ -205,6 +209,9 @@ ____SQL;
             $result = $db->query("SELECT log FROM pagelog WHERE rowid = {$rowid}");
         } else {
             $result = $db->query("SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1");
+        }
+        if ($result === false) {
+            die('Log db is not avalilabe.');
         }
         $log = $result->fetchAll();
         $pageLog = unserialize($log[0]['log']);
