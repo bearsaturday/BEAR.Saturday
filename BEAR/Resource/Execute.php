@@ -88,31 +88,28 @@ class BEAR_Resource_Execute extends BEAR_Factory
         }
         if (isset($path['filename']) && !(isset($url['host']))) {
             return self::_localResourceExecute($this->_config['uri']);
-        } else {
-            //ファイルでない
-            switch (true) {
-                case (isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https')) :
-                    $format = self::FORMAT_HTTP;
-                    break;
-                case (isset($url['scheme']) && $url['scheme'] == 'socket') :
-                    $format = self::FORMAT_SOCKET;
-                    break;
-                case (isset($url['scheme']) && $url['scheme'] == 'page') :
-                    $format = self::FORMAT_PAGE;
-                    break;
-                default :
-                    $executer = _BEAR_APP_HOME . '/App/Resource/Execute/' . ucwords($url['scheme']) . '.php';
-                    $isExecuterExists = file_exists($executer);
-                    if ($isExecuterExists) {
-                        $class = 'App_Resource_Execute_' . ucwords($url['scheme']);
-                        $obj = BEAR::factory($class, $this->_config);
-                        return $obj;
-                    } else {
-                        $msg = 'URI is not valid.';
-                        $info = array('uri' => $this->_config['uri']);
-                        throw $this->_exception($msg, comact('info'));
-                    }
-            }
+        }
+        $executer = _BEAR_APP_HOME . '/App/Resource/Execute/' . ucwords($url['scheme']) . '.php';
+        $isExecuterExists = file_exists($executer);
+        if ($isExecuterExists) {
+            $class = 'App_Resource_Execute_' . ucwords($url['scheme']);
+            $obj = BEAR::factory($class, $this->_config);
+            return $obj;
+        }
+        switch (true) {
+            case (isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https')) :
+                $format = self::FORMAT_HTTP;
+                break;
+            case (isset($url['scheme']) && $url['scheme'] == 'socket') :
+                $format = self::FORMAT_SOCKET;
+                break;
+            case (isset($url['scheme']) && $url['scheme'] == 'page') :
+                $format = self::FORMAT_PAGE;
+                break;
+            default :
+                $msg = 'URI is not valid.';
+                $info = array('uri' => $this->_config['uri']);
+                throw $this->_exception($msg, comact('info'));
         }
         $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);
         return $obj;
