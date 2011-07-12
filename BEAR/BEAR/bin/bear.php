@@ -1,8 +1,4 @@
 <?php
-ini_set('include_path', dirname(dirname(dirname(dirname(__FILE__)))) . ':' . get_include_path());
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-
 /**
  * BEAR
  *
@@ -18,10 +14,12 @@ ini_set('log_errors', 1);
  * @link      http://www.bear-project.net/
  */
 
-
-// BEAR Path
 $bearPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))));
-set_include_path($bearPath . PATH_SEPARATOR . get_include_path());
+$vendorPEARPath = "{$bearPath}/BEAR/vendors/PEAR";
+ini_set('include_path', $bearPath . PATH_SEPARATOR . $vendorPEARPath . PATH_SEPARATOR . get_include_path());
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+
 
 /**
  * BEAR CLI
@@ -83,7 +81,6 @@ class BEAR_Bin_Bear
             BEAR::set('page', new BEAR_Page_Cli(array()));
         }
         $this->_initBear();
-        error_reporting(0);
     }
 
     /**
@@ -97,7 +94,9 @@ class BEAR_Bin_Bear
         $argv = $_SERVER["argv"];
         $count = count($argv);
         $count--;
-        if ($argv[$count - 1] === '--app' || $argv[$count - 1] === '-a') {
+        $hasLastOption =  $count > 0 && isset($argv[$count]) && isset($argv[$count - 1]);
+        $hasAppOption = ($hasLastOption && $argv[$count - 1] === '--app') || ($hasLastOption && $argv[$count - 1] === '-a');
+        if  ($hasAppOption === true){
             $appPath = realpath($argv[$count]);
             if (isset($argv[$count]) && $appPath && file_exists($appPath . '/App.php')) {
                 return $appPath;
@@ -136,9 +135,6 @@ class BEAR_Bin_Bear
      */
     public function exec()
     {
-        ini_set('display_errors', 0);
-        ini_set('log_errors', 1);
-        error_reporting(E_ERROR);
         if ($_SERVER['argc'] == 1) {
             $_SERVER['argc'] == 2;
             $argv = array('bear.php', '--help');
