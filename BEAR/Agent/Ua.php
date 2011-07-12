@@ -31,7 +31,7 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
     /**
      * UAインジェクト
      *
-     * 携帯３キャリア/iPhone/iPad/Andoroidの判定を行います。
+     * 携帯３キャリア/iPhone/iPad/Androidの判定を行います。
      * BEAR_Agentの$config['ua_inject']でこのクラスが指定されています。
      *
      * @param BEAR_Main &$object BEAR_Agentオブジェクト
