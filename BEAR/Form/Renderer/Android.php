@@ -65,6 +65,6 @@
  * @link     http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  * @ignore
  */
-class BEAR_Form_Renderer_Andoroid extends BEAR_Form_Renderer_Default
+class BEAR_Form_Renderer_Android extends BEAR_Form_Renderer_Default
 {
 }
