@@ -44,9 +44,9 @@ class BEAR_Agent_Injector implements BEAR_Injector_Interface
             $method = 'onInject' . $agent;
             if (method_exists($object, $method)) {
                 $object->$method();
-                break;
+                return;
             }
-            $object->onInject();
         }
+        $object->onInject();
     }
 }
