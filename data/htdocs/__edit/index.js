@@ -61,9 +61,14 @@ function set_editor(data) {
     } else {
     	$.pandaEdit.reset();
     	$.pandaEdit.label('reset');
+    	var save = function() {$.pandaEdit.save(data.info.dirname + '/' + data.info.basename, editor.getSession().getValue());};
         $('#editor').keybind('keyup', {
-      	  'C-s': function() {$.pandaEdit.save(data.info.dirname + '/' + data.info.basename, editor.getSession().getValue());
-   	}});
+      	  'C-s': save
+        });
+        $('#editor').keybind('keyup', {
+        	'A-s': save
+        });
+        $('span.editor_file_save').bind("click", save);
     }
     
 }
