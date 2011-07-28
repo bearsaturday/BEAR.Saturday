@@ -81,6 +81,9 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
             $ro->setHeaders($headers);
             $ro->setBody($saved['body']);
             $ro->setLinks($saved['links']);
+            if (isset($saved['pager'])) {
+                BEAR::set('pager', $saved['pager']);
+            }
             unset($saved);
         } else {
             // キャッシュ書き込み
@@ -94,6 +97,9 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                 $save = array('class' => get_class($ro), 'config' => $this->_config,
                               'code' => $ro->getCode(), 'headers' => $ro->getHeaders(),
                               'body' => $ro->getBody(), 'links' => $ro->getLinks());
+                if (BEAR::exists('pager')) {
+                    $save['pager'] =  BEAR::get('pager');
+                }
                 $cache->set($cacheKey, $save);
             } else {
                 // キャッシュ生成エラー
