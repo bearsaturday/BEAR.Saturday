@@ -112,197 +112,240 @@ class BEAR_Dev_Shell extends BEAR_Base
         // parse
         $cli = $this->_config['cli'];
         $parser = new Console_CommandLine(
-        array(
+            array(
                 'name' => 'bear',
                 'description' => 'BEAR command line interface',
                 'version' => BEAR::VERSION,
                 'add_help_option' => true,
-                'add_version_option' => true)
+                'add_version_option' => true
+            )
         );
         // create resource
         $subCmd = $parser->addCommand(
-        self::CMD_CREATE,
-        array('description' => 'create resource.')
+            self::CMD_CREATE,
+            array('description' => 'create resource.')
         );
         $subCmd->addOption(
             'file',
-        array('short_name' => '-a',
+            array('short_name' => '-a',
                 'long_name' => '--file',
                 'action' => 'StoreString',
-                'description' => 'load arguments file.')
+                'description' => 'load arguments file.'
+            )
+        );
+        $subCmd->addOption(
+            'app',
+            array(
+                'short_name' => '-a',
+                'long_name' => '--app',
+                'action' => 'StoreString',
+                'description' => 'specify application path. *Notice* use this on the end of line.'
+            )
         );
         $subCmd->addArgument(
             'uri',
-        array('description' => 'resource URI')
+            array('description' => 'resource URI')
         );
         // read resource
         $subCmd = $parser->addCommand(
-        self::CMD_READ,
-        array('description' => 'show resource.')
+            self::CMD_READ,
+            array('description' => 'show resource.')
         );
         $subCmd->addOption(
             'file',
-        array(
-            'short_name' => '-g',
-            'long_name' => '--file',
-            'action' => 'StoreString',
-            'description' => 'load arguments file.')
-        );
-        $subCmd->addOption(
-            'length',
-        array('short_name' => '-l',
-                'long_name' => '--len',
-                'action' => 'StoreInt',
-                'description' => 'filter specific lenght each data.')
-        );
-        $subCmd->addOption(
-            'format',
-        array(
-                'short_name' => '-f',
-                'long_name' => '--format',
-                'action' => 'StoreString',
-                'description' => 'default | table | php | json | csv | printa ')
-        );
-        $subCmd->addArgument(
-            'uri',
-        array('description' => 'resource URI')
-        );
-        // update resource
-        $subCmd = $parser->addCommand(
-        self::CMD_UPDATE,
-        array('description' => 'update resource.')
-        );
-        $subCmd->addOption(
-            'file',
-        array(
+            array(
                 'short_name' => '-g',
                 'long_name' => '--file',
                 'action' => 'StoreString',
-                'description' => 'load arguments file.')
+                'description' => 'load arguments file.'
+            )
+        );
+        $subCmd->addOption(
+            'length',
+            array('short_name' => '-l',
+                'long_name' => '--len',
+                'action' => 'StoreInt',
+                'description' => 'filter specific lenght each data.'
+            )
+        );
+        $subCmd->addOption(
+            'format',
+            array(
+                'short_name' => '-f',
+                'long_name' => '--format',
+                'action' => 'StoreString',
+                'description' => 'default | table | php | json | csv | printa '
+            )
+        );
+        $subCmd->addOption(
+            'app',
+            array(
+                'short_name' => '-a',
+                'long_name' => '--app',
+                'action' => 'StoreString',
+                'description' => 'specify application path. *Notice* use this on the end of line.'
+            )
         );
         $subCmd->addArgument(
             'uri',
-        array('description' => 'resource URI')
+            array('description' => 'resource URI')
         );
-        // delete resource
+        // update resource
         $subCmd = $parser->addCommand(
-        self::CMD_DELETE,
-        array('description' => 'delete resource.')
+            self::CMD_UPDATE,
+            array('description' => 'update resource.')
         );
         $subCmd->addOption(
             'file',
-        array('short_name' => '-a',
-                  'long_name' => '--file',
-                  'action' => 'StoreString',
-                  'description' => 'load arguments file.'
-                  )
-                  );
-                  $subCmd->addArgument('uri', array('description' => 'resource URI'));
-                  // clear-cache
-                  $parser->addCommand(
+            array(
+                'short_name' => '-g',
+                'long_name' => '--file',
+                'action' => 'StoreString',
+                'description' => 'load arguments file.'
+            )
+        );
+        $subCmd->addOption(
+            'app',
+            array(
+                'short_name' => '-a',
+                'long_name' => '--app',
+                'action' => 'StoreString',
+                'description' => 'specify application path. *Notice* use this on the end of line.'
+            )
+        );
+        $subCmd->addArgument(
+            'uri',
+            array('description' => 'resource URI')
+        );
+        // delete resource
+        $subCmd = $parser->addCommand(
+            self::CMD_DELETE,
+            array('description' => 'delete resource.')
+        );
+        $subCmd->addOption(
+			'file',
+            array('short_name' => '-a',
+                'long_name' => '--file',
+                'action' => 'StoreString',
+                'description' => 'load arguments file.'
+            )
+        );
+        $subCmd->addOption(
+            'app',
+            array(
+                'short_name' => '-a',
+                'long_name' => '--app',
+                'action' => 'StoreString',
+                'description' => 'specify application path. *Notice* use this on the end of line.'
+            )
+        );
+        $subCmd->addArgument('uri', array('description' => 'resource URI'));
+        // clear-cache
+        $parser->addCommand(
             'clear-cache',
-                  array('description' => 'clear all cache.')
-                  );
-                  // clear-log
-                  $parser->addCommand(
+            array('description' => 'clear all cache.')
+        );
+        // clear-log
+        $parser->addCommand(
             'clear-log',
-                  array('description' => 'clear all log.')
-                  );
-                  // clear-all
-                  $parser->addCommand(
+            array('description' => 'clear all log.')
+        );
+        // clear-all
+        $parser->addCommand(
             'clear-all',
-                  array('description' => 'clear cache and log.')
-                  );
-                  if ($cli) {
-                      // create app
-                      $subCmd = $parser->addCommand(
-                      self::CMD_INIT_APP,
-                      array('description' => 'create new application.')
-                      );
-                      $subCmd->addArgument(
+            array('description' => 'clear cache and log.')
+        );
+        if ($cli) {
+            // create app
+            $subCmd = $parser->addCommand(
+            self::CMD_INIT_APP,
+                array('description' => 'create new application.')
+            );
+            $subCmd->addArgument(
                 'path',
-                      array('description' => 'destination path. ex) /var/www/bear.test')
-                      );
-                      $subCmd->addOption(
+                array('description' => 'destination path. ex) /var/www/bear.test')
+            );
+            $subCmd->addOption(
                 'pearrc',
-                      array('short_name' => '-c',
+                array('short_name' => '-c',
                       'long_name' => '--pearrc',
                       'action' => 'StoreString',
-                      'description' => 'find user configuration in `file`')
-                      );
-                      // set app
-                      $subCmd = $parser->addCommand(
-                      self::CMD_SET_APP,
-                      array('description' => 'set application path.')
-                      );
-                      $subCmd->addArgument(
+                      'description' => 'find user configuration in `file`'
+                )
+            );
+            // set app
+            $subCmd = $parser->addCommand(
+                self::CMD_SET_APP,
+                array('description' => 'set application path.')
+            );
+            $subCmd->addArgument(
                 'path',
-                      array('description' => 'application path. ex) /var/www/bear.test')
-                      );
-                      // show app
-                      $subCmd = $parser->addCommand(
-                      self::CMD_SHOW_APP,
-                      array('description' => 'show application path.')
-                      );
-                  }
-                  //exec
-                  try {
-                      ob_start();
-                      $this->_command = $parser->parse(count($argv), $argv);
-                      $buff = ob_get_clean();
-                      $commandName = $this->_command->command_name;
-                      switch ($this->_command->command_name) {
-                          case self::CMD_INIT_APP :
-                              $path = $this->_command->command->args['path'];
-                              $path = $this->_makeFullPath($path);
-                              $pearrc = $this->_command->command->options['pearrc'];
-                              $this->_initApp($path, $pearrc);
-                              $this->_setApp($path);
-                              break;
-                          case self::CMD_SET_APP :
-                              $path = $this->_command->command->args['path'];
-                              $path = $this->_makeFullPath($path);
-                              $this->_setApp($path);
-                              break;
-                          case self::CMD_SHOW_APP :
-                              $this->_checkAppExists();
-                              $this->_showApp();
-                              break;
-                          case self::CMD_CLEAR_CACHE :
-                              $this->_checkAppExists();
-                              $this->clearCache();
-                              break;
-                          case self::CMD_CLEAR_LOG :
-                              $this->_checkAppExists();
-                              $this->clearLog();
-                              break;
-                          case self::CMD_CLEAR_ALL :
-                              $this->_checkAppExists();
-                              $this->clearCache();
-                              $this->clearLog();
-                              break;
-                          case self::CMD_CREATE :
-                          case self::CMD_READ :
-                          case self::CMD_UPDATE :
-                          case self::CMD_DELETE :
-                              $this->_checkAppExists();
-                              $uri = $this->_command->command->args['uri'];
-                              $values = $this->_command->command->options['file'] ?
-                              BEAR::loadValues($this->_command->command->options['file']) : array();
-                              $this->_result = $this->_request($commandName, $uri, $values)->getRo();
-                              $this->_config['debug'] = true;
-                              break;
-                          default :
-                              if ($this->_config['cli']) {
-                                  $this->_result = "BEAR: {$argv[1]}: command not found, try 'bear --help'";
-                              } else {
-                                  $this->_result = "BEAR: {$argv[1]}: command not found, try 'help'";
-                              }
-                              return;
-                      }
-                  } catch(Exception $e) {
-                      $parser->displayError($e->getMessage());
-                  }
+                array('description' => 'application path. ex) /var/www/bear.test')
+            );
+            // show app
+            $subCmd = $parser->addCommand(
+                self::CMD_SHOW_APP,
+                array('description' => 'show application path.')
+            );
+        }
+        //exec
+        try {
+            ob_start();
+            $this->_command = $parser->parse(count($argv), $argv);
+            $buff = ob_get_clean();
+            $commandName = $this->_command->command_name;
+            switch ($this->_command->command_name) {
+                case self::CMD_INIT_APP :
+                    $path = $this->_command->command->args['path'];
+                    $path = $this->_makeFullPath($path);
+                    $pearrc = $this->_command->command->options['pearrc'];
+                    $this->_initApp($path, $pearrc);
+                    $this->_setApp($path);
+                    break;
+                case self::CMD_SET_APP :
+                    $path = $this->_command->command->args['path'];
+                    $path = $this->_makeFullPath($path);
+                    $this->_setApp($path);
+                    break;
+                case self::CMD_SHOW_APP :
+                    $this->_checkAppExists();
+                    $this->_showApp();
+                    break;
+                case self::CMD_CLEAR_CACHE :
+                    $this->_checkAppExists();
+                    $this->clearCache();
+                    break;
+                case self::CMD_CLEAR_LOG :
+                    $this->_checkAppExists();
+                    $this->clearLog();
+                    break;
+                case self::CMD_CLEAR_ALL :
+                    $this->_checkAppExists();
+                    $this->clearCache();
+                    $this->clearLog();
+                    break;
+                case self::CMD_CREATE :
+                case self::CMD_READ :
+                case self::CMD_UPDATE :
+                case self::CMD_DELETE :
+                    $this->_checkAppExists();
+                    $uri = $this->_command->command->args['uri'];
+                    $values = $this->_command->command->options['file'] ?
+                    BEAR::loadValues($this->_command->command->options['file']) : array();
+                    $this->_result = $this->_request($commandName, $uri, $values)->getRo();
+                    $this->_config['debug'] = true;
+                    break;
+                default :
+                    if ($this->_config['cli']) {
+                    $this->_result = "BEAR: {$argv[1]}: command not found, try 'bear --help'";
+                } else {
+                    $this->_result = "BEAR: {$argv[1]}: command not found, try 'help'";
+                }
+                return;
+            }
+        } catch(Exception $e) {
+            $parser->displayError($e->getMessage());
+        }
     }
 
     /**
@@ -359,8 +402,8 @@ class BEAR_Dev_Shell extends BEAR_Base
                         $key',
                         '$val = (is_string($val) && strlen($val) >= ' . $len . ')?
                         substr($val, 0, ' . $len . ' - 2) . "…" : $val;'
-                        )
-                        );
+                )
+                );
             }
             if (is_array($body) || is_object($body)) {
                 switch ($this->_command->command->options['format']) {

@@ -22,7 +22,6 @@
  * @since      File available since Release 1.6.0
  * @ignore
  */
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
 require '../../BEAR.php';
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 $config['package'] = 'BEAR';

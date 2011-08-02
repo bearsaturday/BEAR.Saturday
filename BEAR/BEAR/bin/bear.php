@@ -1,8 +1,4 @@
 <?php
-ini_set('include_path', dirname(dirname(dirname(dirname(__FILE__)))) . ':' . get_include_path());
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-
 /**
  * BEAR
  *
@@ -18,10 +14,12 @@ ini_set('log_errors', 1);
  * @link      http://www.bear-project.net/
  */
 
-
-// BEAR Path
 $bearPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))));
-set_include_path($bearPath . PATH_SEPARATOR . get_include_path());
+$vendorPEARPath = "{$bearPath}/BEAR/vendors/PEAR";
+ini_set('include_path', $bearPath . PATH_SEPARATOR . $vendorPEARPath . PATH_SEPARATOR . get_include_path());
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+
 
 /**
  * BEAR CLI
@@ -72,24 +70,49 @@ class BEAR_Bin_Bear
      */
     public function init()
     {
+        $appPath = $this->_getAppPath();
+        ob_start();
+        if ($appPath) {
+            ini_set('include_path', $appPath . ':' . get_include_path());
+            $bearMode = $this->getBearMode($appPath);
+            $_SERVER['bearmode'] = $bearMode;
+            include_once "{$appPath}/App.php";
+            // CLI用ページをセット
+            BEAR::set('page', new BEAR_Page_Cli(array()));
+        }
+        $this->_initBear();
+    }
+
+    /**
+     * Get App path by -app or ~/.bearrc
+     *
+     * @return mixed
+     *
+     */
+    private function _getAppPath()
+    {
+        $argv = $_SERVER["argv"];
+        $count = count($argv);
+        $count--;
+        $hasLastOption =  $count > 0 && isset($argv[$count]) && isset($argv[$count - 1]);
+        $hasAppOption = ($hasLastOption && $argv[$count - 1] === '--app') || ($hasLastOption && $argv[$count - 1] === '-a');
+        if  ($hasAppOption === true){
+            $appPath = realpath($argv[$count]);
+            if (isset($argv[$count]) && $appPath && file_exists($appPath . '/App.php')) {
+                return $appPath;
+            } else {
+                die("Invalid app path [{$path}]\n");
+            }
+        }
         $bearrc = getenv('HOME') . '/.bearrc';
         if (file_exists($bearrc)) {
             $bearrc = unserialize(file_get_contents($bearrc));
             $appPath = $bearrc['app'];
             if (file_exists("{$appPath}/App.php")) {
-                ini_set('include_path', $appPath . ':' . get_include_path());
-                $bearMode = $this->getBearMode($appPath);
-                $_SERVER['bearmode'] = $bearMode;
-                include_once "{$appPath}/App.php";
-                // CLI用ページをセット
-                BEAR::set('page', new BEAR_Page_Cli(array()));
-            } else {
-                $this->_initBear();
+                return $appPath;
             }
-        } else {
-            $this->_initBear();
         }
-		error_reporting(0);
+        return false;
     }
 
     /**
@@ -112,9 +135,6 @@ class BEAR_Bin_Bear
      */
     public function exec()
     {
-        ini_set('display_errors', 0);
-        ini_set('log_errors', 1);
-        error_reporting(E_ERROR);
         if ($_SERVER['argc'] == 1) {
             $_SERVER['argc'] == 2;
             $argv = array('bear.php', '--help');
