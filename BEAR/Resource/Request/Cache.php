@@ -105,7 +105,6 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                 throw $this->_exception($msg, array('info' => $info));
             }
         }
-        ob_flush();
         return $ro;
     }
 }
