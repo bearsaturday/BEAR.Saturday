@@ -231,7 +231,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $ro->setBody($result);
         $ro->setHeaders($info);
         $pager->setPagerLinks($links, $info);
-        $ro->setLinks(array('pager' => $links));
+        $ro->setLinks(array('pager' => array($links, $info)));
         $log = BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
         return $ro;
     }
