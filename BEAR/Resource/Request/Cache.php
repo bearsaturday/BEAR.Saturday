@@ -82,7 +82,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
             $ro->setBody($saved['body']);
             $ro->setLinks($saved['links']);
             if (isset($saved['links']['pager'])) {
-                BEAR::dependency('BEAR_Pager')->setPagerLinks($saved['links']['pager'][0], $saved['links']['pager'][1]);
+                BEAR::dependency('BEAR_Pager')->setPagerLinks($saved['links']['pager']['links'], $saved['links']['pager']['info']);
             }
             unset($saved);
         } else {
