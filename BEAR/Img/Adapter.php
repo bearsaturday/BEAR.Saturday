@@ -234,20 +234,20 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      */
     public function loadRemoteFile($file)
     {
-        if (strpos($file, 'http') !== false) {
-            $tmpFile = $this->getTmpFileName($file);
-            if (!file_exists($tmpFile)) {
-                //リモートファイルの取得
-                $remoteFile = file_get_contents($file);
-                if ($remoteFile === false) {
-                    $this->_error("loadRemoteFile file=[{$remoteFile}]");
-                }
-                file_put_contents($tmpFile, $remoteFile);
-                BEAR_Img::$deleteFiles[] = $tmpFile;
-            }
-            $file = $tmpFile;
+        if (strpos($file, 'http://') !== 0) {
+            return $file;
         }
-        return $file;
+        $tmpFile = $this->getTmpFileName($file);
+        if (!file_exists($tmpFile)) {
+            //リモートファイルの取得
+            $remoteFile = file_get_contents($file);
+            if ($remoteFile === false) {
+                $this->_error("loadRemoteFile file=[{$remoteFile}]");
+            }
+            file_put_contents($tmpFile, $remoteFile);
+            BEAR_Img::$deleteFiles[] = $tmpFile;
+        }
+        return $tmpFile;
     }
 
     /**

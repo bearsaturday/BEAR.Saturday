@@ -19,12 +19,7 @@
 require _BEAR_BEAR_HOME . '/BEAR/vendors/Smarty/libs/Smarty.class.php';
 
 /**
- * Smarty
- *
- * <pre>
- * BEARで使うテンプレートエンジンのSmartyです。コンストラクタで
- * 初期設定をしています。
- * </pre>
+ * Smarty factory
  *
  * @category  BEAR
  * @package   BEAR_Smarty
@@ -37,6 +32,8 @@ require _BEAR_BEAR_HOME . '/BEAR/vendors/Smarty/libs/Smarty.class.php';
  * @instance singleton
  *
  * @config string ua UAコード
+ * @config string compile_dir
+ * @config string cache_dir
  */
 class BEAR_Smarty extends BEAR_Factory
 {
@@ -62,20 +59,19 @@ class BEAR_Smarty extends BEAR_Factory
     }
 
     /**
-     * Smartyオブジェクトを生成
+     * Return smarty object
      *
      * @return Smarty
      */
     public function factory()
     {
-        //親コンストラクタ
         $smarty = new Smarty();
-        //フォルダパス設定
+        // フォルダパス設定
         $smarty->template_dir = _BEAR_APP_HOME . $this->_config['path'];
         $smarty->config_dir = _BEAR_APP_HOME . '/App/smarty/configs/';
-        $smarty->compile_dir = _BEAR_APP_HOME . '/tmp/smarty_templates_c/';
+        $smarty->compile_dir = isset($this->_config['compile_dir']) ? $this->_config['compile_dir'] : _BEAR_APP_HOME . '/tmp/smarty_templates_c/';
         $smarty->compile_id = isset($this->_config['ua']) ? $this->_config['ua'] : '';
-        $smarty->cache_dir = _BEAR_APP_HOME . '/tmp/smarty_cache/';
+        $smarty->cache_dir = isset($this->_config['cache_dir']) ? $this->_config['cache_dir'] : _BEAR_APP_HOME . '/tmp/smarty_cache/';
         $smarty->plugins_dir = array('plugins',
             'App/smarty/plugins/',
             'BEAR/Smarty/plugins/');
