@@ -84,6 +84,15 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
         if (!$result) {
             $result = $default;
         }
+        if ($result instanceof BEAR_Ro_Container) {
+            $ro = BEAR::factory('BEAR_Ro');
+            $ro->setCode($result->code)
+            ->setHeaders((array)$result->header)
+            ->setBody($result->body)
+            ->setLinks($result->links)
+            ->setHtml($result->html);
+            $result = $ro;
+        }
         if ($result) {
             $this->_log->log('Apc[R]', $key);
         }

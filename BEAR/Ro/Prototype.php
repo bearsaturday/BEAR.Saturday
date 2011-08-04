@@ -188,7 +188,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         $isLinkCache = isset($this->_config['request']['options']['cache']['link']) &&
             $this->_config['request']['options']['cache']['link'];
         if ($isLinked && $isLinkCache === true) {
-            $life = $this->_config['request']['options']['cache']['link'];
+            $life = $this->_config['request']['options']['cache']['life'];
         } elseif (!$isLinked && isset($this->_config['request']['options']['cache']['life']) &&
             isset($this->_config['request']['options']['template'])) {
             $life = $this->_config['request']['options']['cache']['life'];
@@ -222,7 +222,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         }
         // キャッシュ書き込み
         if (isset($useCache)) {
-            $cache->set($cacheKey, $this->_ro);
+            $roContainer = new BEAR_Ro_Container($this->_ro);
+            $cache->set($cacheKey, $roContainer);
         }
     }
 
