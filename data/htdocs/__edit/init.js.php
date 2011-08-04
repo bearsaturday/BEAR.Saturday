@@ -1,5 +1,6 @@
 <?php
-ini_set('display_errors', 0);
+error_reporting(0);
+
 require_once 'App.php';
 require_once 'BEAR.php';
 require_once 'Tree.php';

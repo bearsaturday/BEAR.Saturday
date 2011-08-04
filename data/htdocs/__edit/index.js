@@ -66,11 +66,10 @@ function set_editor(data) {
       	  'C-s': save
         });
         $('#editor').keybind('keyup', {
-        	'A-s': save
+        	'C-S-s': save
         });
         $('span.editor_file_save').bind("click", save);
     }
-    
 }
 
 /**
