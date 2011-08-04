@@ -74,6 +74,8 @@ if (isset($_GET['_cc'])) {
 // log
 $log = array();
 $log['BEAR'] = BEAR::VERSION;
-$log['URI'] = $_SERVER['REQUEST_URI'];
+if (isset($_SERVER['REQUEST_URI'])) {
+    $log['URI'] = $_SERVER['REQUEST_URI'];
+}
 $log['time'] = _BEAR_DATETIME;
 BEAR::dependency('BEAR_Log')->log('start', $log);
