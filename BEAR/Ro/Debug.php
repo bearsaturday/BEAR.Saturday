@@ -80,7 +80,7 @@ class BEAR_Ro_Debug extends BEAR_Base
             } elseif ($_GET['_resource'] === 'body') {
                 $resourceHtml = print_a($body, 'return:1');
                 $logs = $ro->getHeader('_log');
-                foreach ($logs as $logKey => $logVal) {
+                foreach ((array)$logs as $logKey => $logVal) {
                     $resourceHtml .= '<div class="bear-resource-info-label">' . $logKey. '</div>';
                     $resourceHtml .= is_scalar($logVal) ? $logVal : print_a($logVal, 'return:1');
                 }
@@ -150,8 +150,8 @@ class BEAR_Ro_Debug extends BEAR_Base
             // bodyが表構造と仮定
             $table = array();
             $table[] = (array_values(array_keys($body[0])));
-            foreach ($body as $key => $val) {
-                $table[] = array_values($val);
+            foreach ((array)$body as $key => $val) {
+                $table[] = array_values((array)$val);
             }
             FB::table($labelUri, $table);
         } else {
