@@ -54,20 +54,26 @@ class BEAR_Dev_Util
         }
         // エラー統計
         $errorFgColor = "white";
+        $errors = Panda::getAllErrors();
         $errorStat = Panda::getErrorStat();
-        if ($errorStat & E_ERROR) {
+        $errorMsg = implode("\n", $errors);
+        if ($errorStat & E_ERROR || $errorStat & E_USER_ERROR  || $errorStat & E_RECOVERABLE_ERROR) {
             $errorBgColor = "red";
-            $errorMsg = "Fatal Error";
-        } elseif ($errorStat & E_WARNING) {
+            $errorMsg = "Fatal Error: {$errorMsg}";
+            $bear = "BEAR - Error";
+        } elseif ($errorStat & E_WARNING || $errorStat & E_USER_WARNING) {
             $errorBgColor = "yellow";
             $errorFgColor = "black";
-            $errorMsg = "Warning";
-        } elseif ($errorStat & E_NOTICE) {
+            $errorMsg = "WARNING: {$errorMsg}";
+            $bear = "BEAR - Warning";
+        } elseif ($errorStat & E_NOTICE || $errorStat & E_USER_NOTICE) {
             $errorBgColor = "#2D41D7";
-            $errorMsg = "Notice";
+            $errorMsg = "NOTICE: {$errorMsg}";
+            $bear = "BEAR";
         } else {
             $errorBgColor = "green";
-            $errorMsg = 'No Error';
+             $errorMsg = "{$errorMsg}";
+            $bear = "BEAR";
         }
         // デバック情報表示HTML
         // bear.jsを使用する場合はbear_debuggingがtrueになる
@@ -110,7 +116,7 @@ class BEAR_Dev_Util
         $budgeHtml .= '<a href="/__bear/?id=@@@log_id@@@" class="bear_badge" title="';
         $budgeHtml .= $errorMsg . '" style="background-color:' . $errorBgColor;
         $budgeHtml .= ';color:' . $errorFgColor . ';';
-        $budgeHtml .= '">BEAR</a><a href="?_bearinfo" class="bear_info">i</a></div>';
+        $budgeHtml .= '">' . $bear .'</a><a href="?_bearinfo" class="bear_info">i</a></div>';
         $budgeHtml = str_replace(
         	'</body>',
         	"$budgeHtml" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . "</body>",
