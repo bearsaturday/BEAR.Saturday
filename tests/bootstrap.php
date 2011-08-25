@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 // set path
 $bearPath = realpath(__DIR__ . '/../');
-$bearDemoPath = '/usr/local/app/bear.demo';
+$bearDemoPath = '/usr/local/php/beardemo.local';
 
 // set autoloder
 set_include_path($bearPath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());

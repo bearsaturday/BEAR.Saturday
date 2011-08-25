@@ -8,7 +8,7 @@
  */
 
 $bearMode = 0;
-require __DIR__ . '/../sites/bear.demo/App.php';
+require __DIR__ . '/../sites/beardemo.local/App.php';
 
 /**
  * @category   BEAR
@@ -122,7 +122,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
     {
         $params = array(
             'uri' => 'page://self/resource/html/index',
-            'values' => array('host' =>'bear.demo',
+            'values' => array('host' =>'beardemo.local',
                               'uri' => 'http://www.feedforall.com/sample.xml'),
             'options' => array(
                 'output' => 'html'
