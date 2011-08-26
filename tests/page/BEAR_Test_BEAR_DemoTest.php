@@ -318,4 +318,20 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($actualBody['sec']));
         $this->assertInternalType('float', $actualBody['sec']);
     }
+
+    public function testHeaders()
+    {
+        $params = array(
+            'uri' => 'page://self/test/page/header',
+            'values' => array(),
+            'options' => array(
+                'output' => 'html'
+            )
+        );
+        $headers = $this->_resource->read($params)->getHeaders();
+        $this->assertTrue(in_array("cache-control:no-cache", $headers));
+        $this->assertTrue(in_array("test-beardemo-header:1", $headers));
+        $this->assertTrue(in_array("pragma:no-cache", $headers));
+        $this->assertTrue(in_array("content-type:text/plain;charset=utf-8", $headers));
+    }
 }

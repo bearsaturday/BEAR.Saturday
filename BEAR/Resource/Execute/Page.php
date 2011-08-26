@@ -75,7 +75,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             BEAR_Main::includePage($pageFile);
         }
         if (!class_exists($pageClass, false)) {
-            throw new $this->_exception("Page class[$pageClass] is not exist.");
+            throw new BEAR_Exception("Page class[$pageClass] is not exist.");
         }
         $pageConfig = array('resource_id' => $pageClass, 'mode' => BEAR_Page::CONFIG_MODE_RESOURCE);
         $pageOptions = $this->_config['options'];
