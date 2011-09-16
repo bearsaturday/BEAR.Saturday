@@ -8,7 +8,7 @@
  */
 
 $bearMode = 0;
-require_once __DIR__ . '/../apps/beardemo.local/App.php';
+require __DIR__ . '/../sites/beardemo.local/App.php';
 
 /**
  * @category   BEAR
@@ -20,7 +20,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        restore_error_handler();
+        //restore_error_handler();
         $this->_resource = new BEAR_Resource(array());
         $this->_resource->onInject();
         $this->_query = new BEAR_Test_Query;
@@ -67,7 +67,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content ul li');
         $expected = '<li>Athos</li>';
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content div#blog ul ul li.trackback');
-        $expected = '<li class="trackback">記事ID(101)のトラックバック155</li>';
+        $expected = '<li class="trackback">記事ID(101)のトラックバック153</li>';
         $this->assertSame($expected, $xml[5]);
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content p');
         $expected = '<p>[Athos]のユーザーリソースは問題なく取得できました</p>';
@@ -111,19 +111,19 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         $html = $this->_resource->read($params)->getBody();
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content div#blog ul li.entry span.title');
         $expected = '<span class="title">Go</span>';
-        $this->assertSame($expected, $xml[0]);
+        $this->assertSame($expected, $xml[1]);
     }
 
     /**
      * HTTPリソース
      *
      */
-    public function testResourceHttp()
+    public function atestResourceHttp()
     {
         $params = array(
             'uri' => 'page://self/resource/html/index',
-            'values' => array('host' =>'bear.demo',
-                              'uri' => 'http://www.feedforall.com/sample.xml'),
+            'values' => array('host' =>'beardemo.local',
+                              'uri' => 'http://beardemo.local/resource/sample/rss.php'),
             'options' => array(
                 'output' => 'html'
             )
@@ -222,12 +222,12 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         $expected = 25;
         $this->assertSame($expected, count($xml));
         $expected = '<li>
-      〒13101-102  　東京都千代田区飯田橋
+      〒13101-100  　東京都千代田区以下に掲載がない場合
     </li>';
         $actual = $xml[0];
         $this->assertSame($expected, $actual);
         $expected = '<li>
-      〒13101-100  　東京都千代田区霞が関霞が関ビル（１６階）
+      〒13101-100  　東京都千代田区霞が関霞が関ビル（１５階）
     </li>';
         $actual = $xml[24];
         $this->assertSame($expected, $actual);
@@ -317,5 +317,21 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($actualBody['name'] === 'クマ');
         $this->assertTrue(isset($actualBody['sec']));
         $this->assertInternalType('float', $actualBody['sec']);
+    }
+
+    public function testHeaders()
+    {
+        $params = array(
+            'uri' => 'page://self/test/page/header',
+            'values' => array(),
+            'options' => array(
+                'output' => 'html'
+            )
+        );
+        $headers = $this->_resource->read($params)->getHeaders();
+        $this->assertTrue(in_array("cache-control:no-cache", $headers));
+        $this->assertTrue(in_array("test-beardemo-header:1", $headers));
+        $this->assertTrue(in_array("pragma:no-cache", $headers));
+        $this->assertTrue(in_array("content-type:text/plain;charset=utf-8", $headers));
     }
 }

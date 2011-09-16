@@ -17,9 +17,8 @@
 $bearPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))));
 $vendorPEARPath = "{$bearPath}/BEAR/vendors/PEAR";
 ini_set('include_path', $bearPath . PATH_SEPARATOR . $vendorPEARPath . PATH_SEPARATOR . get_include_path());
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-
+ini_set('error_log', 'syslog');
+set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
 
 /**
  * BEAR CLI
@@ -169,6 +168,38 @@ class BEAR_Bin_Bear
         $htaccess = file_get_contents($path);
         preg_match('/bearmode (\d+)/is', $htaccess, $matches);
         return (isset($matches[1])) ? $matches[1] : 0;
+    }
+
+    /**
+     * CLI Error handler
+     *
+     * @param int    $errno
+     * @param string $errmsg
+     * @param string $file
+     * @param int    $line
+     * @param array  $vars
+     */
+    public static function errorHandler($errno, $errmsg, $file, $line, $errcontext) {
+        {
+            if ($errno & E_DEPRECATED || $errno & E_STRICT) {
+                return;
+            }
+            $errortype = array (
+                E_ERROR   =>  "Error",
+                E_WARNING   =>  "Warning",
+                E_PARSE   =>  "Parsing Error",
+                E_NOTICE   =>  "Notice",
+                E_CORE_ERROR  =>  "Core Error",
+                E_CORE_WARNING  =>  "Core Warning",
+                E_COMPILE_ERROR  =>  "Compile Error",
+                E_COMPILE_WARNING =>  "Compile Warning",
+                E_USER_ERROR =>  "User Error",
+                E_USER_WARNING =>  "User Warning",
+                E_USER_NOTICE =>  "User Notice"
+            );
+            $prefix = $errortype[$errno];
+            error_log("{$prefix}[{$errno}]: $errmsg in $file on line $line\n", 0);
+        }
     }
 }
 //bearコマンド実行

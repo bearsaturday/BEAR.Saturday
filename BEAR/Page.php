@@ -297,6 +297,11 @@ abstract class BEAR_Page extends BEAR_Base
             $this->set('pager', $pager);
         }
         $this->_pageRo = $this->_viewAdapter()->display($tplName, $options);
+        // add page BEAR_Page_Hedaers header
+        $pageHeaders = (array)BEAR::dependency('BEAR_Page_Header')->getHeaders();
+        $roHeaders = $this->_pageRo->getHeaders();
+        $headers = array_merge($roHeaders, $pageHeaders);
+        $this->_pageRo->setHeaders($headers);
         $this->_outputHttp($this->_pageRo);
     }
 

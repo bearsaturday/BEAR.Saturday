@@ -17,6 +17,9 @@
 			<property name="eolChar" value="\n" />
 		</properties>
 	</rule>
+    <rule ref="Generic.Files.LineEndings.InvalidEOLChar">
+        <message>改行コードが\nではありません。</message>
+    </rule>
 	<!-- Lines can be 120 chars long, but never show errors -->
 	<rule ref="Generic.Files.LineLength">
 		<properties>
@@ -53,23 +56,36 @@
 	<rule ref="Generic.WhiteSpace.DisallowTabIndent" />
 
 	<!-- PEAR -->
-	<rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine" />
+	<rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine">
+	   <severity>3</severity>
+	</rule>
+	
 	<rule ref="PEAR.Commenting.FileComment.TagIndent">
         <severity>3</severity>
 	</rule>
 	<rule ref="PEAR.Commenting.FileComment.InvalidVersion">
 		<severity>0</severity>
 	</rule>
+    <rule ref="PEAR.Commenting.ClassComment.MissingTag">
+        <severity>3</severity>
+    </rule>
+	
 	<rule ref="PEAR.Commenting.ClassComment.InvalidPackage">
 		<severity>0</severity>
 	</rule>
 	<rule ref="PEAR.Commenting.ClassComment.TagIndent">
         <severity>3</severity>
 	</rule>
+    <rule ref="PEAR.Commenting.FileComment.Missing">
+        <severity>0</severity>
+    </rule>
 	<rule ref="PEAR.Commenting.FileComment.MissingVersion">
 		<severity>0</severity>
 	</rule>
 	<rule ref="PEAR.Commenting.FunctionComment" />
+	<rule ref="PEAR.Commenting.FunctionComment.WrongStyle">
+	   <severity>5</severity>
+	</rule>
 	<rule ref="PEAR.Commenting.FunctionComment.ParameterCommentsNotAligned">
 		<severity>0</severity>
 	</rule>
@@ -80,8 +96,12 @@
 		<severity>0</severity>
 	</rule>
 	<rule ref="PEAR.Commenting.FunctionComment.MissingParamComment">
-		<severity>1</severity>
+		<severity>3</severity>
 		<message>%s(%s番目のパラメータ）のコメントがありません。</message>
+	</rule>
+	<rule ref="PEAR.Commenting.FunctionComment.MissingReturn">
+		<severity>3</severity>
+		<message>functionのコメントに@returnがありません</message>
 	</rule>
 	<rule ref="PEAR.Commenting.FunctionComment.MissingParamTag">
 		<severity>0</severity>
@@ -104,7 +124,7 @@
 		<severity>0</severity>
 	</rule>
 	<rule ref="PEAR.NamingConventions.ValidVariableName.PublicUnderscore">
-		<severity>0</severity>
+		<severity>5</severity>
 	</rule>
 	<rule ref="PEAR.NamingConventions.ValidFunctionName.PublicUnderscore">
 		<severity>0</severity>
@@ -132,6 +152,9 @@
 	</rule>
 	<rule ref="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore">
 		<severity>0</severity>
+	</rule>
+	<rule ref="Zend.NamingConventions.ValidVariableName.PublicHasUnderscore">
+	   <severity>3</severity>
 	</rule>
 
 	<!-- Squiz -->
@@ -165,6 +188,10 @@
 		<severity>0</severity>
 	</rule>
 	<rule ref="Squiz.Classes.ClassDeclaration" />
+	<rule ref="Squiz.Classes.ClassDeclaration.OpenBraceNewLine">
+	   <severity>3</severity>
+	   <message>{がクラス宣言の次の行で開かれていません</message>
+	</rule>
 	<rule ref="Squiz.Classes.ClassDeclaration.EndFileAfterCloseBrace">
 		<severity>0</severity>
 	</rule>
@@ -184,7 +211,12 @@
 	<rule ref="Squiz.Commenting.BlockComment" />
 	<rule ref="Squiz.Commenting.DocCommentAlignment" />
 	<rule ref="Squiz.Commenting.EmptyCatchComment" />
-	<rule ref="Squiz.Commenting.FileComment" />
+	<rule ref="Squiz.Commenting.FileComment">
+	   <severity>0</severity>
+	</rule>
+	<rule ref="Squiz.Commenting.FileComment.Missing">
+	   <severity>0</severity>
+	</rule>
 	<rule ref="Squiz.Commenting.FileComment.TagIndent">
         <severity>0</severity>
 	</rule>
@@ -252,6 +284,10 @@
 
 
 	<rule ref="Squiz.Commenting.FunctionComment.MissingParamComment" />
+	
+	<rule ref="Squiz.Commenting.FunctionComment.MissingReturn">
+	   <severity>0</severity>
+	</rule>
 
 
 	<rule ref="Squiz.Commenting.FunctionComment.ShortNotCapital">
@@ -332,6 +368,10 @@
 	<rule ref="Squiz.PHP.GlobalKeyword" />
 	<rule ref="Squiz.PHP.NonExecutableCode" />
 	<rule ref="Squiz.Scope.MemberVarScope" />
+	<rule ref="Squiz.Scope.MemberVarScope.Missing">
+	   <severity>3</severity>
+	   <message>メンバー変数(%s)にmodiferが宣言されていません</message>
+	</rule>
 	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="Squiz.Scope.StaticThisUsage" />
 	<rule ref="Squiz.Strings.DoubleQuoteUsage">
@@ -351,15 +391,25 @@
 	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing" />
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing">
 		<exclude name="Squiz.WhiteSpace.MemberVarSpacing.After" />
+		<severity>3</severity>
 	</rule>
 	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing" />
 	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing.Before">
 	   <severity>0</severity>
 	</rule>"
 	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+	    <message>%s(%s番目のパラメータ）のコメントがありません。</message>
 		<severity>3</severity>
 	</rule>
-	<rule ref="Squiz.WhiteSpace.PropertyLabelSpacing" />
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<severity>3</severity>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore">
+        <severity>3</severity>
+    </rule>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter">
+        <severity>3</severity>
+    </rule>
 	<rule ref="Squiz.WhiteSpace.ScopeClosingBrace" />
 	<rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing" />
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing" />

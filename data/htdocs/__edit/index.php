@@ -27,16 +27,16 @@
 <body class="twoColHybLt" style="background-color:#DFE4EA">
 <div style="background-color: #c9d9fb;" ><img src="jqueryFileTree/images/file.png" align="bottom"><span id="path" class="path"> Unloaded</span></div>
 <div id="container">
-<div id="sidebar1">
+<div id="sidebar1" style="overflow:scroll">
   <div id="container_id1"></div>
   <div id="container_id2"></div>
   <div id="container_id3"></div>
   <div id="container_id"></div>
 </div>
   <div id="mainContent">
-    <div id="editor" style="position:absolute; left:200px; background-color:white; color:gray; width: 1000px; height: 95%; border: 1px solid black; "></div>
+    <div id="editor" style="position:absolute; left:<?php echo (isset($_GET['x'])) ? $_GET['x'] : 200; ?>px; background-color:white; color:gray; width: 1000px; height: 95%; border: 1px solid black; "></div>
  <div id="file_info"></div>
-    <div id="lavel" class="editor_label"><span class="editor_file_save">BEAR</span></div>
+    <div id="label" class="editor_label"><span class="editor_file_save">BEAR</span></div>
     </div>
 </div>
 </body>

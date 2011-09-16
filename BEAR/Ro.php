@@ -565,6 +565,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
             default :
                 header($_SERVER["SERVER_PROTOCOL"] . ' 200 OK');
         }
+        // this RO headers
         if (is_array($this->_headers)) {
             foreach ($this->_headers as $header) {
                 if (is_string($header)) {
@@ -572,6 +573,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
                 }
             }
         }
+
         $log = BEAR::dependency('BEAR_Log');
         $log->log(
         	'HTTP Output',

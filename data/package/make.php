@@ -77,7 +77,7 @@ $packagexml->addRole('tpl', 'php');
 $packagexml->addInstallAs('BEAR/BEAR/bin/bear.sh', 'bear');
 
 // dependency pear.bear-project.net
-$packagexml->addPackageDepWithChannel('required', 'Panda', 'pear.bear-project.net', '0.3.30');
+$packagexml->addPackageDepWithChannel('required', 'Panda', 'pear.bear-project.net', '0.3.38');
 // dependency pear.zfcampus.org1
 //$packagexml->addPackageDepWithChannel('required', 'zf', 'pear.zfcampus.org', '1.10.2');
 // dependency pear.php.net

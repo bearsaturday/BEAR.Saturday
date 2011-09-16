@@ -52,7 +52,9 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
         } else {
             $cacheKey = serialize($chain);
             $cache = BEAR::dependency('BEAR_Cache');
-            $cache->setLife($options['cache']['life']);
+            if (isset($config['options']['cache']['life'])) {
+                $cache->setLife($config['options']['cache']['life']);
+            }
             $result = $cache->get($cacheKey);
             if (!$result) {
                 $result = $this->_chainLink($rootRo, $chain);

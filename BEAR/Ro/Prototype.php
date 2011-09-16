@@ -364,9 +364,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function getLinkedBody()
     {
         $this->_doRequest();
-        $result = BEAR::dependency(
-        	'BEAR_Ro_Prototype_Link', $this->_prototypeLink
-        )->chainLink($this->_ro, $this->_chainLink);
+        $result = BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink )->chainLink($this->_ro, $this->_chainLink);
         return $result;
     }
 

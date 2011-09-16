@@ -18,12 +18,10 @@ require_once 'FirePHPCore/FirePHP.class.php';
 require_once 'FirePHPCore/fb.php';
 
 // シャットダウン関数登録
-if (isset($_SERVER)
-&& isset($_SERVER['REQUEST_URI'])
-&& substr($_SERVER['REQUEST_URI'], 1, 2) !== '__'
-) {
-    register_shutdown_function(array('BEAR_Dev_Util', 'onShutdownDebug'));
-    register_shutdown_function(array('BEAR_Log', 'onShutdownDebug'));
+if (isset($_SERVER) && isset($_SERVER['REQUEST_URI'])
+    && substr($_SERVER['REQUEST_URI'], 1, 2) !== '__') {
+        register_shutdown_function(array('BEAR_Dev_Util', 'onShutdownDebug'));
+        register_shutdown_function(array('BEAR_Log', 'onShutdownDebug'));
 }
 
 // エラー初期化(Panda)
@@ -37,9 +35,9 @@ if (isset($_SERVER['beardev']) && $_SERVER['beardev']) {
     $validPath[] = _BEAR_BEAR_HOME;
 }
 $pandaConfig = array(Panda::CONFIG_DEBUG => $appConfig['core']['debug'],  // デバックモード
-Panda::CONFIG_VALID_PATH => $validPath,  // エラーレポートするファイルパス
-Panda::CONFIG_LOG_PATH => _BEAR_APP_HOME . '/logs/', // fatalエラーログを保存するパス
-Panda::CONFIG_ON_IS_CLI_OUTPUT => array('BEAR_Main', 'isCliErrorOutput'));
+    Panda::CONFIG_VALID_PATH => $validPath,  // エラーレポートするファイルパス
+    Panda::CONFIG_LOG_PATH => _BEAR_APP_HOME . '/logs/' // fatalエラーログを保存するパス
+);
 if (isset($appConfig['Panda'])) {
     $pandaConfig = array_merge($pandaConfig, $appConfig['Panda']);
 }
@@ -74,6 +72,8 @@ if (isset($_GET['_cc'])) {
 // log
 $log = array();
 $log['BEAR'] = BEAR::VERSION;
-$log['URI'] = $_SERVER['REQUEST_URI'];
+if (isset($_SERVER['REQUEST_URI'])) {
+    $log['URI'] = $_SERVER['REQUEST_URI'];
+}
 $log['time'] = _BEAR_DATETIME;
 BEAR::dependency('BEAR_Log')->log('start', $log);
