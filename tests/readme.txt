@@ -1,0 +1,1 @@
+git clone git@github.com:koriym/beardemo.local.git tests/apps/beardemo.local
