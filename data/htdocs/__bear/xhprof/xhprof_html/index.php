@@ -7,7 +7,7 @@ require_once (XHPROF_LIB_ROOT . "/utils/common.php");
 
 if (!in_array($_SERVER['REMOTE_ADDR'], $controlIPs))
 {
-  die("You do not have permission to view this page.");
+  //die("You do not have permission to view this page.");
 }
 
 

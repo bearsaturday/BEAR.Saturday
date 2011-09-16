@@ -458,42 +458,6 @@ class BEAR_Main extends BEAR_Base
     }
 
     /**
-     * TokenがAJAXのものか検査
-     *
-     * @param string $token トークン
-     *
-     * @return bool
-     *
-     *
-     * @ignore
-     */
-    private function _isAjaxToken($token)
-    {
-        $ajaxToken = BEAR_Form::makeToken(true);
-        $result = ($token == $ajaxToken) ? true : false;
-        return $result;
-    }
-
-    /**
-     * トークン有効チェック
-     *
-     * セッショントークンが有効なものかどうか検査します。
-     *
-     * @param string $token トークン
-     *
-     * @return bool
-     */
-    public function isTokenValid($token)
-    {
-        $mdFiveShort = substr($token, 1, 12);
-        $tokenCheckSum = substr($token, 13, 2);
-        $genuineCheckSum = substr(md5(hexdec($mdFiveShort) * 5 - 1), 0, 2);
-        $result = ($tokenCheckSum == $genuineCheckSum) ? true : false;
-        $this->_log->log('Token Status', $result ? "Secure" : "Unsecure");
-        return $result;
-    }
-
-    /**
      * フォームバリデーションOK処理
      *
      * トークンの検査を行い不正アクセスでなければonActionメソッドの引数に

@@ -60,11 +60,6 @@ class BEAR_Session extends BEAR_Base
     const ADAPTER_MEMCACHE = 3;
 
     /**
-     * セッショントークン
-     */
-    const SESSION_TOKEN = 'stoken';
-
-    /**
      * Constructor
      *
      * @param array $config
@@ -104,7 +99,7 @@ class BEAR_Session extends BEAR_Base
         HTTP_Session2::start(null);
         // セッションを通じた固定トークン
         if (HTTP_Session2::isNew()) {
-            HTTP_Session2::set(self::SESSION_TOKEN, substr(md5(uniqid()), 0, 4));
+            BEAR::dependency('BEAR_Form_Token')->newSessionToken();
         }
         // 有効期限
         if (isset($this->_config['idle']) && $this->_config['idle']) {
@@ -140,7 +135,10 @@ class BEAR_Session extends BEAR_Base
             HTTP_Session2::setGcMaxLifeTime($this->_config['gc_max_lifetime']);
         }
         // セッションスタート
-        $this->_log->log('Session Start', array('id' => session_id(), 'module' => session_module_name() . '/' . $this->_config['adapter']));
+        $this->_log->log('Session Start',
+                          array('id' => session_id(),
+                          'module' => session_module_name() . '/' . $this->_config['adapter'])
+        );
     }
 
     /**

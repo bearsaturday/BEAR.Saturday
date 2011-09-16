@@ -55,24 +55,48 @@ class BEAR_Resource_Request extends BEAR_Base
         if (!isset($parse['scheme'])) {
             $this->_mergeQuery($uri, $values);
         }
-        $isToken = (isset($options[BEAR_Resource::OPTION_TOKEN]) && $options[BEAR_Resource::OPTION_TOKEN]);
-        $isPoe = (isset($options[BEAR_Resource::OPTION_POE]) && $options[BEAR_Resource::OPTION_POE]);
         $isNotRead = $this->_config['method'] !== BEAR_Resource::METHOD_READ;
-        $doCheckToken = $isNotRead && ($isToken || $isPoe);
-        if ($doCheckToken) {
-            $isTokenValid = $this->_isTokenValid($isPoe);
+        if (!$isNotRead) {
+            $hasCsrfOption = false;
+        } elseif (isset($options[BEAR_Resource::OPTION_CSRF]) && $options[BEAR_Resource::OPTION_CSRF]=== true) {
+            // リソースリクエストオプション
+            $hasCsrfOption = true;
+        } elseif ($this->_config[BEAR_Resource::OPTION_CSRF] === true) {
+            // yaml
+            $hasCsrfOption = true;
         } else {
-            $isTokenValid = true;
+            $hasCsrfOption = false;
         }
-        if ($isTokenValid === false) {
-            $headers = array('request config' => $this->_config, 'msg' => 'invalid token');
-            $code = BEAR::CODE_BAD_REQUEST;
-            $config = compact('headers', 'code');
-            $ro = BEAR::factory('BEAR_Ro', $config);
-            $ro->setConfig('uri', $uri);
-            $ro->setConfig('values', $values);
-            $ro->setConfig('options', $options);
-            return $ro;
+        if (!$isNotRead) {
+            $hasPoeOption = false;
+        } elseif (isset($options[BEAR_Resource::OPTION_POE]) && $options[BEAR_Resource::OPTION_POE]=== true) {
+            // リソースリクエストオプション
+            $hasPoeOption = true;
+        } elseif ($this->_config[BEAR_Resource::OPTION_POE] === true) {
+            // yaml
+            $hasPoeOption = true;
+        } else {
+            $hasPoeOption = false;
+        }
+        if ($hasCsrfOption || $hasPoeOption) {
+            $formToken = BEAR::dependency('BEAR_Form_Token'); /* @var $formToken BEAR_Form_Token */
+            $isTokenCsrfValid = $hasCsrfOption ? $formToken->isTokenCsrfValid() : true;
+            if ($isTokenCsrfValid !== true) {
+                throw $this->_exception('CSRF');
+            }
+            $isTokenPoeValid = $hasPoeOption ? $formToken->isTokenPoeValid() : true;
+            if ($isTokenPoeValid !== true) {
+                $headers = array('request config' => $this->_config, 'msg' => 'invalid token');
+                $code = BEAR::CODE_BAD_REQUEST;
+                $config = compact('headers', 'code');
+                $ro = BEAR::factory('BEAR_Ro', $config);
+                $ro->setConfig('uri', $uri);
+                $ro->setConfig('values', $values);
+                $ro->setConfig('options', $options);
+                return $ro;
+            } else {
+                $formToken->newSessionToken();
+            }
         }
         $config = $this->_config;
         $config['uri'] = $uri;
@@ -82,17 +106,17 @@ class BEAR_Resource_Request extends BEAR_Base
             $ro = $resourceRequestCache->request();
             // 中で例外が発生しなかったらPOEオプションで使ったトークンを使用済みにマークする
             // @todo staticコールを廃止
-            BEAR_Form::finishTokens();
+            //             BEAR_Form::finishTokens();
 
-/* @todo 下のifブロックを置き換える
-            $isOkRo = ($ro instanceof BEAR_Ro && $ro->getCode() === BEAR::CODE_OK);
+            /* @todo 下のifブロックを置き換える
+             $isOkRo = ($ro instanceof BEAR_Ro && $ro->getCode() === BEAR::CODE_OK);
             $isNotRo = ($ro instanceof BEAR_Ro === false);
             if (!$isOkRo && $isNotRo) {
-                $body = $ro;
-                $ro = BEAR::factory('BEAR_Ro');
-                $ro->setBody($body);
+            $body = $ro;
+            $ro = BEAR::factory('BEAR_Ro');
+            $ro->setBody($body);
             }
-*/
+            */
             if ($ro instanceof BEAR_Ro && $ro->getCode() === BEAR::CODE_OK) {
                 // $options ポストプロセスクラス
             } elseif ($ro instanceof BEAR_Ro === false) {
@@ -166,9 +190,9 @@ class BEAR_Resource_Request extends BEAR_Base
     private function _actionPostProcess(BEAR_Ro &$ro)
     {
         $body = $ro->getBody();
-            $Info = array();
-            $info['totalItems'] = count($body);
-            $options = $this->_config['options'];
+        $Info = array();
+        $info['totalItems'] = count($body);
+        $options = $this->_config['options'];
         // ページャーリザルト処理
         if (PEAR::isError($body) || !$body) {
             return;
@@ -192,11 +216,11 @@ class BEAR_Resource_Request extends BEAR_Base
             list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
             $info['limit'] = $info['to'] - $info['from'] + 1;
             $pager->setPagerLinks($links, $info);
-         }
+        }
         // コールバックオプション 1
         if (isset($options['callback'])) {
             if (is_callable($options['callback'])) {
-                 call_user_func($options['callback'], $body);
+                call_user_func($options['callback'], $body);
             } else {
                 $msg = 'BEAR_Resource callback failed.';
                 $info = array(
@@ -216,51 +240,6 @@ class BEAR_Resource_Request extends BEAR_Base
             }
         }
         $ro->setBody($body);
-    }
-
-    /**
-     * トークン検査
-     *
-     * <pre>
-     * トークンが有効か無効を調べます。$options['poe']がtrueの場合は
-     * POE(Post Once Exactly)検査をし、そのリソースアクセスが一度しか
-     * 行われないようにチェックします。二重送信を防止する仕組みです
-     * </pre>
-     *
-     * @param bool $isPoe POEチェックも行うか
-     *
-     * @return bool true=valid
-     */
-    private function _isTokenValid($isPoe)
-    {
-        $token = isset($_POST['_token']) ? $_POST['_token'] : (isset($_GET['_token']) ? $_GET['_token'] : null);
-        $poeLog = array();
-        if ($isPoe) {
-            if (isset($_SESSION['_used_token']) && is_array($_SESSION['_used_token'])) {
-                $isPoe = !key_exists($token, $_SESSION['_used_token']);
-            } else {
-                $isPoe = true;
-            }
-            $poeLog['is unused token'] = $isPoe;
-        }
-        $stoken = BEAR_Form::getSessionToken();
-        $isGenuine = (substr($token, 1, 4) == $stoken);
-        $isTokenValid = (($isGenuine !== false) && ($isPoe !== false));
-        if ($isTokenValid) {
-            $result = true;
-            $msg = "OK";
-            //session
-            BEAR_Form::registerUsedToken($token);
-        } else {
-            $msg = " NG";
-            $result = false;
-        }
-        $log = array('resource URI' => $this->_config['uri'],
-            'submit token' => $token,
-            'session token' => $stoken,
-            'is genuine' => $isGenuine) + $poeLog;
-        $this->_log->log('Token Validation' . $msg, $log);
-        return $result;
     }
 
     /**

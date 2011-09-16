@@ -35,6 +35,11 @@
 class BEAR_Form extends BEAR_Factory
 {
     /**
+     * @var BEAR_Form_Token
+     */
+    protected $_formToken;
+
+    /**
      * DHTML_TABLELESSを継承したPC/Mobile対応のAppレンダラー
      *
      * @see App/Form/Renderer/Default.php
@@ -106,14 +111,6 @@ class BEAR_Form extends BEAR_Factory
      * @var array
      */
     public static $submitHeader = array();
-
-    /**
-     * AJAXフォーム用フラグ
-     *
-     * @var bool
-     * @access private
-     */
-    private $_isAjaxForm = false;
 
     /**
      * エラーテンプレート
@@ -198,6 +195,7 @@ class BEAR_Form extends BEAR_Factory
     public function onInject()
     {
         $this->_log = BEAR::dependency('BEAR_Log');
+        $this->_formToken = BEAR::dependency('BEAR_Form_Token');
     }
 
     /**
@@ -261,9 +259,8 @@ class BEAR_Form extends BEAR_Factory
         // JSメッセージ日本語化
         $form->setJsWarnings(self::$jsWarning, '');
         // BEAR使用hidden項目
-        $newToken = self::_saveToken($form);
-        /** @todo トークン消去用シャットダウン処理登録 */
-        //        PEAR::registerShutdownFunc(array('BEAR_Form', 'onShutdown'));
+        $token = $this->_formToken->getToken();
+        $form->addElement('hidden', '_token', $token);
         $log = $options;
         $log['formNames'] = $formName;
         $log['token'] = $newToken;
@@ -313,51 +310,6 @@ class BEAR_Form extends BEAR_Factory
     }
 
     /**
-     * トークンの保存
-     *
-     * 二重送信防止とCSSF防止のため、セッションとhiddenに埋め込みます
-     *
-     * @param object &$form フォームオブジェクト
-     *
-     * @return string $newToken
-     */
-    private static function _saveToken(&$form)
-    {
-        $newToken = self::makeToken();
-        $form->addElement('hidden', '_token', $newToken);
-        return $newToken;
-    }
-
-    /**
-     * トークン生成
-     *
-     * <pre>14桁の16進数トークンを生成。
-     * 前12桁がデータ、残り2桁がチェックサム。
-     * スタティックコールできます。
-     *
-     * データ例）
-     * 8486ab282a8f37
-     * <--data----><check sum>
-     * </pre>
-     *
-     * @param bool $isAjax AJAXかどうか
-     *
-     * @return string
-     * @static
-     */
-    public static function makeToken($isAjax = false)
-    {
-        $session = BEAR::dependency('BEAR_Session');
-        if ($isAjax) {
-            $tokenBody = 'a' . $session->get(BEAR_Session::SESSION_TOKEN) . substr(md5(uniqid(rand(), true)), 0, 8);
-        } else {
-            $tokenBody = '0' . $session->get(BEAR_Session::SESSION_TOKEN) . substr(md5(uniqid(rand(), true)), 0, 8);
-        }
-        $result = $tokenBody . substr(md5(session_id()), 0, 4);
-        return $result;
-    }
-
-    /**
      * セッショントークンの取得
      *
      * セッション開始時につくられるトークンを取得します
@@ -370,46 +322,6 @@ class BEAR_Form extends BEAR_Factory
         $session = BEAR::dependency('BEAR_Session');
         $result = $session->get(BEAR_Session::SESSION_TOKEN);
         return $result;
-    }
-
-    /**
-     * フォームをAJAX用にする
-     *
-     * <pre>QuickFormのフォームをAJAX対応にします。formタグにrel=bearという属性が追加され
-     * postがAJAXリクエストに変わります</pre>
-     *
-     * Example.1 ページ内でフォームをAJAXフォームに変換
-     *
-     * <code>
-     * $this->form->ajax();
-     * </code>
-     *
-     * @return void
-     * @ignore
-     */
-    public function ajax()
-    {
-        $tokenRef = & $this->getElement('_token');
-        if (!PEAR::isError($tokenRef)) {
-            $tokenRef->_attributes['value'] = App_Main::makeToken(true);
-        } else {
-            $this->_log->log('BEAR_Error', array('No Token for AJAX Error '));
-        }
-        $attr = $this->_attributes;
-        $attr['rel'] = "bear";
-        $this->setAttributes($attr);
-        $this->_isAjaxForm = true;
-    }
-
-    /**
-     * AJAXフォームかどうかを返す
-     *
-     * @return bool
-     * @ignore
-     */
-    public function isAjaxForm()
-    {
-        return $this->_isAjaxForm;
     }
 
     /**
@@ -583,34 +495,5 @@ class BEAR_Form extends BEAR_Factory
     public static function getFormNumber()
     {
         return count(self::$formNames);
-    }
-
-    /**
-     * 使用トークンを仮登録
-     *
-     * <pre>
-     * 登録されたトークンはリソースリクエストで例外が発生しなければ
-     * 使用済みとしてマークされます。
-     * </pre>
-     *
-     * @param string $token トークンID
-     *
-     * @return void
-     */
-    static public function registerUsedToken($token)
-    {
-        self::$_usedToken[] = $token;
-    }
-
-    /**
-     * 登録されたトークンを使用済みとしてマーク
-     *
-     * @return void
-     */
-    public static function finishTokens()
-    {
-        foreach (self::$_usedToken as $token) {
-            $_SESSION['_used_token'][$token] = 1;
-        }
     }
 }

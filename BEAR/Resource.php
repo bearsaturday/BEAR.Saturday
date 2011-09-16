@@ -99,6 +99,11 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
     const OPTION_POE = 'poe';
 
     /**
+     * オプション　CSRF (Cross Site Request Forgeries)
+     */
+    const OPTION_CSRF = 'csrf';
+
+    /**
      * オプション　トークン無視
      */
     const OPTION_TOKEN = 'token';

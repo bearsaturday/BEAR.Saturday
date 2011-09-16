@@ -14,7 +14,7 @@ BEAR_Cache:
 
 BEAR_Session:
   # mixed アダプター 0 なし | 1 File | 2 DB | 3 memchache
-  adapter: 0
+  adapter: 1
   # string セッションキーにつけるプリフィックス
   prefix: ''
   # path: dsn | session file path | memcache host(s)
@@ -24,7 +24,7 @@ BEAR_Session:
   #callback タイムアウトコールバックページメソッド
   #callback: 'onSessionTimeout'
   #int エクスパイア時間
-  expire: 0
+  expire: 60
   #int expire_callback
   #expire_callback: 'onSessionExpire'
   #GC時間 (86400 = 24h)
@@ -48,11 +48,14 @@ BEAR_Agent:
 
 BEAR_Agent_Adapter_Apple:
   content_type: 'application/xhtml+xml'
-
 BEAR_View:
   adapter: 'BEAR_View_Adapter_Smarty'
   ua_sniffing: false
   path: '/App/views/'
+
+BEAR_Resource_Request:
+  poe: false
+  csrf: false
 
 Panda:
   http_tpl: 'App/views/pages/_panda/http.php'

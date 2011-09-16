@@ -40,7 +40,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         $result = array();
         $pagePath = $this->_getTemplateNameByPageClass($tplName); // ex) user/create
         // エージェントロール対応ページテンプレート
-        if ($role) {
+        if ($role && (count($role) === 1 && $role[0] !== BEAR_Agent::UA_DEFAULT)) {
             foreach ($role as $agent) {
                 $agentExtention = '.' . strtolower($agent);
                 $pagePathFull = _BEAR_APP_HOME . $this->_config['path']. "pages/{$pagePath}{$agentExtention}.tpl";

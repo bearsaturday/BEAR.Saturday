@@ -25,6 +25,7 @@
 <p><a href="/__bear/Log/">Log<a> | <a href="/__bear/code/">Code</a> | <a
 	href="/__bear/info/">Info</a> | <a href="/__bear/shell/">Shell</a>
 <p><?php
+
 $_SERVER['bearmode'] = 0;
 $_SERVER['__bear'] = 1;
 $_SESSION_['_BEAR_DEV_REQUEST_URI'] = $_SERVER['REQUEST_URI'];

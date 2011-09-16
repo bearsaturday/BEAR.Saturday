@@ -32,6 +32,10 @@ BEAR_Cache_Adapter_Memcache:
 BEAR_Smarty:
   caching: 0
   cache_lifetime: 1
+
+BEAR_Resource_Request:
+  poe: false
+  csrf: false
   
 Panda:
   on_fatal_error: Panda/Template/fatal.html
