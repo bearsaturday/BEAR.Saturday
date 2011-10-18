@@ -263,7 +263,7 @@ class BEAR_Form extends BEAR_Factory
         $form->addElement('hidden', '_token', $token);
         $log = $options;
         $log['formNames'] = $formName;
-        $log['token'] = $newToken;
+        $log['token'] = $token;
         $this->_log->log('Form', $log);
         return $form;
     }
