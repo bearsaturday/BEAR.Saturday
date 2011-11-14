@@ -399,7 +399,7 @@ class BEAR_Form extends BEAR_Factory
      * @return string
      * @todo DOCOMOエージェントの時に<form>にGUID=ONを付加
      */
-    public static function renderForms(&$smarty, $ua, $removeJs = false)
+    public static function renderForms(&$smarty, $ua, $enableJs = false)
     {
         static $result = false;
         static $done = false;
@@ -407,6 +407,7 @@ class BEAR_Form extends BEAR_Factory
         if ($done === true) {
             return $result;
         }
+        $removeJs = !$enableJs;
         $done = true;
         $result = array();
         foreach (self::$formNames as $formName) {
