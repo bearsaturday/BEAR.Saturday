@@ -109,7 +109,7 @@ class BEAR_Resource_Execute extends BEAR_Factory
             default :
                 $msg = 'URI is not valid.';
                 $info = array('uri' => $this->_config['uri']);
-                throw $this->_exception($msg, comact('info'));
+                throw $this->_exception($msg, compact('info'));
         }
         $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);
         return $obj;
