@@ -17,7 +17,7 @@
 // | Based on OLE::Storage_Lite by Kawai, Takanori                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: PPS.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: PPS.php,v 1.7 2007/02/13 21:00:42 schmidt Exp $
 
 
 require_once 'PEAR.php';

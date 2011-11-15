@@ -15,9 +15,9 @@
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Isaac Shepard <ishepard@bsiweb.com>
- * @copyright   2001-2010 The PHP Group
+ * @copyright   2001-2011 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: hiddenselect.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version     CVS: $Id: hiddenselect.php 317587 2011-10-01 07:55:53Z avb $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -38,7 +38,7 @@ require_once 'HTML/QuickForm/select.php';
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Isaac Shepard <ishepard@bsiweb.com>
- * @version     Release: 3.2.12
+ * @version     Release: 3.2.13
  * @since       2.1
  */
 class HTML_QuickForm_hiddenselect extends HTML_QuickForm_select

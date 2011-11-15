@@ -43,7 +43,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2004-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Simple.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: Simple.php 265444 2008-08-24 21:48:21Z ashnazg $
  * @link      http://pear.php.net/package/XML_Parser
  */
 

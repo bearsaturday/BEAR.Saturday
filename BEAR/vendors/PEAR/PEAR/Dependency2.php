@@ -9,7 +9,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Dependency2.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: Dependency2.php 313023 2011-07-06 19:17:11Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -31,7 +31,7 @@ require_once 'PEAR/Validate.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.3
+ * @version    Release: 1.9.4
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -541,7 +541,7 @@ class PEAR_Dependency2
      */
     function getPEARVersion()
     {
-        return '1.9.3';
+        return '1.9.4';
     }
 
     function validatePearinstallerDependency($dep)

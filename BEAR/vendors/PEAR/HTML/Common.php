@@ -17,7 +17,7 @@
  * @author      Adam Daniel <adaniel1@eesus.jnj.com>
  * @copyright   2001-2009 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: Common.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version     CVS: $Id: Common.php,v 1.15 2009/04/03 15:26:22 avb Exp $
  * @link        http://pear.php.net/package/HTML_Common/
  */ 
 

@@ -43,7 +43,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2003-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Util.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: Util.php,v 1.38 2008/11/13 00:03:38 ashnazg Exp $
  * @link      http://pear.php.net/package/XML_Util
  */
 

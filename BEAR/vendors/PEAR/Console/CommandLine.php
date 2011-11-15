@@ -20,7 +20,7 @@
  * @author    David JEAN LOUIS <izimobil@gmail.com>
  * @copyright 2007 David JEAN LOUIS
  * @license   http://opensource.org/licenses/mit-license.php MIT License 
- * @version   CVS: $Id: CommandLine.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: CommandLine.php 297057 2010-03-29 09:42:19Z rquadling $
  * @link      http://pear.php.net/package/Console_CommandLine
  * @since     Class available since release 0.1.0
  * @filesource

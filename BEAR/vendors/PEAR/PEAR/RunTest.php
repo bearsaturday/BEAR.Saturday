@@ -10,7 +10,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: RunTest.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: RunTest.php 313024 2011-07-06 19:51:24Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.3.3
  */
@@ -38,7 +38,7 @@ putenv("PHP_PEAR_RUNTESTS=1");
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.3
+ * @version    Release: 1.9.4
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.3.3
  */
@@ -388,13 +388,15 @@ class PEAR_RunTest
             $namespace         = '';
             $coverage_shutdown = 'coverage_shutdown';
 
+            if (
+                substr($lines[0], 0, 2) == '<?' ||
+                substr($lines[0], 0, 5) == '<?php'
+            ) {
+                unset($lines[0]);
+            }
+
+
             for ($i = 0; $i < $numLines; $i++) {
-                $lines[$i] = trim($lines[$i]);
-
-                if ($lines[$i] == '<?' || $lines[$i] == '<?php') {
-                    unset($lines[$i]);
-                }
-
                 if (isset($lines[$i]) && substr($lines[$i], 0, 9) == 'namespace') {
                     $namespace         = substr($lines[$i], 10, -1);
                     $coverage_shutdown = $namespace . '\\coverage_shutdown';
@@ -405,9 +407,9 @@ class PEAR_RunTest
                 }
             }
 
-            $text .= "\n" . 'xdebug_stop_code_coverage();' .
+            $text .= "\n    xdebug_stop_code_coverage();" .
                 "\n" . '} // end coverage_shutdown()' .
-                "\n" . 'register_shutdown_function("' . $coverage_shutdown . '");';
+                "\n\n" . 'register_shutdown_function("' . $coverage_shutdown . '");';
             $text .= "\n" . 'xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);' . "\n";
 
             $this->save_text($temp_file, "<?php\n" . $namespace . $text  . "\n" . implode("\n", $lines));

@@ -42,7 +42,7 @@
 // | Author: Lukas Smith <smith@pooteeweet.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Iterator.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: Iterator.php 295586 2010-02-28 17:04:17Z quipo $
 
 /**
  * PHP5 Iterator

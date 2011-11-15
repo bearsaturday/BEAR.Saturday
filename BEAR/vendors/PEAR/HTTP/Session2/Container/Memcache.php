@@ -9,7 +9,7 @@
  * @author   Chad Wagner <chad.wagner@gmail.com>
  * @author   Torsten Roehr <torsten.roehr@gmx.de>
  * @license  http://www.opensource.org/licenses/bsd-license.php The BSD License
- * @version  CVS: $Id: Memcache.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: Memcache.php 267740 2008-10-25 16:57:41Z till $
  * @link     http://pear.php.net/package/HTTP_Session2
  */
 

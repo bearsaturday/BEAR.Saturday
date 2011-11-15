@@ -16,7 +16,7 @@
 // | Authors: Stephan Schmidt <schst@php.net>                             |
 // +----------------------------------------------------------------------+
 //
-//    $Id: Handler.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+//    $Id: Handler.php,v 1.5 2004/01/04 15:43:50 schst Exp $
 
 /**
  * Base class for all handlers

@@ -38,7 +38,7 @@
  * @author   David Jean Louis <izi@php.net>
  * @author   Alexey Borzov <avb@php.net>
  * @license  http://opensource.org/licenses/bsd-license.php New BSD License
- * @version  SVN: $Id: Log.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  SVN: $Id: Log.php 308680 2011-02-25 17:40:17Z avb $
  * @link     http://pear.php.net/package/HTTP_Request2
  */
 
@@ -87,7 +87,7 @@ require_once 'HTTP/Request2/Exception.php';
  * @author   David Jean Louis <izi@php.net>
  * @author   Alexey Borzov <avb@php.net>
  * @license  http://opensource.org/licenses/bsd-license.php New BSD License
- * @version  Release: 2.0.0RC1
+ * @version  Release: 2.0.0
  * @link     http://pear.php.net/package/HTTP_Request2
  */
 class HTTP_Request2_Observer_Log implements SplObserver

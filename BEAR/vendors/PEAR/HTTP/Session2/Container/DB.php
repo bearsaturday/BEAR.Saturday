@@ -39,7 +39,7 @@
  * @package    HTTP_Session2
  * @author     Alexander Radivanovich <info@wwwlab.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php The BSD License
- * @version    CVS: $Id: DB.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: DB.php 266493 2008-09-18 16:58:29Z till $
  * @link       http://pear.php.net/package/HTTP_Session2
  * @deprecated This driver/container is deprecated from 0.9.0
  */

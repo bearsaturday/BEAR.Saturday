@@ -42,7 +42,7 @@
 // | Author: Lukas Smith <smith@pooteeweet.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: LOB.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: LOB.php 222350 2006-10-25 11:52:21Z lsmith $
 
 /**
  * @package  MDB2

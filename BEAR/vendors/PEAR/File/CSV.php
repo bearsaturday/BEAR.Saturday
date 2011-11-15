@@ -37,7 +37,7 @@
  * @author      Helgi Þormar Þorbjörnsson <helgi@php.net>
  * @copyright   2004-2011 The Authors
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version     CVS: $Id: CSV.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version     CVS: $Id: CSV.php 309245 2011-03-15 02:02:41Z dufuz $
  * @link        http://pear.php.net/package/File
  */
 

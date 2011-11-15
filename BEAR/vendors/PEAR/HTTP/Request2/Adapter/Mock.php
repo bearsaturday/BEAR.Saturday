@@ -37,7 +37,7 @@
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    SVN: $Id: Mock.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    SVN: $Id: Mock.php 308322 2011-02-14 13:58:03Z avb $
  * @link       http://pear.php.net/package/HTTP_Request2
  */
 
@@ -66,7 +66,7 @@ require_once 'HTTP/Request2/Adapter.php';
  * @category   HTTP
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  */
 class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
 {

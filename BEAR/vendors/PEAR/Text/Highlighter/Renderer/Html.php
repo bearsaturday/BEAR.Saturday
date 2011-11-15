@@ -16,7 +16,7 @@
  * @author     Andrey Demenev <demenev@gmail.com>
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    CVS: $Id: Html.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: Html.php,v 1.2 2007/06/29 06:56:34 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 

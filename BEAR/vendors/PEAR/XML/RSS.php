@@ -10,7 +10,7 @@
  * @package  XML_RSS
  * @author   Martin Jansen <mj@php.net>
  * @license  PHP License http://php.net/license
- * @version  SVN: $Id: RSS.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  SVN: $Id: RSS.php 310689 2011-05-01 17:54:48Z kguest $
  * @link     http://pear.php.net/package/XML_RSS
  */
 

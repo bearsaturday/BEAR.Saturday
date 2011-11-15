@@ -19,7 +19,7 @@
 *
 * @package Cache_Lite
 * @category Caching
-* @version $Id: Lite.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+* @version $Id: Lite.php 314953 2011-08-15 12:32:34Z tacker $
 * @author Fabien MARTY <fab@php.net>
 */
 
@@ -624,7 +624,7 @@ class Cache_Lite
             return $this->raiseError('Cache_Lite : Unable to open cache directory !', -4);
         }
         $result = true;
-        while ($file = readdir($dh)) {
+        while (($file = readdir($dh)) !== false) {
             if (($file != '.') && ($file != '..')) {
                 if (substr($file, 0, 6)=='cache_') {
                     $file2 = $dir . $file;

@@ -17,7 +17,7 @@
  * @author      Michael Wallner <mike@php.net>
  * @copyright   2004-2005 Michael Wallner
  * @license     http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version     CVS: $Id: Util.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version     CVS: $Id: Util.php 309134 2011-03-12 16:45:50Z dufuz $
  * @link        http://pear.php.net/package/File
  */
 

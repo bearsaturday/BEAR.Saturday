@@ -12,7 +12,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Package.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: Package.php 313024 2011-07-06 19:51:24Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -32,7 +32,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.3
+ * @version    Release: 1.9.4
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -160,7 +160,7 @@ of a specific release.
  Sets a SVN tag on all files in a package.  Use this command after you have
  packaged a distribution tarball with the "package" command to tag what
  revisions of what files were in that release.  If need to fix something
- after running svngtag once, but before the tarball is released to the public,
+ after running svntag once, but before the tarball is released to the public,
  use the "slide" option to move the release tag.
 
  to include files (such as a second package.xml, or tests not included in the
@@ -974,7 +974,7 @@ used for automated conversion or learning the format.
         $tar = new Archive_Tar($params[0]);
 
         $tmpdir = $this->config->get('temp_dir');
-        $tmpdir = System::mktemp(" -t $tmpdir -d pearsign");
+        $tmpdir = System::mktemp(' -t "' . $tmpdir . '" -d pearsign');
         if (!$tar->extractList('package2.xml package.xml package.sig', $tmpdir)) {
             return $this->raiseError("failed to extract tar file");
         }

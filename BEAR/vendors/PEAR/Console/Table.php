@@ -36,7 +36,7 @@
  * @copyright 2002-2005 Richard Heyes
  * @copyright 2006-2008 Jan Schneider
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   CVS: $Id: Table.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: Table.php 268934 2008-11-13 10:35:34Z yunosh $
  * @link      http://pear.php.net/package/Console_Table
  */
 

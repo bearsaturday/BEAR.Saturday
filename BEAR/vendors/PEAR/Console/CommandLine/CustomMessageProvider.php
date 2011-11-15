@@ -17,7 +17,7 @@
  * @author    Michael Gauthier <mike@silverorange.com>
  * @copyright 2007 David JEAN LOUIS, 2009 silverorange
  * @license   http://opensource.org/licenses/mit-license.php MIT License
- * @version   CVS: $Id: CustomMessageProvider.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: CustomMessageProvider.php 282427 2009-06-19 10:22:48Z izi $
  * @link      http://pear.php.net/package/Console_CommandLine
  * @since     File available since release 1.1.0
  * @filesource

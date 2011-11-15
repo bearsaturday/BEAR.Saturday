@@ -39,7 +39,7 @@
  * @author      Alexey Borzov <avb@php.net>
  * @copyright   2002-2007 Richard Heyes
  * @license     http://opensource.org/licenses/bsd-license.php New BSD License
- * @version     CVS: $Id: Listener.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version     CVS: $Id: Listener.php,v 1.3 2007/05/18 10:33:31 avb Exp $
  * @link        http://pear.php.net/package/HTTP_Request/ 
  */
 

@@ -12,7 +12,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Installer.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: Installer.php 313024 2011-07-06 19:51:24Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -36,7 +36,7 @@ define('PEAR_INSTALLER_NOBINARY', -240);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.3
+ * @version    Release: 1.9.4
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -1148,11 +1148,11 @@ class PEAR_Installer extends PEAR_Downloader
             }
         }
 
-        $tmpdir   = dirname($descfile);
+        $tmpdir = dirname($descfile);
         if (realpath($descfile) != realpath($pkgfile)) {
             // Use the temp_dir since $descfile can contain the download dir path
             $tmpdir = $this->config->get('temp_dir', null, 'pear.php.net');
-            $tmpdir = System::mktemp("-d -t $tmpdir");
+            $tmpdir = System::mktemp('-d -t "' . $tmpdir . '"');
 
             $tar = new Archive_Tar($pkgfile);
             if (!$tar->extract($tmpdir)) {
@@ -1315,32 +1315,24 @@ class PEAR_Installer extends PEAR_Downloader
 
         $this->startFileTransaction();
 
+        $usechannel = $channel;
+        if ($channel == 'pecl.php.net') {
+            $test = $installregistry->packageExists($pkgname, $channel);
+            if (!$test) {
+                $test = $installregistry->packageExists($pkgname, 'pear.php.net');
+                $usechannel = 'pear.php.net';
+            }
+        } else {
+            $test = $installregistry->packageExists($pkgname, $channel);
+        }
+
         if (empty($options['upgrade']) && empty($options['soft'])) {
             // checks to do only when installing new packages
-            if ($channel == 'pecl.php.net') {
-                $test = $installregistry->packageExists($pkgname, $channel);
-                if (!$test) {
-                    $test = $installregistry->packageExists($pkgname, 'pear.php.net');
-                }
-            } else {
-                $test = $installregistry->packageExists($pkgname, $channel);
-            }
-
             if (empty($options['force']) && $test) {
                 return $this->raiseError("$channel/$pkgname is already installed");
             }
         } else {
-            $usechannel = $channel;
-            if ($channel == 'pecl.php.net') {
-                $test = $installregistry->packageExists($pkgname, $channel);
-                if (!$test) {
-                    $test = $installregistry->packageExists($pkgname, 'pear.php.net');
-                    $usechannel = 'pear.php.net';
-                }
-            } else {
-                $test = $installregistry->packageExists($pkgname, $channel);
-            }
-
+            // Upgrade
             if ($test) {
                 $v1 = $installregistry->packageInfo($pkgname, 'version', $usechannel);
                 $v2 = $pkg->getVersion();
@@ -1348,22 +1340,23 @@ class PEAR_Installer extends PEAR_Downloader
                 if (empty($options['force']) && !version_compare("$v2", "$v1", 'gt')) {
                     return $this->raiseError("upgrade to a newer version ($v2 is not newer than $v1)");
                 }
+            }
+        }
 
-                if (empty($options['register-only'])) {
-                    // when upgrading, remove old release's files first:
-                    if (PEAR::isError($err = $this->_deletePackageFiles($pkgname, $usechannel,
-                          true))) {
-                        if (!isset($options['ignore-errors'])) {
-                            return $this->raiseError($err);
-                        }
-
-                        if (!isset($options['soft'])) {
-                            $this->log(0, 'WARNING: ' . $err->getMessage());
-                        }
-                    } else {
-                        $backedup = $err;
-                    }
+        // Do cleanups for upgrade and install, remove old release's files first
+        if ($test && empty($options['register-only'])) {
+            // when upgrading, remove old release's files first:
+            if (PEAR::isError($err = $this->_deletePackageFiles($pkgname, $usechannel,
+                  true))) {
+                if (!isset($options['ignore-errors'])) {
+                    return $this->raiseError($err);
                 }
+
+                if (!isset($options['soft'])) {
+                    $this->log(0, 'WARNING: ' . $err->getMessage());
+                }
+            } else {
+                $backedup = $err;
             }
         }
 

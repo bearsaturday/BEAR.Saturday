@@ -33,7 +33,7 @@
  * @author    Richard Heyes <richard@phpguru.org>
  * @copyright 2003-2008 Lorenzo Alberton, Richard Heyes
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   CVS: $Id: Pager.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: Pager.php,v 1.26 2008/02/02 16:55:04 quipo Exp $
  * @link      http://pear.php.net/package/Pager
  */
 

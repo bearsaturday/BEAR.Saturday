@@ -41,7 +41,7 @@
  * @author   Alexander Radivaniovich <info@wwwlab.net>
  * @author   Tony Bibbs <tony@geeklog.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php The BSD License
- * @version  CVS: $Id: Container.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: Container.php 295734 2010-03-02 13:25:15Z till $
  * @link     http://pear.php.net/package/HTTP_Session2
  */
 

@@ -15,7 +15,7 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                     |
 // +---------------------------------------------------------------------+
 //
-// $Id: Container.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: Container.php 306597 2010-12-24 05:11:09Z aharvey $
 
 require_once 'Config.php';
 

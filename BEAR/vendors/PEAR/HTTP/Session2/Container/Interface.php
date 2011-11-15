@@ -40,7 +40,7 @@
  * @package  HTTP_Session2
  * @author   Alexander Radivaniovich <info@wwwlab.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php The BSD License
- * @version  CVS: $Id: Interface.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: Interface.php 267742 2008-10-25 17:01:14Z till $
  * @link     http://pear.php.net/package/HTTP_Session2
  */
 

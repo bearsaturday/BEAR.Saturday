@@ -8,7 +8,7 @@
  * @package  Config
  * @author   Phillip Oertel <me@phillipoertel.com>
  * @license  http://www.php.net/license PHP License
- * @version  SVN: $Id: PHPConstants.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  SVN: $Id: PHPConstants.php 306571 2010-12-22 06:50:39Z cweiske $
  * @link     http://pear.php.net/package/Config
  */
 require_once 'Config/Container.php';

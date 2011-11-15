@@ -43,7 +43,7 @@
 // |          Lorenzo Alberton <l.alberton@quipo.it>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Common.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: Common.php 295587 2010-02-28 17:16:38Z quipo $
 //
 
 /**

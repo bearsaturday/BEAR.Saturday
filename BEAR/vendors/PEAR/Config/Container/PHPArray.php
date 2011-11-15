@@ -15,7 +15,7 @@
 // | Authors: Bertrand Mansion <bmansion@mamasam.com>                     |
 // +----------------------------------------------------------------------+
 //
-// $Id: PHPArray.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: PHPArray.php 306488 2010-12-20 08:45:09Z cweiske $
 
 /**
 * Config parser for common PHP configuration array

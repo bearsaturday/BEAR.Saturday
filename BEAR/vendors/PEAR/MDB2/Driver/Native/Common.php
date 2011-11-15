@@ -42,7 +42,7 @@
 // | Author: Lukas Smith <smith@pooteeweet.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Common.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: Common.php 242348 2007-09-09 13:47:36Z quipo $
 //
 
 /**

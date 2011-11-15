@@ -9,7 +9,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: PackageFile.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: PackageFile.php 313024 2011-07-06 19:51:24Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -35,7 +35,7 @@ define('PEAR_PACKAGEFILE_ERROR_INVALID_PACKAGEVERSION', 2);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.3
+ * @version    Release: 1.9.4
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -351,7 +351,7 @@ class PEAR_PackageFile
             }
         }
 
-        $tmpdir = System::mktemp('-t ' . $this->_config->get('temp_dir') . ' -d pear');
+        $tmpdir = System::mktemp('-t "' . $this->_config->get('temp_dir') . '" -d pear');
         if ($tmpdir === false) {
             $ret = PEAR::raiseError("there was a problem with getting the configured temp directory");
             return $ret;

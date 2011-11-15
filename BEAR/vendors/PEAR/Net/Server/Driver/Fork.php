@@ -16,7 +16,7 @@
 // | Authors: Stephan Schmidt <schst@php.net>                             |
 // +----------------------------------------------------------------------+
 //
-//    $Id: Fork.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+//    $Id: Fork.php,v 1.11 2006/02/15 12:12:22 cweiske Exp $
 
 /**
  * Forking server class.

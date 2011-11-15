@@ -15,7 +15,7 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: XML.php 203592 2005-12-24 02:24:30Z aashley $
 
 require_once('XML/Parser.php');
 require_once('XML/Util.php');

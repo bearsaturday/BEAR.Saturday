@@ -17,7 +17,7 @@
  * @package  Console_Getopt
  * @author   Andrei Zmievski <andrei@php.net>
  * @license  http://www.php.net/license/3_0.txt PHP 3.0
- * @version  CVS: $Id: Getopt.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: Getopt.php 306067 2010-12-08 00:13:31Z dufuz $
  * @link     http://pear.php.net/package/Console_Getopt
  */
 

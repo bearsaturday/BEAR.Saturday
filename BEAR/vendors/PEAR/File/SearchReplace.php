@@ -34,7 +34,7 @@
  * @package  File_SearchReplace
  * @author   Richard Heyes <richard@phpguru.org>
  * @license  http://www.opensource.org/licenses/bsd-license.php BSD
- * @version  CVS: $Id: SearchReplace.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: SearchReplace.php 304758 2010-10-25 10:29:02Z clockwerx $
  * @link     http://pear.php.net/File_SearchReplace
  */
 

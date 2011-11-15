@@ -37,7 +37,7 @@
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    SVN: $Id: Request2.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    SVN: $Id: Request2.php 315409 2011-08-24 07:29:23Z avb $
  * @link       http://pear.php.net/package/HTTP_Request2
  */
 
@@ -57,7 +57,7 @@ require_once 'HTTP/Request2/Exception.php';
  * @category   HTTP
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  * @link       http://tools.ietf.org/html/rfc2616#section-5
  */
 class HTTP_Request2 implements SplSubject
@@ -230,7 +230,7 @@ class HTTP_Request2 implements SplSubject
         if (!empty($method)) {
             $this->setMethod($method);
         }
-        $this->setHeader('user-agent', 'HTTP_Request2/2.0.0RC1 ' .
+        $this->setHeader('user-agent', 'HTTP_Request2/2.0.0 ' .
                          '(http://pear.php.net/package/http_request2) ' .
                          'PHP/' . phpversion());
     }
@@ -899,7 +899,7 @@ class HTTP_Request2 implements SplSubject
             throw new HTTP_Request2_LogicException(
                 'HTTP_Request2 needs an absolute HTTP(S) request URL, '
                 . ($this->url instanceof Net_URL2
-                   ? 'none' : "'" . $this->url->__toString() . "'")
+                   ? "'" . $this->url->__toString() . "'" : 'none')
                 . ' given',
                 HTTP_Request2_Exception::INVALID_ARGUMENT
             );

@@ -40,7 +40,7 @@
  * @author   Alexander Radivaniovich <info@wwwlab.net>
  * @author   Tony Bibbs <tony@geeklog.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php The BSD License
- * @version  CVS: $Id: Session2.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: Session2.php 267739 2008-10-25 16:54:23Z till $
  * @link     http://pear.php.net/package/HTTP_Session2
  */
 

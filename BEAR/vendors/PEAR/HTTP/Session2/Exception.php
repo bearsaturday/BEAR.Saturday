@@ -38,7 +38,7 @@
  * @package  HTTP_Session2
  * @author   Till Klampaeckel <till@php.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php The BSD License
- * @version  CVS: $Id: Exception.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version  CVS: $Id: Exception.php 266531 2008-09-19 13:12:58Z till $
  * @link     http://pear.php.net/package/HTTP_Session2
  */
 

@@ -42,7 +42,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2003-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Serializer.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version   CVS: $Id: Serializer.php 294967 2010-02-12 03:10:19Z clockwerx $
  * @link      http://pear.php.net/package/XML_Serializer
  * @see       XML_Unserializer
  */

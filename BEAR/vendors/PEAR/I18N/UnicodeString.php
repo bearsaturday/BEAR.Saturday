@@ -36,7 +36,7 @@
 * @author    John Downey <jdowney@gmail.com>
 * @copyright 2004-2006 John Downey
 * @license   http://www.freebsd.org/copyright/freebsd-license.html 2 Clause BSD License
-* @version   CVS: $Id: UnicodeString.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+* @version   CVS: $Id$
 * @filesource
 */
 

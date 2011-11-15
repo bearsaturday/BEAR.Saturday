@@ -16,7 +16,7 @@
 // | Authors: Stephan Schmidt <schst@php.net>                             |
 // +----------------------------------------------------------------------+
 //
-//    $Id: Sequential.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+//    $Id: Sequential.php,v 1.12 2006/05/27 07:37:56 cweiske Exp $
 
 /**
  * Sequential server class.

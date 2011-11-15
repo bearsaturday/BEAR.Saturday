@@ -42,7 +42,7 @@
 // | Author: Lukas Smith <smith@pooteeweet.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: mysql.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+// $Id: mysql.php 302865 2010-08-29 10:30:55Z quipo $
 //
 
 require_once 'MDB2/Driver/Manager/Common.php';

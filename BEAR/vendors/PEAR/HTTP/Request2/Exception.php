@@ -37,7 +37,7 @@
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    SVN: $Id: Exception.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    SVN: $Id: Exception.php 308629 2011-02-24 17:34:24Z avb $
  * @link       http://pear.php.net/package/HTTP_Request2
  */
 
@@ -51,7 +51,7 @@ require_once 'PEAR/Exception.php';
  *
  * @category   HTTP
  * @package    HTTP_Request2
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  * @link       http://pear.php.net/pepr/pepr-proposal-show.php?id=132
  */
 class HTTP_Request2_Exception extends PEAR_Exception
@@ -115,7 +115,7 @@ class HTTP_Request2_Exception extends PEAR_Exception
  *
  * @category   HTTP
  * @package    HTTP_Request2
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  */
 class HTTP_Request2_NotImplementedException extends HTTP_Request2_Exception {}
 
@@ -131,7 +131,7 @@ class HTTP_Request2_NotImplementedException extends HTTP_Request2_Exception {}
  *
  * @category   HTTP
  * @package    HTTP_Request2
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  */
 class HTTP_Request2_LogicException extends HTTP_Request2_Exception {}
 
@@ -143,7 +143,7 @@ class HTTP_Request2_LogicException extends HTTP_Request2_Exception {}
  *
  * @category   HTTP
  * @package    HTTP_Request2
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  */
 class HTTP_Request2_ConnectionException extends HTTP_Request2_Exception {}
 
@@ -154,7 +154,7 @@ class HTTP_Request2_ConnectionException extends HTTP_Request2_Exception {}
  *
  * @category   HTTP
  * @package    HTTP_Request2
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  */
 class HTTP_Request2_MessageException extends HTTP_Request2_Exception {}
 ?>

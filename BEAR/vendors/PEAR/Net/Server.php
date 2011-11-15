@@ -16,7 +16,7 @@
 // | Authors: Stephan Schmidt <schst@php.net>                             |
 // +----------------------------------------------------------------------+
 //
-//    $Id: Server.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+//    $Id: Server.php,v 1.13 2006/06/27 10:40:44 cweiske Exp $
 
 /**
  * PHP socket server base class

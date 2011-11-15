@@ -6,7 +6,7 @@
  * PHP versions 4 and 5
  *
  * LICENSE:
- * 
+ *
  * Copyright (c) 2005-2007, Mark Wiesemann <wiesemann@php.net>
  * All rights reserved.
  *
@@ -17,9 +17,9 @@
  *    * Redistributions of source code must retain the above copyright
  *      notice, this list of conditions and the following disclaimer.
  *    * Redistributions in binary form must reproduce the above copyright
- *      notice, this list of conditions and the following disclaimer in the 
+ *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
- *    * The names of the authors may not be used to endorse or promote products 
+ *    * The names of the authors may not be used to endorse or promote products
  *      derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
@@ -41,7 +41,7 @@
  * @author     Bertrand Mansion <bmansion@mamasam.com>
  * @author     Mark Wiesemann <wiesemann@php.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Tableless.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: Tableless.php 271939 2008-12-26 20:22:30Z wiesemann $
  * @link       http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  */
 
@@ -50,7 +50,7 @@ require_once 'HTML/QuickForm/Renderer/Default.php';
 /**
  * Replacement for the default renderer of HTML_QuickForm that uses only XHTML
  * and CSS but no table tags, and generates fully valid XHTML output
- * 
+ *
  * You need to specify a stylesheet like the one that you find in
  * data/stylesheet.css to make this work.
  *
@@ -61,7 +61,7 @@ require_once 'HTML/QuickForm/Renderer/Default.php';
  * @author     Bertrand Mansion <bmansion@mamasam.com>
  * @author     Mark Wiesemann <wiesemann@php.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 0.6.1
+ * @version    Release: 0.6.2
  * @link       http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  */
 class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
@@ -78,7 +78,7 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     * @var      string
     * @access   private
     */
-    var $_elementTemplate = 
+    var $_elementTemplate =
         "\n\t\t\t<li><label class=\"element\"><!-- BEGIN required --><span class=\"required\">*</span><!-- END required -->{label}</label><div class=\"element<!-- BEGIN error --> error<!-- END error -->\"><!-- BEGIN error --><span class=\"error\">{error}</span><br /><!-- END error -->{element}</div></li>";
 
    /**
@@ -86,7 +86,7 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     * @var      string
     * @access   private
     */
-    var $_formTemplate = 
+    var $_formTemplate =
         "\n<form{attributes}>\n\t<div style=\"display: none;\">\n{hidden}\t</div>\n{content}\n</form>";
 
    /**
@@ -116,7 +116,7 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     * @var      string
     * @access   private
     */
-    var $_requiredNoteTemplate = 
+    var $_requiredNoteTemplate =
         "\n\t\t\t<li class=\"reqnote\"><label class=\"element\">&nbsp;</label>{requiredNote}</li>";
 
    /**
@@ -133,6 +133,13 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     * @access   private
     */
     var $_stopFieldsetElements = array();
+
+   /**
+    * Name of the currently active group
+    * @var      string
+    * @access   private
+    */
+    var $_currentGroupName = '';
 
    /**
     * Constructor
@@ -225,14 +232,30 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
             $this->_groupElements[] = str_replace('{element}', $element->toHtml(), $html);
 
         } else {
-            $this->_groupElements[] = $element->toHtml();
+            $element_html = $element->toHtml();
+            // add "id" attribute to first element of the group
+            if (count($this->_groupElements) === 0) {
+                if (!is_null($element->getAttribute('id'))) {
+                    $id = $element->getAttribute('id');
+                } else {
+                    $id = $element->getName();
+                }
+                $groupId = $this->_currentGroupName;
+                if ($element->getType() != 'static' && !empty($id)) {
+                    $element_html = preg_replace(preg_quote('#name="' . $id . '#'),
+                                                 'id="' . $groupId . '" name="' . $id,
+                                                 $element_html,
+                                                 1);
+                }
+            }
+            $this->_groupElements[] = $element_html;
         }
     } // end func renderElement
 
    /**
     * Renders an hidden element
     * Called when visiting a hidden element
-    * 
+    *
     * @param object     An HTML_QuickForm_hidden object being visited
     * @access public
     * @return void
@@ -265,7 +288,14 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     function startGroup(&$group, $required, $error)
     {
         $this->_handleStopFieldsetElements($group->getName());
-        parent::startGroup($group, $required, $error);
+        $name = $group->getName();
+        $this->_groupTemplate        = $this->_prepareTemplate($name, $group->getLabel(), $required, $error);
+        $this->_groupTemplate        = str_replace('<label', '<label for="' . $name . '"', $this->_groupTemplate);
+        $this->_groupElementTemplate = empty($this->_groupTemplates[$name])? '': $this->_groupTemplates[$name];
+        $this->_groupWrap            = empty($this->_groupWraps[$name])? '': $this->_groupWraps[$name];
+        $this->_groupElements        = array();
+        $this->_inGroup              = true;
+        $this->_currentGroupName     = $name;
     } // end func startGroup
 
     /**
@@ -320,7 +350,7 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
    /**
     * Called when visiting a form, after processing all form elements
     * Adds required note, form attributes, validation javascript and form content.
-    * 
+    *
     * @param    object      An HTML_QuickForm object being visited
     * @access   public
     * @return   void
@@ -450,9 +480,9 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     } // end func _handleStopFieldsetElements
 
     /**
-     * Sets element template 
+     * Sets element template
      *
-     * @param   string    The HTML surrounding an element 
+     * @param   string    The HTML surrounding an element
      * @param   mixed     (optional) Name(s) of the element to apply template
      *                    for (either single element name as string or multiple
      *                    element names as an array)

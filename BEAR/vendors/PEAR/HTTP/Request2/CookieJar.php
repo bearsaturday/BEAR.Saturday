@@ -37,7 +37,7 @@
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    SVN: $Id: CookieJar.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    SVN: $Id: CookieJar.php 308629 2011-02-24 17:34:24Z avb $
  * @link       http://pear.php.net/package/HTTP_Request2
  */
 
@@ -50,7 +50,7 @@ require_once 'HTTP/Request2.php';
  * @category   HTTP
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
- * @version    Release: 2.0.0RC1
+ * @version    Release: 2.0.0
  */
 class HTTP_Request2_CookieJar implements Serializable
 {
@@ -442,7 +442,7 @@ class HTTP_Request2_CookieJar implements Serializable
 
         // load the list if needed
         if (empty(self::$psl)) {
-            $path = '/Users/kooriyama/PEAR/pear/data' . DIRECTORY_SEPARATOR . 'HTTP_Request2';
+            $path = '/Users/kooriyama/pear/data' . DIRECTORY_SEPARATOR . 'HTTP_Request2';
             if (0 === strpos($path, '@' . 'data_dir@')) {
                 $path = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'
                                  . DIRECTORY_SEPARATOR . 'data');

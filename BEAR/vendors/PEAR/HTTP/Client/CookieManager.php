@@ -39,7 +39,7 @@
  * @package    HTTP_Client
  * @author     Alexey Borzov <avb@php.net>
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: CookieManager.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    CVS: $Id: CookieManager.php,v 1.9 2008/10/25 17:05:40 avb Exp $
  * @link       http://pear.php.net/package/HTTP_Client
  */
 
