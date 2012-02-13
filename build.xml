@@ -49,7 +49,7 @@
   <exec executable="phpmd">
    <arg line="${source}
               xml
-              codesize,design,unusedcode
+			  /usr/local/pmd/pmd.xml
               --reportfile ${basedir}/build/logs/pmd.xml" />
   </exec>
  </target>
@@ -73,7 +73,7 @@
    <arg line="--report=checkstyle
               --report-file=${basedir}/build/logs/checkstyle.xml
               --ignore=vendors/
-              --standard=BEAR
+              --standard=modernphp
               ${source}" />
   </exec>
  </target>
@@ -94,5 +94,5 @@
   </exec>
  </target>
 
- <target name="build" depends="clean,parallelTasks,phpunit,phpcb"/>
+ <target name="build" depends="clean,parallelTasks,phpcb"/>
 </project>

@@ -44,7 +44,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
     {
         parent::__construct($config);
         if (!extension_loaded('memcache')) {
-            throw BEAR_Cache_Exception('Memcached extention is not loaded');
+            throw new BEAR_Cache_Exception('Memcached extention is not loaded');
         }
         $this->_adapter = new Memcache();
         //キャッシュサーバー追加

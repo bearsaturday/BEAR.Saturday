@@ -44,7 +44,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
         $app = BEAR::get('app');
         $this->_config['info'] = $config['info'];
         if (!extension_loaded('apc') || !(ini_get('apc.enabled')) || !function_exists('apc_sma_info')) {
-            throw BEAR_Cache_Exception('APC extention is not loaded');
+            throw new BEAR_Cache_Exception('APC extention is not loaded');
         } else {
             if ($this->_config['debug']) {
                 $apcSmaInfo = apc_sma_info();
