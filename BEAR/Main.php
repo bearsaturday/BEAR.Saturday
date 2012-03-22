@@ -216,7 +216,7 @@ class BEAR_Main extends BEAR_Base
             // onAction(OK) or onOutput()(NG)
             $this->_runSubmit();
         }
-        $this->end();
+        $this->end($initCache);
     }
 
     /**
@@ -365,7 +365,7 @@ class BEAR_Main extends BEAR_Base
      * @return void
      * @throws BEAR_Main_Exception
      */
-    public function end()
+    public function end($initCache = null)
     {
 
         $body = ob_get_contents();
@@ -374,7 +374,7 @@ class BEAR_Main extends BEAR_Base
             if ($this->_config['cache']['type'] === 'page') {
                 $cacheData = array('type' => 'page', 'headers' => headers_list(), 'body' => $body);
                 $this->_writeCache($cacheData);
-            } elseif ($this->_config['cache']['type'] === 'init') {
+            } elseif ((! $initCache) && $this->_config['cache']['type'] === 'init') {
                 $cacheData = array('type' => 'init', 'init' => $this->_page->get());
                 $this->_writeCache($cacheData);
             } else {
