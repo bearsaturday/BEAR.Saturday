@@ -377,8 +377,8 @@ class BEAR_Main extends BEAR_Base
             } elseif ((! $initCache) && $this->_config['cache']['type'] === 'init') {
                 $cacheData = array('type' => 'init', 'init' => $this->_page->get());
                 $this->_writeCache($cacheData);
-            } else {
-                throw new $this->_expection('Invalid Cache Type', $this->_config);
+            } elseif ($this->_config['cache']['type'] !== 'init' && $this->_config['cache']['type'] !== 'page') {
+                throw $this->_exception('Invalid Cache Type', $this->_config);
             }
         }
 
