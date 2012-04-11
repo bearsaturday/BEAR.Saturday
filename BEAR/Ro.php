@@ -274,8 +274,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         if (!$bool) {
             throw $this->_exception(
                 $msg,
-                array('code' => BEAR::CODE_BAD_REQUEST,
-                	  'info' => array('request' => (string)$this))
+                array(
+                    'code' => BEAR::CODE_BAD_REQUEST,
+                    'info' => array('request' => (string) $this)
+                )
             );
         }
     }
@@ -301,8 +303,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         if (count(array_intersect($keys, array_keys($values))) != count($keys)) {
             throw $this->_exception(
                 'Bad Resource Request (@required)',
-                array('code' => BEAR::CODE_BAD_REQUEST,
-                	  'info' => array('request' => $this->toString()))
+                array(
+                    'code' => BEAR::CODE_BAD_REQUEST,
+                    'info' => array('request' => $this->toString())
+                )
             );
         }
     }
@@ -547,22 +551,22 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function outputHttp()
     {
-        //ヘッダー
+        // ヘッダー
         switch ($this->_code) {
-            case BEAR::CODE_BAD_REQUEST :
+            case BEAR::CODE_BAD_REQUEST:
                 header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
                 if (!$this->_body) {
                     $this->setBody('400 Bad Request (BEAR)');
                 }
                 break;
-            case BEAR::CODE_ERROR :
+            case BEAR::CODE_ERROR:
                 header($_SERVER["SERVER_PROTOCOL"] . ' 500 Server Error');
                 if (!$this->_body) {
                     $this->setBody('500 Server Error (BEAR)');
                 }
                 break;
-            case BEAR::CODE_OK :
-            default :
+            case BEAR::CODE_OK:
+            default:
                 header($_SERVER["SERVER_PROTOCOL"] . ' 200 OK');
         }
         // this RO headers
@@ -576,9 +580,11 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
 
         $log = BEAR::dependency('BEAR_Log');
         $log->log(
-        	'HTTP Output',
-            array('header' => headers_list(),
-            'body' => $this->_body)
+            'HTTP Output',
+            array(
+                'header' => headers_list(),
+                'body' => $this->_body
+            )
         );
         echo $this->_body;
     }
@@ -665,10 +671,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function getIterator()
     {
         $this->_body = is_array($this->_body) ? $this->_body : array();
-        $iterator = (isset($this->_config['options']['iterator']) &&
-        class_exists($this->_config['options']['iterator'])) ?
-            $this->_config['iterator'] :
-            'ArrayIterator';
+        $iterator = (isset($this->_config['options']['iterator']) && class_exists($this->_config['options']['iterator'])) ? $this->_config['iterator'] : 'ArrayIterator';
         $obj = new $iterator($this->_body);
         return $obj;
     }
@@ -751,13 +754,12 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * </code>
      *
      * @param string $key テンプレート変数名 省略すればURI(/を_に置換)
-     * @param array  $config 設定
      *
      * @return BEAR_Ro
      */
     public function set($key = null)
     {
-        //キー省略
+        // キー省略
         if (!$key) {
             // 未指定の場合://と/を_に変換してアサイン名に
             $config = $this->getConfig();

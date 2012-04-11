@@ -55,8 +55,7 @@ class BEAR_Pager extends BEAR_Base
     /**
      * ページャーオプション
      *
-     * @var     array
-     * @access  private
+     * @var array
      * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
      */
     private $_options = array();
@@ -79,11 +78,15 @@ class BEAR_Pager extends BEAR_Base
 
     /**
      * PC用ページャーオプション
+     *
+     * @var array
      */
     public static $optionsPc = array();
 
     /**
      * モバイル用ページャーオプション
+     *
+     * @var array
      */
     public static $optionsMobile = array();
 
@@ -112,28 +115,32 @@ class BEAR_Pager extends BEAR_Base
         $sessionId = session_name();
         switch ($ua) {
             // PC
-            case BEAR_Agent::UA_DEFAULT :
-                $this->_options = array('perPage' => 10,  // ページごとに表示するアイテムの数
-            'delta' => 10,  // 現在のページの前後に表示するページ番号の数
-            'urlVar' => self::PAGER_NUM,  // ページ番号を示すためのURL変数名
-            'prevImg' => '前へ',  // Prevボタン（IMGタグをつけてグラフィック表示も可能）
-            'nextImg' => '次へ',  // Nextボタン（IMGタグをつけてグラフィック表示も可能）
-            'separator' => ' ',  // セパレーター
-            'linkClass' => self::PAGER_CLASS,  // リンクスタイルのためのCSSクラス名
-            'totalItems' => 100,  // アイテム総数
-            'excludeVars' => array($sessionId));
+            case BEAR_Agent::UA_DEFAULT:
+                $this->_options = array(
+                    'perPage' => 10,  // ページごとに表示するアイテムの数
+                    'delta' => 10,  // 現在のページの前後に表示するページ番号の数
+                    'urlVar' => self::PAGER_NUM,  // ページ番号を示すためのURL変数名
+                    'prevImg' => '前へ',  // Prevボタン（IMGタグをつけてグラフィック表示も可能）
+                    'nextImg' => '次へ',  // Nextボタン（IMGタグをつけてグラフィック表示も可能）
+                    'separator' => ' ',  // セパレーター
+                    'linkClass' => self::PAGER_CLASS,  // リンクスタイルのためのCSSクラス名
+                    'totalItems' => 100,  // アイテム総数
+                    'excludeVars' => array($sessionId)
+                );
                 break;
                 // Mobile
-            default :
-                $this->_options = array('perPage' => 10,
-            'delta' => 5,
-            'altNext' => 'Next',
-            'urlVar' => self::PAGER_NUM,
-            'prevImg' => '<<(*)',
-            'nextImg' => '>>(#)',
-            'separator' => ' ',
-            'totalItems' => 100,
-            'excludeVars' => array($sessionId));
+            default:
+                $this->_options = array(
+                    'perPage' => 10,
+                    'delta' => 5,
+                    'altNext' => 'Next',
+                    'urlVar' => self::PAGER_NUM,
+                    'prevImg' => '<<(*)',
+                    'nextImg' => '>>(#)',
+                    'separator' => ' ',
+                    'totalItems' => 100,
+                    'excludeVars' => array($sessionId)
+                );
                 break;
         }
         // オプションを指定されていれば値があればオーバーライド
@@ -159,21 +166,17 @@ class BEAR_Pager extends BEAR_Base
     /**
      * ページング
      *
-     * <pre>
      * ページング処理します。
-     * ページングされた結果とページナビゲーションHTMLの生成を
-     * プロパティに保持します。
-     * </pre>
+     * ページングされた結果とページナビゲーションHTMLの生成をプロパティに保持します。
      *
      * @param array $view ページングするデータアイテム
      *
-     *
      * @return void
      */
-    public function makePager($view)
+    public function makePager(array $view)
     {
         if (is_null($view)) {
-            //$viewが無い
+            // $viewが無い
             $this->_links = null;
             return;
         } else {
@@ -288,20 +291,21 @@ class BEAR_Pager extends BEAR_Base
         }
         $links['back_mobile'] = $back;
         $links['next_mobile'] = $next;
-        /** @var $this->pager Pager */
+        /* @var $this->pager Pager */
         $current = $this->pager->getCurrentPageID();
         $total = $this->pager->numPages();
         switch (array($hasBack, $hasNext)) {
-            case array(false, true) :
+            case array(false, true):
                 $links['all'] = "<font color=gray >{$this->_options['prevImg']} $current/$total</font> {$next}";
                 break;
-            case array(true, false) :
+            case array(true, false):
                 $links['all'] = "{$back} <font color=gray>$current/$total {$this->_options['nextImg']}</font>";
                 break;
-            case array(true, true) :
+            case array(true, true):
                 $links['all'] = "{$back} | {$next}";
                 $links['all'] = "{$back} <font color=gray>$current/$total</font> {$next}";
-            default :
+            default:
+                // middle
                 break;
         }
         // セッションクエリーを削除

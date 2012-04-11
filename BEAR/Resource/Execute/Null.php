@@ -31,10 +31,6 @@ class BEAR_Resource_Execute_Null extends BEAR_Resource_Execute_Adapter
     /**
      * リソースリクエスト実行
      *
-     * @param array  $uri    URI
-     * @param array  $values 引数
-     * @param string $method リクエストメソッド（無効)
-     *
      * @return mixed
      */
     public function request()

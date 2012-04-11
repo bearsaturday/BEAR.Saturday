@@ -16,15 +16,12 @@
 /**
  * BEARクラスの抽象クラス
  *
- * <pre>
  * BEARフレームワークで使われる基底クラスです。
  *
  * BEARのクラスはBEAR::factoryやBEAR::dependency()によって以下の順でインスタンス化されます。
  *
  * 1) コンストラクタで設定を行う
- * 2) 設定に基づいてインジェクタで必要なサービス（オブジェクト、変数）をプロパティを用意する
- *
- * </pre>
+ * 2) 設定に基づいてインジェクタで必要なサービスをプロパティに用意
  *
  * @category  BEAR
  * @package   BEAR
@@ -61,7 +58,6 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      * Inject
      *
      * 設定にしたがってサービスをインジェクトします。
-     * サービスオブジェクトは通常BEAR::get()やBEAR::dependency()を使ってサービスロケータで取得します。
      *
      * @return void
      */

@@ -4,12 +4,12 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id:$
+ * @category  BEAR
+ * @package   BEAR_Agent
+ * @author    Akihito Koriyama <koriyama@bear-project.net>
+ * @copyright 2008-2011 Akihito Koriyama All rights reserved.
+ * @license   http://opensource.org/licenses/bsd-license.php BSD
+ * @version   SVN: Release: @package_version@ $Id:$
  * @link      http://www.bear-project.net/
  */
 
@@ -53,17 +53,17 @@ class BEAR_Agent_Mobile extends BEAR_Factory
         $netUserAgentMobile = Net_UserAgent_Mobile::factory($userAgent);
         if (PEAR::isError($netUserAgentMobile)) {
             switch (true) {
-            case (strstr($userAgent, 'DoCoMo')) :
-                $botAgent = BEAR_Agent::BOT_DOCOMO;
-                break;
-            case (strstr($userAgent, 'KDDI-')) :
-                $botAgent = BEAR_Agent::BOT_AU;
-                break;
-            case (preg_match('/(SoftBank|Vodafone|J-PHONE|MOT-)/', $userAgent)) :
-                $botAgent = BEAR_Agent::BOT_SOFTBANK;
-                break;
-            default :
-                $botAgent = '';
+                case (strstr($userAgent, 'DoCoMo')):
+                    $botAgent = BEAR_Agent::BOT_DOCOMO;
+                    break;
+                case (strstr($userAgent, 'KDDI-')):
+                    $botAgent = BEAR_Agent::BOT_AU;
+                    break;
+                case (preg_match('/(SoftBank|Vodafone|J-PHONE|MOT-)/', $userAgent)):
+                    $botAgent = BEAR_Agent::BOT_SOFTBANK;
+                    break;
+                default:
+                    $botAgent = '';
             }
             $netUserAgentMobile = Net_UserAgent_Mobile::factory($botAgent);
         }

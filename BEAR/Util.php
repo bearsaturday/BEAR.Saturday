@@ -28,7 +28,6 @@
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id: Util.php 2563 2011-06-19 16:11:36Z koriyama@bear-project.net $
  * @link      http://www.bear-project.net/
- *
  */
 class BEAR_Util
 {
@@ -54,10 +53,10 @@ class BEAR_Util
             }
             $fileParts = explode('.', $path . DIRECTORY_SEPARATOR . $file);
             if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
-                //dir
+                // dir
                 self::getFilesList($path . DIRECTORY_SEPARATOR . $file);
             } else {
-                //file
+                // file
                 if (array_pop($fileParts) !== 'php') {
                     continue;
                 }

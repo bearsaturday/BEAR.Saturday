@@ -47,6 +47,8 @@ class BEAR_Log extends BEAR_Base
 
     /**
      * リソースログ
+     *
+     * @var array
      */
     private $_resourceLog = array();
 
@@ -133,7 +135,7 @@ class BEAR_Log extends BEAR_Base
     public static function onShutdownDebug()
     {
         $bearLog = BEAR::dependency('BEAR_Log');
-        if (class_exists("SQLiteDatabase",false)) {
+        if (class_exists("SQLiteDatabase", false)) {
             $bearLog->shutdonwnDbDebug();
         } else {
             $bearLog->shutdownDebug(false);
@@ -166,7 +168,7 @@ class BEAR_Log extends BEAR_Base
     /**
      * Get log db
      *
-     * @return void
+     * @return SQLiteDatabase
      */
     public function getPageLogDb()
     {
@@ -198,8 +200,7 @@ ____SQL;
         if (!class_exists("SQLiteDatabase", false)) {
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
             include_once 'BEAR/Util.php';
-            $pageLog = file_exists($pageLogPath) ?
-            BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
+            $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
             return $pageLog;
         }
         $db = $this->getPageLogDb();
@@ -261,7 +262,7 @@ ____SQL;
             }
             // page ログ
             $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : '';
-            //show_vars
+            // show_vars
             if (!function_exists('show_vars')) {
                 include 'BEAR/vendors/debuglib.php';
             }
@@ -274,18 +275,23 @@ ____SQL;
                 $log['smarty'] = '';
             }
             $oldPageLog = isset($pageLog['page']) ? $pageLog['page'] : array();
-            $newPageLog = array('page' => $this->_logs,
-                'uri' => $_SERVER['REQUEST_URI']);
+            $newPageLog = array(
+                'page' => $this->_logs,
+                'uri' => $_SERVER['REQUEST_URI']
+            );
             $oldPageLog[] = $newPageLog;
             if (count($oldPageLog) > 3) {
                 array_shift($oldPageLog);
             }
-            $log += array('page' => $oldPageLog,
+            $log += array(
+                'page' => $oldPageLog,
                 'include' => get_included_files(),
-                'class' => get_declared_classes());
+                'class' => get_declared_classes()
+            );
             if (isset($_SERVER['REQUEST_URI'])) {
                 $log += array(
-                    'uri' => $_SERVER['REQUEST_URI']);
+                    'uri' => $_SERVER['REQUEST_URI']
+                );
             }
             $reg = BEAR_Util::getObjectVarsRecursive(BEAR::getAll());
             $log['reg'] = $reg;

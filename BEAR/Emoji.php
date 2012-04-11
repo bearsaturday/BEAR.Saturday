@@ -45,25 +45,25 @@ class BEAR_Emoji extends BEAR_Base
      * iモード絵文字10進数エンティティ開始番号
      *
      */
-    const DOCOMO_MIN = 63647; //0xF89F
+    const DOCOMO_MIN = 63647; // 0xF89F
 
     /**
      * iモード絵文字10進数エンティティ終了番号
      *
      */
-    const DOCOMO_MAX = 63996; //0xF9FC
+    const DOCOMO_MAX = 63996; // 0xF9FC
 
     /**
      * Ez絵文字10進数エンティティ開始番号
      *
      */
-    const EZWEB_MIN = 62272; //0xF340
+    const EZWEB_MIN = 62272; // 0xF340
 
     /**
      * Ez絵文字10進数エンティティ終了番号
      *
      */
-    const EZWEB_MAX = 63484; //0xF7FC
+    const EZWEB_MAX = 63484; // 0xF7FC
 
     /**
      * Softbank絵文字10進数エンティティ開始番号
@@ -168,7 +168,7 @@ class BEAR_Emoji extends BEAR_Base
         $result = array();
         $unicodes = I18N_UnicodeString::utf8ToUnicode($utfEight);
         foreach ($unicodes as $unicodeDecimal) {
-            //絵文字処理
+            // 絵文字処理
             if (($unicodeDecimal > 0xE000 && $unicodeDecimal <= 0xE53E)) {
                 if (($unicodeDecimal > 0xE000 && $unicodeDecimal < 0xE100)) {
                     $offset = hexdec('98E0');
@@ -178,21 +178,21 @@ class BEAR_Emoji extends BEAR_Base
                     $offset = hexdec('93E0');
                 }
                 $webcodeDecimal = $unicodeDecimal - $offset;
-                //絵文字
-                //1B24 (ESC開き)
+                // 絵文字
+                // 1B24 (ESC開き)
                 $result[] = 0x1b;
                 $result[] = 0x24;
-                //絵文字2バイトコード
+                // 絵文字2バイトコード
                 $result[] = ($webcodeDecimal >> 8) & 0xff;
                 $result[] = $webcodeDecimal & 0xff;
-                //0F (ESC閉じ)
+                // 0F (ESC閉じ)
                 $result[] = 0x0f;
             } else {
-                //非絵文字
+                // 非絵文字
                 $result[] = $unicodeDecimal;
             }
         }
-        //unicodeからUTF8に
+        // unicodeからUTF8に
         $iEighteen = new I18N_UnicodeString($result, 'Unicode');
         $result = $iEighteen->toUtf8String();
         return $result;
@@ -201,10 +201,7 @@ class BEAR_Emoji extends BEAR_Base
     /**
      * 10進数エンティティをつくる
      *
-     * <pre>
-     * stringプロパティの文字列を10進エンティティにして
-     * entityプロパティに格納して返します
-     * </pre>
+     * stringプロパティの文字列を10進エンティティにしてentityプロパティに格納して返します
      *
      * @return string
      */
@@ -212,7 +209,7 @@ class BEAR_Emoji extends BEAR_Base
     {
         static $converterMap = null;
         switch ($this->_config['ua']) {
-            case BEAR_Agent::UA_SOFTBANK :
+            case BEAR_Agent::UA_SOFTBANK:
                 if ($converterMap === null) {
                     $converterMap = $this->_getEmojiMap($this->_config['ua']);
                 }
@@ -221,7 +218,7 @@ class BEAR_Emoji extends BEAR_Base
                 $string = $iEighteen->toUtf8String();
                 $string = mb_encode_numericentity($string, $converterMap, 'utf-8');
                 break;
-            case BEAR_Agent::UA_DOCOMO :
+            case BEAR_Agent::UA_DOCOMO:
                 $emojiRegex = '[\xF8\xF9][\x40-\x7E\x80-\xFC]';
                 $string = $this->_makeEntityBySjisRegex($string, $emojiRegex);
                 break;
@@ -234,7 +231,7 @@ class BEAR_Emoji extends BEAR_Base
                 $emojiRegex = '[\xF3\xF6\xF7][\x40-\xFC]|[\xF4][\x40-\x93]';
                 $string = $this->_makeEntityBySjisRegex($string, $emojiRegex);
                 break;
-            default :
+            default:
                 trigger_error('Agent is not mobile.', E_USER_NOTICE);
                 $encode = '';
                 break;
@@ -323,7 +320,7 @@ class BEAR_Emoji extends BEAR_Base
     private static function _onEmojiImage($matches)
     {
         $emojiId = $matches[1];
-        //キャリア判定
+        // キャリア判定
         if (self::DOCOMO_MIN <= $emojiId && $emojiId <= self::DOCOMO_MAX) {
             $emojiUa = BEAR_Agent::UA_DOCOMO;
         } elseif (self::EZWEB_MIN <= $emojiId && $emojiId <= self::EZWEB_MAX) {
@@ -337,12 +334,12 @@ class BEAR_Emoji extends BEAR_Base
         if ($ua !== $emojiUa && $emojiUa !== false) {
             $emojiPath = isset(self::$_staticConfig['emoji_path']) ? self::$_staticConfig['emoji_path'] : '/emoji';
             $emojiFontSize = ($ua === BEAR_Agent::UA_DEFAULT && isset(self::$_staticConfig['emoji_path'])
-            && isset(self::$_staticConfig['pc_emoji_size'])
-            && self::$_staticConfig['pc_emoji_size'] !== 20)
-            ? '12' : '20';
+                && isset(self::$_staticConfig['pc_emoji_size'])
+                && self::$_staticConfig['pc_emoji_size'] !== 20)
+                ? '12' : '20';
             $result = '<img src="' .$emojiPath . '/' . strtolower($emojiUa) . '/' . $emojiFontSize . '/' . dechex($emojiId) . '.gif" class="bear_emoji" border="0" />';
         } else {
-            //絵文字ではないエンティティ
+            // 絵文字ではないエンティティ
             $result = "&#{$emojiId};";
         }
         return $result;
@@ -371,8 +368,9 @@ class BEAR_Emoji extends BEAR_Base
             $ua = $this->_ua;
         }
         switch ($ua) {
-            case BEAR_Agent::UA_DOCOMO :
-                $result = array(0xE63E,
+            case BEAR_Agent::UA_DOCOMO:
+                $result = array(
+                           0xE63E,
                            0xE69B,
                            0x1261,
                            0xFFFF,
@@ -387,86 +385,90 @@ class BEAR_Emoji extends BEAR_Base
                            0xE6DB,
                            0xE757,
                            0x12A5,
-                           0xFFFF);
+                           0xFFFF
+                          );
                 break;
-            case BEAR_Agent::UA_EZWEB :
+            case BEAR_Agent::UA_EZWEB:
                 $result = array(
-                    0xE468,
-                    0xE4A6,
-                    0x11D8,
-                    0xFFFF,
-                    0xE4A7,
-                    0xE523,
-                    0x11D9,
-                    0xFFFF,
-                    0xE524,
-                    0xE562,
-                    0x121C,
-                    0xFFFF,
-                    0xE563,
-                    0xE5B4,
-                    0x121D,
-                    0xFFFF,
-                    0xE5B5,
-                    0xE5CC,
-                    0x1230,
-                    0xFFFF,
-                    0xE5CD,
-                    0xE5DF,
-                    0x0D73,
-                    0xFFFF,
-                    0xEA80,
-                    0xEAAB,
-                    0x08D3,
-                    0xFFFF,
-                    0xEAAC,
-                    0xEAFA,
-                    0x08D4,
-                    0xFFFF,
-                    0xEAFB,
-                    0xEB0D,
-                    0x0CD7,
-                    0xFFFF,
-                    0xEB0E,
-                    0xEB3B,
-                    0x08C1,
-                    0xFFFF,
-                    0xEB3C,
-                    0xEB7A,
-                    0x0904,
-                    0xFFFF,
-                    0xEB7B,
-                    0xEB88,
-                    0x0905,
-                    0xFFFF);
+                           0xE468,
+                           0xE4A6,
+                           0x11D8,
+                           0xFFFF,
+                           0xE4A7,
+                           0xE523,
+                           0x11D9,
+                           0xFFFF,
+                           0xE524,
+                           0xE562,
+                           0x121C,
+                           0xFFFF,
+                           0xE563,
+                           0xE5B4,
+                           0x121D,
+                           0xFFFF,
+                           0xE5B5,
+                           0xE5CC,
+                           0x1230,
+                           0xFFFF,
+                           0xE5CD,
+                           0xE5DF,
+                           0x0D73,
+                           0xFFFF,
+                           0xEA80,
+                           0xEAAB,
+                           0x08D3,
+                           0xFFFF,
+                           0xEAAC,
+                           0xEAFA,
+                           0x08D4,
+                           0xFFFF,
+                           0xEAFB,
+                           0xEB0D,
+                           0x0CD7,
+                           0xFFFF,
+                           0xEB0E,
+                           0xEB3B,
+                           0x08C1,
+                           0xFFFF,
+                           0xEB3C,
+                           0xEB7A,
+                           0x0904,
+                           0xFFFF,
+                           0xEB7B,
+                           0xEB88,
+                           0x0905,
+                           0xFFFF
+                         );
                 break;
-            case BEAR_Agent::UA_SOFTBANK :
-                $result = array(0xE001,
-                0xE05A,
-                0,
-                0xFFFF,
-                0xE101,
-                0xE15A,
-                0,
-                0xFFFF,
-                0xE201,
-                0xE25A,
-                0,
-                0xFFFF,
-                0xE301,
-                0xE34D,
-                0,
-                0xFFFF,
-                0xE401,
-                0xE44C,
-                0,
-                0xFFFF,
-                0xE501,
-                0xE53E,
-                0,
-                0xFFFF);
+            case BEAR_Agent::UA_SOFTBANK:
+                $result = array(
+                           0xE001,
+                           0xE05A,
+                           0,
+                           0xFFFF,
+                           0xE101,
+                           0xE15A,
+                           0,
+                           0xFFFF,
+                           0xE201,
+                           0xE25A,
+                           0,
+                           0xFFFF,
+                           0xE301,
+                           0xE34D,
+                           0,
+                           0xFFFF,
+                           0xE401,
+                           0xE44C,
+                           0,
+                           0xFFFF,
+                           0xE501,
+                           0xE53E,
+                           0,
+                           0xFFF
+                        );
                 break;
-            default :
+            default:
                 break;
         }
         return $result;
@@ -549,19 +551,19 @@ class BEAR_Emoji extends BEAR_Base
     {
         switch ($this->_ua) {
             // Docomo, Au
-            case BEAR_Agent::UA_DOCOMO :
-            case BEAR_Agent::UA_EZWEB :
+            case BEAR_Agent::UA_DOCOMO:
+            case BEAR_Agent::UA_EZWEB:
                 /* @var $emoji BEAR_Emoji */
                 $decEntity = $this->makeDecEntity($string);
                 $regex = '/&#(\d{5});/is';
                 $string = preg_replace($regex, '', $decEntity);
                 break;
                 // SBモバイル
-            case BEAR_Agent::UA_SOFTBANK :
+            case BEAR_Agent::UA_SOFTBANK:
                 $regex = '/\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f/is';
                 $string = preg_replace($regex, "", $string);
                 break;
-            default :
+            default:
                 break;
         }
         return $string;

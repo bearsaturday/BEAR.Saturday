@@ -135,9 +135,12 @@ class BEAR_Session extends BEAR_Base
             HTTP_Session2::setGcMaxLifeTime($this->_config['gc_max_lifetime']);
         }
         // セッションスタート
-        $this->_log->log('Session Start',
-                          array('id' => session_id(),
-                          'module' => session_module_name() . '/' . $this->_config['adapter'])
+        $this->_log->log(
+            'Session Start',
+            array(
+                'id' => session_id(),
+                'module' => session_module_name() . '/' . $this->_config['adapter']
+            )
         );
     }
 
@@ -151,28 +154,30 @@ class BEAR_Session extends BEAR_Base
      */
     private function _setAdpator(array $config)
     {
-        //セッションハンドラ初期化
+        // セッションハンドラ初期化
         switch ($config['adapter']) {
-            case self::ADAPTER_MEMCACHE :
+            case self::ADAPTER_MEMCACHE:
                 ini_set("session.save_handler", 'memcache');
                 ini_set("session.save_path", $config['path']);
                 break;
-            case self::ADAPTER_DB :
+            case self::ADAPTER_DB:
                 // DSN を指定します
                 $config = array(
-            'dsn' => $config['path'],
-            'table' => 'sessiondata',
-            'autooptimize' => true);
+                    'dsn' => $config['path'],
+                    'table' => 'sessiondata',
+                    'autooptimize' => true
+                );
                 HTTP_Session2::setContainer('MDB2', $config);
                 break;
-            case self::ADAPTER_FILE :
+            case self::ADAPTER_FILE:
                 if (isset($config['path']) && file_exists($config['path'])) {
                     ini_set("session.save_path", $config['path']);
                 }
                 break;
-            case self::ADAPTER_NONE :
+            case self::ADAPTER_NONE:
+                // no cache
                 break;
-            default :
+            default:
                 // error
                 $msg = 'Invalid Session Engine.';
                 $info = array('adapter' => $config['adapter']);

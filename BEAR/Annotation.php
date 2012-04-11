@@ -57,19 +57,19 @@ class BEAR_Annotation extends BEAR_Base
      * @return void
      * @throws BEAR_Annotation_Exception
      */
-    public function required($values)
+    public function required(array $values)
     {
         $match = array();
         $result = preg_match_all("/@required\s+(\w+)/is", $this->_config['doc']['method'], $match);
         if ($result !== false) {
-            //メソッド優先
+            // メソッド優先
             try {
                 BEAR_Util::required($match[1], $values);
             } catch(Exception $e) {
                 $info = array(
-                         'RO' => $this->_config['ref']['method']->class . '::' . $this->_config['ref']['method']->name,
-                         'required' => $match[1], 'values' => $values, 'doc' => $this->_config['doc']['method']
-                       );
+                    'RO' => $this->_config['ref']['method']->class . '::' . $this->_config['ref']['method']->name,
+                    'required' => $match[1], 'values' => $values, 'doc' => $this->_config['doc']['method']
+                );
                 $required = implode($match[1], ',');
                 $msg = "@required item[{$required}] is missing.";
                 throw $this->_exception($msg, array('code' => BEAR::CODE_BAD_REQUEST, 'info' => $info));

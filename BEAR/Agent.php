@@ -138,22 +138,19 @@ class BEAR_Agent extends BEAR_Base
     /**
      * Inject
      *
-     * <pre>
      * user_agentによって以下のプロパティを注入します。
      * 独自のエージェント判別ロジックを入れたいときはインジェクタを変更します。
      *
      * Net_UserAgent_Mobile agentMobile
      * string               _ua UAコード
      * mixed                adapter エージェントアダプター
-     * </pre>
      *
      * @return void
      */
     public function onInject()
     {
         $this->_agentMobile = $this->_config;
-        $injectUa = isset($this->_config['ua_inject']) && is_callable(array($this->_config['ua_inject'], 'inject')) ?
-        $this->_config['ua_inject'] : 'BEAR_Agent_Ua';
+        $injectUa = isset($this->_config['ua_inject']) && is_callable(array($this->_config['ua_inject'], 'inject')) ? $this->_config['ua_inject'] : 'BEAR_Agent_Ua';
         // _uaを注入
         $agent = &$this;
         call_user_func(array($injectUa, 'inject'), $agent, $this->_config);
@@ -198,20 +195,21 @@ class BEAR_Agent extends BEAR_Base
         $serial = '';
         $agentMobile = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile);
         switch ($this->_ua) {
-        case self::UA_DOCOMO :
-            $serial = $this->agentMobile->getCardID();
-            if ($serial === '') {
+            case self::UA_DOCOMO:
+                $serial = $this->agentMobile->getCardID();
+                if ($serial === '') {
+                    $serial = $this->agentMobile->getSerialNumber();
+                }
+                break;
+            case self::UA_EZWEB:
+                $serial = $this->agentMobile->getHeader('X-UP-SUBNO');
+                break;
+            case self::UA_SOFTBANK:
                 $serial = $this->agentMobile->getSerialNumber();
-            }
-            break;
-        case self::UA_EZWEB :
-            $serial = $this->agentMobile->getHeader('X-UP-SUBNO');
-            break;
-        case self::UA_SOFTBANK :
-            $serial = $this->agentMobile->getSerialNumber();
-            break;
-        default :
-            break;
+                break;
+            default:
+                // error
+                break;
         }
         return $serial;
     }

@@ -54,8 +54,7 @@ class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adapter
     public function request()
     {
         $mock = array();
-        $extra = (isset($this->_config['options']['mock']['name']))
-        ? $this->_config['options']['mock']['name'] : $this->_config['uri'];
+        $extra = (isset($this->_config['options']['mock']['name'])) ? $this->_config['options']['mock']['name'] : $this->_config['uri'];
         $y = (isset($this->_config['options']['mock']['y'])) ? $this->_config['options']['mock']['y'] : self::Y_DEFAULT;
         if (isset($this->_config['options']['mock']['x'])) {
             if (is_array($this->_config['options']['mock']['x'])) {
@@ -71,9 +70,7 @@ class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adapter
         }
         for ($i = 0; $i < $y; $i++) {
             for ($j = 0; $j < $x; $j++) {
-                $xKey = (isset($this->_config['options']['mock'])
-                && is_array($this->_config['options']['mock']['x']))
-                ? $this->_config['options']['mock']['x'][$j] : $j;
+                $xKey = (isset($this->_config['options']['mock']) && is_array($this->_config['options']['mock']['x'])) ? $this->_config['options']['mock']['x'][$j] : $j;
                 $row[$labelX[$j]] = "{$extra}.{$i}.{$xKey}";
             }
             $mock[$i] = $row;

@@ -62,8 +62,6 @@ class BEAR_Resource_Execute extends BEAR_Factory
      * URIによってリソースリクエスト実行クラスを確定して
      * インジェクションオブジェクトを生成します
      *
-     * @param array $config
-     *
      * @return BEAR_Resource_Execute_Interface
      * @throws BEAR_Resource_Execute_Exception
      */
@@ -97,16 +95,16 @@ class BEAR_Resource_Execute extends BEAR_Factory
             return $obj;
         }
         switch (true) {
-            case (isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https')) :
+            case (isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https')):
                 $format = self::FORMAT_HTTP;
                 break;
-            case (isset($url['scheme']) && $url['scheme'] == 'socket') :
+            case (isset($url['scheme']) && $url['scheme'] == 'socket'):
                 $format = self::FORMAT_SOCKET;
                 break;
-            case (isset($url['scheme']) && $url['scheme'] == 'page') :
+            case (isset($url['scheme']) && $url['scheme'] == 'page'):
                 $format = self::FORMAT_PAGE;
                 break;
-            default :
+            default:
                 $msg = 'URI is not valid.';
                 $info = array('uri' => $this->_config['uri']);
                 throw $this->_exception($msg, compact('info'));
@@ -132,25 +130,27 @@ class BEAR_Resource_Execute extends BEAR_Factory
             include_once $file;
             $resourcePathName = 'App_Ro_' . str_replace('/', '_', $uri);
             switch (true) {
-                case (class_exists($resourcePathName, false)) :
+                case (class_exists($resourcePathName, false)):
                     $this->_config['class'] = $resourcePathName;
                     $format = 'Ro';
                     break;
-                case (function_exists($resourcePathName)) :
-                    //@deprecated
+                case (function_exists($resourcePathName)):
+                    // @deprecated
                     $this->_config['function'] = $resourcePathName;
                     $format = 'Function';
                     break;
-                default :
+                default:
                     $msg = 'Mismatch resource class/function error.（ファイル名とクラス/関数名がミスマッチです。)';
                     $info = array(
-                    'resource name' => $resourcePathName,
-                    'resource file' => $file);
+                                'resource name' => $resourcePathName,
+                                'resource file' => $file
+                            );
                     throw $this->_exception(
                         $msg,
                         array(
                             'code' => BEAR::CODE_BAD_REQUEST,
-                            'info' => $info)
+                            'info' => $info
+                        )
                     );
                     $format = 'Mock';
             }

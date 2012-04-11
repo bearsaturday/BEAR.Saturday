@@ -94,6 +94,8 @@ abstract class BEAR_Page extends BEAR_Base
 
     /**
      * ページ実行ログ
+     *
+     * @var array
      */
     protected $_pageLog = array();
 
@@ -106,6 +108,8 @@ abstract class BEAR_Page extends BEAR_Base
 
     /**
      * 文字コード変換の場合のモバイルの文字コード
+     *
+     * @var string
      */
     private $_codeFromMoble;
 
@@ -148,6 +152,8 @@ abstract class BEAR_Page extends BEAR_Base
      * charset
      *
      * マルチエージェントの場合のcharset
+     *
+     * @var string
      */
     private static $_charset = null;
 
@@ -522,6 +528,8 @@ abstract class BEAR_Page extends BEAR_Base
      * URLクエリーの$_GETをonInit($args)の$argsにインジェクトします。
      *
      * Injectするキー
+     *
+     * @param string $key
      * @param string $getKey  $_GETキー
      * @param mixed  $default デフォルト
      *
@@ -544,7 +552,7 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @return void
      */
-    public function injectArgs($args)
+    public function injectArgs(array $args)
     {
         $args = (array)BEAR::loadValues($args);
         $this->_args = array_merge($this->_args, $args);
@@ -688,19 +696,19 @@ abstract class BEAR_Page extends BEAR_Base
             $config = $prototypeRo->getConfig();
             $options = $config['request']['options'];
             switch ($setOption) {
-                case  'ajax':
+                case 'ajax':
                     $prototypeRo->setConfig('is_ajax_set', true);
-                case  'lazy':
+                case 'lazy':
                     $this->set($key, $prototypeRo);
                     break;
-                case  'object':
+                case 'object':
                     $ro = $prototypeRo->request();
                     $this->set($key, $ro);
                     break;
-                case  'shutdown':
+                case 'shutdown':
                     BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($prototypeRo);
                     break;
-                case  'value':
+                case 'value':
                 default:
                     $value = $prototypeRo->getValue();
                     $this->set($key, $value);

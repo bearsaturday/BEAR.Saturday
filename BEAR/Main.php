@@ -46,7 +46,6 @@
  * @config bool   enable_ua_sniffing UAスニッフィング
  * @config string injector           インジェクタ
  * @config bool   enable_onshutdown  onShutdown可能に
- *
  */
 class BEAR_Main extends BEAR_Base
 {
@@ -110,8 +109,14 @@ class BEAR_Main extends BEAR_Base
     public function onInject()
     {
         // ページを生成してレジストリにセット
-        $config = array('resource_id' => $this->_config['page_class'], 'enable_ua_sniffing' => $this->_config['enable_ua_sniffing'], 'ua' => $this->_config['ua'], 'mode' => BEAR_Page::CONFIG_MODE_HTML);
-        $options = array('injector' => (isset($this->_config['injector']) ? $this->_config['injector'] : 'onInject'));
+        $config = array(
+            'resource_id' => $this->_config['page_class'],
+            'enable_ua_sniffing' => $this->_config['enable_ua_sniffing'],
+            'ua' => $this->_config['ua'], 'mode' => BEAR_Page::CONFIG_MODE_HTML
+        );
+        $options = array(
+            'injector' => (isset($this->_config['injector']) ? $this->_config['injector'] : 'onInject')
+        );
         $this->_page = BEAR::factory($this->_config['page_class'], $config, $options);
         BEAR::set('page', $this->_page);
         $this->_log = BEAR::dependency('BEAR_Log');
@@ -252,10 +257,12 @@ class BEAR_Main extends BEAR_Base
         } else {
             // submit NG
             $this->_log->log(
-            	'form',
-                array('valid' => false,
-                	  'rules' => $form->_rules,
-                	  'errors' => $form->_errors)
+                'form',
+                array(
+                    'valid' => false,
+                    'rules' => $form->_rules,
+                    'errors' => $form->_errors
+                )
             );
             if ($this->_isAjaxSubmit) {
                 // AJAXバリデーションNG
@@ -348,7 +355,6 @@ class BEAR_Main extends BEAR_Base
         // セッションスタート
         if ($this->_config['enable_ua_sniffing'] === true) {
             $adapterConfig = $this->_agent->adapter->getConfig();
-            //            ini_set('session.use_trans_sid', $adapterConfig['session_trans_sid']);
             if ($adapterConfig['enable_session'] && $app['BEAR_Session']['adapter'] != 0) {
                 BEAR::dependency('BEAR_Session')->start();
             }
@@ -367,7 +373,6 @@ class BEAR_Main extends BEAR_Base
      */
     public function end($initCache = null)
     {
-
         $body = ob_get_contents();
         // ページキャッシュ書き込み
         if (isset($this->_config['cache']['type'])) {
@@ -404,7 +409,7 @@ class BEAR_Main extends BEAR_Base
      */
     private function _runCache()
     {
-        //キャッシュ初期化
+        // キャッシュ初期化
         $type = isset($this->_config['cache']['type']) && $this->_config['cache']['type'];
         if (!$type) {
             return false;
@@ -430,7 +435,6 @@ class BEAR_Main extends BEAR_Base
                     header($header);
                 }
             }
-            //            $this->_page->flushHeader();
             echo $cacheData['body'];
             $this->exitMain();
         } else {
@@ -484,7 +488,7 @@ class BEAR_Main extends BEAR_Base
         }
         // アクションコール
         $this->_page->onAction($submit);
-        //追加でアクションコール
+        // 追加でアクションコール
         $methodExists = method_exists($this->_page, 'onAction' . $formName);
         if ($methodExists) {
             // onAction.フォーム名() コール
@@ -523,13 +527,18 @@ class BEAR_Main extends BEAR_Base
             $ruleKeys[] = $key;
         }
         $ajaxErrorResult = array(
-            'quickform' => array('form_id' => $form->_attributes['id'],
+            'quickform' => array(
+                'form_id' => $form->_attributes['id'],
                 'rules' => $ruleKeys,
-                'errors' => $form->_errors));
+                'errors' => $form->_errors
+            )
+        );
         $this->_log->log('AJAX Form NG', $ajaxErrorResult);
-        $formResult = array('validate' => false,
+        $formResult = array(
+            'validate' => false,
             'id' => $form->_attributes['id'],
-            'errors' => $form->_errors);
+            'errors' => $form->_errors
+        );
         $ajax = BEAR::dependency('BEAR_Page_Ajax');
         $ajax->addAjax('quickform', $formResult);
         $this->_page->output('ajax');
@@ -553,8 +562,11 @@ class BEAR_Main extends BEAR_Base
             $ruleKeys[] = $key;
         }
         BEAR_Page::$formElement = array(
-            'quickform' => array('form_id' => $form->_attributes['id'],
-                'rules' => $ruleKeys));
+            'quickform' => array(
+                'form_id' => $form->_attributes['id'],
+                'rules' => $ruleKeys
+            )
+        );
     }
 
     /**

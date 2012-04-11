@@ -72,9 +72,11 @@ class BEAR_Smarty extends BEAR_Factory
         $smarty->compile_dir = isset($this->_config['compile_dir']) ? $this->_config['compile_dir'] : _BEAR_APP_HOME . '/tmp/smarty_templates_c/';
         $smarty->compile_id = isset($this->_config['ua']) ? $this->_config['ua'] : '';
         $smarty->cache_dir = isset($this->_config['cache_dir']) ? $this->_config['cache_dir'] : _BEAR_APP_HOME . '/tmp/smarty_cache/';
-        $smarty->plugins_dir = array('plugins',
+        $smarty->plugins_dir = array(
+            'plugins',
             'App/smarty/plugins/',
-            'BEAR/Smarty/plugins/');
+            'BEAR/Smarty/plugins/'
+        );
         $smarty->caching = $this->_config['caching'];
         $smarty->cache_lifetime = $this->_config['cache_lifetime'];
         $smarty->compile_check = false;

@@ -14,7 +14,7 @@
  */
 
 /**
- * フォーム
+ * Form
  *
  * フォームにPEAR::HTML_QuickFormを利用しています。
  *
@@ -35,6 +35,8 @@
 class BEAR_Form extends BEAR_Factory
 {
     /**
+     * フォームトークン
+     *
      * @var BEAR_Form_Token
      */
     protected $_formToken;
@@ -96,10 +98,10 @@ class BEAR_Form extends BEAR_Factory
     /**
      * SubmitValue値
      *
-     * <pre>
      * Quick_Form::getSubmitValues()の値、onAction($submit)の$submitは
      * Quick_Form::exportValue()で出力された値でsubmitボタンの値などは出力されない
-     * </pre>
+     *
+     * @var arry
      */
     public static $submitValue;
 
@@ -135,6 +137,8 @@ class BEAR_Form extends BEAR_Factory
 
     /**
      * JS警告
+     *
+     * @var string
      */
     public static $jsWarning = self::JS_WARNING;
 
@@ -147,6 +151,8 @@ class BEAR_Form extends BEAR_Factory
 
     /**
      * フォーム名
+     *
+     * @var array
      */
     public static $formNames = array();
 
@@ -159,11 +165,15 @@ class BEAR_Form extends BEAR_Factory
 
     /**
      * 使用済みトークン
+     *
+     * @var array
      */
     private static $_usedToken = array();
 
     /**
      * シングルトンインスタンス
+     *
+     * @var object
      */
     private static $_instance = null;
 
@@ -175,6 +185,11 @@ class BEAR_Form extends BEAR_Factory
     private static $_rendererCallback = null;
 
 
+    /**
+     * Render Config
+     *
+     * @var array
+     */
     private static $_renderConfig = array();
 
     /**
@@ -208,12 +223,14 @@ class BEAR_Form extends BEAR_Factory
     public function factory()
     {
         $this->_config['action'] = (!isset($this->_config['action']) || $this->_config['action'] == '') ? $_SERVER['REQUEST_URI'] : $this->_config['action'];
-        $options = array('formName' => 'form',
+        $options = array(
+            'formName' => 'form',
             'method' => 'post',
             'action' => '',
             'target' => '',
             'attributes' => null,
-            'callback' => false);
+            'callback' => false
+        );
         if ($this->_config) {
             $options = array_merge($options, $this->_config);
         }
@@ -222,7 +239,7 @@ class BEAR_Form extends BEAR_Factory
         if ($onClick && !($options['action'])) {
             $options['action'] = '?' . BEAR_Page::KEY_CLICK_NAME . '=' . $onClick;
         }
-        //フォーム名の登録
+        // フォーム名の登録
         self::$formNames[] = $formName = $options['formName'];
         // $formObject生成
         $options['trackSubmit'] = true;
@@ -250,7 +267,7 @@ class BEAR_Form extends BEAR_Factory
      * @return HTML_QuickForm
      * @access private
      */
-    private function _factory($formName, $options)
+    private function _factory($formName, array $options)
     {
         // QuickForm作成
         $form = new HTML_QuickForm($formName, $options['method'], $options['action'], $options['target'], $options['attributes'], $options['trackSubmit']);
@@ -334,12 +351,12 @@ class BEAR_Form extends BEAR_Factory
      * onAction($submit)の$submitには渡りません。
      *
      * @param HTML_Quick_Form $form  QuickForm
-     * @param stirng          $key   ヘッダーキー
+     * @param string          $key   ヘッダーキー
      * @param string          $value ヘッダーの値
      *
      * @return void
      */
-    public static function setSubmitHeader($form, $key, $value)
+    public static function setSubmitHeader(HTML_Quick_Form $form, $key, $value)
     {
         $form->addElement('hidden', '_' . $key, $value);
     }
@@ -378,7 +395,7 @@ class BEAR_Form extends BEAR_Factory
      *
      * @return string フォーム名
      */
-    public static function getSubmitFormName($submits)
+    public static function getSubmitFormName(array $submits)
     {
         foreach ($submits as $postName => $postValue) {
             if (preg_match('/^_qf__(.+)/', $postName, $match) > 0) {
@@ -394,12 +411,11 @@ class BEAR_Form extends BEAR_Factory
      *
      * @param Smarty &$smarty  Smartyオブジェクト
      * @param string $ua       UAコード
-     * @param bool   $removeJs JS削除?
+     * @param bool   $enableJs JS有効?
      *
      * @return string
-     * @todo DOCOMOエージェントの時に<form>にGUID=ONを付加
      */
-    public static function renderForms(&$smarty, $ua, $enableJs = false)
+    public static function renderForms(Smarty &$smarty, $ua, $enableJs = false)
     {
         static $result = false;
         static $done = false;
@@ -418,9 +434,9 @@ class BEAR_Form extends BEAR_Factory
             $callback = (isset($renderConfig['callback']) &&
             is_callable($renderConfig['callback'], false)) ? $renderConfig['callback'] : false;
             switch ($adapter) {
-                case self::RENDERER_APP :
+                case self::RENDERER_APP:
                     // DHTMLRulesTablelessレンダラ
-                    //単数フォーム(App_Form_Renderer_優先)
+                    // 単数フォーム(App_Form_Renderer_優先)
                     try {
                         $renderer = BEAR::dependency('App_Form_Renderer_' . $ua);
                     } catch (BEAR_Exception $e) {
@@ -438,9 +454,9 @@ class BEAR_Form extends BEAR_Factory
                     $formValue = $renderer->toHtml();
                     $formErrors = $form->_errors;
                     break;
-                case self::RENDERER_DHTML_TABLELESS :
+                case self::RENDERER_DHTML_TABLELESS:
                     // DHTMLRulesTablelessレンダラ
-                    //単数フォーム
+                    // 単数フォーム
                     $renderer = new HTML_QuickForm_Renderer_Tableless($form);
                     // onblur有効
                     $form->getValidationScript();
@@ -453,10 +469,10 @@ class BEAR_Form extends BEAR_Factory
                     $formValue = $renderer->toHtml();
                     $formErrors = $form->_errors;
                     break;
-                case self::RENDERER_SMARTY_ARRAY :
-                default :
+                case self::RENDERER_SMARTY_ARRAY:
+                default:
                     // HTML_QuickForm_Renderer_ArraySmartyレンダラ
-                    //フォーム描画
+                    // フォーム描画
                     $renderer = new HTML_QuickForm_Renderer_ArraySmarty($smarty);
                     $renderer->setRequiredTemplate(self::$requireTemplate);
                     $renderer->setErrorTemplate(self::$errorTemplate);
@@ -476,11 +492,9 @@ class BEAR_Form extends BEAR_Factory
                 $errorSummary = '<div class="form-errors"><ul><li>' . implode('</li><li>', $formErrors) . '</li></ul></div>';
                 $smarty->assign(self::$_renderConfig[$formName]['errors'], $errorSummary);
             }
-            //remove Javascript code if Docomo or AU
+            // remove Javascript code if Docomo or AU
             if (is_array($formValue) && isset($formValue['javascript']) && $removeJs) {
                 unset($formValue['javascript']);
-            } elseif (is_string($formValue) && $removeJs) {
-                // @todo unset js if string
             }
             $smarty->assign($formName, $formValue);
             $result[$formName] = $formValue;

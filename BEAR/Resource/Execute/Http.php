@@ -63,8 +63,10 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
             if ($code == 200) {
                 $body = $response->getBody();
             } else {
-                $info = array('code' => $code,
-                    'headers' => $headers);
+                $info = array(
+                            'code' => $code,
+                            'headers' => $headers
+                        );
                 throw $this->_exception($response->getBody(), $info);
             }
         } catch(HTTP_Request2_Exception $e) {

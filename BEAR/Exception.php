@@ -51,7 +51,6 @@ class BEAR_Exception extends Exception
      * 例外情報
      *
      * @var array
-     *
      */
     protected $_info = array();
 
@@ -59,7 +58,6 @@ class BEAR_Exception extends Exception
      * クラス
      *
      * @var string
-     *
      */
     protected $_class;
 
@@ -67,7 +65,6 @@ class BEAR_Exception extends Exception
      * リダイレクト
      *
      * @var string
-     *
      */
     protected $_redirect;
 
@@ -76,10 +73,12 @@ class BEAR_Exception extends Exception
      *
      * @var array
      */
-    protected $_default = array('class' => null,
+    protected $_default = array(
+        'class' => null,
         'code' => BEAR::CODE_ERROR,
         'info' => array(),
-        'redirect' => null);
+        'redirect' => null
+    );
 
     /**
      * Constructor
@@ -91,7 +90,7 @@ class BEAR_Exception extends Exception
     {
         $config = array_merge($this->_default, (array)$config);
         parent::__construct($msg);
-        $this->code = $config['code']; //native
+        $this->code = $config['code']; // native
         $this->_class = get_class($this);
         $this->_info = (array)$config['info'];
         $this->_redirect = $config['redirect'];
@@ -125,10 +124,10 @@ class BEAR_Exception extends Exception
      */
     public function __toString()
     {
-        $str = "exception '" . get_class($this) . "'\n" . "class::code '" . $this->_class . "::" . $this->code . "' \n";
-        $str .= "with message '" . $this->message . "' \n" . "information " . var_export($this->_info, true) . " \n";
+        $str = "exception '" . get_class($this) . "'\nclass::code '" . $this->_class . "::" . $this->code . "' \n";
+        $str .= "with message '" . $this->message . "' \ninformation " . var_export($this->_info, true) . " \n";
         $str .= "redirect to '" . $this->_redirect . "' \n";
-        $str .= "Stack trace:\n" . "  " . str_replace("\n", "\n  ", $this->getTraceAsString());
+        $str .= "Stack trace:\n" . "  " . str_replace("\n\n  ", $this->getTraceAsString());
         return $str;
     }
 }

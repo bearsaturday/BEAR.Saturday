@@ -73,7 +73,7 @@ abstract class BEAR_Aspect extends BEAR_Base
     /**
      * joinpointメソッドのリフレクションを返す
      *
-     * @return array methodリフレクション
+     * @return array method リフレクション
      */
     protected function getJoinPonitMethod()
     {

@@ -61,7 +61,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      * </pre>
      *
      * @return mixed
-     * @throws BEAR_Resource_Exception
+     * @throws BEAR_Exception
      */
     public function request()
     {
@@ -151,7 +151,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      */
     protected function _outputResource(BEAR_Page &$page, $cnt)
     {
-        //BEAR_Page::set()でsetされた値
+        // BEAR_Page::set()でsetされた値
         $pageValues = $page->getValues();
         $result = array();
         for ($i = 0; $i < $cnt; $i++) {
@@ -161,7 +161,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             $result[$key] = $prototypeRo->getValue();
         }
         $result = array_merge($result, (array)$pageValues);
-        //        $page->setPrototypeRo();
+        // $page->setPrototypeRo();
         return $result;
     }
 

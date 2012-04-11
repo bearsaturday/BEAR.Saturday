@@ -30,7 +30,6 @@
  * @instance singleton
  *
  * @config mixed adapter イメージアダプター　stringならイメージアダプタークラス
- *
  */
 class BEAR_Img extends BEAR_Factory
 {
@@ -133,8 +132,6 @@ class BEAR_Img extends BEAR_Factory
      * 指定の画像エンジンで画像処理オブジェクトを返します
      * </pre>
      *
-     * @param string $adapter self::ADAPTER_GD | self::ADAPTER_MAGICK | self::ADAPTER_CAIRO
-     *
      * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      * @throws BEAR_Img_Exception
      */
@@ -146,16 +143,16 @@ class BEAR_Img extends BEAR_Factory
         PEAR::registerShutdownFunc(array('BEAR_Img', 'onShutdown'));
         $adapter = $this->_config['adapter'];
         switch ($this->_config['adapter']) {
-            case self::ADAPTER_GD :
+            case self::ADAPTER_GD:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
-            case self::ADAPTER_MAGICK :
+            case self::ADAPTER_MAGICK:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
                 break;
-            case self::ADAPTER_CAIRO :
+            case self::ADAPTER_CAIRO:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
                 break;
-            default :
+            default:
                 if (is_string($adapter)) {
                     self::$_instance = BEAR::dependency('App_Img_Adapter_' . $this->_config['adapter']);
                     break;
@@ -180,25 +177,24 @@ class BEAR_Img extends BEAR_Factory
      */
     public static function changeAdapter($adapter)
     {
-        //保存
+        // 保存
         $tmpFile = self::$_instance->getTmpFileName();
         self::$_instance->save($tmpFile, 'png');
         self::$deleteFiles[] = $tmpFile;
-        //イメージインスタンス
+        // イメージインスタンス
         switch ($adapter) {
-            case self::ADAPTER_GD :
+            case self::ADAPTER_GD:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
                 break;
-            case self::ADAPTER_MAGICK :
+            case self::ADAPTER_MAGICK:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
                 break;
-            case self::ADAPTER_CAIRO :
+            case self::ADAPTER_CAIRO:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
                 break;
-            default :
+            default:
                 trigger_error("No engine supported $adapter");
         }
-        //読み込み
         self::$_instance->load($tmpFile);
         return self::$_instance;
     }
@@ -210,7 +206,7 @@ class BEAR_Img extends BEAR_Factory
      * @deprecated
      */
     public static function changeInstance($adapter)
-	{
+    {
         self::changeAdapter($adapter);
     }
 

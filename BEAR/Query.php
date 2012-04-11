@@ -208,12 +208,14 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $pagerOptions = $pagerOptions + $defaultPagerOptions;
         $pager->setOptions($pagerOptions);
         $pager->pager->build();
-        //情報
+        // 情報
         $info['totalItems'] = $pagerOptions['totalItems'];
         $pager->makeLinks($pagerOptions['delta'], $pagerOptions['totalItems']);
         $links = $pager->pager->getLinks();
-        $info['page_numbers'] = array('current' => $pager->pager->getCurrentPageID(),
-            'total' => $pager->pager->numPages());
+        $info['page_numbers'] = array(
+            'current' => $pager->pager->getCurrentPageID(),
+            'total' => $pager->pager->numPages()
+        );
         list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
         $info['limit'] = $info['to'] - $info['from'] + 1;
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
@@ -263,7 +265,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return mixed
      */
-    private function _selectRow(&$db, $query, $params, $values, $id)
+    private function _selectRow(&$db, $query, array $params, array $values, $id)
     {
         $where = array();
         if (is_string($id) && array_key_exists($id, $values)) {
@@ -413,7 +415,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * エラー？
      *
-     * @param MDB2_Result $result DB結果
+     * @param mixed $result DB結果
      *
      * @return mixed
      */
@@ -430,9 +432,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return int
      */
-    protected function _countQuery($query, $params = array())
+    protected function _countQuery($query, array $params = array())
     {
-        //be smart and try to guess the total number of records
+        // be smart and try to guess the total number of records
         $countQuery = $this->_rewriteCountQuery($query);
         if ($countQuery) {
             if ($params) {
@@ -445,7 +447,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
                 return $totalItems;
             }
         } else {
-            //GROUP BY => fetch the whole resultset and count the rows returned
+            // GROUP BY => fetch the whole resultset and count the rows returned
             $res = $this->_config['db']->queryCol($query);
             if (PEAR::isError($res)) {
                 return $res;

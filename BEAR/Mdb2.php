@@ -127,6 +127,11 @@
 class BEAR_Mdb2 extends BEAR_Factory
 {
 
+    /**
+     * Las log
+     *
+     * @var array
+     */
     private static $_lastLog = array();
 
     /**
@@ -193,10 +198,10 @@ class BEAR_Mdb2 extends BEAR_Factory
     /**
      * デバック用ハンドラ
      *
-     * @param object       &$db     MDB2オブジェクト
-     * @param string       $scope   スコープ
-     * @param string       $message メッセージ
-     * @param unknown_type $isManip 不明
+     * @param object  &$db     MDB2オブジェクト
+     * @param string  $scope   スコープ
+     * @param string  $message メッセージ
+     * @param boolean $isManip 不明
      *
      * @return void
      */
