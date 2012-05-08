@@ -41,10 +41,17 @@
  */
 function smarty_function_resource($params, &$smarty )
 {
+    
     $config = (array)BEAR::loadValues($params['params']) +
     array('method' => 'read', 'uri' => $params['uri'], 'values' => array(), 'options' => array());
     if (isset($params['template'])) {
         $config['options']['template'] = $params['template'];
+    }
+    if (isset($params['cache_life'])) {
+        $config['options']['cache']['life'] = $params['cache_life'];
+    }
+    if (isset($params['cache_key'])) {
+        $config['options']['cache']['key'] = $params['cache_key'];
     }
     $app = BEAR::get('app');
     $string = BEAR::factory(
