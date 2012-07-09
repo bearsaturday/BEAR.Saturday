@@ -127,7 +127,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         );
         $subCmd->addOption(
             'file',
-            array('short_name' => '-a',
+            array('short_name' => '-g',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
