@@ -39,6 +39,13 @@ class App_Ro extends BEAR_Ro
     protected $_db;
 
     /**
+     * Query
+     *
+     * @var BEAR_Query
+     */
+    protected $_query;
+
+    /**
      * Inject
      *
      * 操作によってDBオブジェクトを変更します
@@ -50,9 +57,6 @@ class App_Ro extends BEAR_Ro
     public function onInject()
     {
         $app = BEAR::get('app');
-        assert(is_string($app['App_Db']['dsn']['default']));
-        assert(is_string($app['App_Db']['dsn']['slave']));
-        assert(isset($this->_config['method']));
         $options['default_table_type'] = 'INNODB';
         if ($this->_config['method'] === 'read') {
             $dsn = $app['App_Db']['dsn']['slave'];
