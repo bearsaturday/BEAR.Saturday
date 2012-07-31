@@ -10,7 +10,7 @@
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: Memcache.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
+ * @version    SVN: Release: 0.9.06 $Id: Memcache.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
  * @link      http://www.bear-project.net/
  */
 
@@ -23,7 +23,7 @@
  * @author     Akihito Koriyama <koriyama@bear-project.net>
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    Release: @package_version@ $Id: Memcache.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
+ * @version    Release: 0.9.06 $Id: Memcache.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net
  *
  * @Singleton
@@ -49,8 +49,8 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         $this->_adapter = new Memcache();
         //キャッシュサーバー追加
         if (isset($this->_config['path'])) {
-            foreach($this->_config['path'] as $path) {
-                $this->_adapter->add($path);
+            foreach($this->_config['path'] as $path ){
+                $this->_adapter->connect($path);
             }
         }
         $log = array();

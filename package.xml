@@ -13,11 +13,11 @@
   <email>koriyama@bear-project.net</email>
   <active>yes</active>
  </lead>
- <date>2012-03-26</date>
- <time>14:39:32</time>
+ <date>2012-07-31</date>
+ <time>20:16:49</time>
  <version>
-  <release>0.9.06</release>
-  <api>0.9.06</api>
+  <release>0.9.08</release>
+  <api>0.9.08</api>
  </version>
  <stability>
   <release>beta</release>
@@ -225,7 +225,7 @@ BEAR.saturday (for PHP 5.2)
        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
       </file>
      </dir> <!-- /BEAR/BEAR/bin -->
-     <dir name="scirpt">
+     <dir name="script">
       <file baseinstalldir="/" name="debug_init.php" role="php">
        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
        <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -238,7 +238,7 @@ BEAR.saturday (for PHP 5.2)
        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
       </file>
-     </dir> <!-- /BEAR/BEAR/scirpt -->
+     </dir> <!-- /BEAR/BEAR/script -->
      <file baseinstalldir="/" name="bear.yml" role="php">
       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
       <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -917,12 +917,6 @@ BEAR.saturday (for PHP 5.2)
        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
       </file>
       <file baseinstalldir="/" name="function.resource.php" role="php">
-       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-       <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-       <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-      </file>
-      <file baseinstalldir="/" name="modifier.mb_truncate.php" role="php">
        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
        <tasks:replace from="@package_version@" to="version" type="package-info" />
        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
@@ -5252,14 +5246,6 @@ BEAR.saturday (for PHP 5.2)
         <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
        </file>
       </dir> <!-- /data/app/App/Live -->
-      <dir name="output">
-       <file baseinstalldir="/" name="_untitiled.php" role="data">
-        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-       </file>
-      </dir> <!-- /data/app/App/output -->
       <dir name="Resource">
        <dir name="Execute">
         <file baseinstalldir="/" name="App.php" role="data">
@@ -5269,6 +5255,14 @@ BEAR.saturday (for PHP 5.2)
          <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
         </file>
        </dir> <!-- /data/app/App/Resource/Execute -->
+       <dir name="output">
+        <file baseinstalldir="/" name="_untitiled.php" role="data">
+         <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+         <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+         <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+        </file>
+       </dir> <!-- /data/app/App/Resource/output -->
       </dir> <!-- /data/app/App/Resource -->
       <dir name="Ro">
        <dir name="Test">
@@ -6763,6 +6757,12 @@ BEAR.saturday (for PHP 5.2)
      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
     </file>
    </dir> <!-- /tests -->
+   <file baseinstalldir="/" name="BEAR-0.9.08.tgz" role="data">
+    <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+   </file>
    <file baseinstalldir="/" name="BEAR.php" role="php">
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
     <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -6770,12 +6770,6 @@ BEAR.saturday (for PHP 5.2)
     <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
    </file>
    <file baseinstalldir="/" name="build.xml" role="data">
-    <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-    <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-    <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-   </file>
-   <file baseinstalldir="/" name="package.log" role="data">
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
@@ -6843,6 +6837,21 @@ BEAR.saturday (for PHP 5.2)
     <api>beta</api>
    </stability>
    <date>2012-03-26</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">The BSD License</license>
+   <notes>
+BEAR.saturday (for PHP 5.2)
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9.08</release>
+    <api>0.9.08</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2012-07-31</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">The BSD License</license>
    <notes>
 BEAR.saturday (for PHP 5.2)
