@@ -43,7 +43,7 @@ if (isset($appConfig['Panda'])) {
 }
 Panda::init($pandaConfig);
 // デバック用画面
-include _BEAR_BEAR_HOME . '/BEAR/BEAR/scirpt/dev_info_screen.php';
+include _BEAR_BEAR_HOME . '/BEAR/BEAR/script/dev_info_screen.php';
 
 // _preクエリー
 if (isset($_GET['_pre'])) {

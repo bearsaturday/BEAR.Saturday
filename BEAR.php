@@ -130,7 +130,7 @@ class BEAR
             } else {
                 spl_autoload_register(array(__CLASS__, 'onAutoload'));
             }
-            include _BEAR_BEAR_HOME . '/BEAR/BEAR/scirpt/debug_init.php';
+            include _BEAR_BEAR_HOME . '/BEAR/BEAR/script/debug_init.php';
         }
         if (PHP_SAPI === 'cli' && defined('_BEAR_APP_HOME')) {
             ini_set('include_path',  _BEAR_APP_HOME . PATH_SEPARATOR . get_include_path());
