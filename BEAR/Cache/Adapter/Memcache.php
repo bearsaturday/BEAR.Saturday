@@ -49,8 +49,12 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         $this->_adapter = new Memcache();
         //キャッシュサーバー追加
         if (isset($this->_config['path'])) {
-            foreach($this->_config['path'] as $path ){
-                $this->_adapter->connect($path);
+            if (is_array($this->_config['path'])) {
+                foreach($this->_config['path'] as $path ){
+                    $this->_adapter->connect($path);
+                }
+            } else {
+                $this->_adapter->connect($this->_config['path']);
             }
         }
         $log = array();
