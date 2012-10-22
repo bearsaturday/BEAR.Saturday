@@ -99,7 +99,7 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
             array_walk_recursive($input, array('BEAR_Emoji', 'removeEmoji'), BEAR::dependency('BEAR_Emoji'));
             break;
         default:
-            trigger_error('Illigal $this->_config[\'agent\'] error', E_USER_WARNING);
+            trigger_error('Illegal $this->_config[\'agent\'] error', E_USER_WARNING);
             break;
         }
         // UTF8に文字コード変換
@@ -126,7 +126,7 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
     public static function onUTF8(&$value, $key, $inputEncode)
     {
         if (!mb_check_encoding($value, $inputEncode)) {
-            $msg = 'Illigal Submit Values';
+            $msg = 'Illegal Submit Values';
             $info = array('value' => $value);
             throw BEAR_Agent_Exception(
                 $msg,
@@ -138,7 +138,7 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
         }
         $value = mb_convert_encoding($value, 'utf-8', $inputEncode);
         if (!mb_check_encoding($value, 'utf-8')) {
-            $msg = 'Illigal UTF-8';
+            $msg = 'Illegal UTF-8';
             $info = array('value' => $value);
             throw BEAR_Agent_Exception(
                 $msg,

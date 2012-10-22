@@ -96,12 +96,11 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
      *
      * @return void
      * @ignore
-     * @throws BEAR_Agent_Adapter_Mobile_Exception
      */
     public function UTF8(&$value)
     {
         if (!mb_check_encoding($value, $this->_codeFromMoble)) {
-            $msg = 'Illigal Submit Values';
+            $msg = 'Illegal Submit Values';
             $info = array('value' => $value);
             throw $this->_exception(
                 $msg,
@@ -112,7 +111,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
         }
         $value = mb_convert_encoding($value, 'utf-8', $this->_codeFromMoble);
         if (!mb_check_encoding($value, 'utf-8')) {
-            $msg = 'Illigal UTF-8';
+            $msg = 'Illegal UTF-8';
             $info = array('value' => $value);
             throw $this->_exception(
                 $msg,
