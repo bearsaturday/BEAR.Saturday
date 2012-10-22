@@ -7,7 +7,6 @@
 * Technical choices are described in the 'docs/technical' file
 *
 * @package Cache_Lite
-* @version $Id: Output.php 206076 2006-01-29 00:22:07Z fab $
 * @author Fabien MARTY <fab@php.net>
 */
 
@@ -67,6 +66,3 @@ class Cache_Lite_Output extends Cache_Lite
     }
 
 }
-
-
-?>

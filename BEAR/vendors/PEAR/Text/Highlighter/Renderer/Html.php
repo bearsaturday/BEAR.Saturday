@@ -16,7 +16,7 @@
  * @author     Andrey Demenev <demenev@gmail.com>
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    CVS: $Id: Html.php,v 1.2 2007/06/29 06:56:34 ssttoo Exp $
+ * @version    CVS: $Id$
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 
@@ -123,7 +123,7 @@ define ('HL_NUMBERS_UL',    3);
  * @package    Text_Highlighter
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    Release: 0.7.1
+ * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 
@@ -188,10 +188,12 @@ class Text_Highlighter_Renderer_Html extends Text_Highlighter_Renderer_Array
         'inlinetags' => 'hl-inlinetags',
         'mlcomment'  => 'hl-mlcomment',
         'number'     => 'hl-number',
+        'prepro'     => 'hl-prepro',
         'quotes'     => 'hl-quotes',
         'reserved'   => 'hl-reserved',
         'special'    => 'hl-special',
         'string'     => 'hl-string',
+        'types'      => 'hl-types',
         'url'        => 'hl-url',
         'var'        => 'hl-var',
     );

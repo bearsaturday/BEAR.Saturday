@@ -16,7 +16,7 @@
  * @author     Andrey Demenev <demenev@gmail.com>
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    CVS: $Id: Highlighter.php,v 1.1 2007/06/03 02:35:28 ssttoo Exp $
+ * @version    CVS: $Id$
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 
@@ -58,7 +58,7 @@ define ('HL_INFINITY',      1000000000);
  * @author     Andrey Demenev <demenev@gmail.com>
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    Release: 0.7.1
+ * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 
@@ -83,7 +83,7 @@ define ('HL_INFINITY',      1000000000);
  * Usage example
  * <code>
  *require_once 'Text/Highlighter.php';
- *$hlSQL =& Text_Highlighter::factory('SQL',array('numbers'=>true));
+ *$hlSQL = Text_Highlighter::factory('SQL',array('numbers'=>true));
  *echo $hlSQL->highlight('SELECT * FROM table a WHERE id = 12');
  * </code>
  *
@@ -207,7 +207,7 @@ class Text_Highlighter
             return PEAR::raiseError('Highlighter for ' . $lang . ' not found');
         }
 
-        $obj =& new $classname($options);
+        $obj = new $classname($options);
 
         return $obj;
     }
@@ -224,7 +224,7 @@ class Text_Highlighter
      */
     function setRenderer(&$renderer)
     {
-        $this->_renderer =& $renderer;
+        $this->_renderer = $renderer;
     }
 
     // }}}
@@ -361,7 +361,7 @@ class Text_Highlighter
     {
         if (!($this->_renderer)) {
             include_once('Text/Highlighter/Renderer/Html.php');
-            $this->_renderer =& new Text_Highlighter_Renderer_Html($this->_options);
+            $this->_renderer = new Text_Highlighter_Renderer_Html($this->_options);
         }
         $this->_state = -1;
         $this->_pos = 0;

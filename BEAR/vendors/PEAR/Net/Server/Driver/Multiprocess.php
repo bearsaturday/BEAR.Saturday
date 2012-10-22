@@ -249,7 +249,10 @@ class Net_Server_Multiprocess extends Net_Server_Driver {
             $this->callbackObj->onClose($i);
         }
 
-        $this->_sendDebugMessage("Closed connection from " . $this->clientInfo[$i]["host"] . " on port " . $this->clientInfo[$i]["port"]);
+        $this->_sendDebugMessage(
+            "Closed connection from " . $this->clientInfo[$i]["host"] 
+            . " on port " . $this->clientInfo[$i]["port"]
+        );
 
         @socket_close($this->clientFD[$i]);
         $this->clientFD[$i] = null;
@@ -277,6 +280,7 @@ class Net_Server_Multiprocess extends Net_Server_Driver {
         if (method_exists($this->callbackObj, "onShutdown")) {
             $this->callbackObj->onShutdown();
         }
+
         // this always should return true, we use PHP_FORK_RETURN_METHOD because
         // we want to wait until all processes are really stopped...
         if ($this->_mpmObj->stopAllProcesses(array(''), PHP_FORK_RETURN_METHOD)) {
@@ -287,6 +291,7 @@ class Net_Server_Multiprocess extends Net_Server_Driver {
         } else {
             print "Error stopping mpm\n";
         }
+
         $this->closeConnection();
         $this->_consoleObj->stop();
     }
@@ -303,24 +308,29 @@ class Net_Server_Multiprocess extends Net_Server_Driver {
      *
      * @access private
      */
-        function _setDefaultOptions()
-        {
-        if (!isset($this->_numThreads))
+    function _setDefaultOptions()
+    {
+        if (!isset($this->_numThreads)) {
             $this->_numThreads = 10;
-
-        if (!isset($this->_startPool))
-            $this->_startPool = 2;
-
-        if (!isset($this->_maxIdleTime))
-            $this->_maxIdleTime = 60;
-
-        if (!isset($this->_mpm))
-            $this->_mpm = "prefork";
-
-        if (!isset($this->_console))
-        	$this->_console = "remoteConsole";
-
         }
+
+        if (!isset($this->_startPool)) {
+            $this->_startPool = 2;
+        }
+
+        if (!isset($this->_maxIdleTime)) {
+            $this->_maxIdleTime = 60;
+        }
+
+        if (!isset($this->_mpm)) {
+            $this->_mpm = "prefork";
+        }
+
+        if (!isset($this->_console)) {
+        	$this->_console = "remoteConsole";
+        }
+
+    }
 
 }
 

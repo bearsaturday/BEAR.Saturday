@@ -15,7 +15,7 @@
  * @link       http://pear.php.net/package/Text_Highlighter
  * @category   Text
  * @package    Text_Highlighter
- * @version    generated from: : vbscript.xml,v 1.2 2008/01/02 00:05:52 ssttoo Exp 
+ * @version    generated from: vbscript.xml
  * @author Daniel Fruzynski <daniel-AT-poradnik-webmastera.com>
  *
  */
@@ -34,7 +34,7 @@ require_once 'Text/Highlighter.php';
  * @package    Text_Highlighter
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    Release: 0.7.1
+ * @version    Release: 0.7.0
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 class  Text_Highlighter_VBSCRIPT extends Text_Highlighter

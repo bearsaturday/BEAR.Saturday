@@ -1,0 +1,120 @@
+<?php
+/**
+ * BEAR
+ *
+ * PHP versions 5
+ *
+ * @category  BEAR
+ * @package   BEAR_Page
+ * @author    Akihito Koriyama <koriyama@users.sourceforge.jp>
+ * @copyright 2008 Akihito Koriyama  All rights reserved.
+ * @license   http://opensource.org/licenses/bsd-license.php BSD
+ * @version   SVN: Release: $Id: Header.php 952 2009-09-22 05:45:23Z koriyama.sourceforge $
+ * @link      http://api.bear-project.net/BEAR_Page/BEAR_Page.html
+ */
+/**
+ * BEAR_Page_Headerインターフェイス
+ *
+ * @category  BEAR
+ * @package   BEAR_Page
+ * @author    Akihito Koriyama <koriyama@users.sourceforge.jp>
+ * @copyright 2008 Akihito Koriyama  All rights reserved.
+ * @license   http://opensource.org/licenses/bsd-license.php BSD
+ * @version   SVN: Release: $Id: Header.php 952 2009-09-22 05:45:23Z koriyama.sourceforge $
+ * @link      http://api.bear-project.net/BEAR_Page/BEAR_Page.html
+ * @abstract
+ */
+interface BEAR_Page_Header_Interface
+{
+    /**
+     * ヘッダー出力
+     *
+     * <pre>
+     * ヘッダーを出力用にバッファリングします。
+     * 引数は配列または文字列で指定できます。
+     * スタティック変数として保存されBEAR_Mainで出力バッファを
+     * フラッシュする時に送出されます。
+     * 同じ<
+     * /pre>
+     *
+     * @param mixed $header HTTPヘッダー
+     *
+     * @return void
+     * @static
+     */
+    public function setHeader($header);
+
+    /**
+     * ヘッダーの取得
+     *
+     * @return array ヘッダー
+     */
+    public function getHeaders();
+
+    /**
+     * ヘッダーのフラッシュ
+     *
+     * <pre>
+     * ページにヘッダーを取得します。
+     * 通常はページ出力時に自動で出力されます。
+     * </pre>
+     *
+     * @return void
+     * @static
+     */
+    public function flushHeader();
+
+    /**
+     * リダイレクト
+     *
+     * <pre>Locationヘッダーを用いてページの移動を行います。
+     * クッキーが対応してないエージェントの場合はクエリーに
+     * セッションIDを付加します。
+     *
+     * .(dot)を指定すると同一ページのリフレッシュになります。
+     * ページが完全に移動した場合は$config['permanent']をtrueにすると
+     * 301ヘッダーを付加してリダイレクトしボットなどに移転を知らせます。
+     *
+     * -----------------------------------------
+     *
+     * Example 1. リダイレクト
+     * </pre>
+     * <code>
+     *  $header->redirect('http://www.example.co.jp/');
+     * </code>
+     * <pre>
+     * Example 2. リダイレクト（301 パーマネント)
+     * </pre<
+     * <code>
+     * $header->redirect('/', array('permanent'=>true));
+     * </code>
+     * <pre>
+     * Example 3. 値を渡してリロード
+     * </pre
+     * <code>
+     * // onInit($args)の$argsに渡されます
+     * $header->redirect('.', array('args'=$values);
+     * </code>
+     *
+     * <b>$options</b>
+     *
+     * 'val'       string セッション利用して値を次ページのonInit($args)に変数を渡す値
+     * 'click'     string コールするonClickハンドラ
+     * 'permanent' bool   301ヘッダー(パーマネントムーブ)を出力するか
+     *
+     * @param string $url     URL
+     * @param array  $options オプション
+     *
+     * @return      void
+     */
+    public function redirect($url, array $options = array('val'=>null, 'click'=>null, 'permanent'=>false));
+
+    /**
+     * リクエストヘッダーの取得
+     *
+     * @param string $header HTTPヘッダー名
+     *
+     * @return string|false HTTPヘッダー値、みつからなければfalse
+     */
+    public function getRequestHeader($header);
+}

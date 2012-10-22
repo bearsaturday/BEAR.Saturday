@@ -34,7 +34,7 @@ require_once 'Text/Highlighter.php';
  * @package    Text_Highlighter
  * @copyright  2004-2006 Andrey Demenev
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    Release: 0.7.1
+ * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 class  Text_Highlighter_JAVA extends Text_Highlighter

@@ -1,0 +1,10 @@
+#
+# bear.yml - BEAR Config
+# @ignore
+# 
+BEAR_Main:
+  method:
+    init: onInit
+    output: onOutput
+    action: onAction
+  injector: onInject

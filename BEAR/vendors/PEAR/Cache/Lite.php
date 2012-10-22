@@ -19,8 +19,8 @@
 *
 * @package Cache_Lite
 * @category Caching
-* @version $Id: Lite.php 314953 2011-08-15 12:32:34Z tacker $
 * @author Fabien MARTY <fab@php.net>
+* @author Markus Tacker <tacker@php.net>
 */
 
 define('CACHE_LITE_ERROR_RETURN', 1);
@@ -729,9 +729,13 @@ class Cache_Lite
             if ($this->_readControl) {
                 $hashControl = @fread($fp, 32);
                 $length = $length - 32;
-            } 
+            }
+
             if ($length) {
-                $data = @fread($fp, $length);
+                $data = '';
+                // See https://bugs.php.net/bug.php?id=30936
+                // The 8192 magic number is the chunk size used internally by PHP.
+                while(!feof($fp)) $data .= fread($fp, 8192);
             } else {
                 $data = '';
             }
@@ -842,5 +846,3 @@ class Cache_Lite
     }
     
 } 
-
-?>

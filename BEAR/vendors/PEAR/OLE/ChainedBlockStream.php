@@ -17,7 +17,7 @@
  * @package    OLE
  * @author     Christian Schmidt <schmidt@php.net>
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: ChainedBlockStream.php,v 1.1 2007/02/13 21:00:42 schmidt Exp $
+ * @version    CVS: $Id: ChainedBlockStream.php 322771 2012-01-26 01:24:20Z clockwerx $
  * @link       http://pear.php.net/package/OLE
  * @since      File available since Release 0.6.0
  */

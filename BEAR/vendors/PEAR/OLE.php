@@ -17,7 +17,7 @@
 // | Based on OLE::Storage_Lite by Kawai, Takanori                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: OLE.php,v 1.15 2007/12/18 20:59:11 schmidt Exp $
+// $Id: OLE.php 260165 2008-05-23 16:33:58Z schmidt $
 
 
 /**
@@ -194,6 +194,11 @@ class OLE extends PEAR
         $this->sbat = array();
         $shortBlockCount = $sbbatBlockCount * $this->bigBlockSize / 4;
         $sbatFh = $this->getStream($sbatFirstBlockId);
+        if (!$sbatFh) {
+            // Avoid an infinite loop if ChainedBlockStream.php somehow is
+            // missing
+            return false;
+        }
         for ($blockId = 0; $blockId < $shortBlockCount; $blockId++) {
             $this->sbat[$blockId] = $this->_readInt4($sbatFh);
         }

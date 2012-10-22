@@ -19,7 +19,7 @@
  * @author      Michael Wallner <mike@php.net>
  * @copyright   2002-2005 The Authors
  * @license     http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version     CVS: $Id: File.php,v 1.38 2007/03/24 16:38:56 dufuz Exp $
+ * @version     CVS: $Id: File.php 232504 2007-03-24 16:38:56Z dufuz $
  * @link        http://pear.php.net/package/File
  */
 

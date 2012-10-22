@@ -16,7 +16,7 @@
  * @author     Stoyan Stefanov <ssttoo@gmail.com>
  * @copyright  2006 Stoyan Stefanov
  * @license    http://www.php.net/license/3_0.txt  PHP License
- * @version    CVS: $Id: XML.php,v 1.1 2007/06/03 02:37:09 ssttoo Exp $
+ * @version    CVS: $Id$
  * @link       http://pear.php.net/package/Text_Highlighter
  */
 
@@ -83,7 +83,7 @@ class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
         parent::finalize();
         $output = parent::getOutput();
 
-        $serializer =& new XML_Serializer($this->_serializer_options);
+        $serializer = new XML_Serializer($this->_serializer_options);
         $result = $serializer->serialize($output);
         if ($result === true) {
             $this->_output = $serializer->getSerializedData();
