@@ -27,6 +27,11 @@
 abstract class BEAR_View_Adapter extends BEAR_Base
 {
     /**
+     * @var BEAR_Emoji
+     */
+    protected $_emoji;
+
+    /**
      * テンプレート名の取得
      *
      * @param string $tplName テンプレート名（省略可）
@@ -112,7 +117,9 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             $html = $this->_agentFilter($html);
         }
         // ボディ出力
-        $ro = BEAR::factory('BEAR_Ro')->setHeaders(array($header))->setBody($html);
+        $ro = BEAR::factory('BEAR_Ro');
+        /** @var $ro BEAR_Ro */
+        $ro = $ro->setHeaders(array($header))->setBody($html);
         return $ro;
     }
 
@@ -141,6 +148,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         // (フィルターによりバイナリにパックされる）
         // エンティティ絵文字変換 &#ddddd;
         $html = preg_replace('/&amp;#(\d{5});/s', "&#$1;", $html);
+        /** @noinspection PhpUndefinedMethodInspection */
         $html = BEAR::dependency('BEAR_Emoji')->convertEmojiImage($html);
         // 絵文字バイナリ化
         if (isset($this->_config['ua']) && $this->_config['ua'] !== BEAR_Agent::UA_SOFTBANK) {
@@ -155,7 +163,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             include _BEAR_BEAR_HOME . '/BEAR/vendors/toInlineCSSDoCoMo/toInlineCSSDoCoMo.php';
             try {
                 $html = toInlineCSSDoCoMo::getInstance()->setBaseDir(_BEAR_APP_HOME . '/htdocs')->apply($html);
-            } catch (Expection $e){
+            } /** @noinspection PhpUndefinedClassInspection */ catch (Expection $e){
                 //FB::warn($e);
             }
         }
@@ -305,6 +313,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      *
      * @return string
      */
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function onPackEmoji($match)
     {
         $result = pack('n', $match[1]);

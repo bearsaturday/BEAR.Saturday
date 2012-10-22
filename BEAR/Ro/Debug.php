@@ -74,6 +74,7 @@ class BEAR_Ro_Debug extends BEAR_Base
         if (isset($_GET['_resource'])) {
             if ($_GET['_resource'] === 'html') {
                 $renderer = new Text_Highlighter_Renderer_Html(array( 'tabsize' => 4));
+                /** @noinspection PhpDynamicAsStaticMethodCallInspection */
                 $hlHtml = Text_Highlighter::factory("HTML");
                 $hlHtml->setRenderer($renderer);
                 if ($resourceHtml == '') {
@@ -96,9 +97,9 @@ class BEAR_Ro_Debug extends BEAR_Base
         } else {
             $classEditorLink = $config['uri'];
         }
-        $labelUri = "{$config['uri']}";
         $labelUri = $classEditorLink;
         $labelVaules = ($config['values']) ? '?' . http_build_query($config['values']) : '';
+        $linkLabel = '';
         if ($chainLinks) {
             $linkLabels = array();
             foreach ($chainLinks as $links) {
@@ -124,6 +125,8 @@ class BEAR_Ro_Debug extends BEAR_Base
      *
      * @param string $class
      * @param string $uri
+     *
+     * @return string
      */
     private function _getClassEditorLink($class, $uri)
     {
@@ -154,7 +157,7 @@ class BEAR_Ro_Debug extends BEAR_Base
             // bodyが表構造と仮定
             $table = array();
             $table[] = (array_values(array_keys($body[0])));
-            foreach ((array)$body as $key => $val) {
+            foreach ((array)$body as $val) {
                 $table[] = array_values((array)$val);
             }
             FB::table($labelUri, $table);

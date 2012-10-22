@@ -101,21 +101,6 @@ class BEAR_Emoji extends BEAR_Base
     private $_ua;
 
     /**
-     * 絵文字変換テーブル1
-     *
-     * @var bool
-     * @access private
-     */
-    private $_emojiConvertMap = false;
-
-    /**
-     * シングルトンインスタンス
-     *
-     * @var BEAR_Emoji
-     */
-    private static $_instance;
-
-    /**
      * コールバック関数用config
      *
      * *Any better idea ?*
@@ -203,6 +188,8 @@ class BEAR_Emoji extends BEAR_Base
      *
      * stringプロパティの文字列を10進エンティティにしてentityプロパティに格納して返します
      *
+     * @param $string
+     *
      * @return string
      */
     public function makeDecEntity($string)
@@ -233,7 +220,6 @@ class BEAR_Emoji extends BEAR_Base
                 break;
             default:
                 trigger_error('Agent is not mobile.', E_USER_NOTICE);
-                $encode = '';
                 break;
         }
         return $string;
@@ -273,13 +259,13 @@ class BEAR_Emoji extends BEAR_Base
     /**
      * 16進エンティティをつくる
      *
-     * <pre>
      *  10進エンティティから16進エンティティをつくります。
      * _stringプロパティの文字列を10進エンティティにして
      * _stringプロパティに格納して返します
-     * </pre>
      *
-     * @return string
+     * @param $string
+     *
+     * @return mixed
      */
     public function makeHexEntity($string)
     {
@@ -300,6 +286,7 @@ class BEAR_Emoji extends BEAR_Base
      * @return string
      * @access private
      */
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private function _onHexEntity($matches)
     {
         $result = '&#x' . dechex($matches[1]) . ';';
@@ -317,6 +304,7 @@ class BEAR_Emoji extends BEAR_Base
      * @access private
      * @deprecated
      */
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function _onEmojiImage($matches)
     {
         $emojiId = $matches[1];
@@ -348,19 +336,15 @@ class BEAR_Emoji extends BEAR_Base
     /**
      * 絵文字コードマップの取得
      *
-     * <pre>
      * 絵文字コードマップの配列を取得します。
      *
      * マップフォーマット
      * i,e
      * 絵文字UNICODE開始, 絵文字UNICODE終了,UNICODE<=>SJISオフセット, マスク
-     * v
-     * </pre>
      *
-     * @param string $ua ユーザーエージェントレター
+     * @param mixed $ua ユーザーエージェントレター
      *
      * @return array
-     * @access private
      */
     private function _getEmojiMap($ua = false)
     {
@@ -477,12 +461,10 @@ class BEAR_Emoji extends BEAR_Base
     /**
      * 絵文字変換
      *
-     * <pre>
      * 絵文字変換マップを使って10進エンティティから
      * 他キャリアの対応する絵文字に変換します。
-     * </pre>
      *
-     * @param string $to デフォルトはエージェント
+     * @param mixed $to デフォルトはエージェント
      *
      * @return string
      */
@@ -506,17 +488,13 @@ class BEAR_Emoji extends BEAR_Base
     /**
      * エンティティ化されている絵文字を含んだ文字列をイメージタグに変換します
      *
-     * <pre>smartyのoutputフィルターなどに使用します。$uaで指定したエージェント
+     * smartyのoutputフィルターなどに使用します。$uaで指定したエージェント
      * (無指定の場合は使用しているエージェント）の絵文字はバイナリ出力されます。
-     * PC(_BAER_UA_DEFAULT)を指定すると全ての絵文字がイメージタグ表示されます。</pre>
+     * PC(_BAER_UA_DEFAULT)を指定すると全ての絵文字がイメージタグ表示されます。
      *
-     * @param string $string 文字列
-     * @param string $ua     ユーザーエジェントレター
+     * @param $string
      *
-     * @return string
-     * @static
-     * @deprecated
-     * @ignore
+     * @return mixed
      */
     public function convertEmojiImage($string)
     {
@@ -525,20 +503,20 @@ class BEAR_Emoji extends BEAR_Base
         return $string;
     }
 
-    /**
-     * AU絵文字変換
-     *
-     * <pre>local img形式のAU絵文字を10進エンティティ表記に変換します。</pre>
-     *
-     * @return string
-     */
-    public function localimg2entity($string)
-    {
-        //<img localsrc="334" />
-        $regex = '/(<img [^>]*localsrc\s*=\s*["\']?)([^>"\']+)(["\']?[^>]*>)/is';
-        $string = preg_replace_callback($regex, array(__CLASS__, '_onConvertLocalSrcEmoji'), $string);
-        return $string;
-    }
+//    /**
+//     * AU絵文字変換
+//     *
+//     * <pre>local img形式のAU絵文字を10進エンティティ表記に変換します。</pre>
+//     *
+//     * @return string
+//     */
+//    public function localimg2entity($string)
+//    {
+//        //<img localsrc="334" />
+//        $regex = '/(<img [^>]*localsrc\s*=\s*["\']?)([^>"\']+)(["\']?[^>]*>)/is';
+//        $string = preg_replace_callback($regex, array(__CLASS__, '_onConvertLocalSrcEmoji'), $string);
+//        return $string;
+//    }
 
     /**
      * 絵文字を除去する
@@ -570,26 +548,6 @@ class BEAR_Emoji extends BEAR_Base
     }
 
     /**
-     * AU絵文字変換コールバック
-     *
-     * BEAR_Emoji::localimg2entity()で使用するコールバック関数です。
-     *
-     * @param array $matches 検索文字列
-     *
-     * @return array
-     */
-    private static function _onConvertLocalSrcEmoji($matches)
-    {
-        static $localTable;
-        if (!isset($localTable)) {
-            $mojiAucnvTbl = BEAR_Map::ka_au_no2tbl_make();
-        }
-        $idx = $matches[2];
-        $result = $mojiAucnvTbl[$idx];
-        return $result;
-    }
-
-    /**
      * 絵文字変換コールバック
      *
      * @param array $matches 検索文字列
@@ -597,6 +555,7 @@ class BEAR_Emoji extends BEAR_Base
      * @return string
      * @access private
      */
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function _onConvertEmoji($matches = false)
     {
         static $convertMap;
@@ -693,6 +652,7 @@ class BEAR_Emoji extends BEAR_Base
      * @return string
      * @access private
      */
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function _onSbEmoji($match)
     {
         $emoji = $match[1];
@@ -728,7 +688,9 @@ class BEAR_Emoji extends BEAR_Base
      *
      * @return void
      */
-    public static function onEntityEmoji(&$string, $keys, $emoji)
+    public static function onEntityEmoji(&$string,
+        /** @noinspection PhpUnusedParameterInspection */
+        $keys, $emoji)
     {
         $string = $emoji->makeDecEntity($string);
     }
@@ -748,6 +710,7 @@ class BEAR_Emoji extends BEAR_Base
             $ua = BEAR::dependency('BEAR_Agent')->getUa();
             $file = _BEAR_BEAR_HOME  . "/BEAR/Emoji/Conf/{$ua}.php";
             if (file_exists($file)) {
+                /** @noinspection PhpIncludeInspection */
                 include $file;
             } else {
                 include _BEAR_BEAR_HOME  . '/BEAR/Emoji/Conf/Default.php';

@@ -50,22 +50,12 @@ class BEAR_Agent_Mobile extends BEAR_Factory
     public function factory()
     {
         $userAgent = $this->_config['user_agent'];
+        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $netUserAgentMobile = Net_UserAgent_Mobile::factory($userAgent);
+        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         if (PEAR::isError($netUserAgentMobile)) {
-            switch (true) {
-                case (strstr($userAgent, 'DoCoMo')):
-                    $botAgent = BEAR_Agent::BOT_DOCOMO;
-                    break;
-                case (strstr($userAgent, 'KDDI-')):
-                    $botAgent = BEAR_Agent::BOT_AU;
-                    break;
-                case (preg_match('/(SoftBank|Vodafone|J-PHONE|MOT-)/', $userAgent)):
-                    $botAgent = BEAR_Agent::BOT_SOFTBANK;
-                    break;
-                default:
-                    $botAgent = '';
-            }
-            $netUserAgentMobile = Net_UserAgent_Mobile::factory($botAgent);
+            /** @noinspection PhpDynamicAsStaticMethodCallInspection */
+            $netUserAgentMobile = Net_UserAgent_Mobile::factory('');
         }
         return $netUserAgentMobile;
     }

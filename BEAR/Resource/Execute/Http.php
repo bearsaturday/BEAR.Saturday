@@ -76,7 +76,6 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
         }
         $rss = new XML_RSS($body, 'utf-8', 'utf-8');
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-        // @todo Panda::setPearErrorHandling(仮称）に変更しエラーを画面化しないようにする
         $rss->parse();
         $items = $rss->getItems();
         if (is_array($items) && count($items) > 0) {
@@ -88,9 +87,10 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
             $body = array($body);
         }
         // UTF-8に
-        $encode = mb_convert_variables('UTF-8', 'auto', $body);
-        $ro = BEAR::factory('BEAR_Ro')->setBody($body)->setHeaders($headers);
+        mb_convert_variables('UTF-8', 'auto', $body);
         /* @var $ro BEAR_Ro */
+        /** @noinspection PhpUndefinedMethodInspection */
+        $ro = BEAR::factory('BEAR_Ro')->setBody($body)->setHeaders($headers);
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array('Panda', 'onPearError'));
         return $ro;
     }

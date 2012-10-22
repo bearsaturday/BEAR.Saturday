@@ -61,7 +61,7 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
     public function request()
     {
         foreach ($this->_ro as $ro) {
-            $result = $ro->request();
+            $ro->request();
         }
     }
 
@@ -87,12 +87,6 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
      */
     public function register()
     {
-        $done = false;
-
-        if ($done === true) {
-            return $this;
-        }
-        $done = true;
         register_shutdown_function(array(__CLASS__, 'onShutdown'));
         return $this;
     }

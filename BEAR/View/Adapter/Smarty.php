@@ -36,28 +36,21 @@
 class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_Interface
 {
     /**
+     * @var Smarty
+     */
+    protected $_smarty;
+
+    /**
+     * @var BEAR_Log
+     */
+    protected $_log;
+
+    /**
      * ページバリュー
      *
      * @var array
      */
     private $_values = array();
-
-    /**
-     * エージェント設定
-     *
-     * <pre>
-     * bool   enable_js         JS可？
-     * bool   enable_css        CSS可？
-     * bool   enable_inline_css DocomoのCSS用にtoInlineCSSDoCoMo使用？
-     * string role              ロール
-     * array  header            HTTPヘッダー
-     * bool   agent_filter      フィルター処理?
-     * string output_encode     出力時の文字コード
-     * </pre>
-     *
-     * @var array
-     */
-    private $_agentConfig = array();
 
     /**
      * エージェントロール
@@ -166,7 +159,6 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
      * @param string $tplName テンプレート名
      *
      * @return string
-     * @throws BEAR_View_Smarty_Exception
      */
     public function fetch($tplName)
     {

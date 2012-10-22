@@ -26,6 +26,7 @@
  * @version   Release: @package_version@ $Id: Weaver.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
  * @link      http://www.bear-project.net
  */
+/** @noinspection PhpDocMissingThrowsInspection */
 class BEAR_Aspect_Weaver extends BEAR_Base
 {
     /**
@@ -52,7 +53,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      * returnアドバイス
      */
     const ADVICE_RETURNING = 'returning';
-
+    
     /**
      * アスペクト実行
      *
@@ -83,12 +84,13 @@ class BEAR_Aspect_Weaver extends BEAR_Base
         $this->_config['entry_values'] = $values;
         // joinPointをセット
         $joinPoint = BEAR::factory('BEAR_Aspect_JoinPoint', $this->_config);
-        $this->_config['aspects'] = $this->_config['aspects'];
+        /** @var $joinPoint BEAR_Aspect_JoinPoint */
         //beforeアドバイス
         if (isset($this->_config['aspects'][self::ADVICE_BEFORE])) {
             foreach ($this->_config['aspects'][self::ADVICE_BEFORE] as $adviceClass) {
                 $this->_adviceValidation($adviceClass, 'BEAR_Aspect_Before_Interface');
                 $advice = BEAR::factory($adviceClass, $this->_config);
+                /** @var $advice BEAR_Aspect_Before_Interface */
                 $result = $advice->before($this->_config['values'], $joinPoint);
                 if (is_array($result)) {
                     $this->_config['values'] = $result;
@@ -106,6 +108,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
                     'BEAR_Aspect_Around_Interface'
                 );
                 $advice = BEAR::factory($adviceClass, $this->_config);
+                /** @var $advice BEAR_Aspect_Around_Interface */
                 $result = $advice->around($this->_config['values'], $joinPoint);
             } else {
                 // オリジナルメソッド
@@ -121,57 +124,38 @@ class BEAR_Aspect_Weaver extends BEAR_Base
             foreach ($this->_config['aspects'][self::ADVICE_AFTER] as $adviceClass) {
                 $this->_adviceValidation($adviceClass, 'BEAR_Aspect_After_Interface');
                 $advice = BEAR::factory($adviceClass, $this->_config);
+                /** @var $advice BEAR_Aspect_After_Interface */
                 $return = $advice->after($result, $joinPoint);
                 $result = $return ? $return : $result;
                 // set
                 $this->_config['values'] = $result;
             }
         }
+        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         if (isset($result) && (PEAR::isError($result) | $isException)) {
             if (isset($this->_config['aspects'][self::ADVICE_THROWING])) {
                 foreach ($this->_config['aspects'][self::ADVICE_THROWING] as $adviceClass) {
                     $this->_adviceValidation($adviceClass, 'BEAR_Aspect_Throwing_Interface');
                     $advice = BEAR::factory($adviceClass, $this->_config);
+                    /** @var $advice BEAR_Aspect_Throwing_Interface */
                     $return = $advice->throwing($result, $joinPoint);
                     $result = $return ? $return : $result;
                     // set
                     $this->_config['values'] = $result;
                 }
             } elseif ($isException === true) {
-                throw $e;
+                throw $this->_exception(__CLASS__);
             }
         } elseif (isset($this->_config['aspects'][self::ADVICE_RETURNING])) {
             foreach ($this->_config['aspects'][self::ADVICE_RETURNING] as $adviceClass) {
                 $this->_adviceValidation($adviceClass, 'BEAR_Aspect_Returning_Interface');
                 $advice = BEAR::factory($adviceClass, $this->_config);
+                /** @var $advice BEAR_Aspect_Returning_Interface */
                 $return = $advice->returning($result, $joinPoint);
                 $result = $return ? $return : $result;
                 // set
                 $this->_config['values'] = $result;
             }
-        }
-        return $result;
-    }
-
-    /**
-     * retruningアドバイスの実行
-     *
-     * @param object $obj
-     * @param array  $values
-     * @param string $adviceType
-     * @param mixed  $inteface
-     *
-     * @return mixed
-     */
-    public function invokeRetruning($obj, array $values, $adviceType, $inteface)
-    {
-        //returnアドバイス
-        $adviceClass = isset($this->_config['aspects'][self::ADVICE_AFTER_RETURNING][0]) ?
-        $this->_config['aspects'][self::ADVICE_AFTER_RETURNING][0] : null;
-        if (isset($adviceClass)) {
-            $this->_adviceValidation($adviceClass, 'BEAR_Aspect_Returning_Interface');
-            $advice = BEAR::factory($adviceClass, $this->_config);
-            $result = $advice->returning($result, $joinPoint);
         }
         return $result;
     }

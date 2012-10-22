@@ -36,42 +36,16 @@
 class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Interface
 {
     /**
+     * @var Smarty
+     */
+    protected $_smarty;
+
+    /**
      * ページバリュー
      *
      * @var array
      */
     private $_values = array();
-
-    /**
-     * エージェント設定
-     *
-     * <pre>
-     * bool   enable_js         JS可？
-     * bool   enable_css        CSS可？
-     * bool   enable_inline_css DocomoのCSS用にtoInlineCSSDoCoMo使用？
-     * string role              ロール
-     * array  header            HTTPヘッダー
-     * bool   agent_filter      フィルター処理?
-     * string output_encode     出力時の文字コード
-     * </pre>
-     *
-     * @var array
-     */
-    private $_agentConfig = array();
-
-    /**
-     * エージェントロール
-     *
-     * @var array
-     */
-    private $_role = array();
-
-    /**
-     * JS有効スイッチ
-     *
-     * @var bool
-     */
-    private $_enableJs = true;
 
     /**
      * Inject
@@ -117,33 +91,6 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
      */
     public function display($tplName = null, array $options = array())
     {
-        // Pageバリューアサイン
-//        extract($this->_values, EXTR_OVERWRITE);
-//
-//        // フォームアサイン
-//        $forms = BEAR_Form::renderForms($this->_smarty, $this->_config['ua'], $this->_enableJs);
-//        // テンプレート
-//        $viewInfo = $this->_getViewInfo($tplName, $this->_role, 'php');
-//        var_dump($viewInfo);
-//        $this->_smarty->assign('layout', $viewInfo['layout_value']);
-//        if (isset($options['layout'])) {
-//            $layoutfile = 'layouts/' . $options['layout'];
-//        } elseif (isset($viewInfo['layout_file'])) {
-//            $layoutfile = $viewInfo['layout_file'];
-//        } else {
-//            $layoutfile = null;
-//        }
-//        if (isset($layoutfile)) {
-//            $this->_smarty->assign('content_for_layout', $this->fetch($viewInfo['page_template']));
-//            $finalPath = $layoutfile;
-//        } else {
-//            // レイアウトなしのそのままフェッチ
-//            $finalPath = $viewInfo['page_template'];
-//        }
-//        $html = $this->fetch($finalPath);
-//        $ro = $this->_getRo($html);
-//        // 使用テンプレートのログ
-//        $this->_log->log('view', $viewInfo);
         return $ro;
     }
 
@@ -155,7 +102,6 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
      * @param string $tplName テンプレート名
      *
      * @return string
-     * @throws BEAR_View_Smarty_Exception
      */
     public function fetch($tplName)
     {
