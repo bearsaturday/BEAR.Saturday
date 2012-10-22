@@ -172,9 +172,10 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         if (!file_exists($file)) {
             //テンプレートファイルがない
             $info = array(
-               'tpl name' => $tplName,
-               'template_file' => $file,
-               'set' => $this->_values);
+                'tpl name' => $tplName,
+                'template_file' => $file,
+                'set' => $this->_values
+            );
             $msg = 'Template file is missing.（テンプレートファイルがありません)';
             throw $this->_exception($msg, array('info' => $info));
         }

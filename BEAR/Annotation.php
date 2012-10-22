@@ -67,10 +67,12 @@ class BEAR_Annotation extends BEAR_Base
             // メソッド優先
             try {
                 BEAR_Util::required($match[1], $values);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $info = array(
                     'RO' => $this->_config['ref']['method']->class . '::' . $this->_config['ref']['method']->name,
-                    'required' => $match[1], 'values' => $values, 'doc' => $this->_config['doc']['method']
+                    'required' => $match[1],
+                    'values' => $values,
+                    'doc' => $this->_config['doc']['method']
                 );
                 $required = implode($match[1], ',');
                 $msg = "@required item[{$required}] is missing.";

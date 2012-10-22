@@ -53,7 +53,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      * returnアドバイス
      */
     const ADVICE_RETURNING = 'returning';
-    
+
     /**
      * アスペクト実行
      *
@@ -98,8 +98,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
             }
         }
         //aroudアドバイス
-        $adviceClass = isset($this->_config['aspects'][self::ADVICE_AROUND]) ?
-        $this->_config['aspects'][self::ADVICE_AROUND][0] : null;
+        $adviceClass = isset($this->_config['aspects'][self::ADVICE_AROUND]) ? $this->_config['aspects'][self::ADVICE_AROUND][0] : null;
         try {
             if (isset($adviceClass)) {
                 // aroundメソッドでオーバライド
@@ -173,8 +172,10 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      */
     private function _adviceValidation($adviceClass, $interface)
     {
-        $isValid = !$this->_config['debug'] || class_exists($adviceClass, true)
-        && array_search($interface, class_implements($adviceClass));
+        $isValid = !$this->_config['debug'] || class_exists($adviceClass, true) && array_search(
+            $interface,
+            class_implements($adviceClass)
+        );
         if ($isValid === false) {
             $msg = "{$adviceClass} is not valid advice.";
             $info = array('advice' => $adviceClass, 'aspects' => $this->_config['aspects']);

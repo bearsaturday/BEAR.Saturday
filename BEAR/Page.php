@@ -360,7 +360,10 @@ abstract class BEAR_Page extends BEAR_Base
     {
         $config = $this->_config;
         if (isset($this->_config['enable_ua_sniffing']) && $this->_config['enable_ua_sniffing'] === true) {
-            $adapter = BEAR::dependency('BEAR_Agent_Adapter_' . $this->_config['ua'], array('ua' => $this->_config['ua']));
+            $adapter = BEAR::dependency(
+                'BEAR_Agent_Adapter_' . $this->_config['ua'],
+                array('ua' => $this->_config['ua'])
+            );
             $agentConfig = $adapter->getConfig();
             $config['agent_config'] = $agentConfig;
             $config['enable_ua_sniffing'] = true;
@@ -503,7 +506,7 @@ abstract class BEAR_Page extends BEAR_Base
     protected function _outputHttp(BEAR_Ro $ro)
     {
         if ($this->_config['mode'] === self::CONFIG_MODE_HTML) {
-           $ro->outputHttp();
+            $ro->outputHttp();
         }
     }
 
@@ -654,7 +657,7 @@ abstract class BEAR_Page extends BEAR_Base
         $pageConfig = $ua . serialize(array($this->getArgs(), $this->_config));
         $pagerKey = isset($_GET['_start']) ? $_GET['_start'] : '';
         $sortKey = isset($_GET['_sort']) ? $_GET['_sort'] : '';
-        $result = get_class($this) . '-' . $pagerKey . '-'  . $sortKey . '-' . $pageConfig;
+        $result = get_class($this) . '-' . $pagerKey . '-' . $sortKey . '-' . $pageConfig;
         return $result;
     }
 

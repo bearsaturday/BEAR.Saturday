@@ -255,7 +255,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      * 指定のパスに画像を保存します。
      *
      * @param string $filePath 保存画像のファイルパス
-     * @param mixed $format   フォーマット
+     * @param mixed  $format   フォーマット
      */
     public function save($filePath, $format = false)
     {

@@ -37,7 +37,8 @@ require_once 'HTML/QuickForm/checkbox.php';
  * @link       http://pear.php.net/package/HTML_QuickForm
  * @since      1.0
  */
-class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox {
+class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
+{
 
     /**
      * Class constructor
@@ -47,17 +48,18 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox {
      * @param     string    $text           (optional)Checkbox display text
      * @param     mixed     $attributes     (optional)Either a typical HTML attribute string
      *                                      or an associative array
+     *
      * @since     1.0
      * @access    public
      * @return    void
      */
-    public function HTML_QuickForm_bcheckbox($elementName=null, $elementLabel=null, $text='', $attributes=null)
+    public function HTML_QuickForm_bcheckbox($elementName = null, $elementLabel = null, $text = '', $attributes = null)
     {
         HTML_QuickForm_input::HTML_QuickForm_input($elementName, $elementLabel, $attributes);
         $this->_persistantFreeze = true;
         $this->_text = $text;
         $this->setType('checkbox');
-        $this->updateAttributes(array('value'=>1));
+        $this->updateAttributes(array('value' => 1));
         $this->_generateId();
 
     }
@@ -90,7 +92,8 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox {
      * @access    public
      * @return    string
      */
-    function getFrozenHtml() {
+    function getFrozenHtml()
+    {
         return $this->_getPersistantData();
     }
 }

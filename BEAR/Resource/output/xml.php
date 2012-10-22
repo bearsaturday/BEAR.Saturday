@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: xml.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -26,7 +26,7 @@
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: xml.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $ xml.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -41,7 +41,8 @@
  */
 function outputXml($values, array $options)
 {
-    $defaultOptions = array("mode" => "",
+    $defaultOptions = array(
+        "mode" => "",
         "indent" => "    ",
         "linebreak" => "\n",
         "indentAttributes" => true,
@@ -50,15 +51,18 @@ function outputXml($values, array $options)
         "addDecl" => true,
         "encoding" => "UTF-8",
         "rootName" => "rdf:RDF",
-        "rootAttributes" => array("xmlns" => "http://purl.org/rss/1.0/",
+        "rootAttributes" => array(
+            "xmlns" => "http://purl.org/rss/1.0/",
             "xmlns:rdf" => "http://www.e3.org/1999/02/22-rdf-syntax-ns#",
             "xmlns:dc" => "http://purl.org/dc/elements/1.1/",
             "xmlns:sy" => "http://purl.org/rss/1.0/modules/syndication/",
             "xmlns:admin" => "http://webns.net/mvcb/",
             "xmlns:content" => "http://purl.org/rss/1.0/modules/content/",
-            "xml:lang" => "ja"),
+            "xml:lang" => "ja"
+        ),
         "defaultTagName" => "item",
-        "attributesArray" => "_attributes");
+        "attributesArray" => "_attributes"
+    );
     if (is_array($options)) {
         $options = $options + $defaultOptions;
     } else {

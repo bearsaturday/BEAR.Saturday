@@ -61,8 +61,13 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * @param null $value
      * @param null $attributes
      */
-    function HTML_QuickForm_bradio($elementName=null, $elementLabel=null, $text=null, $value=null, $attributes=null)
-    {
+    function HTML_QuickForm_bradio(
+        $elementName = null,
+        $elementLabel = null,
+        $text = null,
+        $value = null,
+        $attributes = null
+    ) {
         $this->HTML_QuickForm_element($elementName, $elementLabel, $attributes);
         if (isset($value)) {
             $this->setValue($value);
@@ -110,8 +115,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
     function getFrozenHtml()
     {
         if ($this->getChecked()) {
-            return '' .
-            $this->_getPersistantData();
+            return '' . $this->_getPersistantData();
         } else {
             return '';
         }

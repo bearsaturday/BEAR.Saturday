@@ -39,8 +39,8 @@ class BEAR_Prof
     {
         if (function_exists('xhprof_enable')) {
             register_shutdown_function(array(__CLASS__, 'stop'));
-        xhprof_enable();
-        //xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
+            xhprof_enable();
+            //xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
         } else {
             trigger_error('xhprof is not enabled.', E_USER_ERROR);
         }
@@ -64,12 +64,12 @@ class BEAR_Prof
         /** @noinspection PhpUndefinedFunctionInspection */
         $xhprofData = xhprof_disable();
         $app = BEAR::get('app');
-        $appName = $app['core']['info']['id'];            // アプリ名とか識別する名前
+        $appName = $app['core']['info']['id']; // アプリ名とか識別する名前
         include_once _BEAR_BEAR_HOME . '/BEAR/vendors/xhprof_lib/utils/xhprof_lib.php';
         include_once _BEAR_BEAR_HOME . '/BEAR/vendors/xhprof_lib/utils/xhprof_runs.php';
         $xhprofRuns = new XHProfRuns_Default();
         $runId = $xhprofRuns->save_run($xhprofData, $appName);
         $href = "/__bear/prof/index.php?run={$runId}&source={$appName}";
-        echo '<a style="padding: 3px; background-color: red; color: white; font-family: Verdana; font-style: normal; font-variant: normal; font-weight: bold; font-size: 8pt; " name="" target="_blank"' . $appName. '" href="'. $href . '"">PROFILE</a>';
+        echo '<a style="padding: 3px; background-color: red; color: white; font-family: Verdana; font-style: normal; font-variant: normal; font-weight: bold; font-size: 8pt; " name="" target="_blank"' . $appName . '" href="' . $href . '"">PROFILE</a>';
     }
 }

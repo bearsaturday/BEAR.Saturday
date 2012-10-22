@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: 0.9.06 $Id: Memcache.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -55,7 +55,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         //キャッシュサーバー追加
         if (isset($this->_config['path'])) {
             if (is_array($this->_config['path'])) {
-                foreach($this->_config['path'] as $path ){
+                foreach ($this->_config['path'] as $path) {
                     $this->_adapter->connect($path);
                 }
             } else {
@@ -109,11 +109,9 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         }
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
-            $ro->setCode($result->code)
-            ->setHeaders((array)$result->header)
-            ->setBody($result->body)
-            ->setLinks($result->links)
-            ->setHtml($result->html);
+            $ro->setCode($result->code)->setHeaders((array)$result->header)->setBody($result->body)->setLinks(
+                $result->links
+            )->setHtml($result->html);
             $result = $ro;
         }
         if ($result) {

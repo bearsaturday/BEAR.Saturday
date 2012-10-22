@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -117,7 +117,8 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
                 $msg,
                 array(
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => $info)
+                    'info' => $info
+                )
             );
         }
         $value = mb_convert_encoding($value, 'utf-8', $this->_codeFromMoble);
@@ -128,7 +129,8 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
                 $msg,
                 array(
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => $info)
+                    'info' => $info
+                )
             );
         }
     }

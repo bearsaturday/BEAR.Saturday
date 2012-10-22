@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -45,7 +45,8 @@ class BEAR_Agent_Adapter_Docomo extends BEAR_Agent_Adapter_Mobile implements BEA
         $this->_config['session_trans_sid'] = true;
         $this->_config['enable_js'] = false;
         $this->_config['enable_css'] = true;
-        $this->_config['enable_inline_css'] = false; /** @todo inline CSS */
+        $this->_config['enable_inline_css'] = false;
+        /** @todo inline CSS */
         $this->_config['role'] = array(BEAR_Agent::UA_DOCOMO, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT);
     }
 }

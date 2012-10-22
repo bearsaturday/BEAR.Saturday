@@ -34,7 +34,7 @@
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: modifier.qferror.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net/
-
+ *
  * @param array $errors QuickFormエラー
  *
  * @return string

@@ -36,7 +36,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      *
      * @param string $tplName テンプレート名（省略可）
      * @param array  $role    エージェントロール
-     * @param $ext   $ext     拡張子
+     * @param        $ext     $ext     拡張子
      *
      * @return array
      */
@@ -45,10 +45,10 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         $result = array();
         $pagePath = $this->_getTemplateNameByPageClass($tplName); // ex) user/create
         // エージェントロール対応ページテンプレート
-        if($role && (!(count($role) === 1 && $role[0] === BEAR_Agent::UA_DEFAULT))) {
+        if ($role && (!(count($role) === 1 && $role[0] === BEAR_Agent::UA_DEFAULT))) {
             foreach ($role as $agent) {
                 $agentExtention = '.' . strtolower($agent);
-                $pagePathFull = _BEAR_APP_HOME . $this->_config['path']. "pages/{$pagePath}{$agentExtention}.tpl";
+                $pagePathFull = _BEAR_APP_HOME . $this->_config['path'] . "pages/{$pagePath}{$agentExtention}.tpl";
                 if (file_exists($pagePathFull)) {
                     break;
                 }
@@ -70,7 +70,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         } else {
             $templatePath = "pages/{$pagePath}{$agentExtention}.{$ext}";
         }
-        $configFileHead = _BEAR_APP_HOME . $this->_config['path']. 'pages/' . $firstWordForConfig;
+        $configFileHead = _BEAR_APP_HOME . $this->_config['path'] . 'pages/' . $firstWordForConfig;
         // 設定ファイル
         if (file_exists($configFileHead . 'yml')) {
             $configFilePath = $configFileHead . 'yml';
@@ -85,7 +85,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         $result['layout_value'] = $layoutValue;
         if (isset($yml['layout'])) {
             $layoutFile = $this->_getRoleFile(
-                $role, _BEAR_APP_HOME . $this->_config['path'] . 'layouts/',
+                $role,
+                _BEAR_APP_HOME . $this->_config['path'] . 'layouts/',
                 $yml['layout']
             );
             $result['layout_file'] = 'layouts/' . $layoutFile;
@@ -111,8 +112,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         // ヘッダーを出力
         $header = isset($this->_config['agent_config']['header']) ? $this->_config['agent_config']['header'] : array();
         // 絵文字＆（&文字コード）フィルター
-        if (isset($this->_config['agent_config']['agent_filter'])
-            && $this->_config['agent_config']['agent_filter'] === true
+        if (isset($this->_config['agent_config']['agent_filter']) && $this->_config['agent_config']['agent_filter'] === true
         ) {
             $html = $this->_agentFilter($html);
         }
@@ -163,7 +163,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             include _BEAR_BEAR_HOME . '/BEAR/vendors/toInlineCSSDoCoMo/toInlineCSSDoCoMo.php';
             try {
                 $html = toInlineCSSDoCoMo::getInstance()->setBaseDir(_BEAR_APP_HOME . '/htdocs')->apply($html);
-            } /** @noinspection PhpUndefinedClassInspection */ catch (Expection $e){
+            } /** @noinspection PhpUndefinedClassInspection */ catch (Expection $e) {
                 //FB::warn($e);
             }
         }
@@ -196,6 +196,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         }
         return $layoutValue;
     }
+
     /**
      * エージェントロールに対応したファイルを取得
      *
@@ -292,16 +293,16 @@ abstract class BEAR_View_Adapter extends BEAR_Base
     {
         $pathinfo = pathinfo($file);
         switch ($pathinfo['dirname']) {
-        case '/' :
-            $result = $pathinfo['filename'];
-            break;
-        case '.' :
-            $result = $pathinfo['filename'];
-            break;
-        default :
-            $begin = (substr($pathinfo['dirname'], 0, 1) === '/') ? 1 : 0;
-            $result = substr($pathinfo['dirname'], $begin) . '/' . $pathinfo['filename'];
-            break;
+            case '/' :
+                $result = $pathinfo['filename'];
+                break;
+            case '.' :
+                $result = $pathinfo['filename'];
+                break;
+            default :
+                $begin = (substr($pathinfo['dirname'], 0, 1) === '/') ? 1 : 0;
+                $result = substr($pathinfo['dirname'], $begin) . '/' . $pathinfo['filename'];
+                break;
         }
         return $result;
     }

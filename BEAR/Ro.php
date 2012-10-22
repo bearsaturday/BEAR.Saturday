@@ -250,8 +250,8 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function onLink(
         /** @noinspection PhpUnusedParameterInspection */
-        $values)
-    {
+        $values
+    ) {
         return array();
     }
 
@@ -265,7 +265,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * 再利用のためにAOPアドバイスですることも検討してください。
      * </pre>
      *
-     * @param bool  $bool 条件
+     * @param bool   $bool 条件
      * @param string $msg  エラー例外のinfo
      *
      * @return void
@@ -278,7 +278,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
                 $msg,
                 array(
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => array('request' => (string) $this)
+                    'info' => array('request' => (string)$this)
                 )
             );
         }
@@ -679,7 +679,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function getIterator()
     {
         $this->_body = is_array($this->_body) ? $this->_body : array();
-        $iterator = (isset($this->_config['options']['iterator']) && class_exists($this->_config['options']['iterator'])) ? $this->_config['iterator'] : 'ArrayIterator';
+        $iterator = (isset($this->_config['options']['iterator']) && class_exists(
+            $this->_config['options']['iterator']
+        )) ? $this->_config['iterator'] : 'ArrayIterator';
         $obj = new $iterator($this->_body);
         return $obj;
     }
@@ -818,7 +820,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     /**
      * サービスセット
      *
-     * @param string $name プロパティ
+     * @param string $name    プロパティ
      * @param object $service サービス
      *
      * @return void
@@ -875,8 +877,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function getRequestText()
     {
-        $result = ("{$this->_config['method']} {$this->_config['uri']}") .
-        ($this->_config['values'] ? '?' . http_build_query($this->_config['values']) : '');
+        $result = ("{$this->_config['method']} {$this->_config['uri']}") . ($this->_config['values'] ? '?' . http_build_query(
+            $this->_config['values']
+        ) : '');
         return $result;
     }
 }

@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: php.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -22,10 +22,11 @@
  *
  * @return BEAR_Ro
  */
-function outputPhp($values,
+function outputPhp(
+    $values,
     /** @noinspection PhpUnusedParameterInspection */
-    array $options)
-{
+    array $options
+) {
     $body = serialize($values);
     $headers = array('X-BEAR-Output: PHP' => 'Content-Type: text/html; charset=utf-8');
     $ro = BEAR::factory('BEAR_Ro');

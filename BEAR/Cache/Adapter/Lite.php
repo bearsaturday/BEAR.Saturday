@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Lite.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -42,9 +42,11 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
     public function __construct(array $config)
     {
         parent::__construct($config);
-        $options = array('cacheDir' => _BEAR_APP_HOME . '/tmp/cache_lite/',
+        $options = array(
+            'cacheDir' => _BEAR_APP_HOME . '/tmp/cache_lite/',
             'automaticSerialization' => true,
-            'automaticCleaningFactor' => 100);
+            'automaticCleaningFactor' => 100
+        );
         // _adapterをCache_Liteに
         $this->_adapter = BEAR::dependency('Cache_Lite', $options);
     }
@@ -69,11 +71,9 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
             /** @var $ro BEAR_Ro */
-            $ro->setCode($result->code)
-                ->setHeaders((array)$result->header)
-                ->setBody($result->body)
-                ->setLinks($result->links)
-                ->setHtml($result->html);
+            $ro->setCode($result->code)->setHeaders((array)$result->header)->setBody($result->body)->setLinks(
+                $result->links
+            )->setHtml($result->html);
             return $ro;
         }
         if ($result !== false) {

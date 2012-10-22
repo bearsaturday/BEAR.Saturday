@@ -304,7 +304,7 @@ ____SQL;
             } else {
                 file_put_contents($pageLogPath, serialize($log));
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

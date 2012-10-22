@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Mock.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -70,7 +70,9 @@ class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adapter
         }
         for ($i = 0; $i < $y; $i++) {
             for ($j = 0; $j < $x; $j++) {
-                $xKey = (isset($this->_config['options']['mock']) && is_array($this->_config['options']['mock']['x'])) ? $this->_config['options']['mock']['x'][$j] : $j;
+                $xKey = (isset($this->_config['options']['mock']) && is_array(
+                    $this->_config['options']['mock']['x']
+                )) ? $this->_config['options']['mock']['x'][$j] : $j;
                 $row[$labelX[$j]] = "{$extra}.{$i}.{$xKey}";
             }
             $mock[$i] = $row;

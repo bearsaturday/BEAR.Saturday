@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * BEAR
  *
@@ -168,8 +168,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         }
         // All取得
         // 論理削除
-        if (isset($this->_config['deleted_at'])
-            && $this->_config['deleted_at'] === true
+        if (isset($this->_config['deleted_at']) && $this->_config['deleted_at'] === true
         ) {
             if (stripos($query, 'WHERE') === false) {
                 $query .= ' WHERE deleted_at IS NULL';
@@ -511,8 +510,8 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             return false;
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount, ) = preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount,) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount,) = preg_split('/\bLIMIT\b/is', $queryCount);
         return trim($queryCount);
     }
 }

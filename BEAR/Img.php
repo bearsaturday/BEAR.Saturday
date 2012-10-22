@@ -201,6 +201,7 @@ class BEAR_Img extends BEAR_Factory
 
     /**
      * @param $adapter
+     *
      * @deprecated
      */
     public static function changeInstance($adapter)

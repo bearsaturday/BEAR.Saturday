@@ -35,10 +35,11 @@
  *
  * @return string
  */
-function smarty_compiler_emoji($tagArg,
+function smarty_compiler_emoji(
+    $tagArg,
     /** @noinspection PhpUnusedParameterInspection */
-    &$smarty)
-{
+    &$smarty
+) {
     $emoji = BEAR::dependency('BEAR_Emoji')->getAgentEmoji($tagArg);
     // SBの絵文字のエラーを避けるためecho文を使わない
     return '?>' . "{$emoji}" . '<?php ';

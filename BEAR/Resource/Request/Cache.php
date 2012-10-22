@@ -82,7 +82,10 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
             $ro->setBody($saved['body']);
             $ro->setLinks($saved['links']);
             if (isset($saved['links']['pager'])) {
-                BEAR::dependency('BEAR_Pager')->setPagerLinks($saved['links']['pager']['links'], $saved['links']['pager']['info']);
+                BEAR::dependency('BEAR_Pager')->setPagerLinks(
+                    $saved['links']['pager']['links'],
+                    $saved['links']['pager']['info']
+                );
             }
             unset($saved);
         } else {
@@ -90,13 +93,19 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
             $obj = BEAR::factory('BEAR_Resource_Execute', $this->_config);
             $ro = $obj->request(
                 $this->_config['method'],
-                $this->_config['uri'], $this->_config['values'],
+                $this->_config['uri'],
+                $this->_config['values'],
                 $this->_config['options']
             );
             if (!PEAR::isError($ro)) {
-                $save = array('class' => get_class($ro), 'config' => $this->_config,
-                              'code' => $ro->getCode(), 'headers' => $ro->getHeaders(),
-                              'body' => $ro->getBody(), 'links' => $ro->getLinks());
+                $save = array(
+                    'class' => get_class($ro),
+                    'config' => $this->_config,
+                    'code' => $ro->getCode(),
+                    'headers' => $ro->getHeaders(),
+                    'body' => $ro->getBody(),
+                    'links' => $ro->getLinks()
+                );
                 $cache->set($cacheKey, $save);
             } else {
                 // キャッシュ生成エラー

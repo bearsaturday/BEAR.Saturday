@@ -113,7 +113,8 @@ class BEAR_Main extends BEAR_Base
         $config = array(
             'resource_id' => $this->_config['page_class'],
             'enable_ua_sniffing' => $this->_config['enable_ua_sniffing'],
-            'ua' => $this->_config['ua'], 'mode' => BEAR_Page::CONFIG_MODE_HTML
+            'ua' => $this->_config['ua'],
+            'mode' => BEAR_Page::CONFIG_MODE_HTML
         );
         $options = array(
             'injector' => (isset($this->_config['injector']) ? $this->_config['injector'] : 'onInject')
@@ -147,10 +148,7 @@ class BEAR_Main extends BEAR_Base
         // ページクラス存在チェック
         if (!$pageClass || !class_exists($pageClass, false)) {
             $info = array('page_class' => $pageClass);
-            throw new BEAR_Page_Exception(
-                'Page class is not defined.（ページクラスが定義されていません)',
-                array('info' => $info)
-            );
+            throw new BEAR_Page_Exception('Page class is not defined.（ページクラスが定義されていません)', array('info' => $info));
         }
         // フォーム初期化
         if (class_exists('BEAR_Form', false)) {
@@ -178,7 +176,7 @@ class BEAR_Main extends BEAR_Base
             } else {
                 throw $e;
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -242,7 +240,7 @@ class BEAR_Main extends BEAR_Base
         $formName = BEAR_Form::getSubmitFormName($this->_submit);
         try {
             $form = BEAR::get('BEAR_Form_' . $formName);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->_log->log('BEAR_Form Exception', $e->__toString());
             $this->_runPreOnOutput();
             $this->_page->onOutput();
@@ -288,15 +286,19 @@ class BEAR_Main extends BEAR_Base
     {
         // onClick
         $isActiveLink = isset($_GET[BEAR_Page::KEY_CLICK_NAME]);
-        $hasMethod = isset($_GET[BEAR_Page::KEY_CLICK_NAME])
-        && method_exists($this->_page, $onClickMethod = 'onClick' . $_GET[BEAR_Page::KEY_CLICK_NAME]);
+        $hasMethod = isset($_GET[BEAR_Page::KEY_CLICK_NAME]) && method_exists(
+            $this->_page,
+            $onClickMethod = 'onClick' . $_GET[BEAR_Page::KEY_CLICK_NAME]
+        );
         if ($isActiveLink && $hasMethod) {
             $this->_page->setOnClick($_GET[BEAR_Page::KEY_CLICK_NAME]);
             $args['click'] = isset($_GET[BEAR_Page::KEY_CLICK_VALUE]) ? $_GET[BEAR_Page::KEY_CLICK_VALUE] : null;
             $this->_log->log('onClick', array('click' => $this->_page->getOnClick(), 'args' => $args));
             $this->_page->$onClickMethod($args);
-        } else if (method_exists($this->_page, 'onClickNone')) {
-            $this->_page->onClickNone($args);
+        } else {
+            if (method_exists($this->_page, 'onClickNone')) {
+                $this->_page->onClickNone($args);
+            }
         }
     }
 
@@ -364,6 +366,7 @@ class BEAR_Main extends BEAR_Base
         }
 
     }
+
     /**
      * ページ終了処理
      *
@@ -381,7 +384,7 @@ class BEAR_Main extends BEAR_Base
             if ($this->_config['cache']['type'] === 'page') {
                 $cacheData = array('type' => 'page', 'headers' => headers_list(), 'body' => $body);
                 $this->_writeCache($cacheData);
-            } elseif ((! $initCache) && $this->_config['cache']['type'] === 'init') {
+            } elseif ((!$initCache) && $this->_config['cache']['type'] === 'init') {
                 $cacheData = array('type' => 'init', 'init' => $this->_page->get());
                 $this->_writeCache($cacheData);
             } elseif ($this->_config['cache']['type'] !== 'init' && $this->_config['cache']['type'] !== 'page') {

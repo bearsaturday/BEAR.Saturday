@@ -180,17 +180,16 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      * リクエストにテンプレートオプションが指定されているとHTML等文字列化してRoに保持します。
      *
      * @todo リソースボディのキャッシュはUA共通に
+     *
      * @param $isLinked
      */
     protected function _setHtml($isLinked)
     {
         // キャッシュ?
-        $isLinkCache = isset($this->_config['request']['options']['cache']['link']) &&
-            $this->_config['request']['options']['cache']['link'];
+        $isLinkCache = isset($this->_config['request']['options']['cache']['link']) && $this->_config['request']['options']['cache']['link'];
         if ($isLinked && $isLinkCache === true) {
             $life = $this->_config['request']['options']['cache']['life'];
-        } elseif (!$isLinked && isset($this->_config['request']['options']['cache']['life']) &&
-            isset($this->_config['request']['options']['template'])) {
+        } elseif (!$isLinked && isset($this->_config['request']['options']['cache']['life']) && isset($this->_config['request']['options']['template'])) {
             $life = $this->_config['request']['options']['cache']['life'];
         } else {
             $life = false;
@@ -243,12 +242,12 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         }
         if ($enableUaSniffing === true) {
             $fullPath = BEAR::dependency('BEAR_Agent')->getRoleFile(
-                _BEAR_APP_HOME . $this->_config['path'] .
-                'elements', $this->_config['request']['options']['template'], 'tpl'
+                _BEAR_APP_HOME . $this->_config['path'] . 'elements',
+                $this->_config['request']['options']['template'],
+                'tpl'
             );
         } else {
-            $fullPath = _BEAR_APP_HOME . $this->_config['path'] .
-            'elements/' . $this->_config['request']['options']['template'] . '.tpl';
+            $fullPath = _BEAR_APP_HOME . $this->_config['path'] . 'elements/' . $this->_config['request']['options']['template'] . '.tpl';
         }
         if (realpath($fullPath)) {
             $smarty = BEAR::dependency('BEAR_Smarty');
@@ -368,7 +367,10 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function getLinkedBody()
     {
         $this->_doRequest();
-        $result = BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink )->chainLink($this->_ro, $this->_chainLink);
+        $result = BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink)->chainLink(
+            $this->_ro,
+            $this->_chainLink
+        );
         return $result;
     }
 
@@ -440,21 +442,21 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         $linkLabel = '';
         if ($this->_chainLink) {
             foreach ($this->_chainLink as $links) {
-                $linkLabel .= '->' . (count($links) > 1 ? '(' . implode(',',$links) . ')': $links[0]);
+                $linkLabel .= '->' . (count($links) > 1 ? '(' . implode(',', $links) . ')' : $links[0]);
             }
         }
-        $label = $this->_config['uri'] .$linkLabel;
+        $label = $this->_config['uri'] . $linkLabel;
         $labelField = '<fieldset style="color:#4F5155; border:1px solid black;padding:2px;width:10px;">';
-        $labelField .= '<legend style="color:black;font-size:9pt;font-weight:bold;font-family:sans-serif;">' .
-         $label . '</legend>';
+        $labelField .= '<legend style="color:black;font-size:9pt;font-weight:bold;font-family:sans-serif;">' . $label . '</legend>';
         echo $labelField;
         if (isset($linkBody)) {
             print_a($linkBody);
         } else {
-            $resource = array('code' => $this->getCode(),
-                              'header' => $headers,
-                              'body' => $this->getBody(),
-                              'link' => $this->getLinks()
+            $resource = array(
+                'code' => $this->getCode(),
+                'header' => $headers,
+                'body' => $this->getBody(),
+                'link' => $this->getLinks()
             );
             print_a($resource);
         }

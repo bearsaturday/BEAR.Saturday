@@ -34,18 +34,23 @@
  * @version    SVN: Release: @package_version@ $Id:$
  * @link       http://www.bear-project.net/
  *
- * @param mixed $params
+ * @param mixed  $params
  * @param Smarty &$smarty
  *
  * @return mixed $resource
  */
-function smarty_function_resource($params,
+function smarty_function_resource(
+    $params,
     /** @noinspection PhpUnusedParameterInspection */
-    &$smarty )
-{
-    
-    $config = (array)BEAR::loadValues($params['params']) +
-    array('method' => 'read', 'uri' => $params['uri'], 'values' => array(), 'options' => array());
+    &$smarty
+) {
+
+    $config = (array)BEAR::loadValues($params['params']) + array(
+        'method' => 'read',
+        'uri' => $params['uri'],
+        'values' => array(),
+        'options' => array()
+    );
     if (isset($params['template'])) {
         $config['options']['template'] = $params['template'];
     }
@@ -57,10 +62,11 @@ function smarty_function_resource($params,
     }
     $app = BEAR::get('app');
     $string = BEAR::factory(
-    	'BEAR_Ro_Prototype',
+        'BEAR_Ro_Prototype',
         array(
-        	'request' => $config,
-        	'path' => $app['BEAR_View']['path'])
+            'request' => $config,
+            'path' => $app['BEAR_View']['path']
+        )
     )->request()->toString();
     return $string;
 }

@@ -284,12 +284,14 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         /** @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_write_to_png($this->surface, $filePath);
         $isSaved = file_exists($filePath);
-        $log = array('isSaved' => $isSaved,
+        $log = array(
+            'isSaved' => $isSaved,
             'surface' => $this->surface,
             'is_res' => is_resource($this->surface),
             'file path' => $filePath,
             'file_exists' => file_exists($filePath),
-            'file size' => filesize($filePath));
+            'file size' => filesize($filePath)
+        );
         $this->_log->log('cairo_surface_write_to_png', $log);
         /** @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_destroy($this->surface);
@@ -304,7 +306,7 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
      * </pre>
      *
      * @param string $errorFunc コール元のメソッド名
-     * @param mixed $msg       エラーメッセージ
+     * @param mixed  $msg       エラーメッセージ
      *
      * @throws BEAR_Exception
      */

@@ -73,20 +73,20 @@ class BEAR_Ro_Debug extends BEAR_Base
         $body = $ro->getBody();
         if (isset($_GET['_resource'])) {
             if ($_GET['_resource'] === 'html') {
-                $renderer = new Text_Highlighter_Renderer_Html(array( 'tabsize' => 4));
+                $renderer = new Text_Highlighter_Renderer_Html(array('tabsize' => 4));
                 /** @noinspection PhpDynamicAsStaticMethodCallInspection */
                 $hlHtml = Text_Highlighter::factory("HTML");
                 $hlHtml->setRenderer($renderer);
                 if ($resourceHtml == '') {
                     $resourceHtml = '<span class="hl-all">(*Empty String)</span>';
-                 } else {
+                } else {
                     $resourceHtml = '<span class="hl-all">' . $hlHtml->highlight($resourceHtml) . '</span>';
                 }
             } elseif ($_GET['_resource'] === 'body') {
                 $resourceHtml = print_a($body, 'return:1');
                 $logs = $ro->getHeader('_log');
                 foreach ((array)$logs as $logKey => $logVal) {
-                    $resourceHtml .= '<div class="bear-resource-info-label">' . $logKey. '</div>';
+                    $resourceHtml .= '<div class="bear-resource-info-label">' . $logKey . '</div>';
                     $resourceHtml .= is_scalar($logVal) ? $logVal : print_a($logVal, 'return:1');
                 }
             }
@@ -112,9 +112,8 @@ class BEAR_Ro_Debug extends BEAR_Base
         $result .= '<span class="bear-resource-values">' . $labelVaules . '</span>';
         $result .= '<span class="bear-resource-links">' . $linkLabel . '</span>';
         $result .= '' . " + (" . '';
-        $result .= '<span><a border="0" title="' . $config['options']['template'] .'" href="/__panda/edit/?file=';
-        $result .= (_BEAR_APP_HOME . $this->_config['path'] . 'elements/' .
-        $config['options']['template'] . '.tpl') . '">';
+        $result .= '<span><a border="0" title="' . $config['options']['template'] . '" href="/__panda/edit/?file=';
+        $result .= (_BEAR_APP_HOME . $this->_config['path'] . 'elements/' . $config['options']['template'] . '.tpl') . '">';
         $result .= $config['options']['template'] . '</a>)</span>';
         $result .= '</div>' . $resourceHtml . '</div>';
         return $result;
@@ -135,6 +134,7 @@ class BEAR_Ro_Debug extends BEAR_Base
         $classEditorLink = "<a href=\"/__panda/edit/?file={$file}\">{$uri}</a>";
         return $classEditorLink;
     }
+
     /**
      * リソースのデバック表示
      *

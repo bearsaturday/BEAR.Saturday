@@ -34,7 +34,7 @@
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: modifier.printa.php 2538 2011-06-12 17:37:53Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net/
-
+ *
  * @param string $string 文字列
  *
  * @return string

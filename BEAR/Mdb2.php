@@ -160,7 +160,9 @@ class BEAR_Mdb2 extends BEAR_Factory
         if (isset($_instance[$this->_config['dsn']])) {
             return $_instance[$this->_config['dsn']];
         }
-        $options = (isset($this->_config['options']) && is_array($this->_config['options'])) ? $this->_config['options'] : array();
+        $options = (isset($this->_config['options']) && is_array(
+            $this->_config['options']
+        )) ? $this->_config['options'] : array();
         // MDB2インスタンス生成
         if ($this->_config['debug']) {
             // Debugモード オプション

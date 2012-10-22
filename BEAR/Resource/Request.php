@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Request.php 2503 2011-06-11 10:09:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -58,7 +58,7 @@ class BEAR_Resource_Request extends BEAR_Base
         $isNotRead = $this->_config['method'] !== BEAR_Resource::METHOD_READ;
         if (!$isNotRead) {
             $hasCsrfOption = false;
-        } elseif (isset($options[BEAR_Resource::OPTION_CSRF]) && $options[BEAR_Resource::OPTION_CSRF]=== true) {
+        } elseif (isset($options[BEAR_Resource::OPTION_CSRF]) && $options[BEAR_Resource::OPTION_CSRF] === true) {
             // リソースリクエストオプション
             $hasCsrfOption = true;
         } elseif ($this->_config[BEAR_Resource::OPTION_CSRF] === true) {
@@ -69,7 +69,7 @@ class BEAR_Resource_Request extends BEAR_Base
         }
         if (!$isNotRead) {
             $hasPoeOption = false;
-        } elseif (isset($options[BEAR_Resource::OPTION_POE]) && $options[BEAR_Resource::OPTION_POE]=== true) {
+        } elseif (isset($options[BEAR_Resource::OPTION_POE]) && $options[BEAR_Resource::OPTION_POE] === true) {
             // リソースリクエストオプション
             $hasPoeOption = true;
         } elseif ($this->_config[BEAR_Resource::OPTION_POE] === true) {
@@ -79,7 +79,8 @@ class BEAR_Resource_Request extends BEAR_Base
             $hasPoeOption = false;
         }
         if ($hasCsrfOption || $hasPoeOption) {
-            $formToken = BEAR::dependency('BEAR_Form_Token'); /* @var $formToken BEAR_Form_Token */
+            $formToken = BEAR::dependency('BEAR_Form_Token');
+            /* @var $formToken BEAR_Form_Token */
             $isTokenCsrfValid = $hasCsrfOption ? $formToken->isTokenCsrfValid() : true;
             if ($isTokenCsrfValid !== true) {
                 throw $this->_exception('CSRF');
@@ -109,14 +110,14 @@ class BEAR_Resource_Request extends BEAR_Base
             //             BEAR_Form::finishTokens();
 
             /* @todo 下のifブロックを置き換える
-             $isOkRo = ($ro instanceof BEAR_Ro && $ro->getCode() === BEAR::CODE_OK);
+            $isOkRo = ($ro instanceof BEAR_Ro && $ro->getCode() === BEAR::CODE_OK);
             $isNotRo = ($ro instanceof BEAR_Ro === false);
             if (!$isOkRo && $isNotRo) {
             $body = $ro;
             $ro = BEAR::factory('BEAR_Ro');
             $ro->setBody($body);
             }
-            */
+             */
             if ($ro instanceof BEAR_Ro && $ro->getCode() === BEAR::CODE_OK) {
                 // $options ポストプロセスクラス
             } elseif ($ro instanceof BEAR_Ro === false) {
@@ -127,7 +128,7 @@ class BEAR_Resource_Request extends BEAR_Base
 //            $request = ("{$this->_config['method']} {$uri}") .
 //            ($values ? '?' . http_build_query($values) : '');
             self::_actionPostProcess($ro);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             if (get_class($e) === 'Panda_Exception') {
                 // HTTPエラー画面
                 Panda::onException($e);
@@ -136,7 +137,7 @@ class BEAR_Resource_Request extends BEAR_Base
 
             if (BEAR::exists('page')) {
                 $page = BEAR::get('page');
-                if ( method_exists($page, 'onException')) {
+                if (method_exists($page, 'onException')) {
                     $page->onException($e);
                 }
             }
@@ -156,10 +157,11 @@ class BEAR_Resource_Request extends BEAR_Base
                 $args = '';
             }
             $headers = array();
-            $exception = array('class' => get_class($e),
-                               'msg' => $e->getMessage(),
-                               'file' => $e->getFile(),
-                               'line' => $e->getLine()
+            $exception = array(
+                'class' => get_class($e),
+                'msg' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
             );
             $headers['_exception'] = $exception;
             if (method_exists($e, 'getInfo')) {
@@ -207,15 +209,19 @@ class BEAR_Resource_Request extends BEAR_Base
             $pager->setOptions($pagerOptions);
             $pager->makePager($body);
             $body = $pager->getResult();
-            $info['page_numbers'] = array('current' => $pager->pager->getCurrentPageID(),
-            'total' => $pager->pager->numPages());
+            $info['page_numbers'] = array(
+                'current' => $pager->pager->getCurrentPageID(),
+                'total' => $pager->pager->numPages()
+            );
             list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
             $links = $pager->getLinks();
             $ro->setLink(BEAR_Resource::LINK_PAGER, $links);
             $ro->setHeaders($info);
 
-            $info['page_numbers'] = array('current' => $pager->pager->getCurrentPageID(),
-                        'total' => $pager->pager->numPages());
+            $info['page_numbers'] = array(
+                'current' => $pager->pager->getCurrentPageID(),
+                'total' => $pager->pager->numPages()
+            );
             list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
             $info['limit'] = $info['to'] - $info['from'] + 1;
             $pager->setPagerLinks($links, $info);
@@ -227,7 +233,8 @@ class BEAR_Resource_Request extends BEAR_Base
             } else {
                 $msg = 'BEAR_Resource callback failed.';
                 $info = array(
-                    'callback' => $options['callback']);
+                    'callback' => $options['callback']
+                );
                 throw $this->_exception($msg, array('info' => $info));
             }
         }
@@ -238,7 +245,8 @@ class BEAR_Resource_Request extends BEAR_Base
             } else {
                 $msg = 'BEAR_Resource callback_r failed.';
                 $info = array(
-                    'callbackr' => $options['callback_r']);
+                    'callbackr' => $options['callback_r']
+                );
                 throw $this->_exception($msg, array('info' => $info));
             }
         }
@@ -250,7 +258,7 @@ class BEAR_Resource_Request extends BEAR_Base
      *
      * usr?id=1というURIはuriがuserでvaluesが　array('id'=>1)として扱われます。
      *
-     * @param string &$uri   URI
+     * @param string &$uri    URI
      * @param array  &$values 引数
      *
      * @return void

@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: 0.9.0RC4 $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -111,15 +111,13 @@ class BEAR_Dev_Shell extends BEAR_Base
         }
         // parse
         $cli = $this->_config['cli'];
-        $parser = new Console_CommandLine(
-            array(
+        $parser = new Console_CommandLine(array(
                 'name' => 'bear',
                 'description' => 'BEAR command line interface',
                 'version' => BEAR::VERSION,
                 'add_help_option' => true,
                 'add_version_option' => true
-            )
-        );
+            ));
         // create resource
         $subCmd = $parser->addCommand(
             self::CMD_CREATE,
@@ -127,7 +125,8 @@ class BEAR_Dev_Shell extends BEAR_Base
         );
         $subCmd->addOption(
             'file',
-            array('short_name' => '-g',
+            array(
+                'short_name' => '-g',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
@@ -162,7 +161,8 @@ class BEAR_Dev_Shell extends BEAR_Base
         );
         $subCmd->addOption(
             'length',
-            array('short_name' => '-l',
+            array(
+                'short_name' => '-l',
                 'long_name' => '--len',
                 'action' => 'StoreInt',
                 'description' => 'filter specific lenght each data.'
@@ -223,8 +223,9 @@ class BEAR_Dev_Shell extends BEAR_Base
             array('description' => 'delete resource.')
         );
         $subCmd->addOption(
-			'file',
-            array('short_name' => '-a',
+            'file',
+            array(
+                'short_name' => '-a',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
@@ -258,7 +259,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         if ($cli) {
             // create app
             $subCmd = $parser->addCommand(
-            self::CMD_INIT_APP,
+                self::CMD_INIT_APP,
                 array('description' => 'create new application.')
             );
             $subCmd->addArgument(
@@ -267,10 +268,11 @@ class BEAR_Dev_Shell extends BEAR_Base
             );
             $subCmd->addOption(
                 'pearrc',
-                array('short_name' => '-c',
-                      'long_name' => '--pearrc',
-                      'action' => 'StoreString',
-                      'description' => 'find user configuration in `file`'
+                array(
+                    'short_name' => '-c',
+                    'long_name' => '--pearrc',
+                    'action' => 'StoreString',
+                    'description' => 'find user configuration in `file`'
                 )
             );
             // set app
@@ -330,20 +332,21 @@ class BEAR_Dev_Shell extends BEAR_Base
                 case self::CMD_DELETE :
                     $this->_checkAppExists();
                     $uri = $this->_command->command->args['uri'];
-                    $values = $this->_command->command->options['file'] ?
-                    BEAR::loadValues($this->_command->command->options['file']) : array();
+                    $values = $this->_command->command->options['file'] ? BEAR::loadValues(
+                        $this->_command->command->options['file']
+                    ) : array();
                     $this->_result = $this->_request($commandName, $uri, $values)->getRo();
                     $this->_config['debug'] = true;
                     break;
                 default :
                     if ($this->_config['cli']) {
-                    $this->_result = "BEAR: {$argv[1]}: command not found, try 'bear --help'";
-                } else {
-                    $this->_result = "BEAR: {$argv[1]}: command not found, try 'help'";
-                }
-                return;
+                        $this->_result = "BEAR: {$argv[1]}: command not found, try 'bear --help'";
+                    } else {
+                        $this->_result = "BEAR: {$argv[1]}: command not found, try 'help'";
+                    }
+                    return;
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $parser->displayError($e->getMessage());
         }
     }
@@ -363,6 +366,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         }
         return $path;
     }
+
     /**
      * 表示文字列の取得
      *
@@ -380,8 +384,8 @@ class BEAR_Dev_Shell extends BEAR_Base
             if ($this->_config['cli'] != true) {
                 if (is_array($body)) {
                     array_walk_recursive(
-                    $body,
-                    create_function('&$val, $key', '$val = htmlspecialchars($val);')
+                        $body,
+                        create_function('&$val, $key', '$val = htmlspecialchars($val);')
                     );
                 } elseif (is_string($body)) {
                     $body = htmlspecialchars($body);
@@ -392,17 +396,16 @@ class BEAR_Dev_Shell extends BEAR_Base
             $result .= $this->printStrong("header\n");
             $result .= ($header) ? $this->_printR($header) : "n/a\n";
             $result .= $this->printStrong("body\n");
-            $len = (isset($this->_command->command->options['length'])) ?
-            $this->_command->command->options['length'] : self::STRING_LENGTH;
+            $len = (isset($this->_command->command->options['length'])) ? $this->_command->command->options['length'] : self::STRING_LENGTH;
             if (is_array($body)) {
                 array_walk_recursive(
-                $body,
-                create_function(
+                    $body,
+                    create_function(
                         '&$val,
                         $key',
                         '$val = (is_string($val) && strlen($val) >= ' . $len . ')?
                         substr($val, 0, ' . $len . ' - 2) . "…" : $val;'
-                )
+                    )
                 );
             }
             if (is_array($body) || is_object($body)) {
@@ -504,6 +507,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         $isList = isset($data[0]) && is_array(array_keys($data[0]));
         return $isList;
     }
+
     /**
      * var_export文字列の取得
      *
@@ -536,7 +540,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         }
         rewind($outstream);
         $csv = '';
-        while(!feof($outstream) ) {
+        while (!feof($outstream)) {
             $buffer = fgets($outstream);
             $csv .= $buffer;
         }
@@ -583,7 +587,7 @@ class BEAR_Dev_Shell extends BEAR_Base
      * リソースリクエスト
      *
      * @param string $method メソッド
-     * @param string $uri 　 URI（クエリー付き)
+     * @param string $uri    　 URI（クエリー付き)
      * @param array  $values 引数
      *
      * @return BEAR_Ro
@@ -605,7 +609,7 @@ class BEAR_Dev_Shell extends BEAR_Base
      *
      * @return void
      */
-    private function _initApp($path, $pearc='')
+    private function _initApp($path, $pearc = '')
     {
         $bearPath = _BEAR_BEAR_HOME;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -748,8 +752,8 @@ class BEAR_Dev_Shell extends BEAR_Base
         BEAR_Util::unlinkRecursive(_BEAR_APP_HOME . '/tmp/smarty_templates_c/');
         BEAR_Util::unlinkRecursive(_BEAR_APP_HOME . '/tmp/misc/');
         if (function_exists('apc_clear_cache')) {
-            apc_clear_cache ('user');
-            apc_clear_cache ();
+            apc_clear_cache('user');
+            apc_clear_cache();
         }
     }
 

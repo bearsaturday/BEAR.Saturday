@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Page.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -98,7 +98,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             case (!isset($this->_config['options']['output']) || $this->_config['options']['output'] === 'resource'):
                 $result = $this->_outputResource($page, $cnt);
                 break;
-                // html
+            // html
             case ($this->_config['options']['output'] === 'html'):
                 $result = $this->_outputHtml($page);
                 break;

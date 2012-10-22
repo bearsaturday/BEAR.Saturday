@@ -63,6 +63,7 @@ class BEAR_Session extends BEAR_Base
      * @var BEAR_Log
      */
     protected $_log;
+
     /**
      * Constructor
      *
@@ -93,8 +94,7 @@ class BEAR_Session extends BEAR_Base
     {
         static $hasStarted = false;
 
-        if ($hasStarted !== false
-            || $this->_config['adapter'] === self::ADAPTER_NONE
+        if ($hasStarted !== false || $this->_config['adapter'] === self::ADAPTER_NONE
         ) {
             return;
         }

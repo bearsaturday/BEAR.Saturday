@@ -75,7 +75,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
         $this->_tokenStrage = BEAR::dependency('BEAR_Session');
         if (isset($_POST['_token'])) {
             $token = $_POST['_token'];
-        }elseif (isset($_GET['_token'])) {
+        } elseif (isset($_GET['_token'])) {
             $token = $_POST['_token'];
         } else {
             $token = '';
@@ -91,7 +91,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
     public function newSessionToken()
     {
         $csrfToken = $this->_getRndToken(session_id(), self::SESSION_CSRF_LEN);
-        $poeToken = $this->_getRndToken(uniqid(mt_rand() ,true), self::SESSION_POE_LEN);
+        $poeToken = $this->_getRndToken(uniqid(mt_rand(), true), self::SESSION_POE_LEN);
         $token = $csrfToken . $poeToken;
         $this->_tokenStrage->set(self::SESSION_TOKEN, $token);
     }
@@ -132,7 +132,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
      */
     public function isTokenCsrfValid()
     {
-        $sessToken =  $this->_tokenStrage->get(self::SESSION_TOKEN);
+        $sessToken = $this->_tokenStrage->get(self::SESSION_TOKEN);
         $sessToken = substr($sessToken, 0, self::SESSION_POE_LEN);
         $submitToken = substr($this->_submitToken, 0, self::SESSION_CSRF_LEN);
         $isValid = is_string($sessToken) && ($sessToken === $submitToken);
@@ -144,7 +144,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
      */
     public function isTokenPoeValid()
     {
-        $poes =  $this->_tokenStrage->get(self::SESSION_POE);
+        $poes = $this->_tokenStrage->get(self::SESSION_POE);
         $poes = is_array($poes) ? $poes : array();
         $isDoubleSubmit = in_array($this->_submitToken, $poes);
         if ($isDoubleSubmit) {

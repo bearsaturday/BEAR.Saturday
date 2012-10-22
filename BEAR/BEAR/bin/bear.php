@@ -11,7 +11,7 @@
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 $bearPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))));
@@ -45,7 +45,7 @@ set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $ bear.php 2458 2011-06-02 13:09:42Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 class BEAR_Bin_Bear
 {
@@ -94,9 +94,9 @@ class BEAR_Bin_Bear
         $argv = $_SERVER["argv"];
         $count = count($argv);
         $count--;
-        $hasLastOption =  $count > 0 && isset($argv[$count]) && isset($argv[$count - 1]);
+        $hasLastOption = $count > 0 && isset($argv[$count]) && isset($argv[$count - 1]);
         $hasAppOption = ($hasLastOption && $argv[$count - 1] === '--app') || ($hasLastOption && $argv[$count - 1] === '-a');
-        if  ($hasAppOption === true){
+        if ($hasAppOption === true) {
             $appPath = realpath($argv[$count]);
             if (isset($argv[$count]) && $appPath && file_exists($appPath . '/App.php')) {
                 return $appPath;
@@ -147,8 +147,8 @@ class BEAR_Bin_Bear
         /* @var $shell BEAR_Dev_Shell */
         $shell->execute();
         $display = $shell->getDisplay();
-        $display = $display ? $display  :"\nOk.";
-        echo $display .  "\n";
+        $display = $display ? $display : "\nOk.";
+        echo $display . "\n";
     }
 
     /**
@@ -181,31 +181,37 @@ class BEAR_Bin_Bear
      * @param $line
      * @param $errcontext
      */
-    public static function errorHandler($errno, $errmsg, $file, $line,
+    public static function errorHandler(
+        $errno,
+        $errmsg,
+        $file,
+        $line,
         /** @noinspection PhpUnusedParameterInspection */
-        $errcontext) {
+        $errcontext
+    ) {
         {
             if ($errno & E_DEPRECATED || $errno & E_STRICT) {
                 return;
             }
-            $errortype = array (
-                E_ERROR   =>  "Error",
-                E_WARNING   =>  "Warning",
-                E_PARSE   =>  "Parsing Error",
-                E_NOTICE   =>  "Notice",
-                E_CORE_ERROR  =>  "Core Error",
-                E_CORE_WARNING  =>  "Core Warning",
-                E_COMPILE_ERROR  =>  "Compile Error",
-                E_COMPILE_WARNING =>  "Compile Warning",
-                E_USER_ERROR =>  "User Error",
-                E_USER_WARNING =>  "User Warning",
-                E_USER_NOTICE =>  "User Notice"
+            $errortype = array(
+                E_ERROR => "Error",
+                E_WARNING => "Warning",
+                E_PARSE => "Parsing Error",
+                E_NOTICE => "Notice",
+                E_CORE_ERROR => "Core Error",
+                E_CORE_WARNING => "Core Warning",
+                E_COMPILE_ERROR => "Compile Error",
+                E_COMPILE_WARNING => "Compile Warning",
+                E_USER_ERROR => "User Error",
+                E_USER_WARNING => "User Warning",
+                E_USER_NOTICE => "User Notice"
             );
             $prefix = $errortype[$errno];
             error_log("{$prefix}[{$errno}]: $errmsg in $file on line $line\n", 0);
         }
     }
 }
+
 //bearコマンド実行
 $bin = new BEAR_Bin_Bear();
 $bin->run();

@@ -57,10 +57,13 @@
  *
  * @return string
  */
-function smarty_block_a($params, $content,
+function smarty_block_a(
+    $params,
+    $content,
     /** @noinspection PhpUnusedParameterInspection */
-    &$smarty, &$repeat)
-{
+    &$smarty,
+    &$repeat
+) {
     if ($repeat || !$content) {
         return '';
     }

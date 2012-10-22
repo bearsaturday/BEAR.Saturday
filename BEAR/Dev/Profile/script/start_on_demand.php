@@ -16,9 +16,7 @@
  *
  * ?_profクエリーをつけるとデバックモードoffで実行され、実行開始時にプロファイリングがスタートします。
  */
-if (function_exists('xhprof_enable')
-    && isset($bearMode) && $bearMode
-    && isset($_GET['_prof'])
+if (function_exists('xhprof_enable') && isset($bearMode) && $bearMode && isset($_GET['_prof'])
 ) {
     include 'BEAR/Prof.php';
     BEAR_Prof::start(1);

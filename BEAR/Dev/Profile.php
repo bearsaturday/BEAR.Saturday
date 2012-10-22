@@ -93,9 +93,9 @@ class BEAR_Dev_Profile
         $baseHref = self::$_profilerInfo[$type]['href'];
         $runId = $xhprofRuns->save_run($xhprof_data, $appName);
         $href = "{$baseHref}/index.php?run={$runId}&source={$appName}";
-        $link =  '<br><a style="padding: 3px; background-color: red; color: white; font-family:';
+        $link = '<br><a style="padding: 3px; background-color: red; color: white; font-family:';
         $link .= 'Verdana; font-style: normal; font-variant: normal; font-weight: bold; font-size: 8pt;';
-        $link .= ' " name="" target="_blank" href="'. $href . '"">' . self::$_profilerInfo[$type]['label'] .'</a>';
+        $link .= ' " name="" target="_blank" href="' . $href . '"">' . self::$_profilerInfo[$type]['label'] . '</a>';
         echo $link;
     }
 }

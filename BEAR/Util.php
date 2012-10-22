@@ -127,12 +127,14 @@ class BEAR_Util
      *
      * @throws BEAR_Exception 必須項目が足りない場合の例外
      */
-    public static function required(array $required, $values,
+    public static function required(
+        array $required,
+        $values,
         /** @noinspection PhpUnusedParameterInspection */
         $msg = '',
         /** @noinspection PhpUnusedParameterInspection */
-        $code = BEAR::CODE_BAD_REQUEST)
-    {
+        $code = BEAR::CODE_BAD_REQUEST
+    ) {
         if (count(array_intersect($required, array_keys($values))) != count($required)) {
             $info = array('required' => $required, 'values' => $values);
             $msg = "Required Exception";
@@ -157,7 +159,10 @@ class BEAR_Util
             if (is_array($aArrays[$i])) {
                 foreach ($aArrays[$i] as $key => $val) {
                     if (is_array($aArrays[$i][$key])) {
-                        $aMerged[$key] = is_array($aMerged[$key]) ? BEAR::arrayMergeRecursiveDistinct($aMerged[$key], $aArrays[$i][$key]) : $aArrays[$i][$key];
+                        $aMerged[$key] = is_array($aMerged[$key]) ? BEAR::arrayMergeRecursiveDistinct(
+                            $aMerged[$key],
+                            $aArrays[$i][$key]
+                        ) : $aArrays[$i][$key];
                     } else {
                         $aMerged[$key] = $val;
                     }
@@ -227,7 +232,7 @@ class BEAR_Util
                 continue;
             }
             if (!unlink($dir . '/' . $obj)) {
-                self::unlinkRecursive($dir.'/'.$obj, true);
+                self::unlinkRecursive($dir . '/' . $obj, true);
             }
         }
         closedir($dh);

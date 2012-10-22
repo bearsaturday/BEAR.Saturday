@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -35,7 +35,7 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
      * BEAR_Agentの$config['ua_inject']でこのクラスが指定されています。
      *
      * @param BEAR_Main &$object BEAR_Agentオブジェクト
-     * @param array     $config 設定
+     * @param array     $config  設定
      *
      * @return void
      * @see http://code.google.com/p/bear-project/wiki/agent
@@ -51,14 +51,18 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
             if (strpos($config['user_agent'], 'iPhone') !== false) {
                 // iPhoneの場合
                 $ua = BEAR_Agent::UA_IPHONE;
-            } else if (strpos($config['user_agent'], 'iPad') !== false) {
-                // iPadの場合
-                $ua = BEAR_Agent::UA_IPAD;
-            } else if (strpos($config['user_agent'], 'Android') !== false) {
-                // Androidの場合
-                $ua = BEAR_Agent::UA_ANDROID;
             } else {
-                $ua = BEAR_Agent::UA_DEFAULT;
+                if (strpos($config['user_agent'], 'iPad') !== false) {
+                    // iPadの場合
+                    $ua = BEAR_Agent::UA_IPAD;
+                } else {
+                    if (strpos($config['user_agent'], 'Android') !== false) {
+                        // Androidの場合
+                        $ua = BEAR_Agent::UA_ANDROID;
+                    } else {
+                        $ua = BEAR_Agent::UA_DEFAULT;
+                    }
+                }
             }
         } else {
             $ua = ucwords(strtolower($agentMobile->getCarrierLongName()));

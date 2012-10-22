@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -49,8 +49,8 @@ class BEAR_Log_Test extends BEAR_Log
      */
     public function __destruct()
     {
-        header("X-bear-form-log: " .  json_encode($this->_formLog));
-        header("X-bear-resource-log: " .  json_encode($this->_resourceLog));
+        header("X-bear-form-log: " . json_encode($this->_formLog));
+        header("X-bear-resource-log: " . json_encode($this->_resourceLog));
     }
 
     /**

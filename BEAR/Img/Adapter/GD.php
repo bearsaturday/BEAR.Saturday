@@ -212,7 +212,18 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         $newImage = imagecreatetruecolor($newWidth, $newHeight);
         imagealphablending($newImage, false);
         imagesavealpha($newImage, true);
-        imagecopyresampled($newImage, $this->_imgResource, 0, 0, 0, 0, $newWidth, $newHeight, $this->_srcWidth, $this->_srcHeight);
+        imagecopyresampled(
+            $newImage,
+            $this->_imgResource,
+            0,
+            0,
+            0,
+            0,
+            $newWidth,
+            $newHeight,
+            $this->_srcWidth,
+            $this->_srcHeight
+        );
         $this->_imgResource = $newImage;
         $this->_newWidth = $newWidth;
         $this->_newHeight = $newHeight;
@@ -254,9 +265,10 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         $this->_log->log(
             'IMG show',
             array(
-               'format' => $format,
-               'rsc' => (string)$this->_imgResource,
-               'result' => $this->result)
+                'format' => $format,
+                'rsc' => (string)$this->_imgResource,
+                'result' => $this->result
+            )
         );
         parent::header($format);
     }
@@ -292,15 +304,21 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
                 break;
             default :
                 $info = compact("formart");
-                throw $this->_exception('save formart error', array(
-                'info' => $info));
+                throw $this->_exception(
+                    'save formart error',
+                    array(
+                        'info' => $info
+                    )
+                );
         }
-        $this->_log->log('IMG saved',
+        $this->_log->log(
+            'IMG saved',
             array(
                 'format' => $format,
                 'file' => $filePath,
                 'rsc' => (string)$this->_imgResource,
-                'result' => $result)
+                'result' => $result
+            )
         );
     }
 }

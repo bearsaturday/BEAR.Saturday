@@ -114,8 +114,7 @@ class BEAR_Form_Renderer_Default extends HTML_QuickForm_Renderer_Tableless
      * @var      string
      * @access   private
      */
-    var $_requiredNoteTemplate =
-        "\n\t\t\t<li class=\"reqnote\"><label class=\"element\">&nbsp;</label>{requiredNote}</li>";
+    var $_requiredNoteTemplate = "\n\t\t\t<li class=\"reqnote\"><label class=\"element\">&nbsp;</label>{requiredNote}</li>";
 
     /**
      * Constructor

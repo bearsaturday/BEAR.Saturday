@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Http.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -50,8 +50,7 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
             $request = new HTTP_Request2($this->_config['uri'], $reqMethod[$this->_config['method']]);
             $request->setHeader("user-agent", 'BEAR/' . BEAR::VERSION);
             $request->setConfig("follow_redirects", true);
-            if ($this->_config['method'] === BEAR_Resource::METHOD_CREATE
-                || $this->_config['method'] === BEAR_Resource::METHOD_UPDATE
+            if ($this->_config['method'] === BEAR_Resource::METHOD_CREATE || $this->_config['method'] === BEAR_Resource::METHOD_UPDATE
             ) {
                 foreach ($this->_config['values'] as $key => $value) {
                     $request->addPostParameter($key, $value);
@@ -64,14 +63,14 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
                 $body = $response->getBody();
             } else {
                 $info = array(
-                            'code' => $code,
-                            'headers' => $headers
-                        );
+                    'code' => $code,
+                    'headers' => $headers
+                );
                 throw $this->_exception($response->getBody(), $info);
             }
-        } catch(HTTP_Request2_Exception $e) {
+        } catch (HTTP_Request2_Exception $e) {
             throw $this->_exception($e->getMessage());
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw $this->_exception($e->getMessage());
         }
         $rss = new XML_RSS($body, 'utf-8', 'utf-8');

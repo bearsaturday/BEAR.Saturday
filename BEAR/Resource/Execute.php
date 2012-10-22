@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Execute.php 2503 2011-06-11 10:09:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -125,7 +125,7 @@ class BEAR_Resource_Execute extends BEAR_Factory
      */
     private function _localResourceExecute($uri)
     {
-        $file = _BEAR_APP_HOME . '/App/Ro/' .$uri . '.php';
+        $file = _BEAR_APP_HOME . '/App/Ro/' . $uri . '.php';
         if (file_exists($file)) {
             include_once $file;
             $resourcePathName = 'App_Ro_' . str_replace('/', '_', $uri);
@@ -142,9 +142,9 @@ class BEAR_Resource_Execute extends BEAR_Factory
                 default:
                     $msg = 'Mismatch resource class/function error.（ファイル名とクラス/関数名がミスマッチです。)';
                     $info = array(
-                                'resource name' => $resourcePathName,
-                                'resource file' => $file
-                            );
+                        'resource name' => $resourcePathName,
+                        'resource file' => $file
+                    );
                     throw $this->_exception(
                         $msg,
                         array(

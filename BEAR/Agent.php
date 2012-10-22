@@ -156,7 +156,9 @@ class BEAR_Agent extends BEAR_Base
     public function onInject()
     {
         $this->_agentMobile = $this->_config;
-        $injectUa = isset($this->_config['ua_inject']) && is_callable(array($this->_config['ua_inject'], 'inject')) ? $this->_config['ua_inject'] : 'BEAR_Agent_Ua';
+        $injectUa = isset($this->_config['ua_inject']) && is_callable(
+            array($this->_config['ua_inject'], 'inject')
+        ) ? $this->_config['ua_inject'] : 'BEAR_Agent_Ua';
         // _uaを注入
         $agent = &$this;
         call_user_func(array($injectUa, 'inject'), $agent, $this->_config);
@@ -306,9 +308,9 @@ class BEAR_Agent extends BEAR_Base
     public function getRoleFile($dir, $fileNameBase, $ext = 'tpl')
     {
         $role = $this->getAgentRole();
-        $result = $dir. '/' . $fileNameBase . '.' . $ext;
+        $result = $dir . '/' . $fileNameBase . '.' . $ext;
         foreach ($role as $uaCode) {
-            $fullPath = $dir. '/' . $fileNameBase . '.' . strtolower($uaCode) . '.' . $ext;
+            $fullPath = $dir . '/' . $fileNameBase . '.' . strtolower($uaCode) . '.' . $ext;
             if (file_exists($fullPath)) {
                 $result = $fullPath;
                 break;

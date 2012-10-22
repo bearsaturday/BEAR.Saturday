@@ -4,13 +4,13 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package	  BEAR_Test
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id:$$
- * @link      http://www.bear-project.net/
+ * @category     BEAR
+ * @package      BEAR_Test
+ * @author       Akihito Koriyama <koriyama@bear-project.net>
+ * @copyright    2008-2011 Akihito Koriyama  All rights reserved.
+ * @license      http://opensource.org/licenses/bsd-license.php BSD
+ * @version      SVN: Release: @package_version@ $Id:$$
+ * @link         http://www.bear-project.net/
  */
 
 /**
@@ -94,8 +94,7 @@ class BEAR_Test_Client extends HTTP_Request2
     public function isValidSubmit()
     {
         $formLog = $this->getFormLog();
-        $result = (isset($formLog['valid']) && $formLog['valid'] === true) ?
-        true : false;
+        $result = (isset($formLog['valid']) && $formLog['valid'] === true) ? true : false;
         return $result;
     }
 
@@ -120,8 +119,7 @@ class BEAR_Test_Client extends HTTP_Request2
     public function getResourceRequestLog()
     {
         $header = $this->response->getHeader();
-        $result = isset($header['x-bear-resource-log']) ?
-            json_decode($header['x-bear-resource-log'], true) : array();
+        $result = isset($header['x-bear-resource-log']) ? json_decode($header['x-bear-resource-log'], true) : array();
         return $result;
     }
 

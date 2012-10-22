@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Client.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -98,9 +98,11 @@ class BEAR_Resource_Server_Client
             $ro->setCode($code);
             $result = $ro;
         } else {
-            $result = array('code' => $code,
+            $result = array(
+                'code' => $code,
                 'headers' => $headers,
-                'body' => $body);
+                'body' => $body
+            );
         }
         return $result;
     }

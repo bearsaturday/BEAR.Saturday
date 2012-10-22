@@ -118,8 +118,7 @@ class BEAR_Form_Renderer_Mobile extends HTML_QuickForm_Renderer_Tableless
      * @var      string
      * @access   private
      */
-    var $_requiredNoteTemplate =
-        "\n\t\t\t<div><span style=\"color:black;font-size:xx-small;text-align:left;\">{requiredNote}</span></div>";
+    var $_requiredNoteTemplate = "\n\t\t\t<div><span style=\"color:black;font-size:xx-small;text-align:left;\">{requiredNote}</span></div>";
 
     /**
      * Constructor

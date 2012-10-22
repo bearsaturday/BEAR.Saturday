@@ -10,7 +10,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -45,14 +45,14 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
     /**
      * 携帯絵文字サブミット無変換
      *
-     *  @var integer
+     * @var integer
      */
     const MOBILE_SUBMIT_ENTITY = 1;
 
     /**
      * 携帯絵文字サブミット除去
      *
-     *  @var integer
+     * @var integer
      */
     const MOBILE_SUBMIT_REMOVE_EMOJI = 2;
 
@@ -85,22 +85,22 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
         $emojiSubmit = isset($app['BEAR_Emoji']['submit']) ? $app['BEAR_Emoji']['submit'] : 'pass';
         switch ($emojiSubmit) {
             // 何もしない
-        case 'pass':
-            break;
-        case 'entity':
-            // 絵文字をエンティティに変換
-            // 3GCsエンコード変換必須
-            if ($this->_config['is_mobile']) {
-                array_walk_recursive($input, array('BEAR_Emoji', 'onEntityEmoji'), BEAR::dependency('BEAR_Emoji'));
-            }
-            break;
+            case 'pass':
+                break;
+            case 'entity':
+                // 絵文字をエンティティに変換
+                // 3GCsエンコード変換必須
+                if ($this->_config['is_mobile']) {
+                    array_walk_recursive($input, array('BEAR_Emoji', 'onEntityEmoji'), BEAR::dependency('BEAR_Emoji'));
+                }
+                break;
             // 絵文字除去
-        case 'remove':
-            array_walk_recursive($input, array('BEAR_Emoji', 'removeEmoji'), BEAR::dependency('BEAR_Emoji'));
-            break;
-        default:
-            trigger_error('Illegal $this->_config[\'agent\'] error', E_USER_WARNING);
-            break;
+            case 'remove':
+                array_walk_recursive($input, array('BEAR_Emoji', 'removeEmoji'), BEAR::dependency('BEAR_Emoji'));
+                break;
+            default:
+                trigger_error('Illegal $this->_config[\'agent\'] error', E_USER_WARNING);
+                break;
         }
         // UTF8に文字コード変換
         if (isset($this->_config['input_encode'])) {
@@ -123,32 +123,28 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
      * @return void
      * @throws BEAR_Agent_Exception
      */
-    public static function onUTF8(&$value,
+    public static function onUTF8(
+        &$value,
         /** @noinspection PhpUnusedParameterInspection */
-        $key, $inputEncode)
-    {
+        $key,
+        $inputEncode
+    ) {
         if (!mb_check_encoding($value, $inputEncode)) {
             $msg = 'Illegal Submit Values';
             $info = array('value' => $value);
-            throw new BEAR_Agent_Exception(
-                $msg,
-                array(
+            throw new BEAR_Agent_Exception($msg, array(
                     'code' => BEAR::CODE_BAD_REQUEST,
                     'info' => $info
-                )
-            );
+                ));
         }
         $value = mb_convert_encoding($value, 'utf-8', $inputEncode);
         if (!mb_check_encoding($value, 'utf-8')) {
             $msg = 'Illegal UTF-8';
             $info = array('value' => $value);
-            throw new BEAR_Agent_Exception(
-                $msg,
-                array(
+            throw new BEAR_Agent_Exception($msg, array(
                     'code' => BEAR::CODE_BAD_REQUEST,
                     'info' => $info
-                )
-            );
+                ));
         }
     }
 }

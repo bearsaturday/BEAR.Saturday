@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Handler.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -78,43 +78,43 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
         $method = strtolower($parsed[0]);
         $uri = $parsed[1];
         switch ($method) {
-        case '' :
-            break;
-        case '/info' :
-            $info = $this->_server->getClientInfo();
-            $this->_server->sendData($clientId, var_export($info, true));
-            exit();
-        case '/close' :
-            $this->_server->closeConnection($clientId);
-            exit();
-        case '/help' :
-            $help = 'Usage: <method> <url>' . PHP_EOL;
-            $this->_server->sendData($clientId, $help);
-            exit();
-        default :
+            case '' :
+                break;
+            case '/info' :
+                $info = $this->_server->getClientInfo();
+                $this->_server->sendData($clientId, var_export($info, true));
+                exit();
+            case '/close' :
+                $this->_server->closeConnection($clientId);
+                exit();
+            case '/help' :
+                $help = 'Usage: <method> <url>' . PHP_EOL;
+                $this->_server->sendData($clientId, $help);
+                exit();
+            default :
         }
         $resource = BEAR::dependency('BEAR_Resource');
         $params = array('uri' => $uri);
         switch ($method) {
-        case 'create' :
-        case 'post' :
-            $resource->create($params);
-            break;
-        case 'read' :
-        case 'broadcast' :
-        case 'get' :
-            $resource->read($params);
-            break;
-        case 'update' :
-        case 'put' :
-            $resource->update($params);
-            break;
-        case 'delete' :
-            $resource->delete($params);
-            break;
-        default :
-            $resource = false;
-            break;
+            case 'create' :
+            case 'post' :
+                $resource->create($params);
+                break;
+            case 'read' :
+            case 'broadcast' :
+            case 'get' :
+                $resource->read($params);
+                break;
+            case 'update' :
+            case 'put' :
+                $resource->update($params);
+                break;
+            case 'delete' :
+                $resource->delete($params);
+                break;
+            default :
+                $resource = false;
+                break;
         }
         if ($resource !== false) {
             $ro = $resource->getRo();
@@ -136,10 +136,12 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      *
      * @return void
      */
-    public function sendData($clientId,
+    public function sendData(
+        $clientId,
         /** @noinspection PhpUnusedParameterInspection */
-        $method, BEAR_Ro $ro)
-    {
+        $method,
+        BEAR_Ro $ro
+    ) {
         $code = $ro->getCode();
         $hearders = $ro->getHeaders();
         if (isset($hearders['broadcast'])) {

@@ -258,8 +258,14 @@ class BEAR_Form extends BEAR_Factory
         $page->setConfig('redner_form', true);
         self::$_renderConfig[$formName] = $this->_config;
         // extra elements
-        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bcheckbox'] = array(_BEAR_BEAR_HOME . '/BEAR/Form/elements/bcheckbox.php', 'HTML_QuickForm_bcheckbox');
-        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bradio'] = array(_BEAR_BEAR_HOME . '/BEAR/Form/elements/bradio.php', 'HTML_QuickForm_bradio');
+        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bcheckbox'] = array(
+            _BEAR_BEAR_HOME . '/BEAR/Form/elements/bcheckbox.php',
+            'HTML_QuickForm_bcheckbox'
+        );
+        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bradio'] = array(
+            _BEAR_BEAR_HOME . '/BEAR/Form/elements/bradio.php',
+            'HTML_QuickForm_bradio'
+        );
         return $formObject;
     }
 
@@ -438,8 +444,10 @@ class BEAR_Form extends BEAR_Factory
             $adapter = isset($renderConfig['adapter']) ? $renderConfig['adapter'] : self::RENDERER_APP;
             $form = BEAR::get('BEAR_Form_' . $formName);
             $formErrors = false;
-            $callback = (isset($renderConfig['callback']) &&
-            is_callable($renderConfig['callback'], false)) ? $renderConfig['callback'] : false;
+            $callback = (isset($renderConfig['callback']) && is_callable(
+                $renderConfig['callback'],
+                false
+            )) ? $renderConfig['callback'] : false;
             switch ($adapter) {
                 case self::RENDERER_APP:
                     // DHTMLRulesTablelessレンダラ
@@ -491,12 +499,14 @@ class BEAR_Form extends BEAR_Factory
                     break;
             }
             // エラーサマリー
-            if (is_array($formErrors)
-                && $formErrors
-                && isset(self::$_renderConfig[$formName]['errors'])
-                && self::$_renderConfig[$formName]['errors']
+            if (is_array(
+                $formErrors
+            ) && $formErrors && isset(self::$_renderConfig[$formName]['errors']) && self::$_renderConfig[$formName]['errors']
             ) {
-                $errorSummary = '<div class="form-errors"><ul><li>' . implode('</li><li>', $formErrors) . '</li></ul></div>';
+                $errorSummary = '<div class="form-errors"><ul><li>' . implode(
+                    '</li><li>',
+                    $formErrors
+                ) . '</li></ul></div>';
                 $smarty->assign(self::$_renderConfig[$formName]['errors'], $errorSummary);
             }
             // remove Javascript code if Docomo or AU

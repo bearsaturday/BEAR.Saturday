@@ -34,6 +34,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
     protected $_chain = array();
 
     protected $_links;
+
     /**
      * リソースのリンクをつなげる
      *
@@ -66,6 +67,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
         }
         return $result;
     }
+
     /**
      * リソースのリンクをつなげる
      *
@@ -232,26 +234,29 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
     private static function _makeRequestConfig($onLinks, $link)
     {
         if (!isset($onLinks[$link])) {
-            $info = array('link uri' => $link,
-                        'available links' => $onLinks
+            $info = array(
+                'link uri' => $link,
+                'available links' => $onLinks
             );
-            throw new BEAR_Ro_Prototype_Link_Exception(
-            	'Resource link key is not exist.',
-                array('code' => BEAR::CODE_BAD_REQUEST,'info' => $info)
-            );
+            throw new BEAR_Ro_Prototype_Link_Exception('Resource link key is not exist.', array(
+                    'code' => BEAR::CODE_BAD_REQUEST,
+                    'info' => $info
+                ));
         }
         if (is_array($onLinks[$link])) {
-            $emptyParams = array('method' => 'read',
-                                 'uri' => '',
-                                 'values' => array(),
-                                 'options' => array()
+            $emptyParams = array(
+                'method' => 'read',
+                'uri' => '',
+                'values' => array(),
+                'options' => array()
             );
             $result = array_merge($emptyParams, $onLinks[$link]);
         } else {
-            $result = array('method' => 'read',
-                            'uri' => $onLinks[$link],
-                            'values' => array(),
-                            'options' => array()
+            $result = array(
+                'method' => 'read',
+                'uri' => $onLinks[$link],
+                'values' => array(),
+                'options' => array()
             );
         }
         return $result;

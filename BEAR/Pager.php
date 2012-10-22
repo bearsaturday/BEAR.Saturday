@@ -117,18 +117,18 @@ class BEAR_Pager extends BEAR_Base
             // PC
             case BEAR_Agent::UA_DEFAULT:
                 $this->_options = array(
-                    'perPage' => 10,  // ページごとに表示するアイテムの数
-                    'delta' => 10,  // 現在のページの前後に表示するページ番号の数
-                    'urlVar' => self::PAGER_NUM,  // ページ番号を示すためのURL変数名
-                    'prevImg' => '前へ',  // Prevボタン（IMGタグをつけてグラフィック表示も可能）
-                    'nextImg' => '次へ',  // Nextボタン（IMGタグをつけてグラフィック表示も可能）
-                    'separator' => ' ',  // セパレーター
-                    'linkClass' => self::PAGER_CLASS,  // リンクスタイルのためのCSSクラス名
-                    'totalItems' => 100,  // アイテム総数
+                    'perPage' => 10, // ページごとに表示するアイテムの数
+                    'delta' => 10, // 現在のページの前後に表示するページ番号の数
+                    'urlVar' => self::PAGER_NUM, // ページ番号を示すためのURL変数名
+                    'prevImg' => '前へ', // Prevボタン（IMGタグをつけてグラフィック表示も可能）
+                    'nextImg' => '次へ', // Nextボタン（IMGタグをつけてグラフィック表示も可能）
+                    'separator' => ' ', // セパレーター
+                    'linkClass' => self::PAGER_CLASS, // リンクスタイルのためのCSSクラス名
+                    'totalItems' => 100, // アイテム総数
                     'excludeVars' => array($sessionId)
                 );
                 break;
-                // Mobile
+            // Mobile
             default:
                 $this->_options = array(
                     'perPage' => 10,

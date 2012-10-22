@@ -11,7 +11,7 @@
  * @copyright  2008-2011 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Ro.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @link       http://www.bear-project.net/
  */
 
 /**
@@ -41,10 +41,10 @@ class BEAR_Resource_Execute_Ro extends BEAR_Resource_Execute_Adapter
     {
         // ROクラスDI
         $config = array(
-                    'method' => $this->_config['method'],
-                    'uri' => $this->_config['uri'],
-                    'class' => $this->_config['class']
-                  );
+            'method' => $this->_config['method'],
+            'uri' => $this->_config['uri'],
+            'class' => $this->_config['class']
+        );
         if (isset($this->_config['options']['config'])) {
             $roConfig = array_merge($this->_config, $this->_config['options']['config']);
         } else {

@@ -58,7 +58,7 @@ class BEAR_Dev_Util
         $errors = Panda::getAllErrors();
         $errorStat = Panda::getErrorStat();
         $errorMsg = implode("\n", $errors);
-        if ($errorStat & E_ERROR || $errorStat & E_USER_ERROR  || $errorStat & E_RECOVERABLE_ERROR) {
+        if ($errorStat & E_ERROR || $errorStat & E_USER_ERROR || $errorStat & E_RECOVERABLE_ERROR) {
             $errorBgColor = "red";
             $errorMsg = "Fatal Error: {$errorMsg}";
             $bear = "BEAR - Error";
@@ -73,12 +73,12 @@ class BEAR_Dev_Util
             $bear = "BEAR";
         } else {
             $errorBgColor = "green";
-             $errorMsg = "{$errorMsg}";
+            $errorMsg = "{$errorMsg}";
             $bear = "BEAR";
         }
         // デバック情報表示HTML
         // bear.jsを使用する場合はbear_debuggingがtrueになる
-        if (file_exists(_BEAR_APP_HOME. '/htdocs/__edit')) {
+        if (file_exists(_BEAR_APP_HOME . '/htdocs/__edit')) {
             $editHtml = '<a href="/__edit/?id=@@@log_id@@@"';
             $editHtml .= ' class="bear_page_edit" style="padding:5px 3px 3px 3px;background-color: gray';
             $editHtml .= ';color:white; font:bold 8pt Verdana;';
@@ -106,21 +106,21 @@ class BEAR_Dev_Util
         $currentMode = isset($_GET['_resource']) ? $_GET['_resource'] : 'none';
         $res = $mode ? array('_resource' => $mode) : array();
         unset($_GET['_resource']);
-        $resourceBoxUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-        . '?' . http_build_query(array_merge($_GET, $res));
+        $resourceBoxUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '?' . http_build_query(
+            array_merge($_GET, $res)
+        );
         $budgeHtml = '<div id="bear_badge">';
         $budgeHtml .= $editHtml;
         if ($hasResource === true) {
-            $budgeHtml .= '<a href="' . $resourceBoxUrl . '" class="bear_resource_'
-            . $currentMode . '" title="' . $title . '">RES</a>';
+            $budgeHtml .= '<a href="' . $resourceBoxUrl . '" class="bear_resource_' . $currentMode . '" title="' . $title . '">RES</a>';
         }
         $budgeHtml .= '<a href="/__bear/?id=@@@log_id@@@" class="bear_badge" title="';
         $budgeHtml .= $errorMsg . '" style="background-color:' . $errorBgColor;
         $budgeHtml .= ';color:' . $errorFgColor . ';';
-        $budgeHtml .= '">' . $bear .'</a><a href="?_bearinfo" class="bear_info">i</a></div>';
+        $budgeHtml .= '">' . $bear . '</a><a href="?_bearinfo" class="bear_info">i</a></div>';
         $budgeHtml = str_replace(
-        	'</body>',
-        	"$budgeHtml" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . "</body>",
+            '</body>',
+            "$budgeHtml" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . "</body>",
             $html
         );
         return $budgeHtml;
@@ -170,7 +170,7 @@ class BEAR_Dev_Util
         $err = print_r($lastError, true);
         if (isset($_GET['_error'])) {
             $errorTo = $_GET['_error'];
-            if ($errorTo == '' ) {
+            if ($errorTo == '') {
                 $errorCode = Panda::$phpError[$lastError['type']];
                 Panda::error("$errorCode (Last Error)", "{$lastError['message']}", '', (array)$lastError);
                 return;
