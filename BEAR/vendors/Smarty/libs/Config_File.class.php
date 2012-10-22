@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Config_File class.
  *
@@ -16,21 +17,25 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @link http://smarty.php.net/
- * @version 2.6.19-dev
+ * For questions, help, comments, discussion, etc., please join the
+ * Smarty mailing list. Send a blank e-mail to
+ * smarty-discussion-subscribe@googlegroups.com 
+ *
+ * @link http://www.smarty.net/
+ * @version 2.6.25-dev
  * @copyright Copyright: 2001-2005 New Digital Group, Inc.
  * @author Andrei Zmievski <andrei@php.net>
  * @access public
  * @package Smarty
  */
-/* $Id: Config_File.class.php 28 2008-07-13 16:57:35Z koriyama $ */
+
+/* $Id: Config_File.class.php 3149 2009-05-23 20:59:25Z monte.ohrt $ */
+
 /**
  * Config file reading class
  * @package Smarty
  */
-class Config_File
-{
-
+class Config_File {
     /**#@+
      * Options
      * @var boolean
@@ -38,32 +43,31 @@ class Config_File
     /**
      * Controls whether variables with the same name overwrite each other.
      */
-    var $overwrite = true;
+    var $overwrite        =    true;
 
     /**
      * Controls whether config values of on/true/yes and off/false/no get
      * converted to boolean values automatically.
      */
-    var $booleanize = true;
+    var $booleanize        =    true;
 
     /**
      * Controls whether hidden config sections/vars are read from the file.
      */
-    var $read_hidden = true;
+    var $read_hidden     =    true;
 
     /**
      * Controls whether or not to fix mac or dos formatted newlines.
      * If set to true, \r or \r\n will be changed to \n.
      */
-    var $fix_newlines = true;
-
+    var $fix_newlines =    true;
     /**#@-*/
+
     /** @access private */
-    var $_config_path = "";
-
-    var $_config_data = array();
-
+    var $_config_path    = "";
+    var $_config_data    = array();
     /**#@-*/
+
     /**
      * Constructs a new config file class.
      *
@@ -74,6 +78,7 @@ class Config_File
         if (isset($config_path))
             $this->set_path($config_path);
     }
+
 
     /**
      * Set the path where configuration files can be found.
@@ -87,12 +92,14 @@ class Config_File
                 $this->_trigger_error_msg("Bad config file path '$config_path'");
                 return;
             }
-            if (substr($config_path, -1) != DIRECTORY_SEPARATOR) {
+            if(substr($config_path, -1) != DIRECTORY_SEPARATOR) {
                 $config_path .= DIRECTORY_SEPARATOR;
             }
+
             $this->_config_path = $config_path;
         }
     }
+
 
     /**
      * Retrieves config info based on the file, section, and variable name.
@@ -112,11 +119,12 @@ class Config_File
             if (!isset($this->_config_data[$file_name]))
                 $this->load_file($file_name, false);
         }
+
         if (!empty($var_name)) {
             if (empty($section_name)) {
                 return $this->_config_data[$file_name]["vars"][$var_name];
             } else {
-                if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name]))
+                if(isset($this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name]))
                     return $this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name];
                 else
                     return array();
@@ -125,13 +133,14 @@ class Config_File
             if (empty($section_name)) {
                 return (array)$this->_config_data[$file_name]["vars"];
             } else {
-                if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"]))
+                if(isset($this->_config_data[$file_name]["sections"][$section_name]["vars"]))
                     return (array)$this->_config_data[$file_name]["sections"][$section_name]["vars"];
                 else
                     return array();
             }
         }
     }
+
 
     /**
      * Retrieves config info based on the key.
@@ -157,6 +166,7 @@ class Config_File
         return array_keys($this->_config_data);
     }
 
+
     /**
      * Get all section names from a loaded file.
      *
@@ -170,8 +180,10 @@ class Config_File
             $this->_trigger_error_msg("Unknown config file '$file_name'");
             return;
         }
+
         return array_keys($this->_config_data[$file_name]["sections"]);
     }
+
 
     /**
      * Get all global or section variable names.
@@ -189,11 +201,13 @@ class Config_File
             $this->_trigger_error_msg("Unknown config file '$file_name'");
             return;
         }
+
         if (empty($section))
             return array_keys($this->_config_data[$file_name]["vars"]);
         else
             return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
     }
+
 
     /**
      * Clear loaded config data for a certain file or all files.
@@ -208,6 +222,7 @@ class Config_File
             $this->_config_data[$file_name] = array();
     }
 
+
     /**
      * Load a configuration file manually.
      *
@@ -221,14 +236,17 @@ class Config_File
             $config_file = $this->_config_path . $file_name;
         else
             $config_file = $file_name;
+
         ini_set('track_errors', true);
         $fp = @fopen($config_file, "r");
         if (!is_resource($fp)) {
             $this->_trigger_error_msg("Could not open config file '$config_file'");
             return false;
         }
+
         $contents = ($size = filesize($config_file)) ? fread($fp, $size) : '';
         fclose($fp);
+
         $this->_config_data[$config_file] = $this->parse_contents($contents);
         return true;
     }
@@ -252,23 +270,26 @@ class Config_File
      */
     function parse_contents($contents)
     {
-        if ($this->fix_newlines) {
+        if($this->fix_newlines) {
             // fix mac/dos formatted newlines
             $contents = preg_replace('!\r\n?!', "\n", $contents);
         }
+
         $config_data = array();
         $config_data['sections'] = array();
         $config_data['vars'] = array();
+
         /* reference to fill with data */
-        $vars = & $config_data['vars'];
+        $vars =& $config_data['vars'];
+
         /* parse file line by line */
         preg_match_all('!^.*\r?\n?!m', $contents, $match);
         $lines = $match[0];
-        for ($i = 0, $count = count($lines); $i < $count; $i++) {
+        for ($i=0, $count=count($lines); $i<$count; $i++) {
             $line = $lines[$i];
-            if (empty($line))
-                continue;
-            if (substr($line, 0, 1) == '[' && preg_match('!^\[(.*?)\]!', $line, $match)) {
+            if (empty($line)) continue;
+
+            if ( substr($line, 0, 1) == '[' && preg_match('!^\[(.*?)\]!', $line, $match) ) {
                 /* section found */
                 if (substr($match[1], 0, 1) == '.') {
                     /* hidden section */
@@ -280,15 +301,15 @@ class Config_File
                         $vars = array();
                         continue;
                     }
-                } else {
+                } else {                    
                     $section_name = $match[1];
                 }
                 if (!isset($config_data['sections'][$section_name]))
-                    $config_data['sections'][$section_name] = array(
-                        'vars' => array());
-                $vars = & $config_data['sections'][$section_name]['vars'];
+                    $config_data['sections'][$section_name] = array('vars' => array());
+                $vars =& $config_data['sections'][$section_name]['vars'];
                 continue;
             }
+
             if (preg_match('/^\s*(\.?\w+)\s*=\s*(.*)/s', $line, $match)) {
                 /* variable found */
                 $var_name = rtrim($match[1]);
@@ -296,7 +317,7 @@ class Config_File
                     /* handle multiline-value */
                     $lines[$i] = substr($match[2], 3);
                     $var_value = '';
-                    while ($i < $count) {
+                    while ($i<$count) {
                         if (($pos = strpos($lines[$i], '"""')) === false) {
                             $var_value .= $lines[$i++];
                         } else {
@@ -306,10 +327,12 @@ class Config_File
                         }
                     }
                     $booleanize = false;
+
                 } else {
                     /* handle simple value */
                     $var_value = preg_replace('/^([\'"])(.*)\1$/', '\2', rtrim($match[2]));
                     $booleanize = $this->booleanize;
+
                 }
                 $this->_set_config_var($vars, $var_name, $var_value, $booleanize);
             }
@@ -334,16 +357,19 @@ class Config_File
             else
                 $var_name = substr($var_name, 1);
         }
+
         if (!preg_match("/^[a-zA-Z_]\w*$/", $var_name)) {
             $this->_trigger_error_msg("Bad variable name '$var_name'");
             return;
         }
+
         if ($booleanize) {
             if (preg_match("/^(on|true|yes)$/i", $var_value))
                 $var_value = true;
             else if (preg_match("/^(off|false|no)$/i", $var_value))
                 $var_value = false;
         }
+
         if (!isset($container[$var_name]) || $this->overwrite)
             $container[$var_name] = $var_value;
         else {
@@ -361,6 +387,7 @@ class Config_File
     {
         trigger_error("Config_File error: $error_msg", $error_type);
     }
-/**#@-*/
+    /**#@-*/
 }
+
 ?>

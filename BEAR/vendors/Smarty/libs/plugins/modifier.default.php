@@ -1,10 +1,11 @@
 <?php
-
 /**
  * Smarty plugin
  * @package Smarty
  * @subpackage plugins
  */
+
+
 /**
  * Smarty default modifier plugin
  *
@@ -25,5 +26,7 @@ function smarty_modifier_default($string, $default = '')
     else
         return $string;
 }
+
 /* vim: set expandtab: */
+
 ?>

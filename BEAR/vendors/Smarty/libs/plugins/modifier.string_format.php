@@ -1,10 +1,11 @@
 <?php
-
 /**
  * Smarty plugin
  * @package Smarty
  * @subpackage plugins
  */
+
+
 /**
  * Smarty string_format modifier plugin
  *
@@ -22,5 +23,7 @@ function smarty_modifier_string_format($string, $format)
 {
     return sprintf($format, $string);
 }
+
 /* vim: set expandtab: */
+
 ?>
