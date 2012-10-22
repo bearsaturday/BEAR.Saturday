@@ -68,6 +68,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
         }
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
+            /** @var $ro BEAR_Ro */
             $ro->setCode($result->code)
                 ->setHeaders((array)$result->header)
                 ->setBody($result->body)

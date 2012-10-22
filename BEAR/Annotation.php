@@ -42,7 +42,9 @@ class BEAR_Annotation extends BEAR_Base
         parent::__construct($config);
         $this->_config['ref']['method'] = new ReflectionMethod($config['class'], $config['method']);
         $this->_config['ref']['class'] = new ReflectionClass($config['class']);
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->_config['doc']['class'] = $this->_config['ref']['class']->getDocComment();
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->_config['doc']['method'] = $this->_config['ref']['method']->getDocComment();
     }
 
@@ -85,7 +87,7 @@ class BEAR_Annotation extends BEAR_Base
     public function aspect()
     {
         $match = array();
-        $result = preg_match_all("/@aspect\s+(\w+)\s+(\w+)/is", $this->_config['doc']['method'], $match);
+        preg_match_all("/@aspect\s+(\w+)\s+(\w+)/is", $this->_config['doc']['method'], $match);
         $aspects = array();
         // <アドバイスタイプ> => <アドバイスクラス>の連想配列
         $max = count($match[0]);

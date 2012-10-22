@@ -121,7 +121,7 @@ class BEAR_Cache extends BEAR_Factory
                 break;
             default:
                 if (is_string($this->_config['adapter'])) {
-                    self::$_instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adapter']);
+                    $instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adapter']);
                     break;
                 }
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Void', $this->_config);

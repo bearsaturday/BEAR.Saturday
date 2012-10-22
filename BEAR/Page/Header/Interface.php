@@ -116,7 +116,7 @@ interface BEAR_Page_Header_Interface extends BEAR_Base_Interface
      *
      * @param string $header HTTPヘッダー名
      *
-     * @return string|false HTTPヘッダー値、みつからなければfalse
+     * @return mixed string | false HTTPヘッダー値、みつからなければfalse
      */
     public function getRequestHeader($header);
 }

@@ -66,7 +66,7 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
     /**
      * データ受信ハンドラ
      *
-     * @param string $clientId クライアントID
+     * @param int    $clientId クライアントID
      * @param string $data     受信データ
      *
      * @return void
@@ -136,7 +136,9 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      *
      * @return void
      */
-    public function sendData($clientId, $method, BEAR_Ro $ro)
+    public function sendData($clientId,
+        /** @noinspection PhpUnusedParameterInspection */
+        $method, BEAR_Ro $ro)
     {
         $code = $ro->getCode();
         $hearders = $ro->getHeaders();

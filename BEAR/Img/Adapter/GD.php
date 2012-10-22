@@ -34,6 +34,21 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
 {
 
     /**
+     * @var string
+     */
+    protected $file;
+
+    /**
+     * @var string
+     */
+    protected $format;
+
+    /**
+     * @var mixed
+     */
+    protected $result;
+
+    /**
      * GDイメージリソース
      *
      * @var resource
@@ -143,7 +158,6 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
             $this->_log->log('IMG load error', $file);
             $info = array('file' => $file);
             throw $this->_exception('Image Load Error', array('info' => $info));
-            exit();
         }
         $this->_srcWidth = $width;
         $this->_srcHeight = $height;
@@ -165,9 +179,9 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      * サムネール画像作成などにつかいます。
      * </pre>
      *
-     * @param int  $width     幅
-     * @param int  $height    高さ
-     * @param bool $smallOnly 縮小のみ（小さい画像を大きくはしない）
+     * @param bool|int $width     幅
+     * @param bool|int $height    高さ
+     * @param bool     $smallOnly 縮小のみ（小さい画像を大きくはしない）
      *
      * @return void
      */
@@ -182,8 +196,10 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
             return;
         }
         if ($width / $this->_srcWidth > $height / $this->_srcHeight) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $magnify = $height / $this->_srcHeight;
         } else {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $magnify = $width / $this->_srcWidth;
         }
         if ($width / $this->_srcWidth > $height / $this->_srcHeight) {
@@ -207,7 +223,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      *
      * ヘッダーと画像をhttp出力します。
      *
-     * @param string $format 画像ファイルの場所(URL or fileパス)
+     * @param bool|string $format 画像ファイルの場所(URL or fileパス)
      *
      * @return void
      */

@@ -30,11 +30,12 @@ interface BEAR_Aspect_Returning_Interface
 {
 
     /**
-     * throwingアドバイス
+     * returningアドバイス
      *
-     * @param mixed $result エラー結果
+     * @param                       $result
+     * @param BEAR_Aspect_JoinPoint $joinPoint
      *
-     * @return void
+     * @return mixed
      */
     public function returning($result, BEAR_Aspect_JoinPoint $joinPoint);
 }

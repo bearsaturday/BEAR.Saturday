@@ -29,6 +29,16 @@
 abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 {
     /**
+     * @var string
+     */
+    protected $_header;
+
+    /**
+     * @var Smarty
+     */
+    protected $_smarty;
+
+    /**
      * 携帯サ絵文字ポート対応なし
      *
      * @var integer
@@ -94,6 +104,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
      *
      * @param string &$value 文字列
      *
+     * @throws BEAR_Exception
      * @return void
      * @ignore
      */

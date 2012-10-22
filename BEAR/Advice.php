@@ -54,6 +54,7 @@ abstract class BEAR_Aspect extends BEAR_Base
      */
     protected function proceed(array $values)
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         $result = $this->_config['ref']['method']->invoke($this->_config['obj'], $values);
         return $result;
     }

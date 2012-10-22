@@ -123,16 +123,18 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
      * @return void
      * @throws BEAR_Agent_Exception
      */
-    public static function onUTF8(&$value, $key, $inputEncode)
+    public static function onUTF8(&$value,
+        /** @noinspection PhpUnusedParameterInspection */
+        $key, $inputEncode)
     {
         if (!mb_check_encoding($value, $inputEncode)) {
             $msg = 'Illegal Submit Values';
             $info = array('value' => $value);
-            throw BEAR_Agent_Exception(
+            throw new BEAR_Agent_Exception(
                 $msg,
                 array(
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => $inf
+                    'info' => $info
                 )
             );
         }
@@ -140,7 +142,7 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
         if (!mb_check_encoding($value, 'utf-8')) {
             $msg = 'Illegal UTF-8';
             $info = array('value' => $value);
-            throw BEAR_Agent_Exception(
+            throw new BEAR_Agent_Exception(
                 $msg,
                 array(
                     'code' => BEAR::CODE_BAD_REQUEST,

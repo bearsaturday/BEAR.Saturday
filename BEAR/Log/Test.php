@@ -54,10 +54,10 @@ class BEAR_Log_Test extends BEAR_Log
     }
 
     /**
-     * TESTようにformとresourceだけ別に記録
+     * TEST用にformとresourceだけ別に記録
      *
-     * @return void
-     * @see BEAR_Log::log()
+     * @param string $logKey
+     * @param null   $logValue
      */
     public function log($logKey, $logValue = null)
     {

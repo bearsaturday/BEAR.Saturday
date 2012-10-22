@@ -60,6 +60,12 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
      */
     protected $_tokenStrage;
 
+    /**
+     * Submit token
+     *
+     * @var string
+     */
+    protected $_submitToken;
 
     /**
      * @see BEAR_Base::onInject()
@@ -102,7 +108,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
     {
         $sha = sha1($salt);
         if ($length === null) {
-            return $token;
+            return $sha;
         }
         $token = substr($sha, 0, $length);
         return $token;

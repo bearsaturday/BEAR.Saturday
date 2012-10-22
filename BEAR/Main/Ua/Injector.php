@@ -41,6 +41,7 @@ class BEAR_Main_Ua_Injector implements BEAR_Injector_Interface
         $userAgent = isset($config['http_user_agent']) ? $config['http_user_agent'] :
             (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
         $agent = BEAR::dependency('BEAR_Agent', array('user_agent' => $userAgent));
+        /** @var $agent BEAR_Agent */
         $object->setService('_agent', $agent);
         $object->setConfig('ua', $agent->getUa());
         $object->setConfig('enable_ua_sniffing', true);

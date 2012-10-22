@@ -118,6 +118,7 @@ class BEAR_Agent extends BEAR_Base
      */
     const UA_ANDROID = 'Android';
 
+    public $agentMobile;
 
     /**
      * モバイルエージェント
@@ -127,6 +128,11 @@ class BEAR_Agent extends BEAR_Base
      * @var mixed
      */
     protected $_agentMobile = array('user_agent' => null);
+
+    /**
+     * @var BEAR_Agent_Adapter
+     */
+    public $adapter;
 
     /**
      * UAコード
@@ -193,18 +199,26 @@ class BEAR_Agent extends BEAR_Base
     public function getSerialNumber()
     {
         $serial = '';
-        $agentMobile = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile);
+        $this->agentMobile = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile);
         switch ($this->_ua) {
             case self::UA_DOCOMO:
+                /** @noinspection PhpUndefinedMethodInspection */
+                /** @noinspection PhpUndefinedMethodInspection */
                 $serial = $this->agentMobile->getCardID();
                 if ($serial === '') {
+                    /** @noinspection PhpUndefinedMethodInspection */
+                    /** @noinspection PhpUndefinedMethodInspection */
                     $serial = $this->agentMobile->getSerialNumber();
                 }
                 break;
             case self::UA_EZWEB:
+                /** @noinspection PhpUndefinedMethodInspection */
+                /** @noinspection PhpUndefinedMethodInspection */
                 $serial = $this->agentMobile->getHeader('X-UP-SUBNO');
                 break;
             case self::UA_SOFTBANK:
+                /** @noinspection PhpUndefinedMethodInspection */
+                /** @noinspection PhpUndefinedMethodInspection */
                 $serial = $this->agentMobile->getSerialNumber();
                 break;
             default:
@@ -224,6 +238,10 @@ class BEAR_Agent extends BEAR_Base
         static $size;
 
         if (!isset($size)) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
             $size = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile)->getDisplay()->getSize();
         }
         return $size;
@@ -241,7 +259,13 @@ class BEAR_Agent extends BEAR_Base
         static $byteSize;
 
         if (!isset($byteSize)) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
             $display = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile)->getDisplay();
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
             $byteSize = array($display->getWidthBytes(), $display->getHeightBytes());
         }
         return $byteSize;

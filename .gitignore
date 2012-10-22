@@ -1,4 +1,5 @@
 .project
+.idea
 .settings
 build
 .DS_Store

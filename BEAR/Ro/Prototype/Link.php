@@ -33,17 +33,21 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      */
     protected $_chain = array();
 
-
+    protected $_links;
     /**
      * リソースのリンクをつなげる
      *
-     * <pre>リソースをリンクした結果をHEADER_LINK_BODYヘッダーに付加します</pre>
+     * リソースをリンクした結果をHEADER_LINK_BODYヘッダーに付加します
      *
-     * @return void
+     * @param BEAR_Ro $rootRo
+     * @param array   $chain
+     *
+     * @return array
      */
     public function chainLink(BEAR_Ro $rootRo, array $chain)
     {
         if ($chain === array()) {
+            /** @noinspection PhpInconsistentReturnPointsInspection */
             return;
         }
         $config = $rootRo->getConfig();
@@ -66,6 +70,9 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      * リソースのリンクをつなげる
      *
      * リソースをリンクした結果をHEADER_LINK_BODYヘッダーに付加します
+     *
+     * @param BEAR_Ro $rootRo
+     * @param array   $chain
      *
      * @return array
      */

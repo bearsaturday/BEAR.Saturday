@@ -21,6 +21,7 @@
 /**
  * Base class
  */
+/** @noinspection PhpIncludeInspection */
 require_once 'HTML/QuickForm/checkbox.php';
 
 /**

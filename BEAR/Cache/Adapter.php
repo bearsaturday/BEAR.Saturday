@@ -46,6 +46,11 @@ abstract class BEAR_Cache_Adapter extends BEAR_Base
     protected $_adapter;
 
     /**
+     * @var BEAR_Log
+     */
+    protected $_log;
+
+    /**
      * Inject
      *
      * @return void

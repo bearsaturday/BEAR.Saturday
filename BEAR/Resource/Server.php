@@ -49,7 +49,7 @@ class BEAR_Resource_Server extends BEAR_Base
      * @param int    $port        ポート番号
      * @param bool   $isFork      サーバータイプ true:folk false:sequential
      * @param string $handlerName サーバーハンドラ名
-     * @param string $ipAddress   サーバーIP
+     * @param bool   $ipAddress   サーバーIP
      *
      * @return void
      * @see http://pear.php.net/manual/ja/package.networking.net-server.net-server.create.php

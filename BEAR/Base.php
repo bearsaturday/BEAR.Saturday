@@ -107,7 +107,7 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      * Set service
      *
      * @param string $name    サービスキー
-     * @param object $service サービス
+     * @param mixed  $service サービス
      *
      * @return void
      */

@@ -33,8 +33,6 @@ interface BEAR_Aspect_Before_Interface
      *
      * @param array                 $values    バリュー
      * @param BEAR_Aspect_JoinPoint $joinPoint ジョインポイント
-     *
-     * @return void
      */
     public function before(array $values, BEAR_Aspect_JoinPoint $joinPoint);
 }

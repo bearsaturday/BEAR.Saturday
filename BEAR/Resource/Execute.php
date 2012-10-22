@@ -152,7 +152,6 @@ class BEAR_Resource_Execute extends BEAR_Factory
                             'info' => $info
                         )
                     );
-                    $format = 'Mock';
             }
         } else {
             $file = _BEAR_APP_HOME . '/App/Ro/' . $uri;
@@ -164,7 +163,6 @@ class BEAR_Resource_Execute extends BEAR_Factory
                     "Resource file[{$file}] is not exists.",
                     array('info' => array('uri' => $uri, 'file' => $file))
                 );
-                $format = 'Null';
             }
         }
         $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);

@@ -34,9 +34,12 @@ interface BEAR_Injector_Interface
      * 指定オブジェクトに必要なサービスを注入します。
      *
      * Inject対象のオブジェクト
-     * @param array  $config 設定
+     *
+     * @param $object
+     * @param $config
      *
      * @return void
      */
+    /** @noinspection PhpAbstractStaticMethodInspection */
     public static function inject($object, $config);
 }

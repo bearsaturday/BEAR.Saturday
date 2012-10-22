@@ -21,6 +21,7 @@
 /**
  * Base class for <input /> form elements
  */
+/** @noinspection PhpIncludeInspection */
 require_once 'HTML/QuickForm/input.php';
 
 /**
@@ -52,16 +53,13 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
     // {{{ constructor
 
     /**
-     * Class constructor
+     * Constructor
      *
-     * @param     string    Input field name attribute
-     * @param     mixed     Label(s) for a field
-     * @param     string    Text to display near the radio
-     * @param     string    Input field value
-     * @param     mixed     Either a typical HTML attribute string or an associative array
-     * @since     1.0
-     * @access    public
-     * @return    void
+     * @param null $elementName
+     * @param null $elementLabel
+     * @param null $text
+     * @param null $value
+     * @param null $attributes
      */
     function HTML_QuickForm_bradio($elementName=null, $elementLabel=null, $text=null, $value=null, $attributes=null)
     {

@@ -41,13 +41,13 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     public function __construct(array $config)
     {
         parent::__construct($config);
-        $app = BEAR::get('app');
         $this->_config['info'] = $config['info'];
         if (!extension_loaded('apc') || !(ini_get('apc.enabled')) || !function_exists('apc_sma_info')) {
             throw new BEAR_Cache_Exception('APC extention is not loaded');
         } else {
             if ($this->_config['debug']) {
                 $apcSmaInfo = apc_sma_info();
+                /** @noinspection PhpUndefinedMethodInspection */
                 BEAR::dependency('BEAR_Log')->log('APC', $apcSmaInfo);
             }
         }
@@ -86,6 +86,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
         }
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
+            /** @var $ro BEAR_Ro */
             $ro->setCode($result->code)
             ->setHeaders((array)$result->header)
             ->setBody($result->body)

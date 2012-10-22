@@ -32,7 +32,15 @@
  */
 class BEAR_Page_Ajax extends BEAR_Base
 {
+    /**
+     * @var BEAR_Log
+     */
+    protected $_log;
 
+    /**
+     * @var BEAR_Session
+     */
+    protected $_session;
     /**
      * Ajaxコマンド
      */
@@ -65,8 +73,8 @@ class BEAR_Page_Ajax extends BEAR_Base
      *
      * AJAXリクエストが不正なものでないかチェックします。
      *
+     * @throws BEAR_Exception
      * @return void
-     * @throws BEAR_Page_Exception
      */
     public function checkSecurity()
     {
@@ -165,6 +173,7 @@ class BEAR_Page_Ajax extends BEAR_Base
         case 'init' :
             foreach ($data as $div => $initValueKey) {
                 $page = BEAR::get('page');
+                /** @var $init @page BEAR_Page */
                 $init = $page->get();
                 $ajaxDivBody[$div] = $init[$initValueKey];
             }

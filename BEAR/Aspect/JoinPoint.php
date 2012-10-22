@@ -40,6 +40,7 @@ class BEAR_Aspect_JoinPoint extends BEAR_Base
      */
     public function proceed(array $values)
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         $result = $this->_config['ref']['method']->invoke($this->_config['object'], $values);
         return $result;
     }

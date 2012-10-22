@@ -47,12 +47,19 @@ interface BEAR_Query_Interface
     /**
      * インサート
      *
-     * @return mixeds
+     * @param array $values
+     * @param null  $table
+     *
+     * @return mixed
      */
     public function insert(array $values, $table = null);
 
     /**
      * アップデート
+     *
+     * @param array $values
+     * @param       $where
+     * @param null  $table
      *
      * @return mixed
      */
@@ -61,6 +68,9 @@ interface BEAR_Query_Interface
     /**
      * デリート
      *
+     * @param      $where
+     * @param null $table
+     *
      * @return mixed
      */
     public function delete($where, $table = null);
@@ -68,7 +78,10 @@ interface BEAR_Query_Interface
     /**
      * クオート
      *
-     * @return strings
+     * @param $value
+     * @param $type
+     *
+     * @return mixed
      */
     public function quote($value, $type);
 

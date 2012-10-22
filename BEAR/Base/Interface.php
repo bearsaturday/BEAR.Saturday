@@ -33,29 +33,31 @@ interface BEAR_Base_Interface
 {
 
     /**
-     * Constructor.
+     * Constructor
      *
      * $configが配列なら$_configプロパティとマージされます。
      * 文字列ならそれをファイルパスとして読み込み初期値とします。
      *
-     * @param mixed $config ユーザー設定値
-     *
-     * @return void
-     *
+     * @param array $config ユーザー設定値
      */
     public function __construct(array $config);
 
     /**
      * コンフィグセット
      *
-     * @return void
+     * @param      $config
+     * @param null $values
+     *
+     * @return mixed
      */
     public function setConfig($config, $values = null);
 
     /**
      * コンフィグ取得
      *
-     * @return void
+     * @param null $key
+     *
+     * @return mixed
      */
     public function getConfig($key = null);
 }

@@ -33,6 +33,11 @@
 final class BEAR_Cache_Adapter_Void extends BEAR_Base
 {
     /**
+     * @var BEAR_Log
+     */
+    protected $_log;
+
+    /**
      * Inject
      *
      * @return void
@@ -64,9 +69,11 @@ final class BEAR_Cache_Adapter_Void extends BEAR_Base
      *
      * @param int $life
      *
-     * @return BEAR_Cache_Adapter_None
+     * @return BEAR_Cache_Adapter_Void
      */
-    public function setLife($life = null)
+    public function setLife(
+        /** @noinspection PhpUnusedParameterInspection */
+        $life = null)
     {
         return $this;
     }

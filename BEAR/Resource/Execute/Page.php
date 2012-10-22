@@ -66,7 +66,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
     public function request()
     {
         $this->_setGetPost($this->_config['options']);
-        $pageRawPath = substr($this->_config['uri'], 7);
+        //$pageRawPath = substr($this->_config['uri'], 7);
         $url = parse_url($this->_config['uri']);
         $pageRawPath = $url['path'];
         $pageClass = 'page' . str_replace('/', '_', $pageRawPath);
@@ -86,6 +86,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             $pageConfig['enable_ua_sniffing'] = true;
         }
         $page = BEAR::factory($pageClass, $pageConfig, $pageOptions);
+        /** @var $page BEAR_Page  */
         $method = ($this->_config['method'] === 'read') ? 'onInit' : 'onAction';
         $args = array_merge($page->getArgs(), $this->_config['values']);
         $cnt = $this->_roPrototye->countStack();

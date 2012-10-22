@@ -27,8 +27,14 @@
  * @abstract
  *
  */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedClassInspection */
 abstract class BEAR_Img_Adapter extends BEAR_Base
 {
+    /**
+     * @var string
+     */
+    protected $file;
 
     /**
      * イメージリソース
@@ -67,7 +73,7 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      *
      * @var string
      */
-    public $type;
+    public $_srcType;
 
     /**
      * デストラクタで消去するファイルリスト
@@ -89,6 +95,11 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      * @var bool
      */
     protected $_result;
+
+    /**
+     * @var BEAR_Log
+     */
+    protected $_log;
 
     /**
      * Constructor.
@@ -146,16 +157,16 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
         list($width, $height, $type, $attr) = getimagesize($this->file);
         // src
         $this->_srcWidth = $width;
-        $this->srcHeight = $height;
-        $this->srcType = $type;
-        $this->srcAttr = $attr;
+        $this->_srcHeight = $height;
+        $this->_srcType = $type;
+        $this->_srcAttr = $attr;
     }
 
     /**
      * ヘッダー出力
      *
-     * @param int $format フォーマット
-     * @param int $expire expire
+     * @param mixed $format フォーマット
+     * @param int   $expire expire
      *
      * @return void
      */
@@ -164,7 +175,7 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
         if ($format) {
             $mimeType = 'image/' . strtolower($format);
         } else {
-            $mimeType = image_type_to_mime_type($this->srcType);
+            $mimeType = image_type_to_mime_type($this->_srcType);
         }
         header("Content-type: " . $mimeType);
         //        header("Content-Type: image/gif");
@@ -178,12 +189,11 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
     /**
      * 一時ファイル名を取得
      *
-     * <pre>一時画像ファイル名を生成します。
+     * 一時画像ファイル名を生成します。
      * $deleteオプションがtrueの場合、デストラクタでテンポラリーファイルは消去されます
-     * </pre>
      *
-     * @param string $file   ファイル名
-     * @param string $delete 消去
+     * @param mixed $file   ファイル名
+     * @param mixed $delete 消去
      *
      * @return string
      */
@@ -206,15 +216,17 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      */
     public function resizeMobile()
     {
-        $agent = BEAR::dependency('BEAR_Agent');
         /* @var $agent BEAR_Agent */
+        /** @noinspection PhpUndefinedMethodInspection */
         $display = BEAR::dependency('BEAR_Agent')->agentMobile->getDisplay();
+        /** @noinspection PhpUndefinedMethodInspection */
         list($width, $hight) = $display->getSize();
         if ($width == 0) {
             //サイズが取れないときはQVGA
             $width = 240;
             $hight = 320;
         }
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->resize($width, $hight, true);
     }
 
