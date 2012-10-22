@@ -61,6 +61,7 @@ class BEAR_Prof
             return;
         }
         $done = true;
+        /** @noinspection PhpUndefinedFunctionInspection */
         $xhprofData = xhprof_disable();
         $app = BEAR::get('app');
         $appName = $app['core']['info']['id'];            // アプリ名とか識別する名前

@@ -75,6 +75,7 @@ class BEAR_Bin_Bear
             ini_set('include_path', $appPath . ':' . get_include_path());
             $bearMode = $this->getBearMode($appPath);
             $_SERVER['bearmode'] = $bearMode;
+            /** @noinspection PhpIncludeInspection */
             include_once "{$appPath}/App.php";
             // CLI用ページをセット
             BEAR::set('page', new BEAR_Page_Cli(array()));
@@ -135,6 +136,7 @@ class BEAR_Bin_Bear
     public function exec()
     {
         if ($_SERVER['argc'] == 1) {
+            /** @noinspection PhpExpressionResultUnusedInspection */
             $_SERVER['argc'] == 2;
             $argv = array('bear.php', '--help');
         } else {
@@ -173,13 +175,15 @@ class BEAR_Bin_Bear
     /**
      * CLI Error handler
      *
-     * @param int    $errno
-     * @param string $errmsg
-     * @param string $file
-     * @param int    $line
-     * @param array  $vars
+     * @param $errno
+     * @param $errmsg
+     * @param $file
+     * @param $line
+     * @param $errcontext
      */
-    public static function errorHandler($errno, $errmsg, $file, $line, $errcontext) {
+    public static function errorHandler($errno, $errmsg, $file, $line,
+        /** @noinspection PhpUnusedParameterInspection */
+        $errcontext) {
         {
             if ($errno & E_DEPRECATED || $errno & E_STRICT) {
                 return;

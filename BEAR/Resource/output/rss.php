@@ -101,7 +101,11 @@
  * @ignore
  * @throws BEAR_Resource_Exception
  */
-function outputRss($values, array $options)
+function outputRss(
+    /** @noinspection PhpUnusedParameterInspection */
+    $values,
+    /** @noinspection PhpUnusedParameterInspection */
+    array $options)
 {
     throw new BEAR_Resource_Exception('not implement yet');
 }

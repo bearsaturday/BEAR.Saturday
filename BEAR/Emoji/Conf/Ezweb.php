@@ -17,6 +17,7 @@
  * スタティック絵文字データ for Ezweb
  */
 
+/** @noinspection PhpDuplicateArrayKeysInspection */
 $emojiChars = array (
 'SUN' => '&#63072;',
 'CLOUD' => '&#63077;',

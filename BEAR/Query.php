@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * BEAR
  *
@@ -148,8 +148,11 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      * @param string $query  SQL
      * @param array  $params プリペアードステートメントにする場合にバインドする変数
      * @param array  $values where条件配列
+     * @param string $id
+     *
      * @return BEAR_Ro
      */
+
     public function select($query, array $params = array(), array $values = null, $id = 'id')
     {
         assert(is_object($this->_config['db']));
@@ -235,7 +238,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $pager->setPagerLinks($links, $info);
         $pager = array('links' => $links, 'info' => $info);
         $ro->setLinks(array('pager' => $pager));
-        $log = BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
+        BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
         return $ro;
     }
 
@@ -318,7 +321,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         if (stripos($sql, 'ORDER BY') !== false) {
             return $sql;
         }
-        $orderKeys = $orders = array();
+        $orders = array();
         $get = $this->_sortGetQuery();
         foreach ($this->_config['sort'] as $item) {
             assert(count($item) === 3);
@@ -366,7 +369,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * インサート
      *
-     * @return mixeds
+     * @param array $values
+     * @param null  $table
+     *
+     * @return mixed
      */
     public function insert(array $values, $table = null)
     {
@@ -378,6 +384,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
 
     /**
      * アップデート
+     *
+     * @param array $values
+     * @param       $where
+     * @param null  $table
      *
      * @return mixed
      */
@@ -392,6 +402,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * デリート
      *
+     * @param      $where
+     * @param null $table
+     *
      * @return mixed
      */
     public function delete($where, $table = null)
@@ -405,7 +418,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * クオート
      *
-     * @return strings
+     * @param $value
+     * @param $type
+     *
+     * @return mixed
      */
     public function quote($value, $type)
     {

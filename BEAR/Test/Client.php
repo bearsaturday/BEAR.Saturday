@@ -37,12 +37,12 @@ class BEAR_Test_Client extends HTTP_Request2
     public $request;
 
     /**
-     * Http responce
+     * Http response
      *
      * @var HTTP_Request2_Response
      * @see http://pear.php.net/manual/en/package.http.http-request2.intro.php
      */
-    public $reqponce;
+    public $response;
 
     /**
      * Http request

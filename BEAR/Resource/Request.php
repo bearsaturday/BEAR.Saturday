@@ -124,8 +124,8 @@ class BEAR_Resource_Request extends BEAR_Base
                 $ro = BEAR::factory('BEAR_Ro');
                 $ro->setBody($body);
             }
-            $request = ("{$this->_config['method']} {$uri}") .
-            ($values ? '?' . http_build_query($values) : '');
+//            $request = ("{$this->_config['method']} {$uri}") .
+//            ($values ? '?' . http_build_query($values) : '');
             self::_actionPostProcess($ro);
         } catch(Exception $e) {
             if (get_class($e) === 'Panda_Exception') {
@@ -149,8 +149,10 @@ class BEAR_Resource_Request extends BEAR_Base
             $refTrace =& $trace;
             $trace = array_shift($refTrace);
             if (isset($trace['args'])) {
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 $args = $trace['args'];
             } else {
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 $args = '';
             }
             $headers = array();
@@ -190,6 +192,7 @@ class BEAR_Resource_Request extends BEAR_Base
     private function _actionPostProcess(BEAR_Ro &$ro)
     {
         $body = $ro->getBody();
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $Info = array();
         $info['totalItems'] = count($body);
         $options = $this->_config['options'];
@@ -254,7 +257,7 @@ class BEAR_Resource_Request extends BEAR_Base
      */
     private function _mergeQuery(&$uri, array &$values = array())
     {
-        $newUri = $newValues = null;
+        $newValues = null;
         $parse = parse_url($uri);
         $query = isset($parse['query']) ? $parse['query'] : '';
         parse_str($query, $parsedValues);

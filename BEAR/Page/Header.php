@@ -31,6 +31,11 @@
 class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
 {
     /**
+     * @var BEAR_Log
+     */
+    protected $_log;
+
+    /**
      * HTTP出力ヘッダー
      *
      * @var array

@@ -42,7 +42,6 @@ class BEAR_Util
     public static function getFilesList($path)
     {
         static $_files = array();
-        $files = 0;
         $dir = opendir($path);
         while (($file = readdir($dir)) !== false) {
             if ($file[0] == '.') {
@@ -128,7 +127,11 @@ class BEAR_Util
      *
      * @throws BEAR_Exception 必須項目が足りない場合の例外
      */
-    public static function required(array $required, $values, $msg = '', $code = BEAR::CODE_BAD_REQUEST)
+    public static function required(array $required, $values,
+        /** @noinspection PhpUnusedParameterInspection */
+        $msg = '',
+        /** @noinspection PhpUnusedParameterInspection */
+        $code = BEAR::CODE_BAD_REQUEST)
     {
         if (count(array_intersect($required, array_keys($values))) != count($required)) {
             $info = array('required' => $required, 'values' => $values);

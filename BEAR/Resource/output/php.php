@@ -22,7 +22,9 @@
  *
  * @return BEAR_Ro
  */
-function outputPhp($values, array $options)
+function outputPhp($values,
+    /** @noinspection PhpUnusedParameterInspection */
+    array $options)
 {
     $body = serialize($values);
     $headers = array('X-BEAR-Output: PHP' => 'Content-Type: text/html; charset=utf-8');

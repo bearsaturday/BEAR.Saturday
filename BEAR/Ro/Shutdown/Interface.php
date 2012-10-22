@@ -47,12 +47,11 @@ interface BEAR_Ro_Shutdown_Interface
     /**
      * shutdown登録される関数
      *
-     * <pre>
      * このメソッドをregister_shutdown_functionしておくと
      * shutdown時にrequest()メソッドがコールされます。
-     * </pre>
      *
      * @return void
      */
+    /** @noinspection PhpAbstractStaticMethodInspection */
     public static function onShutdown();
 }

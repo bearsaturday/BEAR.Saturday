@@ -54,7 +54,9 @@
  *
  * @return string
  */
-function smarty_block_agent($params, $content, &$smarty, &$repeat)
+function smarty_block_agent($params, $content,
+    /** @noinspection PhpUnusedParameterInspection */
+    &$smarty, &$repeat)
 {
     $ua = strtolower(BEAR::dependency('BEAR_Agent')->getUa());
     //開始タグ

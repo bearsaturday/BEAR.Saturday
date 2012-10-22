@@ -22,7 +22,11 @@
  *
  * @return BEAR_Ro
  */
-function outputAjax($values, array $options)
+function outputAjax(
+    /** @noinspection PhpUnusedParameterInspection */
+    $values,
+    /** @noinspection PhpUnusedParameterInspection */
+    array $options)
 {
     $ajax = BEAR::get('BEAR_Page_Ajax');
     $values = $ajax->getAjaxValues();

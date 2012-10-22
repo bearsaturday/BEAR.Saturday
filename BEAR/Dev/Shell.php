@@ -504,22 +504,6 @@ class BEAR_Dev_Shell extends BEAR_Base
         $isList = isset($data[0]) && is_array(array_keys($data[0]));
         return $isList;
     }
-
-    /**
-     * print_r文字列の取得
-     *
-     * @param string $str 文字列
-     *
-     * @return string
-     */
-    private function _getVarDump($str)
-    {
-        ob_start();
-        var_dump($str);
-        $result = ob_get_clean();
-        return $result;
-    }
-
     /**
      * var_export文字列の取得
      *
@@ -626,7 +610,6 @@ class BEAR_Dev_Shell extends BEAR_Base
         $bearPath = _BEAR_BEAR_HOME;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             throw Exception("Windows is not supported for init-app, copy data/app instaed.\n");
-            exit();
         }
         $config = new PEAR_Config($pearc);
         $pearPath = $config->get('php_dir');

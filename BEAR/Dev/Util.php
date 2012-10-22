@@ -42,11 +42,12 @@ class BEAR_Dev_Util
      * <li>緑 noticeも出てない</li>
      * </url>
      *
-     * @return string
+     * @param $html
+     *
+     * @return mixed
      */
     public static function onOutpuHtmlDebug($html)
     {
-        $ua = BEAR::dependency('BEAR_Agent')->getUa();
         $hasResource = BEAR::factory('BEAR_Ro_Debug')->hasResourceDebug();
         $app = BEAR::get('app');
         if (!$app['core']['debug']) {

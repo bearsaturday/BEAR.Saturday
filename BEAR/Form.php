@@ -163,12 +163,18 @@ class BEAR_Form extends BEAR_Factory
      */
     public static $method = 'post';
 
+
+    /**
+     * @var BEAR_Log
+     */
+    protected $_log;
     /**
      * 使用済みトークン
      *
      * @var array
      */
-    private static $_usedToken = array();
+    private static /** @noinspection PhpUnusedPrivateFieldInspection */
+        $_usedToken = array();
 
     /**
      * シングルトンインスタンス
@@ -182,7 +188,8 @@ class BEAR_Form extends BEAR_Factory
      *
      * @var callable
      */
-    private static $_rendererCallback = null;
+    private static /** @noinspection PhpUnusedPrivateFieldInspection */
+        $_rendererCallback = null;
 
 
     /**
@@ -326,20 +333,20 @@ class BEAR_Form extends BEAR_Factory
         return self::$_renderer;
     }
 
-    /**
-     * セッショントークンの取得
-     *
-     * セッション開始時につくられるトークンを取得します
-     *
-     * @return string
-     * @static
-     */
-    public static function getSessionToken()
-    {
-        $session = BEAR::dependency('BEAR_Session');
-        $result = $session->get(BEAR_Session::SESSION_TOKEN);
-        return $result;
-    }
+//    /**
+//     * セッショントークンの取得
+//     *
+//     * セッション開始時につくられるトークンを取得します
+//     *
+//     * @return string
+//     * @static
+//     */
+//    public static function getSessionToken()
+//    {
+//        $session = BEAR::dependency('BEAR_Session');
+//        $result = $session->get(BEAR_Session::SESSION_TOKEN);
+//        return $result;
+//    }
 
     /**
      * Add submit header

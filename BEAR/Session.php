@@ -60,6 +60,10 @@ class BEAR_Session extends BEAR_Base
     const ADAPTER_MEMCACHE = 3;
 
     /**
+     * @var BEAR_Log
+     */
+    protected $_log;
+    /**
      * Constructor
      *
      * @param array $config

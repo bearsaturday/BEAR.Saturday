@@ -248,7 +248,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      *
      * @return array
      */
-    public function onLink($values)
+    public function onLink(
+        /** @noinspection PhpUnusedParameterInspection */
+        $values)
     {
         return array();
     }
@@ -264,10 +266,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * </pre>
      *
      * @param bool  $bool 条件
-     * @param array $msg  エラー例外のinfo
+     * @param string $msg  エラー例外のinfo
      *
      * @return void
-     * @throws BEAR_Ro_Exception
+     * @throws Exception
      */
     public function assert($bool, $msg = 'Bad Resource Request (assert)')
     {
@@ -336,7 +338,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     /**
      * リソースヘッダーの取得
      *
-     * @return array
+     * @param $headerKey
+     *
+     * @return null
      */
     public function getHeader($headerKey)
     {
@@ -373,6 +377,8 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
 
     /**
      * リソースHTMLの指定
+     *
+     * @param $html
      *
      * @return BEAR_Ro
      */
@@ -529,7 +535,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     /**
      * 関数としての振る舞い
      *
-     * @return BEAR_Ro
+     * @param array $values
+     *
+     * @return mixed
      */
     public function __invoke(array $values)
     {
@@ -794,7 +802,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     /**
      * コンフィグ取得
      *
-     * @return array
+     * @param null $key
+     *
+     * @return array|mixed
      */
     public function getConfig($key = null)
     {

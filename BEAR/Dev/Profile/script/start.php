@@ -19,6 +19,8 @@ if (function_exists('xhprof_enable')) {
     include_once 'BEAR/vendors/xhprof_lib/utils/xhprof_lib.php';
     include_once 'BEAR/vendors/xhprof_lib/utils/xhprof_runs.php';
     include_once 'BEAR/Dev/Profile.php';
+    /** @noinspection PhpUndefinedConstantInspection */
+    /** @noinspection PhpUndefinedConstantInspection */
     xhprof_enable(XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
     //xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
     register_shutdown_function(array('BEAR_Dev_Profile', 'stop'), BEAR_Dev_Profile::XHPROF);

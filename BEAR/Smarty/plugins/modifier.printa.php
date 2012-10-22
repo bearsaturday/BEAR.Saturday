@@ -37,11 +37,12 @@
 
  * @param string $string 文字列
  *
- * @return $string
+ * @return string
  */
 function smarty_modifier_printa($string)
 {
     if (!function_exists('print_a')) {
+        /** @noinspection PhpIncludeInspection */
         include 'BEAR/vendors/debuglib.php';
     }
     $string = print_a($string, "return:true");

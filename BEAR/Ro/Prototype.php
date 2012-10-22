@@ -179,8 +179,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * リクエストにテンプレートオプションが指定されているとHTML等文字列化してRoに保持します。
      *
-     * @return void
      * @todo リソースボディのキャッシュはUA共通に
+     * @param $isLinked
      */
     protected function _setHtml($isLinked)
     {
@@ -304,7 +304,9 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * リソースリクエストを行いその結果のボディを返します。
      *
-     * @return mixed
+     * @param bool $link
+     *
+     * @return array|mixed
      */
     public function getBody($link = false)
     {
@@ -323,7 +325,9 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * リソースリクエストを行いその結果のヘッダーを返します。
      *
-     * @return array
+     * @param $headerKey
+     *
+     * @return null
      */
     public function getHeader($headerKey)
     {
@@ -424,7 +428,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         if ($this->hasChainLink()) {
             $linkBody = $this->getLinkedBody();
         } else {
-            $body = $this->getBody();
+            //$body = $this->getBody();
         }
         $headers = $this->_ro->getHeaders();
         $request = $headers['_request'];

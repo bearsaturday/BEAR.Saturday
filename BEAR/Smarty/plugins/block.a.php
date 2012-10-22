@@ -57,7 +57,9 @@
  *
  * @return string
  */
-function smarty_block_a($params, $content, &$smarty, &$repeat)
+function smarty_block_a($params, $content,
+    /** @noinspection PhpUnusedParameterInspection */
+    &$smarty, &$repeat)
 {
     if ($repeat || !$content) {
         return '';
@@ -77,6 +79,7 @@ function smarty_block_a($params, $content, &$smarty, &$repeat)
     $params['href'] = $href . '?' . http_build_query($values);
     unset($params['val']);
     $result = '';
+    /** @noinspection PhpWrongForeachArgumentTypeInspection */
     foreach ($params as $key => $value) {
         $result .= ' ' . $key . '="' . $value . '"';
     }

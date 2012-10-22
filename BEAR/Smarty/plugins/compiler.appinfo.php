@@ -35,7 +35,9 @@
  *
  * @return string
  */
-function smarty_compiler_appinfo($tagArg, &$smarty)
+function smarty_compiler_appinfo($tagArg,
+    /** @noinspection PhpUnusedParameterInspection */
+    &$smarty)
 {
     static $app = array();
 

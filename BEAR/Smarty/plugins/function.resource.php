@@ -39,7 +39,9 @@
  *
  * @return mixed $resource
  */
-function smarty_function_resource($params, &$smarty )
+function smarty_function_resource($params,
+    /** @noinspection PhpUnusedParameterInspection */
+    &$smarty )
 {
     
     $config = (array)BEAR::loadValues($params['params']) +

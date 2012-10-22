@@ -120,7 +120,7 @@ class BEAR_Img extends BEAR_Factory
         }
         foreach (self::$deleteFiles as $deleteFile) {
             if (is_string($deleteFile)) {
-                $result = unlink($deleteFile);
+                unlink($deleteFile);
             }
         }
     }
@@ -200,9 +200,7 @@ class BEAR_Img extends BEAR_Factory
     }
 
     /**
-     * changeAdapterのエイリアス
-     *
-     * @return void
+     * @param $adapter
      * @deprecated
      */
     public static function changeInstance($adapter)

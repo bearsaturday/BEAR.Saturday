@@ -51,6 +51,16 @@ class BEAR_Main extends BEAR_Base
 {
 
     /**
+     * @var BEAR_Log
+     */
+    protected $_log;
+
+    /**
+     * @var
+     */
+    protected $_agent;
+
+    /**
      * runできる
      *
      * @var bool
@@ -63,15 +73,6 @@ class BEAR_Main extends BEAR_Base
      * @var BEAR_Page
      */
     private $_page = null;
-
-    /**
-     * ページ引数
-     *
-     * ページの$_GETや$_COOKIE,CLIの引数。
-     *
-     * @var array
-     */
-    private $_args = array();
 
     /**
      * サブミット値
@@ -120,7 +121,7 @@ class BEAR_Main extends BEAR_Base
         $this->_page = BEAR::factory($this->_config['page_class'], $config, $options);
         BEAR::set('page', $this->_page);
         $this->_log = BEAR::dependency('BEAR_Log');
-        $this->_roPrototype = BEAR::dependency('BEAR_Ro_Prototype');
+        //$this->_roPrototype = BEAR::dependency('BEAR_Ro_Prototype');
     }
 
     /**
@@ -187,7 +188,7 @@ class BEAR_Main extends BEAR_Base
      *
      * ページを実行します。
      *
-     * @return void
+     * @param $pageClass
      */
     protected function _run($pageClass)
     {
@@ -368,8 +369,9 @@ class BEAR_Main extends BEAR_Base
      *
      * ヘッダーとコンテンツを出力して終了します。
      *
-     * @return void
-     * @throws BEAR_Main_Exception
+     * @param null $initCache
+     *
+     * @throws BEAR_Exception
      */
     public function end($initCache = null)
     {
@@ -545,29 +547,29 @@ class BEAR_Main extends BEAR_Base
         $this->end();
     }
 
-    /**
-     * AJAXフォームでバリデーションOK
-     *
-     * フォームエレメント名をJSONで返す
-     *
-     * @param object $form フォームオブジェクト
-     *
-     * @return void
-     * @ignore
-     */
-    private function _ajaxValidationOk($form)
-    {
-        // ルール
-        foreach ($form->_rules as $key => $value) {
-            $ruleKeys[] = $key;
-        }
-        BEAR_Page::$formElement = array(
-            'quickform' => array(
-                'form_id' => $form->_attributes['id'],
-                'rules' => $ruleKeys
-            )
-        );
-    }
+//    /**
+//     * AJAXフォームでバリデーションOK
+//     *
+//     * フォームエレメント名をJSONで返す
+//     *
+//     * @param object $form フォームオブジェクト
+//     *
+//     * @return void
+//     * @ignore
+//     */
+//    private function _ajaxValidationOk($form)
+//    {
+//        // ルール
+//        foreach ($form->_rules as $key => $value) {
+//            $ruleKeys[] = $key;
+//        }
+//        BEAR_Page::$formElement = array(
+//            'quickform' => array(
+//                'form_id' => $form->_attributes['id'],
+//                'rules' => $ruleKeys
+//            )
+//        );
+//    }
 
     /**
      * エラーの出力フォーマット(CLI or rich HTML)
@@ -600,6 +602,7 @@ class BEAR_Main extends BEAR_Base
         if (!file_exists($fullPathPageFile)) {
             throw new BEAR_Main_Exception('Page file is not exit', array('info' => array('file' => $fullPathPageFile)));
         }
+        /** @noinspection PhpIncludeInspection */
         include_once $fullPathPageFile;
         self::$_isRunnable = true;
     }

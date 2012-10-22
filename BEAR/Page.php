@@ -106,12 +106,12 @@ abstract class BEAR_Page extends BEAR_Base
      */
     private $_onClick = null;
 
-    /**
-     * 文字コード変換の場合のモバイルの文字コード
-     *
-     * @var string
-     */
-    private $_codeFromMoble;
+//    /**
+//     * 文字コード変換の場合のモバイルの文字コード
+//     *
+//     * @var string
+//     */
+//    private $_codeFromMoble;
 
     /**
      *  ページにセットされたバリュー
@@ -134,28 +134,28 @@ abstract class BEAR_Page extends BEAR_Base
      */
     protected $_pageRo = array();
 
-    /**
-     * ページキャッシュ
-     *
-     * @var string
-     */
-    private $_cache = array('use_cache' => false, 'headers' => null, 'html' => null);
+//    /**
+//     * ページキャッシュ
+//     *
+//     * @var string
+//     */
+//    private $_cache = array('use_cache' => false, 'headers' => null, 'html' => null);
 
-    /**
-     * AJAXコマンドデータ
-     *
-     * @var array
-     */
-    private $_ajax = array();
+//    /**
+//     * AJAXコマンドデータ
+//     *
+//     * @var array
+//     */
+//    private $_ajax = array();
 
-    /**
-     * charset
-     *
-     * マルチエージェントの場合のcharset
-     *
-     * @var string
-     */
-    private static $_charset = null;
+//    /**
+//     * charset
+//     *
+//     * マルチエージェントの場合のcharset
+//     *
+//     * @var string
+//     */
+//    private static $_charset = null;
 
     /**
      * クリックをゲット
@@ -195,12 +195,12 @@ abstract class BEAR_Page extends BEAR_Base
      */
     protected $_view = 'view';
 
-    /**
-     * ページリソースモード
-     *
-     * @var bool
-     */
-    private static $_isResourceMode = false;
+//    /**
+//     * ページリソースモード
+//     *
+//     * @var bool
+//     */
+//    private static $_isResourceMode = false;
 
     /**
      * クリックをセット
@@ -412,8 +412,6 @@ abstract class BEAR_Page extends BEAR_Base
      * @param string $key 変数キー
      *
      * @return mixed
-     *
-     * @deprecated
      */
     public function get($key = null)
     {
@@ -484,11 +482,12 @@ abstract class BEAR_Page extends BEAR_Base
         } else {
             $isValid = false;
         }
+        /** @noinspection PhpIncludeInspection */
         include_once $formatFile;
         if (!$isValid || !function_exists('output' . $format)) {
             $info = array('format' => $format);
             $msg = 'Output format is unavailable.（アウトプットフォーマットが利用できません)';
-            throw $this->_exception('Invalid output format', array('info' => $info));
+            throw $this->_exception($msg, array('info' => $info));
         }
         $ro = call_user_func('output' . $format, $this->_values, $options);
         $this->_outputHttp($ro);
@@ -686,18 +685,16 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function setPrototypeRo()
     {
-        static $_registerResourceOnShutdown = false;
         // initでsetされたroをバリューに
         $stackedRos = BEAR::dependency('BEAR_Ro_Prototype')->popAll();
         foreach ($stackedRos as $item) {
             list($key, $prototypeRo) = each($item);
             /* @var $prototypeRo BEAR_Ro_Prototype */
             $setOption = $prototypeRo->getSetOption();
-            $config = $prototypeRo->getConfig();
-            $options = $config['request']['options'];
             switch ($setOption) {
                 case 'ajax':
                     $prototypeRo->setConfig('is_ajax_set', true);
+                    break;
                 case 'lazy':
                     $this->set($key, $prototypeRo);
                     break;

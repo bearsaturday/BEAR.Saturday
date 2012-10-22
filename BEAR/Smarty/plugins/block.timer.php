@@ -49,7 +49,11 @@
  * @see http://jp2.php.net/manual/ja/function.strtotime.php strtotime
  * @see http://www.gnu.org/software/tar/manual/html_node/Date-input-formats.html Date-input-formats
  */
-function smarty_block_timer($params, $content, &$smarty, &$repeat)
+function smarty_block_timer($params, $content,
+    /** @noinspection PhpUnusedParameterInspection */
+    &$smarty,
+    /** @noinspection PhpUnusedParameterInspection */
+    &$repeat)
 {
     $from = (strtotime($params['from']));
     $to = (strtotime($params['to']));

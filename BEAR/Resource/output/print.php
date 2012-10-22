@@ -22,7 +22,9 @@
  *
  * @return BEAR_Ro
  */
-function outputPrint($values, array $options)
+function outputPrint($values,
+    /** @noinspection PhpUnusedParameterInspection */
+    array $options)
 {
     $body = print_a($values, 'return:1');
     $headers = array('X-BEAR-Output: PRINT' => 'Content-Type: text/html; charset=utf-8');

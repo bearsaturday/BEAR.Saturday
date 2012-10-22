@@ -157,6 +157,7 @@ class BEAR_Log extends BEAR_Base
         $log = sqlite_escape_string(serialize($log));
         $sql = "INSERT INTO pagelog(log) VALUES('{$log}')";
         $db->queryExec($sql);
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $id = $db->lastInsertRowid();
         $ob = ob_get_clean();
         $ob = str_replace('@@@log_id@@@', $id, $ob);
@@ -193,7 +194,9 @@ ____SQL;
     /**
      * Get page log
      *
-     * @param array $get $_GET
+     * @param array $get
+     *
+     * @return array|mixed|string
      */
     public function getPageLog(array $get)
     {
@@ -207,8 +210,10 @@ ____SQL;
         if (isset($get['id'])) {
             //    $rowid = sqlite
             $rowid = sqlite_escape_string($get['id']);
+            /** @noinspection PhpVoidFunctionResultUsedInspection */
             $result = $db->query("SELECT log FROM pagelog WHERE rowid = {$rowid}");
         } else {
+            /** @noinspection PhpVoidFunctionResultUsedInspection */
             $result = $db->query("SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1");
         }
         if ($result === false) {
@@ -222,7 +227,6 @@ ____SQL;
     /**
      * スクリプトシャットダウン時のログ処理
      *
-     * <pre>
      * アプリケーションログ、smartyアサインログ、グローバル変数ログ、
      * リクエストURIをシリアライズしてファイル保存します。
      * デバックモードの時のみ使用します。
@@ -230,11 +234,11 @@ ____SQL;
      * シャットダウン時実行のメソッドとしてフレームワーク内で登録され、
      * スクリプト終了時に実行されます。
      * フレームワーク内で使用されます。
-     * </pre>
      *
-     * @return void
-     * @ignore
-     * @throws BEAR_Log_Exception
+     * @param bool $return
+     *
+     * @return array
+     * @throws Exception
      */
     public function shutdownDebug($return = true)
     {
@@ -305,24 +309,24 @@ ____SQL;
         }
     }
 
-    /**
-     * AJAX終了処理
-     *
-     * ajax.logをlogフォルダに作成する
-     *
-     * @return void
-     */
-    private function _onShutdownDebugAjax()
-    {
-        $ajaxLogPath = _BEAR_APP_HOME . '/logs/ajax.log';
-        $ajaxLog = file_exists($ajaxLogPath) ? BEAR_Util::unserialize(file_get_contents($ajaxLogPath)) : null;
-        $log = array('page' => $this->_logs, 'uri' => $_SERVER['REQUEST_URI']);
-        $ajaxLog[] = $log;
-        if (count($ajaxLog) > 5) {
-            array_shift($ajaxLog);
-        }
-        file_put_contents(_BEAR_APP_HOME . '/logs/ajax.log', serialize($ajaxLog));
-    }
+//    /**
+//     * AJAX終了処理
+//     *
+//     * ajax.logをlogフォルダに作成する
+//     *
+//     * @return void
+//     */
+//    private function _onShutdownDebugAjax()
+//    {
+//        $ajaxLogPath = _BEAR_APP_HOME . '/logs/ajax.log';
+//        $ajaxLog = file_exists($ajaxLogPath) ? BEAR_Util::unserialize(file_get_contents($ajaxLogPath)) : null;
+//        $log = array('page' => $this->_logs, 'uri' => $_SERVER['REQUEST_URI']);
+//        $ajaxLog[] = $log;
+//        if (count($ajaxLog) > 5) {
+//            array_shift($ajaxLog);
+//        }
+//        file_put_contents(_BEAR_APP_HOME . '/logs/ajax.log', serialize($ajaxLog));
+//    }
 
     /**
      * ログを記録開始

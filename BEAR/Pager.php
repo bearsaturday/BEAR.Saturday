@@ -304,6 +304,7 @@ class BEAR_Pager extends BEAR_Base
             case array(true, true):
                 $links['all'] = "{$back} | {$next}";
                 $links['all'] = "{$back} <font color=gray>$current/$total</font> {$next}";
+                break;
             default:
                 // middle
                 break;

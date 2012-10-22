@@ -22,7 +22,9 @@
  *
  * @return BEAR_Ro
  */
-function outputJson($values, array $options)
+function outputJson($values,
+    /** @noinspection PhpUnusedParameterInspection */
+    array $options)
 {
     $body = json_encode($values);
     $headers = array('X-BEAR-Output: JSON' => 'Content-Type: text/javascript+json; charset=utf-8');

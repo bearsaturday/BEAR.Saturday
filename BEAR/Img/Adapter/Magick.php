@@ -141,13 +141,12 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     /**
      * ヘッダーを出力
      *
-     * <pre>
      * イメージリソースの内容をみてHTTPヘッダーを出力します。
      * 他の画像タイプと違い画像タイプを出力する必要がありません
      * imagick_getmimetypeを使用
-     * </pre>
      *
-     * @return void
+     * @param null $format
+     * @param null $expire
      */
     public function header($format = null, $expire = null)
     {
@@ -256,9 +255,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      * 指定のパスに画像を保存します。
      *
      * @param string $filePath 保存画像のファイルパス
-     * @param string $format   フォーマット
-     *
-     * @return void
+     * @param mixed $format   フォーマット
      */
     public function save($filePath, $format = false)
     {
@@ -283,7 +280,11 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     private function _thisError($func, $msg = null)
     {
         //エラーヘッダー
+        /** @noinspection PhpUndefinedFunctionInspection */
+        /** @noinspection PhpUndefinedFunctionInspection */
         $reason = (is_resource($this->image)) ? imagick_failedreason($this->image) : "no image resource";
+        /** @noinspection PhpUndefinedFunctionInspection */
+        /** @noinspection PhpUndefinedFunctionInspection */
         $description = (is_resource($this->image)) ? imagick_faileddescription($this->image) : "no image resource";
         $isResource = (is_resource($this->image)) ? 'true' : 'false';
         $msg .= 'iMagcik Error:' . $msg;
