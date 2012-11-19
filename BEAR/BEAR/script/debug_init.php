@@ -14,8 +14,11 @@
  */
 
 require_once 'Panda.php';
-require_once 'FirePHPCore/FirePHP.class.php';
-require_once 'FirePHPCore/fb.php';
+
+if ($appConfig['Panda']['firephp'] === true) {
+    require_once 'FirePHPCore/FirePHP.class.php';
+    require_once 'FirePHPCore/fb.php';
+}
 
 // シャットダウン関数登録
 if (isset($_SERVER) && isset($_SERVER['REQUEST_URI'])
