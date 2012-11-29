@@ -48,6 +48,7 @@ BEAR_Agent:
 
 BEAR_Agent_Adapter_Apple:
   content_type: 'application/xhtml+xml'
+
 BEAR_View:
   adapter: 'BEAR_View_Adapter_Smarty'
   ua_sniffing: false
@@ -65,7 +66,7 @@ App_Main:
   # UAコード
   ua: 'Default'
   # インジェクター
-  injector: 'onInject'
+  __injector: 'onInject'
   # Page::onShutdown()有効化
   enable_onshutdown: false
   
