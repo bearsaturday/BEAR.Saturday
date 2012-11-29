@@ -143,7 +143,8 @@ class BEAR_Session extends BEAR_Base
             'Session Start',
             array(
                 'id' => session_id(),
-                'module' => session_module_name() . '/' . $this->_config['adapter']
+                'module' => session_module_name() . '/' . $this->_config['adapter'],
+                'gc_maxlifetime' => ini_get('session.gc_maxlifetime')
             )
         );
     }
