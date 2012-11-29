@@ -146,8 +146,9 @@ class BEAR_Ro_Debug extends BEAR_Base
      */
     public function debugShowResource(BEAR_Ro $ro)
     {
+        $app = BEAR::get('app');
         $config = $ro->getConfig();
-        if (!isset($config['method'])) {
+        if (!isset($config['method']) || !function_exists('FB')) {
             return;
         }
         $labelUri = "[resource] {$config['method']} {$config['uri']}";
