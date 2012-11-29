@@ -49,21 +49,23 @@ interface BEAR_Query_Interface
      *
      * @param array $values
      * @param null  $table
+     * @param null  $types
      *
-     * @return mixed
+     * @return mixed|mixeds
      */
-    public function insert(array $values, $table = null);
+    public function insert(array $values, $table = null, $types = null);
 
     /**
      * アップデート
      *
-     * @param array $values
-     * @param       $where
-     * @param null  $table
+     * @param array  $values
+     * @param string $where
+     * @param null   $table
+     * @param null   $types
      *
      * @return mixed
      */
-    public function update(array $values, $where, $table = null);
+     public function update(array $values, $where, $table, $types = null);
 
     /**
      * デリート

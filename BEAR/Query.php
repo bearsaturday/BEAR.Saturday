@@ -157,7 +157,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
-        $db = &$this->_config['db'];
+        $db = & $this->_config['db'];
         $ro = $this->_config['ro'];
         // Row取得
         if (!is_null($values)) {
@@ -334,7 +334,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         // 文字列作成
         $arr = array();
         foreach ($orders as $column => &$dir) {
-            $db = &$this->_config['db'];
+            $db = & $this->_config['db'];
             $arr[] = $db->quoteIdentifier($column) . ' ' . (($dir === '-') ? 'DESC' : 'ASC');
         }
         $orderBy = ' ORDER BY ' . implode(', ', $arr);
@@ -370,31 +370,35 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @param array $values
      * @param null  $table
+     * @param null  $types
      *
-     * @return mixed
+     * @return mixed|mixeds
      */
-    public function insert(array $values, $table = null)
+    public function insert(array $values, $table = null, $types = null)
     {
-        $db = &$this->_config['db'];
+        $db = & $this->_config['db'];
         $table = $table ? $table : $this->_config['table'];
-        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_INSERT);
+        $types = $types ? $types : $this->_config['types'];
+        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_INSERT, false, $types);
         return $affectedRow;
     }
 
     /**
      * アップデート
      *
-     * @param array $values
-     * @param       $where
-     * @param null  $table
+     * @param array  $values
+     * @param string $where
+     * @param null   $table
+     * @param null   $types
      *
      * @return mixed
      */
-    public function update(array $values, $where, $table = null)
+    public function update(array $values, $where, $table, $types = null)
     {
-        $db = &$this->_config['db'];
+        $db = & $this->_config['db'];
         $table = $table ? $table : $this->_config['table'];
-        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_UPDATE, $where);
+        $types = $types ? $types : $this->_config['types'];
+        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_UPDATE, $where, $types);
         return $affectedRow;
     }
 
@@ -408,7 +412,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      */
     public function delete($where, $table = null)
     {
-        $db = &$this->_config['db'];
+        $db = & $this->_config['db'];
         $table = $table ? $table : $this->_config['table'];
         $affectedRow = $db->extended->autoExecute($table, null, MDB2_AUTOQUERY_DELETE, $where);
         return $affectedRow;
