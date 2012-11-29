@@ -33,7 +33,6 @@ php_value session.name _s
 php_value session.use_trans_sid 1
 php_value session.use_only_cookies 0
 php_value session.auto_start 0
-php_value session.gc_maxlifetime 2440
 php_value session.cookie_lifetime 0
 php_value session.gc_probability 1
 php_value session.gc_divisor 100
