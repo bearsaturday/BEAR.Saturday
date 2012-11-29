@@ -58,6 +58,7 @@ BEAR_Resource_Request:
   csrf: false
 
 Panda:
+  firephp: true
   http_tpl: 'App/views/pages/_panda/http.php'
 
 App_Main:
