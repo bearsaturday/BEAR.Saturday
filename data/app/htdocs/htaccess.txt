@@ -2,7 +2,7 @@
 # <Change Here>
 # 0:Live >1:Debug
 SetEnv bearmode 1
-php_value include_path "@APP-DIR@:@VENDORS-PEAR-DIR@:@PEAR-DIR@:."
+php_value include_path "@APP-DIR@:@PEAR-DIR@:@VENDORS-PEAR-DIR@:."
 # </Change Here>
 
 # BEAR
