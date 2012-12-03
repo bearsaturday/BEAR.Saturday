@@ -20,13 +20,17 @@ BEAR_Session:
   # path: dsn | session file path | memcache host(s)
   path: '/tmp/sess'
   #int アイドル時間
-  idle  : 3600
+  idle  : 10800
   #callback タイムアウトコールバックページメソッド
-  #callback: 'onSessionTimeout'
+  #callback:
+  #- App_Session
+  #- onSessionTimeout
   #int エクスパイア時間
-  expire: 60
+  expire: 10800
   #int expire_callback
-  #expire_callback: 'onSessionExpire'
+  #expire_callback:
+  #- App_Session
+  #- onSessionTimeout
   #GC時間 (86400 = 24h)
   gc_max_lifetime: 86400
 
