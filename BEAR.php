@@ -284,7 +284,6 @@ class BEAR
                 $msg .= $root->getMessage();
                 $info = array('parse' => $parse, 'input' => $target);
                 throw new BEAR_Exception($msg, compact('info'));
-                return false;
             } else {
                 $result = $root->toArray();
                 return $result['root'];
@@ -295,9 +294,10 @@ class BEAR
     /**
      * コンフィグファイル読み込み
      *
-     * @param string $target YAMLアプリケーション設定ファイルpath
+     * @param      $target YAMLアプリケーション設定ファイルpath
+     * @param bool $useApc
      *
-     * @return array
+     * @return array|mixed
      */
     public static function loadConfig($target, $useApc = false)
     {
