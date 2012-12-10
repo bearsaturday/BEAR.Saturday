@@ -255,7 +255,7 @@ class BEAR
                     while ($fields = File_CSV::read($target, $conf)) {
                         array_push($csv, $fields);
                     }
-                    $result = $cache->set($key, $csv);
+                    $cache->set($key, $csv);
                     return $csv;
                 case 'ini':
                     $parse = 'inicommented';
