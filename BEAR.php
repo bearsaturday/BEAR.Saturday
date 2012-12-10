@@ -360,7 +360,7 @@ class BEAR
             } catch (Exception $e){
                 $info = compact('class');
                 throw new BEAR_Exception(
-                    "Auto loader failed for class [$bearClass]",
+                    "Auto loader failed for class [$class]",
                     array('code' => self::CODE_BAD_REQUEST, 'info' => $info)
                 );
             }
