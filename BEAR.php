@@ -111,6 +111,7 @@ class BEAR
         }
         $_run = true;
         // PEAR_Errorがオートローダー効かないための事前require
+        /** @noinspection PhpIncludeInspection */
         include_once 'PEAR.php';
         // クラスオートローダー登録
         self::set('app', new ArrayObject($appConfig));
@@ -156,6 +157,7 @@ class BEAR
             return;
         }
         $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+        /** @noinspection PhpIncludeInspection */
         include_once $file;
         // クラス宣言を含むかどうか確認する
         if (class_exists($class, false) || interface_exists($class, false)) {
