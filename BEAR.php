@@ -134,7 +134,7 @@ class BEAR
             include _BEAR_BEAR_HOME . '/BEAR/BEAR/script/debug_init.php';
         }
         if (PHP_SAPI === 'cli' && defined('_BEAR_APP_HOME')) {
-            ini_set('include_path',  _BEAR_APP_HOME . PATH_SEPARATOR . get_include_path());
+            ini_set('include_path', _BEAR_APP_HOME . PATH_SEPARATOR . get_include_path());
         }
     }
 
@@ -165,7 +165,7 @@ class BEAR
         }
         // auto loader error
         if (!class_exists('BEAR_Exception', false)) {
-            include _BEAR_BEAR_HOME. '/BEAR/Exception.php';
+            include _BEAR_BEAR_HOME . '/BEAR/Exception.php';
         }
         $info = array('class' => $class, 'file' => $file);
         throw new BEAR_Exception("BEAR Auto loader failed for [$class]", compact('info'));
@@ -237,8 +237,11 @@ class BEAR
             // PEAR::Configを使って設定ファイルをパース
             $pathinfo = pathinfo($target);
             // 相対パスなら絶対パスに (/:linux :win)
-            $target = (substr($target, 0, 1) == '/' || substr($target, 1, 1) == ':') ?
-            $target : _BEAR_APP_HOME . '/App/Ro/' . $target;
+            $target = (substr($target, 0, 1) == '/' || substr(
+                $target,
+                1,
+                1
+            ) == ':') ? $target : _BEAR_APP_HOME . '/App/Ro/' . $target;
             $extension = isset($options['extention']) ? $options['extention'] : $pathinfo['extension'];
             switch ($extension) {
                 case 'yml':
@@ -278,7 +281,7 @@ class BEAR
                     break;
             }
             $config = new Config();
-            $root = &$config->parseConfig($target, $parse);
+            $root = & $config->parseConfig($target, $parse);
             if (PEAR::isError($root)) {
                 $msg = '設定を読み込む際のエラー: ';
                 $msg .= $root->getMessage();
@@ -353,51 +356,50 @@ class BEAR
     public static function factory($class, array $config = array(), array $options = array())
     {
         // class
-        $class = isset(self::$_registry['app'][$class]) && isset(self::$_registry['app'][$class]['__class']) ?
-        self::$_registry['app'][$class]['__class'] : $class;
+        $class = isset(self::$_registry['app'][$class]) && isset(self::$_registry['app'][$class]['__class']) ? self::$_registry['app'][$class]['__class'] : $class;
         // auto loader
         if (class_exists($class, false) === false) {
             try {
                 self::onAutoload($class);
-            } catch (Exception $e){
+            } catch (Exception $e) {
                 $info = compact('class');
-                throw new BEAR_Exception(
-                    "Auto loader failed for class [$class]",
-                    array('code' => self::CODE_BAD_REQUEST, 'info' => $info)
-                );
+                throw new BEAR_Exception("Auto loader failed for class [$class]", array(
+                        'code' => self::CODE_BAD_REQUEST,
+                        'info' => $info
+                    ));
             }
         }
         // config;
         if (isset(self::$_registry['app'][$class])) {
             $config += self::$_registry['app'][$class];
         }
-        $config = (isset($config['__config']) && is_callable($config['__config']))
-        ? call_user_func($config['__config'], $config) : $config;
+        $config = (isset($config['__config']) && is_callable($config['__config'])) ? call_user_func(
+            $config['__config'],
+            $config
+        ) : $config;
         // merge common 'core' config
         $config += (array)self::$_registry['app']['core'];
         $object = new $class($config);
         // inject
-        $injector = isset($options['injector']) ?
-            $options['injector'] : (
-                (isset(self::$_registry['app'][$class]) && isset(self::$_registry['app'][$class]['__injector']) ?
-                    self::$_registry['app'][$class]['__injector'] : 'onInject'
-            )
-        );
+        $injector = isset($options['injector']) ? $options['injector'] : ((isset(self::$_registry['app'][$class]) && isset(self::$_registry['app'][$class]['__injector']) ? self::$_registry['app'][$class]['__injector'] : 'onInject'));
         if (is_string($injector)) {
             if (method_exists($object, $injector)) {
                 $object->$injector();
-            } else if (method_exists($object, 'onInject')) {
-                $object->onInject();
-            }
-        } else if (is_array($injector)) {
-            if (is_callable(array($injector[0], $injector[1]))) {
-                call_user_func(array($injector[0], $injector[1]), $object, $config);
             } else {
-                throw new BEAR_Exception(
-                    'Injector is not valid.', array(
-                    'code' => self::CODE_BAD_REQUEST,
-                    'info' => compact('injector'))
-                );
+                if (method_exists($object, 'onInject')) {
+                    $object->onInject();
+                }
+            }
+        } else {
+            if (is_array($injector)) {
+                if (is_callable(array($injector[0], $injector[1]))) {
+                    call_user_func(array($injector[0], $injector[1]), $object, $config);
+                } else {
+                    throw new BEAR_Exception('Injector is not valid.', array(
+                        'code' => self::CODE_BAD_REQUEST,
+                        'info' => compact('injector')
+                    ));
+                }
             }
         }
         // factoryオブジェクトなら生成したインスタンスを返す
@@ -484,14 +486,16 @@ class BEAR
             $service = self::$_registry[$config];
             if (is_object($service)) {
                 return self::$_registry[$config];
-            } else if (is_array($service)) {
-                // 遅延ロード
-                self::$_registry[$service[0]] = self::factory($service[0], $service[1]);
-                return self::$_registry[$service[0]];
             } else {
-                $msg = 'No service in self::dependency';
-                $info = array('class' => $class);
-                throw new BEAR_Exception($msg, array('info' => $info));
+                if (is_array($service)) {
+                    // 遅延ロード
+                    self::$_registry[$service[0]] = self::factory($service[0], $service[1]);
+                    return self::$_registry[$service[0]];
+                } else {
+                    $msg = 'No service in self::dependency';
+                    $info = array('class' => $class);
+                    throw new BEAR_Exception($msg, array('info' => $info));
+                }
             }
         }
         if (is_array($options)) {
