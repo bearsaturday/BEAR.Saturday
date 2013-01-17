@@ -117,7 +117,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
     /**
      * リソースオブジェクト
      *
-     * @var BEAR_Ro
+     * @var BEAR_Ro_Prototype
      */
     private $_ro;
 
@@ -177,7 +177,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
      *
      * @param array $params リクエストパラメータ
      *
-     * @return BEAR_Ro
+     * @return BEAR_Ro_Prototype
      */
     public function create(array $params)
     {
