@@ -158,8 +158,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
             //            $ro = BEAR::dependency('BEAR_Resource')->read($params)->getRo();
             $body = $ro->getBody();
             if (is_array($body)) {
-                $refBody = &$body;
-                self::_makeCollectionChain($refBody, $linkTo, $ro);
+                self::_makeCollectionChain($body, $linkTo, $ro);
             }
             $linked[$linkTo] = $body;
         } else {

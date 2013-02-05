@@ -160,8 +160,7 @@ class BEAR_Agent extends BEAR_Base
             array($this->_config['ua_inject'], 'inject')
         ) ? $this->_config['ua_inject'] : 'BEAR_Agent_Ua';
         // _uaを注入
-        $agent = &$this;
-        call_user_func(array($injectUa, 'inject'), $agent, $this->_config);
+        call_user_func(array($injectUa, 'inject'), $this, $this->_config);
         $this->_config['ua'] = $this->_ua;
         try {
             $this->adapter = BEAR::dependency('BEAR_Agent_Adapter_' . $this->_ua, $this->_config);

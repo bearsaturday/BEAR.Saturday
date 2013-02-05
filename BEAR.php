@@ -131,6 +131,7 @@ class BEAR
             } else {
                 spl_autoload_register(array(__CLASS__, 'onAutoload'));
             }
+
             include _BEAR_BEAR_HOME . '/BEAR/BEAR/script/debug_init.php';
         }
         if (PHP_SAPI === 'cli' && defined('_BEAR_APP_HOME')) {
@@ -393,7 +394,9 @@ class BEAR
         } else {
             if (is_array($injector)) {
                 if (is_callable(array($injector[0], $injector[1]))) {
-                    call_user_func(array($injector[0], $injector[1]), $object, $config);
+                    $class = $injector[0];
+                    $method = $injector[1];
+                    $class::$method($object, $config);
                 } else {
                     throw new BEAR_Exception('Injector is not valid.', array(
                         'code' => self::CODE_BAD_REQUEST,
