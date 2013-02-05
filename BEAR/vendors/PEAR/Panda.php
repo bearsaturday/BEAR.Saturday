@@ -329,7 +329,6 @@ class Panda
         if (isset($_GET['_nopanda'])) {
             return;
         }
-        $er = error_reporting(false);
         self::$_config = array_merge(self::$_config, $config);
         // reset handler
         if (self::$_config[self::CONFIG_DEBUG] !== true) {
@@ -356,7 +355,6 @@ class Panda
                 ob_start(array('Panda', 'onStrictError'));
             }
         }
-        error_reporting($er);
     }
 
     /**
@@ -369,7 +367,7 @@ class Panda
         require_once 'Panda/Debug.php';
         require_once 'Panda/Debug/util.php';
         require_once 'Panda/Exception.php';
-        include_once 'Net/Growl.php';
+//        include_once 'Net/Growl.php';
         ini_set('display_errors', 1);
         // アサーションを有効
         assert_options(ASSERT_ACTIVE, 1);
@@ -632,7 +630,7 @@ class Panda
             if (isset(self::$_config[self::CONFIG_LOG_PATH])) {
                 $filePath = self::$_config[self::CONFIG_LOG_PATH] . "$id.log";
                 if (!file_exists($filePath)) {
-                    file_put_contents($filePath, "$log\n[Info]:\n" . print_r($info, true) . "\n[Trace]" . print_r($e->getTrace(), true));
+                    @file_put_contents($filePath, "$log\n[Info]:\n" . print_r($info, true) . "\n[Trace]" . print_r($e->getTrace(), true));
                 }
             }
             if (self::$_config['debug'] === true) {
