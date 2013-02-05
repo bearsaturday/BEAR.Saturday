@@ -73,7 +73,7 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      *
      * @var string
      */
-    public $_srcType;
+    private $_srcType;
 
     /**
      * デストラクタで消去するファイルリスト
