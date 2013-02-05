@@ -294,7 +294,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         try {
             ob_start();
             $this->_command = $parser->parse(count($argv), $argv);
-            $buff = ob_get_clean();
+            ob_get_clean();
             $commandName = $this->_command->command_name;
             switch ($this->_command->command_name) {
                 case self::CMD_INIT_APP :
