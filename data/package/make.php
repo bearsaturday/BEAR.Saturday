@@ -67,7 +67,7 @@ $packagexml->setDescription($config['description']);
 $packagexml->setNotes($config['note']);
 $packagexml->setPhpDep($config['dep_php']);
 $packagexml->setPearinstallerDep($config['pear_ver']);
-$packagexml->addMaintainer('lead', 'koriyama' , 'Koriyama', 'koriyama@bear-project.net');
+$packagexml->addMaintainer('lead', 'koriyama' , 'Koriyama', 'akihito.koriyama@gmail.com');
 $packagexml->setLicense('The BSD License', 'http://www.opensource.org/licenses/bsd-license.php');
 
 $packagexml->addRole('sh', 'script');
