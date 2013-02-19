@@ -33,7 +33,7 @@ $config['summery'] = 'PHP Framework Package';
 $config['description'] = 'BEAR is web application framework package.';
 $config['dep_php'] = '5.2.0';
 $config['pear_ver'] = '1.6.0';
-$config['note'] = 'BEAR.saturday (for PHP 5.2)';
+$config['note'] = 'BEAR.Saturday (for PHP 5.2)';
 /**
  * This is the only setup function needed
  */
