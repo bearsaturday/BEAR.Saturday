@@ -100,7 +100,10 @@ class BEAR_Session extends BEAR_Base
         }
         $hasStarted = true;
         $this->_setAdpator($this->_config);
-        HTTP_Session2::start(null);
+
+        // セッションスタート
+        $this->_httpSession2Start();
+
         // セッションを通じた固定トークン
         if (HTTP_Session2::isNew()) {
             BEAR::dependency('BEAR_Form_Token')->newSessionToken();
@@ -147,6 +150,21 @@ class BEAR_Session extends BEAR_Base
                 'gc_maxlifetime' => ini_get('session.gc_maxlifetime')
             )
         );
+    }
+
+    /**
+     * PEAR::HTTP_Session2をスタート
+     *
+     * セッションIDの生成をPHPに任せてスタート
+     */
+    private static function _httpSession2Start()
+    {
+        session_start();
+        if (!isset($_SESSION['__HTTP_Session2_Info'])) {
+            $_SESSION['__HTTP_Session2_Info'] = HTTP_Session2::STARTED;
+        } else {
+            $_SESSION['__HTTP_Session2_Info'] = HTTP_Session2::CONTINUED;
+        }
     }
 
     /**
