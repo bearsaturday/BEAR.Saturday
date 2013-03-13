@@ -18,7 +18,7 @@
  *
  * セッションを取り扱います。
  * PEAR::HTTP_Session2を利用していて、デフォルトのファイルセッション、
- * webクラスターシステムのためのDBまたはmemchacheが選択できます。
+ * webクラスターシステムのためのDBまたはmemcacheが選択できます。
  * 詳細設定は　htdocs/.htaccess(またはphp.ini)でも行う必要があります。
  *
  * @category  BEAR
@@ -55,7 +55,7 @@ class BEAR_Session extends BEAR_Base
     const ADAPTER_DB = 2;
 
     /**
-     * memchacheセッション
+     * memcacheセッション
      */
     const ADAPTER_MEMCACHE = 3;
 
@@ -99,7 +99,7 @@ class BEAR_Session extends BEAR_Base
             return;
         }
         $hasStarted = true;
-        $this->_setAdpator($this->_config);
+        $this->_setAdapter($this->_config);
 
         // セッションスタート
         $this->_httpSession2Start();
@@ -175,7 +175,7 @@ class BEAR_Session extends BEAR_Base
      * @return void
      * @throws BEAR_Session_Exception
      */
-    private function _setAdpator(array $config)
+    private function _setAdapter(array $config)
     {
         // セッションハンドラ初期化
         switch ($config['adapter']) {
