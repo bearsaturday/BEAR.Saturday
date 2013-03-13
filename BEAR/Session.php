@@ -18,7 +18,7 @@
  *
  * セッションを取り扱います。
  * PEAR::HTTP_Session2を利用していて、デフォルトのファイルセッション、
- * webクラスターシステムのためのDBまたはmemchacheが選択できます。
+ * webクラスターシステムのためのDBまたはmemcacheが選択できます。
  * 詳細設定は　htdocs/.htaccess(またはphp.ini)でも行う必要があります。
  *
  * @category  BEAR
@@ -55,7 +55,7 @@ class BEAR_Session extends BEAR_Base
     const ADAPTER_DB = 2;
 
     /**
-     * memchacheセッション
+     * memcacheセッション
      */
     const ADAPTER_MEMCACHE = 3;
 
@@ -99,8 +99,11 @@ class BEAR_Session extends BEAR_Base
             return;
         }
         $hasStarted = true;
-        $this->_setAdpator($this->_config);
-        HTTP_Session2::start(null);
+        $this->_setAdapter($this->_config);
+
+        // セッションスタート
+        $this->_httpSession2Start();
+
         // セッションを通じた固定トークン
         if (HTTP_Session2::isNew()) {
             BEAR::dependency('BEAR_Form_Token')->newSessionToken();
@@ -150,6 +153,21 @@ class BEAR_Session extends BEAR_Base
     }
 
     /**
+     * PEAR::HTTP_Session2をスタート
+     *
+     * セッションIDの生成をPHPに任せてスタート
+     */
+    private static function _httpSession2Start()
+    {
+        session_start();
+        if (!isset($_SESSION['__HTTP_Session2_Info'])) {
+            $_SESSION['__HTTP_Session2_Info'] = HTTP_Session2::STARTED;
+        } else {
+            $_SESSION['__HTTP_Session2_Info'] = HTTP_Session2::CONTINUED;
+        }
+    }
+
+    /**
      * セッションアダプターのセット
      *
      * @param array $config
@@ -157,7 +175,7 @@ class BEAR_Session extends BEAR_Base
      * @return void
      * @throws BEAR_Session_Exception
      */
-    private function _setAdpator(array $config)
+    private function _setAdapter(array $config)
     {
         // セッションハンドラ初期化
         switch ($config['adapter']) {
