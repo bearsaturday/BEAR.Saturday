@@ -8,6 +8,7 @@ php_value include_path "@APP-DIR@:@PEAR-DIR@:@VENDORS-PEAR-DIR@:."
 # BEAR
 # error report level
 php_value display_errors 1
+# 22519 = E_ALL & ~E_NOTICE & ~E_DEPRECATED
 php_value error_reporting 22519
 php_value log_errors 1
 php_value ignore_repeated_errors 1
