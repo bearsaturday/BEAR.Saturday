@@ -45,6 +45,14 @@ class BEAR_Test_Client extends HTTP_Request2
     public $response;
 
     /**
+     * @param HTTP_Request2 $request
+     */
+    public function __construct(HTTP_Request2 $request = null)
+    {
+        $this->request = $request ? $request : new HTTP_Request2;
+    }
+
+    /**
      * Http request
      *
      * @param string $method
@@ -56,19 +64,18 @@ class BEAR_Test_Client extends HTTP_Request2
      */
     public function request($method, $url, array $submit = array(), $formName = 'form')
     {
-        $this->request = new HTTP_Request2;
-        $url = new Net_URL2($url);
         $this->request->setMethod($method);
+        $this->request->setUrl(new Net_URL2($url));
+
         if ($submit) {
             $submit = array_merge(array('_token' => '0dc59902014b6', '_qf__' . $formName => ''), $submit);
         }
-        if ($submit && $method === 'POST') {
+        if ($submit && $this->request->getMethod() === HTTP_Request2::METHOD_POST) {
             $this->request->addPostParameter($submit);
         }
-        if ($submit && $method === 'GET') {
+        if ($submit && $this->request->getMethod() === HTTP_Request2::METHOD_GET) {
             $url->setQueryVariables($submit);
         }
-        $this->request->setUrl($url);
         $this->response = $this->request->send();
         return $this;
     }
