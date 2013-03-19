@@ -62,14 +62,10 @@ class BEAR_Test_Client extends HTTP_Request2
      *
      * @return HTTP_Request2_Response
      */
-    public function request($method = null, $url = null, array $submit = array(), $formName = 'form')
+    public function request($method, $url, array $submit = array(), $formName = 'form')
     {
-        if (!is_null($method)) {
-            $this->request->setMethod($method);
-        }
-        if (!is_null($url)) {
-            $this->request->setUrl(new Net_URL2($url));
-        }
+        $this->request->setMethod($method);
+        $this->request->setUrl(new Net_URL2($url));
 
         if ($submit) {
             $submit = array_merge(array('_token' => '0dc59902014b6', '_qf__' . $formName => ''), $submit);
