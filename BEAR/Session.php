@@ -72,7 +72,7 @@ class BEAR_Session extends BEAR_Base
     public function __construct(array $config)
     {
         parent::__construct($config);
-        $this->_config['prefix'] = $this->_config['prefix'] ? $this->_config['prefix'] : ($this->_config['info']['id'] . $this->_config['info']['version'] . (int)$this->_config['debug']);
+        $this->_config['prefix'] = $this->_config['prefix'] ? $this->_config['prefix'] : ($this->_config['info']['id'] . $this->_config['info']['version'] . (int) $this->_config['debug']);
     }
 
     /**
@@ -95,7 +95,7 @@ class BEAR_Session extends BEAR_Base
         static $hasStarted = false;
 
         if ($hasStarted !== false || $this->_config['adapter'] === self::ADAPTER_NONE
-        ) {
+) {
             return;
         }
         $hasStarted = true;
@@ -225,6 +225,7 @@ class BEAR_Session extends BEAR_Base
         $key = $this->_config['prefix'] . $key;
         $values = HTTP_Session2::get($key, $default);
         $this->_log->log('Session[R]', array($key));
+
         return $values;
     }
 

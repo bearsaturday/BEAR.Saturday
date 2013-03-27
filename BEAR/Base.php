@@ -68,8 +68,8 @@ abstract class BEAR_Base implements BEAR_Base_Interface
     /**
      * Set config
      *
-     * @param mixed $config (string)設定キー | (array)設定配列
-     * @param mixed $values (string)$configの時の設定値
+     * @param mixed $config (string) 設定キー | (array) 設定配列
+     * @param mixed $values (string) $configの時の設定値
      *
      * @return self
      */
@@ -80,6 +80,7 @@ abstract class BEAR_Base implements BEAR_Base_Interface
         } else {
             $this->_config = $config;
         }
+
         return $this;
     }
 
@@ -131,6 +132,7 @@ abstract class BEAR_Base implements BEAR_Base_Interface
         if (!file_exists(_BEAR_APP_HOME . "/{$file}") && !file_exists(_BEAR_BEAR_HOME . "/{$file}")) {
             $class = 'BEAR_Exception';
         }
+
         return new $class($msg, $config);
     }
 }

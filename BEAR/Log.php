@@ -178,7 +178,7 @@ class BEAR_Log extends BEAR_Base
             $db = new SQLiteDatabase($file);
             $sql = <<<____SQL
 CREATE TABLE pagelog (
-	 "log" text NOT NULL
+     "log" text NOT NULL
 );
 ____SQL;
             $db->queryExec($sql);
@@ -188,6 +188,7 @@ ____SQL;
         if ($db === false) {
             throw new BEAR_Exception('sqlite error');
         }
+
         return $db;
     }
 
@@ -204,6 +205,7 @@ ____SQL;
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
             include_once 'BEAR/Util.php';
             $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
+
             return $pageLog;
         }
         $db = $this->getPageLogDb();
@@ -221,6 +223,7 @@ ____SQL;
         }
         $log = $result->fetchAll();
         $pageLog = unserialize($log[0]['log']);
+
         return $pageLog;
     }
 
@@ -262,6 +265,7 @@ ____SQL;
             if (file_exists($pageLogPath) && !is_writable($pageLogPath)) {
                 // 書き込み権限のエラー
                 Panda::error('Permission denied.', "[$pageLogPath] is not writable.");
+
                 return;
             }
             // page ログ
@@ -347,6 +351,7 @@ ____SQL;
     {
         $length = count($this->_logs) - $this->_temporaryOffset;
         $result = array_slice($this->_logs, $this->_temporaryOffset, $length);
+
         return $result;
     }
 }

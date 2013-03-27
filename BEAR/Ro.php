@@ -166,7 +166,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         if (isset($app[$class])) {
             $config = array_merge($app[$class], $config);
         }
-        $this->_config = (array)$config;
+        $this->_config = (array) $config;
     }
 
     /**
@@ -191,6 +191,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function onCreate($values)
     {
         $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
+
         return $ro;
     }
 
@@ -206,6 +207,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function onRead($values)
     {
         $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
+
         return $ro;
     }
 
@@ -222,6 +224,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function onUpdate($values)
     {
         $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
+
         return $ro;
     }
 
@@ -238,6 +241,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function onDelete($values)
     {
         $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
+
         return $ro;
     }
 
@@ -278,7 +282,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
                 $msg,
                 array(
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => array('request' => (string)$this)
+                    'info' => array('request' => (string) $this)
                 )
             );
         }
@@ -345,6 +349,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function getHeader($headerKey)
     {
         $result = isset($this->_headers[$headerKey]) ? $this->_headers[$headerKey] : null;
+
         return $result;
     }
 
@@ -372,6 +377,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function setBody($body)
     {
         $this->_body = $body;
+
         return $this;
     }
 
@@ -385,6 +391,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function setHtml($html)
     {
         $this->_html = $html;
+
         return $this;
     }
 
@@ -404,6 +411,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function setHeader($key, $header)
     {
         $this->_headers[$key] = $header;
+
         return $this;
     }
 
@@ -417,6 +425,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function setHeaders(array $headers)
     {
         $this->_headers = $headers;
+
         return $this;
     }
 
@@ -436,6 +445,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function setLink($key, $link)
     {
         $this->_links[$key] = $link;
+
         return $this;
     }
 
@@ -449,6 +459,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function setLinks($links)
     {
         $this->_links = $links;
+
         return $this;
     }
 
@@ -466,6 +477,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         } else {
             $this->_code = BEAR::CODE_ERROR;
         }
+
         return $this;
     }
 
@@ -498,12 +510,14 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
             if ($this->_config['debug'] === true) {
                 $this->_html = BEAR::dependency('BEAR_Ro_Debug')->getResourceToString($this);
             }
+
             return $this->_html;
         }
         // リソースプロトタイプなら実リクエスト
         if ($this instanceof BEAR_Ro_Prototype) {
             if (isset($this->_config['is_ajax_set'])) {
                 $html = BEAR::factory('BEAR_Resource_Request_Ajax', $this->_config['request'])->getJs();
+
                 return $html;
             }
             $ro = $this->request();
@@ -512,8 +526,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
             if ($this->_config['debug'] === true) {
                 $html = BEAR::dependency('BEAR_Ro_Debug')->getResourceToString($ro);
             }
+
             return $html;
         }
+
         return '';
     }
 
@@ -529,6 +545,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         } catch (Exception $e) {
             return '';
         }
+
         return $string;
     }
 
@@ -543,6 +560,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     {
         $config = array_merge($this->_config, array('values' => $values));
         $ro = BEAR::factory('BEAR_Resource_Request', $config)->request();
+
         return $ro;
     }
 
@@ -683,6 +701,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
             $this->_config['options']['iterator']
         )) ? $this->_config['iterator'] : 'ArrayIterator';
         $obj = new $iterator($this->_body);
+
         return $obj;
     }
 
@@ -695,9 +714,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     {
         $body = is_array($this->body) ? $this->body : array();
         $obj = new $this->iterator($body);
+
         return $obj;
     }
-
 
     /**
      * count取得
@@ -731,6 +750,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function ksort()
     {
         parent::ksort();
+
         return $this;
     }
 
@@ -745,6 +765,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function append($val)
     {
         parent::append($val);
+
         return $this;
     }
 
@@ -780,14 +801,15 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         /* @var $page App_Page */
         $val = (isset($config['ro']) && $config['ro'] === true) ? $this : $this->_body;
         $page->set($key, $val);
+
         return $this;
     }
 
     /**
      * Set config
      *
-     * @param mixed $config (string)コンフィグキー | (array)コンフィグ配列
-     * @param mixed $values (string)$configの時のコンフィグ値
+     * @param mixed $config (string) コンフィグキー | (array) コンフィグ配列
+     * @param mixed $values (string) $configの時のコンフィグ値
      *
      * @return BEAR_Ro
      */
@@ -798,6 +820,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         } else {
             $this->_config = $config;
         }
+
         return $this;
     }
 
@@ -845,6 +868,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         if (!file_exists(_BEAR_APP_HOME . "/{$file}") && !file_exists(_BEAR_BEAR_HOME . "/{$file}")) {
             $class = 'BEAR_Ro_Exception';
         }
+
         return new $class($msg, $config);
     }
 
@@ -880,6 +904,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         $result = ("{$this->_config['method']} {$this->_config['uri']}") . ($this->_config['values'] ? '?' . http_build_query(
             $this->_config['values']
         ) : '');
+
         return $result;
     }
 }

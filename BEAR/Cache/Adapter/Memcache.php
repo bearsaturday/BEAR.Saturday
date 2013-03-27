@@ -69,6 +69,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
             /** @noinspection PhpUndefinedMethodInspection */
             BEAR::dependency('BEAR_Log')->log('Memcache', $log);
         }
+
         return $this->_adapter;
     }
 
@@ -88,6 +89,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
             $result = $this->_adapter->set($this->_config['prefix'] . $key, $value, MEMCACHE_COMPRESSED, $this->_life);
         }
         $this->_log->log('Memcache[W]', array('key' => $key, 'result' => $result));
+
         return $result;
     }
 
@@ -109,7 +111,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         }
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
-            $ro->setCode($result->code)->setHeaders((array)$result->header)->setBody($result->body)->setLinks(
+            $ro->setCode($result->code)->setHeaders((array) $result->header)->setBody($result->body)->setLinks(
                 $result->links
             )->setHtml($result->html);
             $result = $ro;
@@ -117,6 +119,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         if ($result) {
             $this->_log->log('Memcache[R]', $key);
         }
+
         return $result;
     }
 
@@ -132,6 +135,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $result = $this->_adapter->delete($this->_config['prefix'] . $key);
         $this->_log->log('Memcache[D]', $key);
+
         return $result;
     }
 
@@ -143,6 +147,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
     public function deleteAll()
     {
         /** @noinspection PhpVoidFunctionResultUsedInspection */
+
         return $this->_adapter->flush();
     }
 
@@ -167,6 +172,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
             $life = 1;
         }
         $this->_life = $life;
+
         return $this;
     }
 }

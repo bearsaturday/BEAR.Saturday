@@ -85,6 +85,7 @@ class BEAR_Smarty extends BEAR_Factory
             // テンプレートキャッシュは常に再生成
             $smarty->force_compile = true;
         }
+
         return $smarty;
     }
 }

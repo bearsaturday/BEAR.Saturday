@@ -42,4 +42,3 @@ class BEAR_Resource_Request_Ajax extends BEAR_Base
         return "<span id=\"{$requestId}\">*</span>" . $js;
     }
 }
-

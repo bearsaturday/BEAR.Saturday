@@ -180,6 +180,7 @@ class BEAR_Emoji extends BEAR_Base
         // unicodeからUTF8に
         $iEighteen = new I18N_UnicodeString($result, 'Unicode');
         $result = $iEighteen->toUtf8String();
+
         return $result;
     }
 
@@ -222,6 +223,7 @@ class BEAR_Emoji extends BEAR_Base
                 trigger_error('Agent is not mobile.', E_USER_NOTICE);
                 break;
         }
+
         return $string;
     }
 
@@ -253,6 +255,7 @@ class BEAR_Emoji extends BEAR_Base
             $converted = mb_ereg_replace($patternRep, $replacement, $converted);
         }
         mb_regex_encoding($mbRegexEncoding);
+
         return $converted;
     }
 
@@ -275,6 +278,7 @@ class BEAR_Emoji extends BEAR_Base
             array(__CLASS__, '_onHexEntity'),
             $string
         );
+
         return $string;
     }
 
@@ -290,6 +294,7 @@ class BEAR_Emoji extends BEAR_Base
     private function _onHexEntity($matches)
     {
         $result = '&#x' . dechex($matches[1]) . ';';
+
         return $result;
     }
 
@@ -329,6 +334,7 @@ class BEAR_Emoji extends BEAR_Base
             // 絵文字ではないエンティティ
             $result = "&#{$emojiId};";
         }
+
         return $result;
     }
 
@@ -454,6 +460,7 @@ class BEAR_Emoji extends BEAR_Base
             default:
                 break;
         }
+
         return $result;
     }
 
@@ -481,6 +488,7 @@ class BEAR_Emoji extends BEAR_Base
             $regex = '/&#(\d{5});/is';
         }
         $this->_string = preg_replace_callback($regex, array(__CLASS__, '_onConvertEmoji'), $this->_string);
+
         return $this->_string;
     }
 
@@ -499,6 +507,7 @@ class BEAR_Emoji extends BEAR_Base
     {
         //Docomo/Au変換
         $string = preg_replace_callback('/&#(\d+);/is', array(__CLASS__, '_onEmojiImage'), $string);
+
         return $string;
     }
 
@@ -543,6 +552,7 @@ class BEAR_Emoji extends BEAR_Base
             default:
                 break;
         }
+
         return $string;
     }
 
@@ -594,13 +604,14 @@ class BEAR_Emoji extends BEAR_Base
                 $converted = $convertMap[$emoji][$to];
                 $result .= ($converted) ? $converted : '';
             }
+
             return $result;
         }
         $emoji = $matches[0];
         $converted = $convertMap[$emoji][$to];
         // docomo推奨バイナリ絵文字
         if (($to == BEAR_Agent::UA_DOCOMO || $to == BEAR_Agent::UA_EZWEB) && preg_match('/&#(\d{5});/', $converted)) {
-            $decCode = (int)preg_replace('/&#(\d{5});/', '$1', $converted);
+            $decCode = (int) preg_replace('/&#(\d{5});/', '$1', $converted);
             $len = strlen($decCode);
             if ($len > 5) {
                 $result = '';
@@ -617,6 +628,7 @@ class BEAR_Emoji extends BEAR_Base
             $converted = str_replace(' ', '', $converted);
             $result = ($converted) ? $converted : '';
         }
+
         return $result;
     }
 
@@ -640,6 +652,7 @@ class BEAR_Emoji extends BEAR_Base
     {
         $regex = '/\x1b\x24(.*?)\x0f/is';
         $result = preg_replace_callback($regex, array(__CLASS__, '_onSbEmoji'), $html);
+
         return $result;
     }
 
@@ -656,6 +669,7 @@ class BEAR_Emoji extends BEAR_Base
     {
         $emoji = $match[1];
         $result = pack('c*', 0x1b, 0x24) . html_entity_decode($emoji) . pack('c*', 0x0f);
+
         return $result;
     }
 
@@ -675,6 +689,7 @@ class BEAR_Emoji extends BEAR_Base
         // SB絵文字消去
         $regex = '/(&#(\d{5});)|(\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f)/is';
         $string = preg_replace($regex, "", $string);
+
         return $string;
     }
 
@@ -717,6 +732,7 @@ class BEAR_Emoji extends BEAR_Base
                 include _BEAR_BEAR_HOME . '/BEAR/Emoji/Conf/Default.php';
             }
         }
+
         return $emojiChars[$emoji];
     }
 }

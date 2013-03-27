@@ -178,6 +178,7 @@ class BEAR_Pager extends BEAR_Base
         if (is_null($view)) {
             // $viewが無い
             $this->_links = null;
+
             return;
         } else {
             $this->_options['itemData'] = $view;
@@ -209,6 +210,7 @@ class BEAR_Pager extends BEAR_Base
         $this->pager->setOptions($this->_options);
         $this->pager->build();
         $this->_links = $this->pager->getLinks();
+
         return $this->_links;
     }
 
@@ -327,6 +329,7 @@ class BEAR_Pager extends BEAR_Base
             $value = preg_replace('/<a\s/', '<a rel="bear" >', $value);
             $array[$key] = $value;
         }
+
         return $array;
     }
 
@@ -346,6 +349,7 @@ class BEAR_Pager extends BEAR_Base
         if (!BEAR::exists('pager')) {
             BEAR::set('pager', new ArrayObject(array('links' => $links, 'info' => $info)));
         }
+
         return $this;
     }
 }

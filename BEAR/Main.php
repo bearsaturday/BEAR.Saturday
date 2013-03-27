@@ -142,6 +142,7 @@ class BEAR_Main extends BEAR_Base
         // include
         if (self::$_isRunnable === false) {
             BEAR::dependency('BEAR_Log')->log("Page Include", $pageClass);
+
             return;
         }
         self::$_isRunnable = false;
@@ -327,7 +328,6 @@ class BEAR_Main extends BEAR_Base
         $this->_page->onInit($args);
     }
 
-
     /**
      * 出力前のバッファの消去
      *
@@ -410,7 +410,7 @@ class BEAR_Main extends BEAR_Base
      * ページキャッシュはヘッダーもキャッシュされます。
      * </pre>
      *
-     * @return mixed array (bool)false no cache | (bool) true write cache | (array) initcache
+     * @return mixed array (bool) false no cache | (bool) true write cache | (array) initcache
      */
     private function _runCache()
     {
@@ -587,6 +587,7 @@ class BEAR_Main extends BEAR_Base
             $ajax = BEAR::dependency('BEAR_Page_Ajax');
             $result = $ajax->isAjaxRequest();
         }
+
         return $result;
     }
 

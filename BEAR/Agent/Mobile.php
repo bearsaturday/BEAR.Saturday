@@ -57,6 +57,7 @@ class BEAR_Agent_Mobile extends BEAR_Factory
             /** @noinspection PhpDynamicAsStaticMethodCallInspection */
             $netUserAgentMobile = Net_UserAgent_Mobile::factory('');
         }
+
         return $netUserAgentMobile;
     }
 }

@@ -35,7 +35,7 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
      * BEAR_Agentの$config['ua_inject']でこのクラスが指定されています。
      *
      * @param BEAR_Main &$object BEAR_Agentオブジェクト
-     * @param array     $config  設定
+     * @param array $config 設定
      *
      * @return void
      * @see http://code.google.com/p/bear-project/wiki/agent
@@ -44,6 +44,7 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
     {
         if (!isset($config['user_agent'])) {
             $object->setService('_ua', BEAR_Agent::UA_DEFAULT);
+
             return;
         }
         $agentMobile = BEAR::dependency('BEAR_Agent_Mobile', array('user_agent' => $config['user_agent']));

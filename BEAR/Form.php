@@ -64,7 +64,6 @@ class BEAR_Form extends BEAR_Factory
      */
     const RENDERER_DHTML_TABLELESS = 2;
 
-
     /**
      * JS Alertのメッセージ
      *
@@ -163,7 +162,6 @@ class BEAR_Form extends BEAR_Factory
      */
     public static $method = 'post';
 
-
     /**
      * @var BEAR_Log
      */
@@ -190,7 +188,6 @@ class BEAR_Form extends BEAR_Factory
      */
     private static /** @noinspection PhpUnusedPrivateFieldInspection */
         $_rendererCallback = null;
-
 
     /**
      * Render Config
@@ -266,6 +263,7 @@ class BEAR_Form extends BEAR_Factory
             _BEAR_BEAR_HOME . '/BEAR/Form/elements/bradio.php',
             'HTML_QuickForm_bradio'
         );
+
         return $formObject;
     }
 
@@ -295,6 +293,7 @@ class BEAR_Form extends BEAR_Factory
         $log['formNames'] = $formName;
         $log['token'] = $token;
         $this->_log->log('Form', $log);
+
         return $form;
     }
 
@@ -396,6 +395,7 @@ class BEAR_Form extends BEAR_Factory
         } else {
             $result = isset($post[$submitHeaderKey]) ? $post[$submitHeaderKey] : null;
         }
+
         return $result;
     }
 
@@ -416,6 +416,7 @@ class BEAR_Form extends BEAR_Factory
                 break;
             }
         }
+
         return $formName;
     }
 
@@ -516,6 +517,7 @@ class BEAR_Form extends BEAR_Factory
             $smarty->assign($formName, $formValue);
             $result[$formName] = $formValue;
         }
+
         return $result;
     }
 

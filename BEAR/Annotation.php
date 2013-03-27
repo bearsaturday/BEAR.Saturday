@@ -100,11 +100,13 @@ class BEAR_Annotation extends BEAR_Base
         }
         if (!$aspects) {
             $method = new ReflectionMethod($this->_config['class'], $this->_config['method']);
+
             return $method;
         }
         $this->_config['aspects'] = $aspects;
         // weaver
         $weaver = BEAR::factory('BEAR_Aspect_Weaver', $this->_config);
+
         return $weaver;
     }
 }

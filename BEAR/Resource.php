@@ -159,6 +159,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
     {
         $links = $this->_ro->getLinks();
         $result = array('links' => $links['pager'], 'info' => $this->_ro->getHeaders());
+
         return $result;
     }
 
@@ -184,6 +185,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
         $values = isset($params['values']) ? $params['values'] : array();
         $options = isset($params['options']) ? $params['options'] : array();
         $this->_ro = $this->request(self::METHOD_CREATE, $params['uri'], $values, $options);
+
         return $this->_ro;
     }
 
@@ -212,6 +214,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
         $values = isset($params['values']) ? $params['values'] : array();
         $options = isset($params['options']) ? $params['options'] : array();
         $this->_ro = $this->request(self::METHOD_READ, $params['uri'], $values, $options);
+
         return $this->_ro;
     }
 
@@ -242,6 +245,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
         $values = isset($params['values']) ? $params['values'] : array();
         $options = isset($params['options']) ? $params['options'] : array();
         $this->_ro = $this->request(self::METHOD_UPDATE, $params['uri'], $values, $options);
+
         return $this->_ro;
     }
 
@@ -265,6 +269,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
         $values = isset($params['values']) ? $params['values'] : array();
         $options = isset($params['options']) ? $params['options'] : array();
         $this->_ro = $this->request(self::METHOD_DELETE, $params['uri'], $values, $options);
+
         return $this->_ro;
     }
 
@@ -298,6 +303,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
     {
         $config = compact('method', 'uri', 'values', 'options');
         $ro = BEAR::factory('BEAR_Ro_Prototype', array('request' => $config, 'path' => $this->_config['path']));
+
         return $ro;
     }
 }

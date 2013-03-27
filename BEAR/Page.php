@@ -299,12 +299,12 @@ abstract class BEAR_Page extends BEAR_Base
     public function display($tplName = null, array $options = array())
     {
         if (BEAR::exists('pager')) {
-            $pager = (array)BEAR::get('pager');
+            $pager = (array) BEAR::get('pager');
             $this->set('pager', $pager);
         }
         $this->_pageRo = $this->_viewAdapter()->display($tplName, $options);
         // add page BEAR_Page_Hedaers header
-        $pageHeaders = (array)BEAR::dependency('BEAR_Page_Header')->getHeaders();
+        $pageHeaders = (array) BEAR::dependency('BEAR_Page_Header')->getHeaders();
         $roHeaders = $this->_pageRo->getHeaders();
         $headers = array_merge($roHeaders, $pageHeaders);
         $this->_pageRo->setHeaders($headers);
@@ -376,6 +376,7 @@ abstract class BEAR_Page extends BEAR_Base
         $config['ro'] = $this->_ro;
         $config['resource_id'] = $this->_config['resource_id'];
         $this->_view = BEAR::factory('BEAR_View', $config);
+
         return $this->_view;
     }
 
@@ -419,6 +420,7 @@ abstract class BEAR_Page extends BEAR_Base
     public function get($key = null)
     {
         $result = (is_null($key)) ? $this->_values : $this->_values[$key];
+
         return $result;
     }
 
@@ -556,7 +558,7 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function injectArgs(array $args)
     {
-        $args = (array)BEAR::loadValues($args);
+        $args = (array) BEAR::loadValues($args);
         $this->_args = array_merge($this->_args, $args);
     }
 
@@ -641,7 +643,7 @@ abstract class BEAR_Page extends BEAR_Base
     /**
      * ページキャッシュのキーを生成
      *
-     * @return mixed (bool)falseキャッシュ不可 | (string)キャッシュキー
+     * @return mixed (bool) falseキャッシュ不可 | (string) キャッシュキー
      *
      * @todu UA
      */
@@ -658,6 +660,7 @@ abstract class BEAR_Page extends BEAR_Base
         $pagerKey = isset($_GET['_start']) ? $_GET['_start'] : '';
         $sortKey = isset($_GET['_sort']) ? $_GET['_sort'] : '';
         $result = get_class($this) . '-' . $pagerKey . '-' . $sortKey . '-' . $pageConfig;
+
         return $result;
     }
 

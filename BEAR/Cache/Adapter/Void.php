@@ -61,6 +61,7 @@ final class BEAR_Cache_Adapter_Void extends BEAR_Base
             $log = array('name' => $name, 'args' => $args);
             $this->_log->log('BEAR_Cache_Adapter_None', $log);
         }
+
         return null;
     }
 

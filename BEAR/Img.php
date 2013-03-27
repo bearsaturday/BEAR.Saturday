@@ -160,6 +160,7 @@ class BEAR_Img extends BEAR_Factory
                 $options = array('config' => $this->_config);
                 throw $this->_exception('Invalid Image Adapter', $options);
         }
+
         return self::$_instance;
     }
 
@@ -196,6 +197,7 @@ class BEAR_Img extends BEAR_Factory
                 trigger_error("No engine supported $adapter");
         }
         self::$_instance->load($tmpFile);
+
         return self::$_instance;
     }
 
