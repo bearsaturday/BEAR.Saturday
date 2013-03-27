@@ -1,1 +1,5 @@
-git clone git@github.com:koriym/beardemo.local.git tests/apps/beardemo.local
+Setup for test
+--------------
+    git submodule update --init
+    pear channel-discover zend.googlecode.com/svn
+    pear install zend/zend
