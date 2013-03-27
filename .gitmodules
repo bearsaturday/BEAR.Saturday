@@ -1,6 +1,6 @@
 [submodule "tests/sites/beardemo.local"]
 	path = tests/sites/beardemo.local
-        url = git://github.com/koriym/beardemo.local.git
+	url = git@github.com:koriym/beardemo.local.git
 [submodule "vendors/Panda"]
 	path = vendors/Panda
 	url = git://github.com/koriym/Panda.git
