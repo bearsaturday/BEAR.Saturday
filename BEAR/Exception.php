@@ -88,11 +88,11 @@ class BEAR_Exception extends Exception
      */
     public function __construct($msg, array $config = array())
     {
-        $config = array_merge($this->_default, (array)$config);
+        $config = array_merge($this->_default, (array) $config);
         parent::__construct($msg);
         $this->code = $config['code']; // native
         $this->_class = get_class($this);
-        $this->_info = (array)$config['info'];
+        $this->_info = (array) $config['info'];
         $this->_redirect = $config['redirect'];
     }
 
@@ -128,6 +128,7 @@ class BEAR_Exception extends Exception
         $str .= "with message '" . $this->message . "' \ninformation " . var_export($this->_info, true) . " \n";
         $str .= "redirect to '" . $this->_redirect . "' \n";
         $str .= "Stack trace:\n" . "  " . str_replace("\n\n  ", '', $this->getTraceAsString());
+
         return $str;
     }
 }

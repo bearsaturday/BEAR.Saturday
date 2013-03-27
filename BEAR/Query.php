@@ -194,6 +194,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             } else {
                 $result = $db->queryAll($query);
             }
+
             return $result;
         }
         // DBページャー
@@ -238,6 +239,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $pager = array('links' => $links, 'info' => $info);
         $ro->setLinks(array('pager' => $pager));
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
+
         return $ro;
     }
 
@@ -292,6 +294,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         } else {
             $result = $db->queryRow($query);
         }
+
         return $result;
     }
 
@@ -339,6 +342,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         }
         $orderBy = ' ORDER BY ' . implode(', ', $arr);
         $result = $sql . $orderBy;
+
         return $result;
     }
 
@@ -362,6 +366,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             }
             $result[$item] = $order;
         }
+
         return $result;
     }
 
@@ -380,6 +385,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $table = $table ? $table : $this->_config['table'];
         $types = $types ? $types : $this->_config['types'];
         $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_INSERT, false, $types);
+
         return $affectedRow;
     }
 
@@ -399,6 +405,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $table = $table ? $table : $this->_config['table'];
         $types = $types ? $types : $this->_config['types'];
         $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_UPDATE, $where, $types);
+
         return $affectedRow;
     }
 
@@ -415,6 +422,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $db = & $this->_config['db'];
         $table = $table ? $table : $this->_config['table'];
         $affectedRow = $db->extended->autoExecute($table, null, MDB2_AUTOQUERY_DELETE, $where);
+
         return $affectedRow;
     }
 
@@ -473,6 +481,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             }
             $totalItems = count($res);
         }
+
         return $totalItems;
     }
 
@@ -516,6 +525,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
         list($queryCount,) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
         list($queryCount,) = preg_split('/\bLIMIT\b/is', $queryCount);
+
         return trim($queryCount);
     }
 }

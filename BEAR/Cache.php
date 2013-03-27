@@ -86,10 +86,9 @@ class BEAR_Cache extends BEAR_Factory
     public function __construct(array $config)
     {
         parent::__construct($config);
-        $this->_config['prefix'] = isset($this->_config['prefix']) ? $this->_config['prefix'] : ($this->_config['info']['id'] . $this->_config['info']['version'] . (int)$this->_config['debug']);
+        $this->_config['prefix'] = isset($this->_config['prefix']) ? $this->_config['prefix'] : ($this->_config['info']['id'] . $this->_config['info']['version'] . (int) $this->_config['debug']);
         include_once 'MDB2.php'; // PEAR::MDB2
     }
-
 
     /**
      * Inject
@@ -126,6 +125,7 @@ class BEAR_Cache extends BEAR_Factory
                 }
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Void', $this->_config);
         }
+
         return $instance;
     }
 }

@@ -47,7 +47,7 @@ class BEAR_Dev_Profile
      *
      * @var array
      */
-    static protected $_profilerInfo = array(
+    protected static $_profilerInfo = array(
         array('href' => '/__bear/prof/', 'label' => 'XHPROF'),
         array('href' => '/__bear/xhprof/xhprof_html', 'label' => 'XH GUI')
     );

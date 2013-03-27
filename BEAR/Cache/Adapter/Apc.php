@@ -65,6 +65,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     {
         $result = apc_store($this->_config['prefix'] . $key, $value, $this->_life);
         $this->_log->log('APC[W]', array('key' => $key, 'result' => $result));
+
         return $result;
     }
 
@@ -87,7 +88,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
             /** @var $ro BEAR_Ro */
-            $ro->setCode($result->code)->setHeaders((array)$result->header)->setBody($result->body)->setLinks(
+            $ro->setCode($result->code)->setHeaders((array) $result->header)->setBody($result->body)->setLinks(
                 $result->links
             )->setHtml($result->html);
             $result = $ro;
@@ -95,6 +96,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
         if ($result) {
             $this->_log->log('Apc[R]', $key);
         }
+
         return $result;
     }
 
@@ -108,6 +110,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     public function delete($key)
     {
         $result = apc_delete($this->_config['prefix'] . $key);
+
         return $result;
     }
 
@@ -142,6 +145,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
             $life = 1;
         }
         $this->_life = $life;
+
         return $this;
     }
 }

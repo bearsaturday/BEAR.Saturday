@@ -30,7 +30,7 @@ class BEAR_Agent_Injector implements BEAR_Injector_Interface
      *　Inject
      *
      * @param BEAR_Agent &$object BEAR_Agentオブジェクト
-     * @param array      $config
+     * @param array $config
      *
      * @return void
      */
@@ -43,6 +43,7 @@ class BEAR_Agent_Injector implements BEAR_Injector_Interface
             $method = 'onInject' . $agent;
             if (method_exists($object, $method)) {
                 $object->$method();
+
                 return;
             }
         }

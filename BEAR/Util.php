@@ -64,6 +64,7 @@ class BEAR_Util
             }
         }
         closedir($dir);
+
         return $_files;
     }
 
@@ -169,6 +170,7 @@ class BEAR_Util
                 }
             }
         }
+
         return $aMerged;
     }
 
@@ -183,6 +185,7 @@ class BEAR_Util
     public static function unserialize($data)
     {
         trigger_error('BEAR_Util::unserialize deprecated', E_USER_DEPRECATED);
+
         return unserialize($data);
     }
 
@@ -200,11 +203,13 @@ class BEAR_Util
             foreach (get_object_vars($data) as $key => $val) {
                 $ret[$key] = self::getObjectVarsRecursive($val);
             }
+
             return $ret;
         } elseif (is_array($data)) {
             foreach ($data as $key => $val) {
                 $ret[$key] = self::getObjectVarsRecursive($val);
             }
+
             return $ret;
         } else {
             return $data;

@@ -71,14 +71,16 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
             /** @var $ro BEAR_Ro */
-            $ro->setCode($result->code)->setHeaders((array)$result->header)->setBody($result->body)->setLinks(
+            $ro->setCode($result->code)->setHeaders((array) $result->header)->setBody($result->body)->setLinks(
                 $result->links
             )->setHtml($result->html);
+
             return $ro;
         }
         if ($result !== false) {
             $this->_log->log('Cache Lite[R]', $key);
         }
+
         return $result;
     }
 
@@ -98,6 +100,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
         $result = $this->_adapter->save($values, $this->_config['prefix'] . $key);
         $log = array('key' => $key, 'result' => $result);
         $this->_log->log('Cache Lite[W]', $log);
+
         return $result;
     }
 
@@ -112,6 +115,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
     {
         $result = $this->_adapter->remove($this->_config['prefix'] . $key);
         $this->_log->log('Cache Lite[D]', $key);
+
         return $result;
     }
 
@@ -123,6 +127,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
     public function deleteAll()
     {
         $result = $this->_adapter->clean();
+
         return $result;
     }
 
@@ -136,6 +141,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
     public function setLife($life = null)
     {
         $this->_adapter->setLifeTime($life);
+
         return $this;
     }
 }

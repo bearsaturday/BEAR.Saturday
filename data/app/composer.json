@@ -1,0 +1,16 @@
+{
+    "name": "bear/app",
+    "description": "BEAR.Saturday application",
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phpunit/php-invoker": "*",
+        "phpunit/dbunit": "*",
+        "phpunit/phpunit-selenium": "*",
+        "phpunit/phpunit-story": "*",
+        "piece/stagehand-testrunner": "*",
+        "phake/phake": "*",
+        "pdepend/pdepend": "*",
+        "phpmd/phpmd": "*",
+        "fabpot/php-cs-fixer": "*"
+    }
+}

@@ -181,7 +181,6 @@ class BEAR_Agent extends BEAR_Base
         return $this->_ua;
     }
 
-
     /**
      * ユーザーエージェントコードの取得
      *
@@ -226,6 +225,7 @@ class BEAR_Agent extends BEAR_Base
                 // error
                 break;
         }
+
         return $serial;
     }
 
@@ -245,6 +245,7 @@ class BEAR_Agent extends BEAR_Base
             /** @noinspection PhpUndefinedMethodInspection */
             $size = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile)->getDisplay()->getSize();
         }
+
         return $size;
     }
 
@@ -269,6 +270,7 @@ class BEAR_Agent extends BEAR_Base
             /** @noinspection PhpUndefinedMethodInspection */
             $byteSize = array($display->getWidthBytes(), $display->getHeightBytes());
         }
+
         return $byteSize;
     }
 
@@ -280,6 +282,7 @@ class BEAR_Agent extends BEAR_Base
     public function getAgentRole()
     {
         $adapterConfig = $this->adapter->getConfig();
+
         return $adapterConfig['role'];
     }
 
@@ -315,6 +318,7 @@ class BEAR_Agent extends BEAR_Base
                 break;
             }
         }
+
         return $result;
     }
 }
