@@ -8,7 +8,7 @@
  */
 
 $bearMode = 0;
-require __DIR__ . '/../sites/beardemo.local/App.php';
+require dirname(__DIR__) . '/sites/beardemo.local/App.php';
 
 /**
  * @category   BEAR
