@@ -1,29 +1,8 @@
 <?php
-/**
- * Here is a sample file that demonstrates all of PEAR_PackageFileManager2's features.
- *
- * First, a subpackage is created that is then automatically processed with the parent package
- * Next, the parent package is created.  Finally, a compatible PEAR_PackageFileManager object is
- * automatically created from the parent package in order to maintain two copies of the same file.
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category   pear
- * @package    PEAR_PackageFileManager
- * @author     Greg Beaver <cellog@php.net>
- * @copyright  2005 The PHP Group
- * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: make.php 2583 2011-06-20 10:13:23Z koriyama@bear-project.net $
- * @link       http://pear.php.net/package/PEAR_PackageFileManager
- * @since      File available since Release 1.6.0
- * @ignore
- */
 require '../../BEAR.php';
+
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 $config['package'] = 'BEAR';
 $config['channel'] = 'pear.bear-project.net';
 $config['release_ver'] = BEAR::VERSION;
@@ -46,7 +25,7 @@ $packagexml = new PEAR_PackageFileManager2();
 $packagexml->setOptions(array('filelistgenerator' => 'file',
       'packagedirectory' => dirname(dirname(dirname(__FILE__))),
       'baseinstalldir' => '/',
-      'ignore' => array('CVS/', '.svn/', 'package/', ),
+      'ignore' => array('CVS/', '.svn/', 'package/', '.git/'),
 'exceptions' => array('BEAR/BEAR/bin/bear.sh' => 'script'),
 'installexceptions' => array('BEAR/BEAR/bin/bear.sh' => '/'),
 'installas' => array('BEAR/BEAR/bin/bear.sh' => 'bear'),
@@ -81,7 +60,6 @@ $packagexml->addPackageDepWithChannel('required', 'Panda', 'pear.bear-project.ne
 // dependency pear.zfcampus.org1
 //$packagexml->addPackageDepWithChannel('required', 'zf', 'pear.zfcampus.org', '1.10.2');
 // dependency pear.php.net
-/**
 $packagexml->addPackageDepWithChannel('required', 'Cache_Lite', 'pear.php.net', '1.7.0');
 $packagexml->addPackageDepWithChannel('required', 'HTML_QuickForm', 'pear.php.net', '3.2.5');
 $packagexml->addPackageDepWithChannel('required', 'HTML_QuickForm_Renderer_Tableless', 'pear.php.net', '0.6.0');
@@ -111,11 +89,9 @@ $packagexml->addPackageDepWithChannel('required', 'HTML_CSS', 'pear.php.net', '1
 $packagexml->addPackageDepWithChannel('required', 'Net_Server', 'pear.php.net', '1.0.2');
 $packagexml->addPackageDepWithChannel('required', 'FirePHPCore', 'pear.firephp.org', '0.3.1');
 $packagexml->addPackageDepWithChannel('required', 'Services_JSON', 'pear.php.net', '1.0.2');
-*/
+
 // optional (for developper)
-$packagexml->addPackageDepWithChannel('optional', 'PEAR_PackageFileManager2', 'pear.php.net', '1.0.0');
-$packagexml->addPackageDepWithChannel('optional', 'PhpDocumentor', 'pear.php.net', '1.4.2');
-$packagexml->addPackageDepWithChannel('optional', 'PHP_CodeSniffer', 'pear.php.net', '1.1.0');
+
 // $packagexml->addGlobalReplacement('package-info', '@PEAR-VER@', 'version');
 $packagexml->addGlobalReplacement('pear-config', '@PEAR-DIR@', 'php_dir');
 $packagexml->addGlobalReplacement('package-info', '@package_version@', 'version');
@@ -136,4 +112,4 @@ if (isset($_GET['make']) || (isset($_SERVER['argv']) && @$_SERVER['argv'][1] == 
     //    $packagexml->writePackageFile();
     $packagexml->debugPackageFile();
 }
-?>
+
