@@ -8,9 +8,9 @@ $bearDemoPath = __DIR__ . '/sites/beardemo.local';
 $pandaPath = dirname(__DIR__) . '/vendors/Panda';
 // set autoloder
 set_include_path($bearPath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . $pandaPath . PATH_SEPARATOR . get_include_path());
-spl_autoload_register('bearTestAutolodaer');
+spl_autoload_register('bearTestAutoloder');
 BEAR::set('page', new BEAR_Page_Cli(array()));
-function bearTestAutolodaer($class) {
+function bearTestAutoloder($class) {
     $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
     if(file_exists($file)) {
         include_once $file;
