@@ -12,5 +12,7 @@ spl_autoload_register('bearTestAutolodaer');
 BEAR::set('page', new BEAR_Page_Cli(array()));
 function bearTestAutolodaer($class) {
     $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-    include_once $file;
+    if(file_exists($file)) {
+        include_once $file;
+    }
 }
