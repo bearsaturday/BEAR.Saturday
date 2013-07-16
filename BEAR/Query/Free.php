@@ -20,6 +20,9 @@
  * selectを使用した場合,preparedステートメントを毎回freeします。
  * selectMultipleを使用する場合は、Roクラス内でBEAR::dependencyを使用して呼び出してください。
  * </pre>
+ * @category  BEAR
+ * @package   BEAR_Query
+ * @author    Satomi Fukushima <satomi.fukushima@excite.jp>
  */
 class Bear_Query_Free extends BEAR_Query
 {
