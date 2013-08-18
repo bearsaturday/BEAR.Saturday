@@ -112,12 +112,12 @@ class BEAR_Dev_Shell extends BEAR_Base
         // parse
         $cli = $this->_config['cli'];
         $parser = new Console_CommandLine(array(
-                'name' => 'bear',
-                'description' => 'BEAR command line interface',
-                'version' => BEAR::VERSION,
-                'add_help_option' => true,
-                'add_version_option' => true
-            ));
+            'name' => 'bear',
+            'description' => 'BEAR command line interface',
+            'version' => BEAR::VERSION,
+            'add_help_option' => true,
+            'add_version_option' => true
+        ));
         // create resource
         $subCmd = $parser->addCommand(
             self::CMD_CREATE,
@@ -360,6 +360,9 @@ class BEAR_Dev_Shell extends BEAR_Base
      */
     private function _makeFullPath($path)
     {
+        if(substr($path, -1) === '/') {
+            $path = substr($path, 0, -1);
+        }
         if ($path[0] !== '/') {
             $fullpath = $_SERVER['PWD'] . '/' . $path;
             $path = $fullpath;
@@ -605,17 +608,17 @@ class BEAR_Dev_Shell extends BEAR_Base
      * BEARスケルトンアプリ作成
      *
      * @param string $path  アプリケーシン絶対or相対パス
-     * @param string $pearc .pearrcパス
+     * @param string $pearrc .pearrcパス
      *
      * @return void
      */
-    private function _initApp($path, $pearc = '')
+    private function _initApp($path, $pearrc = '')
     {
         $bearPath = _BEAR_BEAR_HOME;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             throw Exception("Windows is not supported for init-app, copy data/app instaed.\n");
         }
-        $config = new PEAR_Config($pearc);
+        $config = new PEAR_Config($pearrc, '', false, true);
         $pearPath = $config->get('php_dir');
         $pearDataPath = $config->get('data_dir'); //usr/share/php/data
         $source = "{$pearDataPath}/BEAR/data/app";
@@ -625,10 +628,10 @@ class BEAR_Dev_Shell extends BEAR_Base
         if (!file_exists($source)) {
             die("error: no valid app folder\n$source\n");
         }
-        $exec = "/bin/cp -R {$source} {$path}";
+        $exec = "/bin/cp -R {$source}/ {$path}/";
         //　コピー先エラーチェック
-        if (file_exists($path)) {
-            die("'{$path}' already exists\n");
+        if (file_exists($path . '/App.php')) {
+            die("path '{$path}' already exists\n");
         }
         $result = shell_exec($exec);
         if ($result) {
