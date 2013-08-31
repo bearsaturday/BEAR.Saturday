@@ -318,7 +318,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return string
      */
-    private function _sort($sql)
+    protected function _sort($sql)
     {
         if (stripos($sql, 'ORDER BY') !== false) {
             return $sql;
@@ -353,7 +353,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return array
      */
-    private function _sortGetQuery()
+    protected function _sortGetQuery()
     {
         $get = (isset($_GET['_sort'])) ? explode(',', $_GET['_sort']) : array();
         $result = array();
