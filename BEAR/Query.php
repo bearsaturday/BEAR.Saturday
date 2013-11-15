@@ -190,6 +190,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             }
             if ($params) {
                 $sth = $db->prepare($query);
+                if (PEAR::isError($result)) {
+                    return $result;
+                }
                 $result = $sth->execute($params)->fetchAll();
             } else {
                 $result = $db->queryAll($query);
