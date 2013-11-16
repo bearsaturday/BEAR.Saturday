@@ -150,6 +150,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      * @param array  $values where条件配列
      * @param string $id
      *
+     *
      * @return BEAR_Ro
      */
 
@@ -190,8 +191,8 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             }
             if ($params) {
                 $sth = $db->prepare($query);
-                if (PEAR::isError($result)) {
-                    return $result;
+                if (PEAR::isError($sth)) {
+                    return $sth;
                 }
                 $result = $sth->execute($params)->fetchAll();
             } else {
@@ -227,6 +228,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
         if ($params) {
             $sth = $db->prepare($query);
+             if (PEAR::isError($sth)) {
+                return $sth;
+             }
             $result = $sth->execute($params)->fetchAll();
         } else {
             $result = $db->queryAll($query);
@@ -293,6 +297,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         }
         if ($params) {
             $sth = $db->prepare($query);
+             if (PEAR::isError($sth)) {
+                return $sth;
+             }
             $result = $sth->execute($params)->fetchRow();
         } else {
             $result = $db->queryRow($query);
@@ -469,6 +476,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         if ($countQuery) {
             if ($params) {
                 $sth = $this->_config['db']->prepare($countQuery);
+                if (PEAR::isError($sth)) {
+                   return $sth;
+                }
                 $totalItems = $sth->execute($params)->fetchOne();
             } else {
                 $totalItems = $this->_config['db']->queryOne($countQuery);
