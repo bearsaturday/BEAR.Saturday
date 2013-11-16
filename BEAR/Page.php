@@ -661,7 +661,7 @@ abstract class BEAR_Page extends BEAR_Base
         $sortKey = isset($_GET['_sort']) ? $_GET['_sort'] : '';
         $result = get_class($this) . '-' . $pagerKey . '-' . $sortKey . '-' . $pageConfig;
 
-        return $result;
+        return md5($result);
     }
 
     /**
