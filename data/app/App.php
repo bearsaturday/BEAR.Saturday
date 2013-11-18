@@ -57,7 +57,7 @@ class App
                 break;
             case 100:
                 // for UNIT test or HTTP access test
-                $app['core']['debug'] = true;
+                $app['core']['debug'] = false;
                 $app['App_Db']['dsn']['default'] = $app['App_Db']['dsn']['slave'] = $app['App_Db']['dsn']['test'];
                 $app['BEAR_Log']['__class'] = 'BEAR_Log_Test';
                 $app['BEAR_Resource_Request']['__class'] = 'BEAR_Resource_Request_Test';
