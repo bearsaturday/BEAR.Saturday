@@ -56,7 +56,7 @@ class BEAR
     /**
      * BEAR version
      */
-    const VERSION = '0.9.16';
+    const VERSION = '0.9.17';
 
     /**
      * Code OK
