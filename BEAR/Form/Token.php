@@ -76,7 +76,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
         if (isset($_POST['_token'])) {
             $token = $_POST['_token'];
         } elseif (isset($_GET['_token'])) {
-            $token = $_POST['_token'];
+            $token = $_GET['_token'];
         } else {
             $token = '';
         }
