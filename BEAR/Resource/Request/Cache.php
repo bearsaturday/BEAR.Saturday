@@ -106,6 +106,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                     'body' => $ro->getBody(),
                     'links' => $ro->getLinks()
                 );
+                $cache->setLife($options['cache']['life']);
                 $cache->set($cacheKey, $save);
             } else {
                 // キャッシュ生成エラー
