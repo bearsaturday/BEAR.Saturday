@@ -394,9 +394,9 @@ class BEAR
         } else {
             if (is_array($injector)) {
                 if (is_callable(array($injector[0], $injector[1]))) {
-                    $class = $injector[0];
+                    $className = $injector[0];
                     $method = $injector[1];
-                    call_user_func_array(array($classname, $method), array($object, $config));
+                    call_user_func_array(array($className, $method), array($object, $config));
                 } else {
                     throw new BEAR_Exception('Injector is not valid.', array(
                         'code' => self::CODE_BAD_REQUEST,
