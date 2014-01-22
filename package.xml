@@ -13,11 +13,11 @@
   <email>akihito.koriyama@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2013-12-02</date>
- <time>10:19:13</time>
+ <date>2014-01-22</date>
+ <time>08:05:25</time>
  <version>
-  <release>0.9.18</release>
-  <api>0.9.18</api>
+  <release>0.9.19</release>
+  <api>0.9.19</api>
  </version>
  <stability>
   <release>beta</release>
@@ -2527,40 +2527,6 @@ BEAR.Saturday (for PHP 5.2)
        </file>
       </dir> <!-- /data/app/tmp/upload -->
      </dir> <!-- /data/app/tmp -->
-     <dir name="vendor">
-      <dir name="composer">
-       <file baseinstalldir="/" name="autoload_classmap.php" role="data">
-        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-       </file>
-       <file baseinstalldir="/" name="autoload_namespaces.php" role="data">
-        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-       </file>
-       <file baseinstalldir="/" name="autoload_real.php" role="data">
-        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-       </file>
-       <file baseinstalldir="/" name="ClassLoader.php" role="data">
-        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-        <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-       </file>
-      </dir> <!-- /data/app/vendor/composer -->
-      <file baseinstalldir="/" name="autoload.php" role="data">
-       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-       <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
-       <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
-      </file>
-     </dir> <!-- /data/app/vendor -->
      <file baseinstalldir="/" name="App.php" role="data">
       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
       <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -3905,14 +3871,14 @@ BEAR.Saturday (for PHP 5.2)
  <changelog>
   <release>
    <version>
-    <release>0.9.18</release>
-    <api>0.9.18</api>
+    <release>0.9.19</release>
+    <api>0.9.19</api>
    </version>
    <stability>
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2013-12-02</date>
+   <date>2014-01-22</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">The BSD License</license>
    <notes>
 BEAR.Saturday (for PHP 5.2)
