@@ -84,15 +84,15 @@ div#bear_badge a.bear_info {
 	background-color: gray;
 	color: white;
 	font: bold 8pt Verdana;
-	border: 1px solid #ddddd;
+	border: 1px solid #dddddd;
 }
 
 div#bear_badge a.bear_resource_none {
 	padding: 5px 3px 3px 3px;
-	background-color: grey;
+	background-color: gray;
 	color: white;
 	font: bold 8pt Verdana;
-	border: 1px solid #ddddd;
+	border: 1px solid #dddddd;
 }
 
 div#bear_badge a.bear_resource_box {
@@ -108,7 +108,7 @@ div#bear_badge a.bear_resource_body {
 	background-color: blue;
 	color: white;
 	font: bold 8pt Verdana;
-	border: 1px solid #ddddd;
+	border: 1px solid #dddddd;
 }
 
 div#bear_badge a.bear_resource_html {
@@ -116,7 +116,7 @@ div#bear_badge a.bear_resource_html {
 	background-color: forestgreen;
 	color: white;
 	font: bold 8pt Verdana;
-	border: 1px solid #ddddd;
+	border: 1px solid #dddddd;
 }
 
 .hl-all {
@@ -125,10 +125,6 @@ div#bear_badge a.bear_resource_html {
 
 .hl-main {
 	font-family: monospace;
-}
-
-.hl-default {
-	color: #;
 }
 
 .hl-code {
