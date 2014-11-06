@@ -122,7 +122,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * @param mixed $link
      *
-     * @return BEAR_Ro
+     * @return BEAR_Ro_Prototype
      */
     public function link($link)
     {
