@@ -419,9 +419,13 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function get($key = null)
     {
-        $result = (is_null($key)) ? $this->_values : $this->_values[$key];
-
-        return $result;
+    	if (is_null($key)) {
+    		return $this->_values;
+    	}
+    	if (is_set($this->_values[$key])) {
+    		return $this->_values[$key];
+    	}
+   		return null;
     }
 
     /**
