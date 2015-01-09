@@ -422,7 +422,7 @@ abstract class BEAR_Page extends BEAR_Base
         if (is_null($key)) {
             return $this->_values;
         }
-        if (is_set($this->_values[$key])) {
+        if (isset($this->_values[$key])) {
             return $this->_values[$key];
         }
         return null;
