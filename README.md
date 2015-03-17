@@ -14,11 +14,15 @@ BEAR(Saturday) is only supported on PHP 5.2 and up.
 
 Create project with BEAR.Saturday
 -------------
-$ composer create-project bearsaturday/skeleton MyVendor.MyPackage
+```
+composer create-project bearsaturday/skeleton MyVendor.MyPackage
+````
 
 Hosting
 -------------
-$ ln -s MyVendor.MyPackage/htdocs /path/to/vhost_dir
+```
+ln -s MyVendor.MyPackage/htdocs /path/to/vhost_dir
+```
 
 looking for older versin ? visit the official [BEAR pear-channel][1]
 
