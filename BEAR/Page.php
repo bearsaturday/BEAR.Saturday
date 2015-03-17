@@ -130,7 +130,7 @@ abstract class BEAR_Page extends BEAR_Base
     /**
      * 出力されたページをリソースオブジェクトにしたもの
      *
-     * @var array
+     * @var BEAR_Ro
      */
     protected $_pageRo = array();
 
@@ -303,7 +303,7 @@ abstract class BEAR_Page extends BEAR_Base
             $this->set('pager', $pager);
         }
         $this->_pageRo = $this->_viewAdapter()->display($tplName, $options);
-        // add page BEAR_Page_Hedaers header
+        // add page BEAR_Page_Headers header
         $pageHeaders = (array) BEAR::dependency('BEAR_Page_Header')->getHeaders();
         $roHeaders = $this->_pageRo->getHeaders();
         $headers = array_merge($roHeaders, $pageHeaders);
@@ -419,9 +419,13 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function get($key = null)
     {
-        $result = (is_null($key)) ? $this->_values : $this->_values[$key];
-
-        return $result;
+        if (is_null($key)) {
+            return $this->_values;
+        }
+        if (isset($this->_values[$key])) {
+            return $this->_values[$key];
+        }
+        return null;
     }
 
     /**
@@ -470,11 +474,10 @@ abstract class BEAR_Page extends BEAR_Base
      * 1) /BEAR/Resource/output/
      * 2) /App/output/
      *
-     * @param string $format  フォーマット
+     * @param string $format フォーマット
      * @param array  $options オプション
      *
-     * @return void
-     * @throws BEAR_Page_Exception
+     * @throws BEAR_Exception
      */
     public function output($format = 'print', array $options = array())
     {
@@ -572,7 +575,7 @@ abstract class BEAR_Page extends BEAR_Base
     public function injectAjaxValues()
     {
         $ajax = BEAR::dependency('BEAR_Page_Ajax');
-        /* @param $ajax BEAR_Page_Ajax */
+        /** @var $ajax BEAR_Page_Ajax */
         $ajaxReq = $ajax->getAjaxRequest();
         $this->_args = array_merge($this->_args, $ajaxReq);
     }
@@ -649,12 +652,6 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function getCacheKey()
     {
-        static $result = null;
-
-        // キーの同一性を保障＆パフォーマンス
-        if (!is_null($result)) {
-            return $result;
-        }
         $ua = (isset($this->_config['ua'])) ? $this->_config['ua'] : '';
         $pageConfig = $ua . serialize(array($this->getArgs(), $this->_config));
         $pagerKey = isset($_GET['_start']) ? $_GET['_start'] : '';

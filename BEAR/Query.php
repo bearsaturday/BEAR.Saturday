@@ -399,7 +399,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return mixed
      */
-    public function update(array $values, $where, $table, $types = null)
+    public function update(array $values, $where, $table = null, $types = null)
     {
         $db = & $this->_config['db'];
         $table = $table ? $table : $this->_config['table'];

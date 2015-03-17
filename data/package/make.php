@@ -16,7 +16,7 @@ $config['note'] = 'BEAR.Saturday (for PHP 5.2)';
 /**
  * This is the only setup function needed
  */
-require_once 'PEAR/PackageFileManager2.php';
+require_once __DIR__ . '/PEAR/PackageFileManager2.php';
 // recommended - makes PEAR_Errors act like exceptions (kind of)
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
@@ -112,4 +112,3 @@ if (isset($_GET['make']) || (isset($_SERVER['argv']) && @$_SERVER['argv'][1] == 
     //    $packagexml->writePackageFile();
     $packagexml->debugPackageFile();
 }
-
