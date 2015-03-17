@@ -652,12 +652,6 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function getCacheKey()
     {
-        static $result = null;
-
-        // キーの同一性を保障＆パフォーマンス
-        if (!is_null($result)) {
-            return $result;
-        }
         $ua = (isset($this->_config['ua'])) ? $this->_config['ua'] : '';
         $pageConfig = $ua . serialize(array($this->getArgs(), $this->_config));
         $pagerKey = isset($_GET['_start']) ? $_GET['_start'] : '';
