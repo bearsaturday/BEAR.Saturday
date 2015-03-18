@@ -106,7 +106,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
     public function get($key, $default = null)
     {
         $result = $this->_adapter->get($this->_config['prefix'] . $key);
-        if (!$result) {
+        if ($result === false && !is_null($default)) {
             $result = $default;
         }
         if ($result instanceof BEAR_Ro_Container) {

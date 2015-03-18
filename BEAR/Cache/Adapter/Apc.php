@@ -82,7 +82,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     public function get($key, $default = null)
     {
         $result = apc_fetch($this->_config['prefix'] . $key);
-        if (!$result) {
+        if ($result === false && !is_null($default)) {
             $result = $default;
         }
         if ($result instanceof BEAR_Ro_Container) {
