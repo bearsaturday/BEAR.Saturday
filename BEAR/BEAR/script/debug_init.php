@@ -16,8 +16,8 @@
 require_once 'Panda.php';
 
 if ($appConfig['Panda']['firephp'] === true) {
-    require_once 'FirePHPCore/FirePHP.class.php';
-    require_once 'FirePHPCore/fb.php';
+    require_once dirname(dirname(__DIR__)) . '/vendors/FirePHPCore/FirePHP.class.php';
+    require_once dirname(dirname(__DIR__)) . '/vendors/FirePHPCore/fb.php';
 }
 
 // シャットダウン関数登録

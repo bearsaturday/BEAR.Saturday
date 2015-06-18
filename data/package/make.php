@@ -4,7 +4,7 @@ require '../../BEAR.php';
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 $config['package'] = 'BEAR';
-$config['channel'] = 'pear.bear-project.net';
+$config['channel'] = 'bearsaturday.github.io/pear';
 $config['release_ver'] = BEAR::VERSION;
 $config['api_ver'] = $config['release_ver'];
 $config['stability'] = 'beta';
@@ -56,7 +56,7 @@ $packagexml->addRole('tpl', 'php');
 $packagexml->addInstallAs('BEAR/BEAR/bin/bear.sh', 'bear');
 
 // dependency pear.bear-project.net
-$packagexml->addPackageDepWithChannel('required', 'Panda', 'pear.bear-project.net', '0.3.38');
+$packagexml->addPackageDepWithChannel('required', 'Panda', 'bearsaturday.github.io/pear', '0.3.38');
 // dependency pear.zfcampus.org1
 //$packagexml->addPackageDepWithChannel('required', 'zf', 'pear.zfcampus.org', '1.10.2');
 // dependency pear.php.net
@@ -87,7 +87,7 @@ $packagexml->addPackageDepWithChannel('required', 'Console_Table', 'pear.php.net
 $packagexml->addPackageDepWithChannel('required', 'File_SearchReplace', 'pear.php.net', '1.1.2');
 $packagexml->addPackageDepWithChannel('required', 'HTML_CSS', 'pear.php.net', '1.5.4');
 $packagexml->addPackageDepWithChannel('required', 'Net_Server', 'pear.php.net', '1.0.2');
-$packagexml->addPackageDepWithChannel('required', 'FirePHPCore', 'pear.firephp.org', '0.3.1');
+//$packagexml->addPackageDepWithChannel('required', 'FirePHPCore', 'pear.firephp.org', '0.3.1');
 $packagexml->addPackageDepWithChannel('required', 'Services_JSON', 'pear.php.net', '1.0.2');
 
 // optional (for developper)

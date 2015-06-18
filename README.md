@@ -12,18 +12,19 @@ Requirements
 
 BEAR(Saturday) is only supported on PHP 5.2 and up.
 
-Install BEAR
+Create project with BEAR.Saturday
 -------------
-$ pear channel-discover pear.bear-project.net  
-$ pear install bear/BEAR-beta
+```
+composer create-project bearsaturday/skeleton MyVendor.MyPackage
+````
 
-Create Project
+Hosting
 -------------
-$ bear init-app bearapp.name  
-$ ln -s bearapp.name/htdocs /path/to/vhost_dir
+```
+ln -s MyVendor.MyPackage/htdocs /path/to/vhost_dir
+```
 
-
-visit the official [BEAR website][1] to learn more.(Japanese only)
+looking for older versin ? visit the official [BEAR pear-channel][1]
 
 [1]: http://www.bear-project.net/
 [2]: http://www.youtube.com/watch?v=NKdiNdNbH0Y

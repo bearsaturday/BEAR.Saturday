@@ -4,7 +4,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
  <name>BEAR</name>
- <channel>pear.bear-project.net</channel>
+ <channel>bearsaturday.github.io/pear</channel>
  <summary>PHP Framework Package</summary>
  <description>BEAR is web application framework package.</description>
  <lead>
@@ -13,11 +13,11 @@
   <email>akihito.koriyama@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2015-03-17</date>
- <time>07:47:25</time>
+ <date>2015-06-18</date>
+ <time>07:55:53</time>
  <version>
-  <release>0.9.20</release>
-  <api>0.9.20</api>
+  <release>0.9.22</release>
+  <api>0.9.22</api>
  </version>
  <stability>
   <release>beta</release>
@@ -957,6 +957,32 @@ BEAR.Saturday (for PHP 5.2)
      </file>
     </dir> <!-- /BEAR/Test -->
     <dir name="vendors">
+     <dir name="FirePHPCore">
+      <file baseinstalldir="/" name="fb.php" role="php">
+       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+       <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+       <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+      </file>
+      <file baseinstalldir="/" name="fb.php4" role="data">
+       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+       <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+       <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+      </file>
+      <file baseinstalldir="/" name="FirePHP.class.php" role="php">
+       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+       <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+       <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+      </file>
+      <file baseinstalldir="/" name="FirePHP.class.php4" role="data">
+       <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+       <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+       <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+      </file>
+     </dir> <!-- /BEAR/vendors/FirePHPCore -->
      <dir name="jquery">
       <file baseinstalldir="/" name="jquery-1.3.1.js" role="data">
        <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
@@ -2135,6 +2161,48 @@ BEAR.Saturday (for PHP 5.2)
      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
     </file>
    </dir> <!-- /BEAR -->
+   <dir name="build">
+    <dir name="logs">
+     <file baseinstalldir="/" name="jdepend.xml" role="data">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="phploc.csv" role="data">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="pmd-cpd.xml" role="data">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="pmd.xml" role="data">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+    </dir> <!-- /build/logs -->
+    <dir name="pdepend">
+     <file baseinstalldir="/" name="dependencies.svg" role="data">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="overview-pyramid.svg" role="data">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+    </dir> <!-- /build/pdepend -->
+   </dir> <!-- /build -->
    <dir name="data">
     <dir name="app">
      <dir name="App">
@@ -3677,6 +3745,46 @@ BEAR.Saturday (for PHP 5.2)
      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
     </file>
    </dir> <!-- /tests -->
+   <dir name="vendor">
+    <dir name="composer">
+     <file baseinstalldir="/" name="autoload_classmap.php" role="php">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="autoload_namespaces.php" role="php">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="autoload_psr4.php" role="php">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="autoload_real.php" role="php">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+     <file baseinstalldir="/" name="ClassLoader.php" role="php">
+      <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+      <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+      <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+     </file>
+    </dir> <!-- /vendor/composer -->
+    <file baseinstalldir="/" name="autoload.php" role="php">
+     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+     <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+    </file>
+   </dir> <!-- /vendor -->
    <file baseinstalldir="/" name="BEAR.php" role="php">
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
     <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -3684,6 +3792,12 @@ BEAR.Saturday (for PHP 5.2)
     <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
    </file>
    <file baseinstalldir="/" name="build.xml" role="data">
+    <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    <tasks:replace from="@PHP-BIN@" to="bin_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" name="composer.json" role="data">
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
@@ -3713,7 +3827,7 @@ BEAR.Saturday (for PHP 5.2)
    </pearinstaller>
    <package>
     <name>Panda</name>
-    <channel>pear.bear-project.net</channel>
+    <channel>bearsaturday.github.io/pear</channel>
     <min>0.3.38</min>
    </package>
    <package>
@@ -3852,11 +3966,6 @@ BEAR.Saturday (for PHP 5.2)
     <min>1.0.2</min>
    </package>
    <package>
-    <name>FirePHPCore</name>
-    <channel>pear.firephp.org</channel>
-    <min>0.3.1</min>
-   </package>
-   <package>
     <name>Services_JSON</name>
     <channel>pear.php.net</channel>
     <min>1.0.2</min>
@@ -3871,14 +3980,14 @@ BEAR.Saturday (for PHP 5.2)
  <changelog>
   <release>
    <version>
-    <release>0.9.20</release>
-    <api>0.9.20</api>
+    <release>0.9.22</release>
+    <api>0.9.22</api>
    </version>
    <stability>
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2015-03-17</date>
+   <date>2015-06-18</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">The BSD License</license>
    <notes>
 BEAR.Saturday (for PHP 5.2)
