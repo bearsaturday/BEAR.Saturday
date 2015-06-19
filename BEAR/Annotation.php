@@ -31,7 +31,6 @@
  */
 class BEAR_Annotation extends BEAR_Base
 {
-
     /**
      * Constructor
      *

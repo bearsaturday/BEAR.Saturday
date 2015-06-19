@@ -37,7 +37,6 @@
  */
 abstract class BEAR_Page extends BEAR_Base
 {
-
     /**
      * アクティブリンク・クリックネーム　クエリーキー
      *
@@ -715,5 +714,4 @@ abstract class BEAR_Page extends BEAR_Base
             }
         }
     }
-
 }

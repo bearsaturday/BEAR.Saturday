@@ -44,7 +44,6 @@ function smarty_function_resource(
     /** @noinspection PhpUnusedParameterInspection */
     &$smarty
 ) {
-
     $config = (array)BEAR::loadValues($params['params']) + array(
         'method' => 'read',
         'uri' => $params['uri'],

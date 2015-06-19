@@ -319,4 +319,3 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         throw $this->_exception($msg, array('info' => $info));
     }
 }
-

@@ -24,7 +24,7 @@
  * @package   BEAR_Query
  * @author    Satomi Fukushima <satomi.fukushima@excite.jp>
  */
-class Bear_Query_Free extends BEAR_Query
+class BEAR_Query_Free extends BEAR_Query
 {
     //prepareステートメント結果を使いまわすために使用
     protected $_stmt = null;
@@ -72,14 +72,14 @@ class Bear_Query_Free extends BEAR_Query
         
         // Row取得
         if (!is_null($values)) {
-            if(is_object($this->_stmt)) {
+            if (is_object($this->_stmt)) {
                 $sth = $this->_stmt;
             }
             $result = $this->_selectRow($db, $query, $params, $values, $id, $sth);
-            if(!is_object($sth) && is_null($this->_stmt)) {
+            if (!is_object($sth) && is_null($this->_stmt)) {
                 $this->_stmt = $sth;
             }
-            if($free) {
+            if ($free) {
                 $this->_stmt->free();
                 $this->_stmt = null;
             }
@@ -110,13 +110,13 @@ class Bear_Query_Free extends BEAR_Query
                 $query .= ' LIMIT ' . $this->_config['perPage'];
             }
             if ($params) {
-                if(!is_object($sth) && is_null($this->_stmt)) {
+                if (!is_object($sth) && is_null($this->_stmt)) {
                     $sth = $db->prepare($query);
                     $this->_stmt = $sth;
                 } else {
                     $sth = $this->_stmt;
                 }
-                if($free) {
+                if ($free) {
                     $this->_stmt->free();
                     $this->_stmt = null;
                 }
@@ -130,14 +130,14 @@ class Bear_Query_Free extends BEAR_Query
         $pagerOptions = $this->_config['options'];
         $pagerOptions['perPage'] = $this->_config['perPage'];
         if (!array_key_exists('totalItems', $pagerOptions)) {
-            if(is_object($this->_stmt)) {
+            if (is_object($this->_stmt)) {
                 $count_sth = $this->_count_stmt;
             }
-            $pagerOptions['totalItems'] = $this->_countQuery($query, $params,$count_sth);
-            if(!is_object($count_sth) && is_null($this->_count_stmt)) {
+            $pagerOptions['totalItems'] = $this->_countQuery($query, $params, $count_sth);
+            if (!is_object($count_sth) && is_null($this->_count_stmt)) {
                 $this->_count_stmt = $count_sth;
             }
-            if($free) {
+            if ($free) {
                 $this->_count_stmt->free();
                 $this->_count_stmt = null;
             }
@@ -162,13 +162,13 @@ class Bear_Query_Free extends BEAR_Query
         $info['limit'] = $info['to'] - $info['from'] + 1;
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
         if ($params) {
-            if(!is_object($sth) && is_null($this->_stmt)) {
+            if (!is_object($sth) && is_null($this->_stmt)) {
                 $sth = $db->prepare($query);
                 $this->_stmt = $sth;
             } else {
                 $sth = $this->_stmt;
             }
-            if($free) {
+            if ($free) {
                 $this->_stmt->free();
                 $this->_stmt = null;
             }
@@ -188,7 +188,6 @@ class Bear_Query_Free extends BEAR_Query
         $ro->setLinks(array('pager' => $pager));
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
         return $ro;
-        
     }
     
     /**
@@ -208,7 +207,7 @@ class Bear_Query_Free extends BEAR_Query
      * @param string $query  SQL
      * @param array  $params プリペアードステートメントにする場合にバインドする変数
      * @param array  $values where条件配列
-     * @param string $id     
+     * @param string $id
      *
      * @return BEAR_Ro
      */
@@ -265,7 +264,7 @@ class Bear_Query_Free extends BEAR_Query
         $pagerOptions = $this->_config['options'];
         $pagerOptions['perPage'] = $this->_config['perPage'];
         if (!array_key_exists('totalItems', $pagerOptions)) {
-            $pagerOptions['totalItems'] = $this->_countQuery($query, $params,$count_sth);
+            $pagerOptions['totalItems'] = $this->_countQuery($query, $params, $count_sth);
             // prepareステートメントをfree
             $count_sth->free();
         }
@@ -337,7 +336,7 @@ class Bear_Query_Free extends BEAR_Query
      *
      * @return mixed
      */
-    private function _selectRow(&$db, $query, array $params, array $values, $id ,&$sth)
+    private function _selectRow(&$db, $query, array $params, array $values, $id, &$sth)
     {
         $where = array();
         if (is_string($id) && array_key_exists($id, $values)) {
@@ -357,7 +356,7 @@ class Bear_Query_Free extends BEAR_Query
             $query .= ' WHERE ' . implode(' AND ', $where);
         }
         if ($params) {
-            if(!is_object($sth)) {
+            if (!is_object($sth)) {
                 $sth = $db->prepare($query);
             }
             $result = $sth->execute($params)->fetchRow();
@@ -376,7 +375,7 @@ class Bear_Query_Free extends BEAR_Query
     *
     * @return int
     */
-    protected function _countQuery($query, array $params = array(),&$sth)
+    protected function _countQuery($query, array $params = array(), &$sth)
     {
         $prepare_free = (isset($this->_config['prepare_free'])) ? $this->_config['prepare_free'] : 1;
         // be smart and try to guess the total number of records
@@ -401,5 +400,4 @@ class Bear_Query_Free extends BEAR_Query
     
         return $totalItems;
     }
-    
 }

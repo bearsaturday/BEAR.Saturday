@@ -31,7 +31,6 @@
  */
 interface BEAR_Base_Interface
 {
-
     /**
      * Constructor
      *

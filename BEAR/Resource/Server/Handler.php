@@ -42,7 +42,6 @@
  */
 class BEAR_Resource_Server_Handler extends Net_Server_Handler
 {
-
     /**
      * Constructor
      */

@@ -82,7 +82,6 @@
  */
 class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interface, BEAR_Base_Interface
 {
-
     /**
      * コード OK
      */

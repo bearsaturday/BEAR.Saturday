@@ -28,7 +28,6 @@
  */
 interface BEAR_Aspect_Throwing_Interface
 {
-
     /**
      * throwingアドバイス
      *

@@ -129,5 +129,4 @@ class BEAR_Test_Client extends HTTP_Request2
         $result = isset($header['x-bear-resource-log']) ? json_decode($header['x-bear-resource-log'], true) : array();
         return $result;
     }
-
 }

@@ -126,7 +126,6 @@
  */
 class BEAR_Mdb2 extends BEAR_Factory
 {
-
     /**
      * Las log
      *

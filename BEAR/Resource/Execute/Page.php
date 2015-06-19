@@ -28,7 +28,6 @@
  */
 class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
 {
-
     /**
      * Roプロトタイプ
      *

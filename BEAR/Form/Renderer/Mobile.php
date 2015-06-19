@@ -72,21 +72,21 @@ class BEAR_Form_Renderer_Mobile extends HTML_QuickForm_Renderer_Tableless
      * @var      string
      * @access   private
      */
-    var $_headerTemplate = "\n<div style=\"color:#fff;background:#2c6ebd;font-size:medium;text-align:left;\">{header}</div>\n";
+    public $_headerTemplate = "\n<div style=\"color:#fff;background:#2c6ebd;font-size:medium;text-align:left;\">{header}</div>\n";
 
     /**
      * Element template string
      * @var      string
      * @access   private
      */
-    var $_elementTemplate = "\n\t\t<label><!-- BEGIN required --><span style=\"color:red;\">*</span><!-- END required -->{label}</label><div class=\"element<!-- BEGIN error -->_error<!-- END error -->\"><!-- BEGIN error --><div style=\"color:#ff0000\">{error}</div><!-- END error --><!-- BEGIN label_2 --><div style=\"color:#555;font-size:xx-small;\">{label_2}</div><!-- END label_2 -->{element}<!-- BEGIN label_3 -->{label_3}<!-- END label_3 --></div>";
+    public $_elementTemplate = "\n\t\t<label><!-- BEGIN required --><span style=\"color:red;\">*</span><!-- END required -->{label}</label><div class=\"element<!-- BEGIN error -->_error<!-- END error -->\"><!-- BEGIN error --><div style=\"color:#ff0000\">{error}</div><!-- END error --><!-- BEGIN label_2 --><div style=\"color:#555;font-size:xx-small;\">{label_2}</div><!-- END label_2 -->{element}<!-- BEGIN label_3 -->{label_3}<!-- END label_3 --></div>";
 
     /**
      * Form template string
      * @var      string
      * @access   private
      */
-    var $_formTemplate = "\n<div style=\"color:#000000;background:#eeeeaa;\"><form{attributes}>\n\t<div style=\"display: none;\">\n{hidden}\t</div>\n{content}\n</form></div>";
+    public $_formTemplate = "\n<div style=\"color:#000000;background:#eeeeaa;\"><form{attributes}>\n\t<div style=\"display: none;\">\n{hidden}\t</div>\n{content}\n</form></div>";
 
     /**
      * Template used when opening a fieldset
@@ -94,7 +94,7 @@ class BEAR_Form_Renderer_Mobile extends HTML_QuickForm_Renderer_Tableless
      * @access   private
      */
     //    var $_openFieldsetTemplate = "\n\t<fieldset{id}{attributes}>";
-    var $_openFieldsetTemplate = "";
+    public $_openFieldsetTemplate = "";
 
     /**
      * Template used when opening a hidden fieldset
@@ -103,7 +103,7 @@ class BEAR_Form_Renderer_Mobile extends HTML_QuickForm_Renderer_Tableless
      * @access   private
      */
     //    var $_openHiddenFieldsetTemplate = "\n\t<fieldset class=\"hidden{class}\">\n\t\t<ol>";
-    var $_openHiddenFieldsetTemplate = "";
+    public $_openHiddenFieldsetTemplate = "";
 
     /**
      * Template used when closing a fieldset
@@ -111,21 +111,21 @@ class BEAR_Form_Renderer_Mobile extends HTML_QuickForm_Renderer_Tableless
      * @access   private
      */
     //    var $_closeFieldsetTemplate = "\n\t\t</ol>\n\t</fieldset>";
-    var $_closeFieldsetTemplate = "";
+    public $_closeFieldsetTemplate = "";
 
     /**
      * Required Note template string
      * @var      string
      * @access   private
      */
-    var $_requiredNoteTemplate = "\n\t\t\t<div><span style=\"color:black;font-size:xx-small;text-align:left;\">{requiredNote}</span></div>";
+    public $_requiredNoteTemplate = "\n\t\t\t<div><span style=\"color:black;font-size:xx-small;text-align:left;\">{requiredNote}</span></div>";
 
     /**
      * Constructor
      *
      * @access public
      */
-    function __construct()
+    public function __construct()
     {
         $this->HTML_QuickForm_Renderer_Default();
     }

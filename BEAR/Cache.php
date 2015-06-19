@@ -38,7 +38,6 @@
  */
 class BEAR_Cache extends BEAR_Factory
 {
-
     /**
      * キャッシュなし
      */

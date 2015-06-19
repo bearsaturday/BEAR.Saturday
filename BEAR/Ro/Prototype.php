@@ -316,7 +316,6 @@ class BEAR_Ro_Prototype extends BEAR_Ro
             $result = $this->_ro->getBody();
         }
         return $result;
-
     }
 
     /**

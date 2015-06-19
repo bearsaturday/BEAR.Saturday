@@ -17,7 +17,6 @@ require dirname(__DIR__) . '/sites/beardemo.local/App.php';
  */
 class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         //restore_error_handler();
@@ -244,7 +243,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         // オリジナル
         $params = array('uri' => 'Test/Aop', 'values' => $values);
         $actualBody = $this->_resource->read($params)->getBody();
-        $expected = array (
+        $expected = array(
           'id' => 1,
           'name' => 'BEAR',
         );
@@ -252,7 +251,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         // before アドバイス
         $params = array('uri' => 'Test/Aop/Before', 'values' => $values);
         $actualBody = $this->_resource->read($params)->getBody();
-        $expected = array (
+        $expected = array(
           'id' => 2,
           'name' => 'Kuma',
         );
@@ -260,7 +259,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         // after アドバイス
         $params = array('uri' => 'Test/Aop/After', 'values' => $values);
         $actualBody = $this->_resource->read($params)->getBody();
-        $expected = array (
+        $expected = array(
           'id' => 1,
           'name' => 'BEAR',
           'age' => 10,
@@ -277,7 +276,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         // returning アドバイス
         $params = array('uri' => 'Test/Aop/Returning', 'values' => $values);
         $actualBody = $this->_resource->read($params)->getBody();
-        $expected = array (
+        $expected = array(
           'id' => 1,
           'name' => 'BEAR',
           'is_no_problem' => true,
@@ -286,7 +285,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         // throwing アドバイス (1)
         $params = array('uri' => 'Test/Aop/Throwing', 'values' => $values);
         $actualBody = $this->_resource->read($params)->getBody();
-        $expected = array (
+        $expected = array(
           'is_error' => true,
         );
         $this->assertSame($expected, $actualBody);
@@ -294,7 +293,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         // throwing アドバイス (2)
         $params = array('uri' => 'Test/Aop/Throwing2', 'values' => $values);
         $actualBody = $this->_resource->read($params)->getBody();
-        $expected = array (
+        $expected = array(
           'is_error' => true,
         );
         $this->assertSame($expected, $actualBody);

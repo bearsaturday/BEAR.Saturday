@@ -33,7 +33,6 @@
  */
 class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adapter
 {
-
     /**
      * デフォルト行数
      */

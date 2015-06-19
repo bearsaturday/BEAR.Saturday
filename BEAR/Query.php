@@ -228,9 +228,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
         if ($params) {
             $sth = $db->prepare($query);
-             if (PEAR::isError($sth)) {
+            if (PEAR::isError($sth)) {
                 return $sth;
-             }
+            }
             $result = $sth->execute($params)->fetchAll();
         } else {
             $result = $db->queryAll($query);
@@ -297,9 +297,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         }
         if ($params) {
             $sth = $db->prepare($query);
-             if (PEAR::isError($sth)) {
+            if (PEAR::isError($sth)) {
                 return $sth;
-             }
+            }
             $result = $sth->execute($params)->fetchRow();
         } else {
             $result = $db->queryRow($query);
@@ -477,7 +477,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             if ($params) {
                 $sth = $this->_config['db']->prepare($countQuery);
                 if (PEAR::isError($sth)) {
-                   return $sth;
+                    return $sth;
                 }
                 $totalItems = $sth->execute($params)->fetchOne();
             } else {
@@ -536,8 +536,8 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             return false;
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount,) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount,) = preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount, ) = preg_split('/\bLIMIT\b/is', $queryCount);
 
         return trim($queryCount);
     }

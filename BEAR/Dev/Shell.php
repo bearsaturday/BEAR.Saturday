@@ -28,7 +28,6 @@
  */
 class BEAR_Dev_Shell extends BEAR_Base
 {
-
     /**
      * App初期化作成コマンド
      */
@@ -360,7 +359,7 @@ class BEAR_Dev_Shell extends BEAR_Base
      */
     private function _makeFullPath($path)
     {
-        if(substr($path, -1) === '/') {
+        if (substr($path, -1) === '/') {
             $path = substr($path, 0, -1);
         }
         if ($path[0] !== '/') {

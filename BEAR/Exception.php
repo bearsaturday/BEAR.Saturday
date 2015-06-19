@@ -26,7 +26,6 @@
  */
 class BEAR_Exception extends Exception
 {
-
     /**
      * 設定　クラス名
      */

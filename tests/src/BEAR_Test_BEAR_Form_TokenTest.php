@@ -17,7 +17,7 @@ require_once 'App.php';
  */
 class BEAR_Test_BEAR_Form_TokenTest extends PHPUnit_Framework_TestCase
 {
-    var $_token;
+    public $_token;
 
     public function setUp()
     {

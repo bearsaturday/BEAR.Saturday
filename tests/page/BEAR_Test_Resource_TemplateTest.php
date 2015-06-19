@@ -17,7 +17,6 @@ require_once 'App.php';
  */
 class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         restore_error_handler();

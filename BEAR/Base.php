@@ -34,7 +34,6 @@
  */
 abstract class BEAR_Base implements BEAR_Base_Interface
 {
-
     /**
      * Class config
      *

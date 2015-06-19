@@ -184,5 +184,4 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         $html = $this->_smarty->fetch($file);
         return $html;
     }
-
 }
