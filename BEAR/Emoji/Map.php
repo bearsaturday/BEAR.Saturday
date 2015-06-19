@@ -31,7 +31,6 @@
  */
 class BEAR_Emoji_Map
 {
-
     /**
      * 絵文字変換テーブル
      *

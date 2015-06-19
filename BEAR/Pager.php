@@ -33,7 +33,6 @@
  */
 class BEAR_Pager extends BEAR_Base
 {
-
     /**
      * ページャーキー
      *

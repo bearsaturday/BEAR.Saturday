@@ -47,9 +47,8 @@ set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
  * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $ bear.php 2458 2011-06-02 13:09:42Z koriyama@bear-project.net $
  * @link       http://www.bear-project.net/
  */
-class BEAR_Bin_Bear
+class BEAR_bin_bear
 {
-
     /**
      * bearシェル実行
      *

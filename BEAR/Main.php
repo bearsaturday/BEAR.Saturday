@@ -49,7 +49,6 @@
  */
 class BEAR_Main extends BEAR_Base
 {
-
     /**
      * @var BEAR_Log
      */
@@ -364,7 +363,6 @@ class BEAR_Main extends BEAR_Base
         } elseif ($app['BEAR_Session']['adapter'] != 0) {
             BEAR::dependency('BEAR_Session')->start();
         }
-
     }
 
     /**

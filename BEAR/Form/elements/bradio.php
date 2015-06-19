@@ -47,7 +47,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * @since     1.1
      * @access    private
      */
-    var $_text = '';
+    public $_text = '';
 
     // }}}
     // {{{ constructor
@@ -61,7 +61,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * @param null $value
      * @param null $attributes
      */
-    function HTML_QuickForm_bradio(
+    public function HTML_QuickForm_bradio(
         $elementName = null,
         $elementLabel = null,
         $text = null,
@@ -89,7 +89,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * @access    public
      * @return    string
      */
-    function toHtml()
+    public function toHtml()
     {
         if (0 == strlen($this->_text)) {
             $label = '';
@@ -112,7 +112,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * @access    public
      * @return    string
      */
-    function getFrozenHtml()
+    public function getFrozenHtml()
     {
         if ($this->getChecked()) {
             return '' . $this->_getPersistantData();
@@ -120,5 +120,4 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
             return '';
         }
     } //end func getFrozenHtml
-
 }

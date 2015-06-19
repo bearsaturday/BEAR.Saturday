@@ -28,7 +28,6 @@
  */
 interface BEAR_Aspect_Returning_Interface
 {
-
     /**
      * returningアドバイス
      *

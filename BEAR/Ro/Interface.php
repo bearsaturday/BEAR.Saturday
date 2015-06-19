@@ -26,7 +26,6 @@
  */
 interface BEAR_Ro_Interface
 {
-
     /**
      * リソース作成
      *

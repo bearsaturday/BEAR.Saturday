@@ -186,8 +186,8 @@ class BEAR_Session extends BEAR_Base
             case self::ADAPTER_DB:
                 // DSN を指定します
                 $autoOptimize = true;
-                if(isset($config['auto_optimize']) && is_bool($config['auto_optimize']) ){
-                   $autoOptimize = $config['auto_optimize']; 
+                if (isset($config['auto_optimize']) && is_bool($config['auto_optimize'])) {
+                    $autoOptimize = $config['auto_optimize'];
                 }
                 $config = array(
                     'dsn' => $config['path'],

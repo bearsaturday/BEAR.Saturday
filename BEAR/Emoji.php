@@ -40,7 +40,6 @@
  */
 class BEAR_Emoji extends BEAR_Base
 {
-
     /**
      * iモード絵文字10進数エンティティ開始番号
      *

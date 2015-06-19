@@ -164,8 +164,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             try {
                 $html = toInlineCSSDoCoMo::getInstance()->setBaseDir(_BEAR_APP_HOME . '/htdocs')->apply($html);
             } /** @noinspection PhpUndefinedClassInspection */ catch (Expection $e) {
-                //FB::warn($e);
-            }
+     //FB::warn($e);
+ }
         }
         // remove JS
         if ($agentConfig['enable_js'] === false) {

@@ -171,8 +171,8 @@ class BEAR_Form extends BEAR_Factory
      *
      * @var array
      */
-    private static /** @noinspection PhpUnusedPrivateFieldInspection */
-        $_usedToken = array();
+    /** @noinspection PhpUnusedPrivateFieldInspection */
+        private static $_usedToken = array();
 
     /**
      * シングルトンインスタンス
@@ -186,8 +186,8 @@ class BEAR_Form extends BEAR_Factory
      *
      * @var callable
      */
-    private static /** @noinspection PhpUnusedPrivateFieldInspection */
-        $_rendererCallback = null;
+    /** @noinspection PhpUnusedPrivateFieldInspection */
+        private static $_rendererCallback = null;
 
     /**
      * Render Config

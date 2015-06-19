@@ -26,7 +26,6 @@
  */
 class BEAR_Agent_Mobile extends BEAR_Factory
 {
-
     /**
      * ボット用携帯エージェント(Docomo)
      */

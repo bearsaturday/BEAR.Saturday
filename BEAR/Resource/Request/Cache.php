@@ -71,7 +71,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
         $cacheKey = $this->_config['uri'] . md5($cacheKey);
         // キャッシュ
         $cache = BEAR::dependency('BEAR_Cache');
-        if(isset($options['cache']['life'])){
+        if (isset($options['cache']['life'])) {
             $cache->setLife($options['cache']['life']);
         }
         $saved = $cache->get($cacheKey);
@@ -108,7 +108,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                     'body' => $ro->getBody(),
                     'links' => $ro->getLinks()
                 );
-                if(isset($options['cache']['life'])){
+                if (isset($options['cache']['life'])) {
                     $cache->setLife($options['cache']['life']);
                 }
                 $cache->set($cacheKey, $save);

@@ -33,7 +33,6 @@
  */
 class BEAR_Img extends BEAR_Factory
 {
-
     /**
      * 外部画像ファイルをフェッチするときのUA
      *

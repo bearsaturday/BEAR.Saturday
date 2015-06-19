@@ -30,7 +30,6 @@
  */
 class BEAR_Log extends BEAR_Base
 {
-
     /**
      * アプリケーションログ
      *

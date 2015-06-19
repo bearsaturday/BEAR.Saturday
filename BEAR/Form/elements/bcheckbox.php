@@ -39,7 +39,6 @@ require_once 'HTML/QuickForm/checkbox.php';
  */
 class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
 {
-
     /**
      * Class constructor
      *
@@ -61,7 +60,6 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
         $this->setType('checkbox');
         $this->updateAttributes(array('value' => 1));
         $this->_generateId();
-
     }
 
     /**
@@ -71,7 +69,7 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
      * @access    public
      * @return    string
      */
-    function toHtml()
+    public function toHtml()
     {
         if (0 == strlen($this->_text)) {
             $label = '';
@@ -92,7 +90,7 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
      * @access    public
      * @return    string
      */
-    function getFrozenHtml()
+    public function getFrozenHtml()
     {
         return $this->_getPersistantData();
     }

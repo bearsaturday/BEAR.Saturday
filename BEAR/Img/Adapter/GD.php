@@ -32,7 +32,6 @@
  */
 class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
 {
-
     /**
      * @var string
      */

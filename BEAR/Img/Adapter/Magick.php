@@ -54,7 +54,6 @@
  */
 class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
 {
-
     /**
      * アニメGIFではない
      *
@@ -297,4 +296,3 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         throw $this->_exception($msg, array('info' => $info));
     }
 }
-
