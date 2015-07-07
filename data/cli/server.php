@@ -14,9 +14,9 @@ error_reporting(0);
  * @category   BEAR
  * @package    BEAR_Resource
  * @subpackage Server
- * @author     $Author: koriyama@bear-project.net $ <anonymous@example.com>
+ * @author     $Author: akihito.koriyama@gmail.com $ <anonymous@example.com>
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: server.php 2549 2011-06-13 23:39:37Z koriyama@bear-project.net $ server.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
+ * @version    @package_version@
  */
 
 require_once '../App.php';

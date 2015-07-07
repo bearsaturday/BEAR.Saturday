@@ -6,11 +6,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Aspect
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: JoinPoint.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -21,11 +21,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Aspect
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   Release: @package_version@ $Id: JoinPoint.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 class BEAR_Aspect_JoinPoint extends BEAR_Base
 {

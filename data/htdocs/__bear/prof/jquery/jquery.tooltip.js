@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2006 - 2008 Jörn Zaefferer
  *
- * $Id: jquery.tooltip.js 2379 2011-03-07 03:34:27Z koriyama@bear-project.net $
+ * $Id: jquery.tooltip.js 2379 2011-03-07 03:34:27Z akihito.koriyama@gmail.com $
  * 
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php

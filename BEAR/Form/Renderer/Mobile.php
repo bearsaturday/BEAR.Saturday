@@ -41,7 +41,7 @@
  * @author   Bertrand Mansion <bmansion@mamasam.com>
  * @author   Mark Wiesemann <wiesemann@php.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version  SVN: $Id:$
+ * @version    @package_version@
  * @link     http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  * @ignore
  */
@@ -61,7 +61,7 @@
  * @author   Bertrand Mansion <bmansion@mamasam.com>
  * @author   Mark Wiesemann <wiesemann@php.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version  Release: 0.6.1
+ * @version    @package_version@
  * @link     http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  * @ignore
  */

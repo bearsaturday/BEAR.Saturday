@@ -6,11 +6,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Smarty
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Smarty.php 2538 2011-06-12 17:37:53Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -23,11 +23,11 @@ require _BEAR_BEAR_HOME . '/BEAR/vendors/Smarty/libs/Smarty.class.php';
  *
  * @category  BEAR
  * @package   BEAR_Smarty
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Smarty.php 2538 2011-06-12 17:37:53Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  *
  * @instance singleton
  *

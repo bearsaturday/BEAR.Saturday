@@ -6,7 +6,7 @@
  * @package  {@app@}
  * @author   $Author: $ <username@example.com>
  * @license  {@app_license@} http://www.example.com/
- * @version  $Id: sample2.php 2453 2011-05-31 13:42:18Z koriyama@bear-project.net $
+ * @version    @package_version@
  * @link     http://www.example.com/
  */
 
@@ -17,7 +17,7 @@
  * @package  {@app@}
  * @author   $Author: $ <username@example.com>
  * @license  {@app_license@} http://www.example.com/license
- * @version  $Id: sample2.php 2453 2011-05-31 13:42:18Z koriyama@bear-project.net $
+ * @version    @package_version@
  * @link     http://www.example.com/api
  */
 class A {

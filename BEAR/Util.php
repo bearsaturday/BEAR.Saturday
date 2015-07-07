@@ -6,11 +6,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Util
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Util.php 2563 2011-06-19 16:11:36Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -23,11 +23,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Util
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Util.php 2563 2011-06-19 16:11:36Z koriyama@bear-project.net $
- * @link      http://www.bear-project.net/
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 class BEAR_Util
 {

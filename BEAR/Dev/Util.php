@@ -6,11 +6,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Dev
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net/
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -18,11 +18,11 @@
  *
  * @category  BEAR
  * @package   BEAR_Dev
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   Release: @package_version@ $Id:$
- * @link      http://www.bear-project.net
+ * @version    @package_version@
+ * @link      https://github.com/bearsaturday
  */
 class BEAR_Dev_Util
 {
@@ -136,7 +136,7 @@ class BEAR_Dev_Util
      *
      * <code>
      * ?_error                           エラー表示
-     * ?_error=koriyama@bear-project.net エラーメール送信
+     * ?_error=akihito.koriyama@gmail.com エラーメール送信
      * ?_error=/tmp/error.log            エラーログファイルを書き込み
      * </code>
      *

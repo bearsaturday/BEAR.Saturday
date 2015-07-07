@@ -6,11 +6,11 @@
  *
  * @category   BEAR
  * @package    BEAR_Base
- * @author     Akihito Koriyama <koriyama@bear-project.net>
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: Interface.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $ Interface.php 2455 2011-06-02 02:33:00Z koriyama@bear-project.net $
- * @link       http://www.bear-project.net/
+ * @version    @package_version@
+ * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -23,11 +23,11 @@
  * @category   BEAR
  * @package    BEAR_Base
  * @subpackage Aspect
- * @author     Akihito Koriyama <koriyama@bear-project.net>
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: Interface.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $ Interface.php 2455 2011-06-02 02:33:00Z koriyama@bear-project.net $
- * @link       http://www.bear-project.net/
+ * @version    @package_version@
+ * @link       https://github.com/bearsaturday
  */
 interface BEAR_Base_Interface
 {

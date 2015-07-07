@@ -7,11 +7,11 @@
  * @category   BEAR
  * @package    BEAR_Dev
  * @subpackage Shell
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: 0.9.0RC4 $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
- * @link       http://www.bear-project.net/
+ * @version    @package_version@
+ * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -20,11 +20,11 @@
  * @category   BEAR
  * @package    BEAR_Dev
  * @subpackage Shell
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    Release: 0.9.0RC4 $Id: Shell.php 2586 2011-06-20 10:51:54Z koriyama@bear-project.net $
- * @link       http://www.bear-project.net
+ * @version    @package_version@
+ * @link       https://github.com/bearsaturday
  */
 class BEAR_Dev_Shell extends BEAR_Base
 {

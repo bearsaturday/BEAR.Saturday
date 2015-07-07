@@ -1,6 +1,6 @@
 /*
  * bear.js - JS library for BEAR
- * Author: Akihito Koriyama (http://www.bear-project.net/)
+ * Author: Akihito Koriyama (https://github.com/bearsaturday)
  * Version: 0.0.1
  */
 

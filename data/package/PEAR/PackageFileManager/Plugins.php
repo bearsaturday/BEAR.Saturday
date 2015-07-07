@@ -9,7 +9,7 @@
  * @author    Helgi Þormar Þorbjörnsson <helgi@php.net>
  * @copyright 2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   CVS: $Id: Plugins.php 309717 2011-03-26 18:14:32Z dufuz $
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
  * @since     File available since Release 1.0.0alpha1
  */
@@ -55,7 +55,7 @@ array(
  * @author    Helgi Þormar Þorbjörnsson <helgi@php.net>
  * @copyright 2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   Release: 1.0.2
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
  * @since     Class available since Release 1.0.0alpha1
  */

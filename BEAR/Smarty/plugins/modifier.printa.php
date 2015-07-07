@@ -7,11 +7,11 @@
  * @category   BEAR
  * @package    BEAR_Smarty
  * @subpackage Plugin
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama  All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: modifier.printa.php 2538 2011-06-12 17:37:53Z koriyama@bear-project.net $
- * @link       http://www.bear-project.net/
+ * @version    @package_version@
+ * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -29,11 +29,11 @@
  * @category   BEAR
  * @package    BEAR_Smarty
  * @subpackage Plugin
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama  All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: modifier.printa.php 2538 2011-06-12 17:37:53Z koriyama@bear-project.net $
- * @link       http://www.bear-project.net/
+ * @version    @package_version@
+ * @link       https://github.com/bearsaturday
  *
  * @param string $string 文字列
  *

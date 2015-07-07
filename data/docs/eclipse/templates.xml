@@ -16,7 +16,7 @@ require_once 'App.php';&#13;
  * @package    App&#13;
  * @subpackage Page&#13;
  * @author     $$Author:$$&#13;
- * @version    SVN: Release: $$Id:$$&#13;
+ * @version    @package_version@
  */&#13;
 class Index extends App_Page&#13;
 {&#13;
@@ -78,7 +78,7 @@ BEAR_Main::run('Index');</template><template autoinsert="true" context="newPhp" 
  * @package     App
  * @subpackage  Rresource
  * @author      $$Author:$$
- * @version     $$Id$$
+ * @version    @package_version@
  * 
  */
 class App_Resource_Untitled extends App_Vo
@@ -236,7 +236,7 @@ function userExists($$form){&#13;
  * &lt;/pre&gt;&#13;
  *&#13;
  * @author  ${user}&#13;
- * @version $$Id:$$&#13;
+ * @version    @package_version@
  * @since   ${date}　${time}&#13;
  * &#13;
  * @param array&#13;
@@ -268,7 +268,7 @@ function smarty_block_sample($$params, $$content, &amp;$$smarty)&#13;
  * &lt;/code&gt;&#13;
  *&#13;
  * @author  $$Author:${user}$$&#13;
- * @version $$Id:${date}${time}$$&#13;
+ * @version    @package_version@
  *&#13;
  * @param string $$string&#13;
  * @param string $$option&#13;

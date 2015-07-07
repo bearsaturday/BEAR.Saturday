@@ -19,7 +19,7 @@ require_once 'BEAR/vendors/debuglib.php';
  * @package     App
  * @subpackage  page
  * @author      $Author: koriyama@users.sourceforge.jp $
- * @version     $$
+ * @version    @package_version@
  */
 class Page_Shell extends App_Page
 {

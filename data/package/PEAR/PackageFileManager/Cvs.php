@@ -10,7 +10,7 @@
  * @author    Greg Beaver <cellog@php.net>
  * @copyright 2003-2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   CVS: $Id: Cvs.php 309762 2011-03-28 02:51:20Z dufuz $
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
  * @since     File available since Release 1.0.0alpha1
  */
@@ -28,7 +28,7 @@ require_once 'PEAR/PackageFileManager/File.php';
  * @author    Greg Beaver <cellog@php.net>
  * @copyright 2003-2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   Release: 1.0.2
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
  * @since     Class available since Release 1.0.0alpha1
  */

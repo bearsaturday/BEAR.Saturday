@@ -10,7 +10,7 @@
  * @author    Greg Beaver <cellog@php.net>
  * @copyright 2005-2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   CVS: $Id: PackageFileManager2.php 309758 2011-03-28 01:47:53Z dufuz $
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager2
  * @since     File available since Release 1.0.0alpha1
  */
@@ -192,7 +192,7 @@ array(
  * @author    Greg Beaver <cellog@php.net>
  * @copyright 2005-2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   Release: 1.0.2
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager2
  * @since     Class available since Release 1.0.0alpha1
  */

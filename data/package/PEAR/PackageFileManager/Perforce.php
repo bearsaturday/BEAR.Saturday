@@ -10,7 +10,7 @@
  * @author    Jon Parise <jon@php.net>
  * @copyright 2005-2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   CVS: $Id: Perforce.php 272180 2008-12-29 04:57:55Z dufuz $
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
  * @since     File available since Release 1.0.0alpha1
  */
@@ -30,7 +30,7 @@ require_once 'PEAR/PackageFileManager/File.php';
  * @author    Jon Parise <jon@php.net>
  * @copyright 2005-2009 The PEAR Group
  * @license   New BSD, Revised
- * @version   Release: 1.0.2
+ * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
  * @since     Class available since Release 1.0.0alpha1
  */

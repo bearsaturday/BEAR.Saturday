@@ -7,7 +7,7 @@
  * @subpackage Profile
  * @author     $Author:$ <username@example.com>
  * @license    @license@ http://@license_url@
- * @version    Release: @package_version@ $Id:$
+ * @version    @package_version@
  * @link       http://@link_url@
  */
 

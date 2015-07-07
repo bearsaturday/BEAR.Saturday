@@ -2,7 +2,7 @@ BEAR
 
 Copyright (c) 2008, Akihito Koriyama <koriyama@users.sourceforge.jp>
 All rights reserved.
-http://www.bear-project.net/
+https://github.com/bearsaturday
 $HeadURL: http://bear-project.googlecode.com/svn/trunk/docs/LICENCE.txt $
 
 Redistribution and use in source and binary forms, with or without modification,

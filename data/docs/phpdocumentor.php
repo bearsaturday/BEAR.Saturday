@@ -48,7 +48,7 @@
 * @throws       Javadoc-compatible, use as needed
 * @todo         phpdoc.de compatibility
 * @var        type    a data type for a class variable
-* @version    version
+* @version    @package_version@
 *
 *
 * -----------------------------------------
