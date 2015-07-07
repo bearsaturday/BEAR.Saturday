@@ -29,11 +29,6 @@
 class BEAR_Dev_Shell extends BEAR_Base
 {
     /**
-     * App初期化作成コマンド
-     */
-    const CMD_INIT_APP = 'init-app';
-
-    /**
      * Appパス設定コマンド
      */
     const CMD_SET_APP = 'set-app';
@@ -256,11 +251,6 @@ class BEAR_Dev_Shell extends BEAR_Base
             array('description' => 'clear cache and log.')
         );
         if ($cli) {
-            // create app
-            $subCmd = $parser->addCommand(
-                self::CMD_INIT_APP,
-                array('description' => 'create new application.')
-            );
             $subCmd->addArgument(
                 'path',
                 array('description' => 'destination path. ex) /var/www/bear.test')
@@ -296,13 +286,6 @@ class BEAR_Dev_Shell extends BEAR_Base
             ob_get_clean();
             $commandName = $this->_command->command_name;
             switch ($this->_command->command_name) {
-                case self::CMD_INIT_APP :
-                    $path = $this->_command->command->args['path'];
-                    $path = $this->_makeFullPath($path);
-                    $pearrc = $this->_command->command->options['pearrc'];
-                    $this->_initApp($path, $pearrc);
-                    $this->_setApp($path);
-                    break;
                 case self::CMD_SET_APP :
                     $path = $this->_command->command->args['path'];
                     $path = $this->_makeFullPath($path);
@@ -601,103 +584,6 @@ class BEAR_Dev_Shell extends BEAR_Base
         $params = array('uri' => $uri, 'values' => $values);
         $ro = $resource->request($method, $uri, $values)->getRo();
         return $ro;
-    }
-
-    /**
-     * BEARスケルトンアプリ作成
-     *
-     * @param string $path  アプリケーシン絶対or相対パス
-     * @param string $pearrc .pearrcパス
-     *
-     * @return void
-     */
-    private function _initApp($path, $pearrc = '')
-    {
-        $bearPath = _BEAR_BEAR_HOME;
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            throw Exception("Windows is not supported for init-app, copy data/app instaed.\n");
-        }
-        $config = new PEAR_Config($pearrc, '', false, true);
-        $pearPath = $config->get('php_dir');
-        $pearDataPath = $config->get('data_dir'); //usr/share/php/data
-        $source = "{$pearDataPath}/BEAR/data/app";
-        if (!file_exists($source)) {
-            $source = _BEAR_BEAR_HOME . '/data/app';
-        }
-        if (!file_exists($source)) {
-            die("error: no valid app folder\n$source\n");
-        }
-        $exec = "/bin/cp -R {$source}/ {$path}/";
-        //　コピー先エラーチェック
-        if (file_exists($path . '/App.php')) {
-            die("path '{$path}' already exists\n");
-        }
-        $result = shell_exec($exec);
-        if ($result) {
-            die("cp error. src=[$source] dest=[$path]");
-        }
-        // 属性変更
-        $dirs = array();
-        $dirs[] = "{$path}/logs";
-        $dirs[] = "{$path}/tmp";
-        $dirs[] = "{$path}/tmp/cache_lite";
-        $dirs[] = "{$path}/tmp/session";
-        $dirs[] = "{$path}/tmp/smarty_cache";
-        $dirs[] = "{$path}/tmp/smarty_templates_c";
-        $dirs[] = "{$path}/tmp/upload";
-        $dirs[] = "{$path}/tmp/misc";
-        foreach ($dirs as $dir) {
-            if (chmod($dir, 0777) == false) {
-                die("chmod fault path=[$dir]\n");
-            }
-        }
-        // .htaccess
-        $htacessPath = "{$path}/htdocs/htaccess.txt";
-        $htacessPathNew = "{$path}/htdocs/.htaccess";
-        if (!file_exists($htacessPath)) {
-            die("[ERROR] htaccss missing error = [$htacessPath]\n");
-        }
-        // symlink
-        $from = "$pearDataPath/BEAR/data/htdocs/__bear";
-        $to = "{$path}/htdocs/__bear";
-        $result = symlink($from, $to);
-        if ($result === false) {
-            rmdir($to);
-            echo "Please make symlink manually.\n'ln -s {$from} {$to}'\n";
-        }
-        $from = "$pearDataPath/BEAR/data/htdocs/__edit";
-        $to = "{$path}/htdocs/__edit";
-        $result = symlink($from, $to);
-        if ($result === false) {
-            rmdir($to);
-            echo "Please make symlink manually.\n'ln -s {$from} {$to}'\n";
-        }
-        $from = "$pearDataPath/Panda/data/htdocs/__panda";
-        $to = "{$path}/htdocs/__panda";
-        $result = symlink($from, $to);
-        if ($result === false) {
-            rmdir($to);
-            echo "Please make symlink manually.\n'ln -s {$from} {$to}'\n";
-        }
-        // 置換
-        $files = array($htacessPath);
-        $ignoreline = array("#", ":");
-        $err = error_reporting();
-        error_reporting(0);
-        $snr = new File_SearchReplace('@APP-DIR@', $path, $files, "$path/htdocs/", false, $ignoreline);
-        $snr->doSearch();
-        $snr = new File_SearchReplace('@VENDORS-PEAR-DIR@', "$bearPath/BEAR/vendors/PEAR", $files, "$path/htdocs/", false, $ignoreline);
-        $snr->doSearch();
-        $snr = new File_SearchReplace('/opt/local/lib/php', $pearPath, $files, "$path/htdocs/", false, $ignoreline);
-        $snr->doSearch();
-        error_reporting($err);
-        //mv htaccess.txt .htaccess
-        $result = rename($htacessPath, $htacessPathNew);
-        if (!$result) {
-            echo "htaccess rename error [{$htacessPath}] to [{$htacessPathNew}]\n";
-        }
-        echo "BEAR App files are made at '{$path}'.\n";
-        echo "Thank you for using BEAR.";
     }
 
     /**
