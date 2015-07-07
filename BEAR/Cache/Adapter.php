@@ -7,10 +7,10 @@
  * @category   BEAR
  * @package    BEAR_Cache
  * @subpackage Adapter
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: Adapter.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
+ * @version    SVN: Release: @package_version@ $Id: Adapter.php 2485 2011-06-05 18:47:28Z akihito.koriyama@gmail.com $
  * @link       http://www.bear-project.net/
  */
 
@@ -22,10 +22,10 @@
  * @category   BEAR
  * @package    BEAR_Cache
  * @subpackage Adapter
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    Release: @package_version@ $Id: Adapter.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $
+ * @version    Release: @package_version@ $Id: Adapter.php 2485 2011-06-05 18:47:28Z akihito.koriyama@gmail.com $
  * @link       http://www.bear-project.net
  */
 abstract class BEAR_Cache_Adapter extends BEAR_Base

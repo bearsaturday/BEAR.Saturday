@@ -6,10 +6,10 @@
  *
  * @category  BEAR
  * @package   BEAR_Mdb2
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id:$ Exception.php 2455 2011-06-02 02:33:00Z koriyama@bear-project.net $
+ * @version   SVN: Release: @package_version@ $Id:$ Exception.php 2455 2011-06-02 02:33:00Z akihito.koriyama@gmail.com $
  * @link      http://www.bear-project.net/
  */
 
@@ -18,10 +18,10 @@
  *
  * @category  BEAR
  * @package   BEAR_Mdb2
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id:$ Exception.php 2455 2011-06-02 02:33:00Z koriyama@bear-project.net $
+ * @version   SVN: Release: @package_version@ $Id:$ Exception.php 2455 2011-06-02 02:33:00Z akihito.koriyama@gmail.com $
  * @link      http://www.bear-project.net/
  */
 class BEAR_Mdb2_Exception extends BEAR_Exception

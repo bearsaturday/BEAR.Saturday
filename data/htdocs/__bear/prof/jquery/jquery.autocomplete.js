@@ -7,7 +7,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Revision: $Id: jquery.autocomplete.js 2379 2011-03-07 03:34:27Z koriyama@bear-project.net $
+ * Revision: $Id: jquery.autocomplete.js 2379 2011-03-07 03:34:27Z akihito.koriyama@gmail.com $
  *
  */
 

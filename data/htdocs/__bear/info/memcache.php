@@ -17,7 +17,7 @@
  +----------------------------------------------------------------------+
  */
 
-$VERSION = '$Id: memcache.php 2379 2011-03-07 03:34:27Z koriyama@bear-project.net $';
+$VERSION = '$Id: memcache.php 2379 2011-03-07 03:34:27Z akihito.koriyama@gmail.com $';
 
 define('ADMIN_USERNAME', ''); // Admin Username
 define('ADMIN_PASSWORD', ''); // Admin Password

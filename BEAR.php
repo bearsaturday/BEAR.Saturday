@@ -6,10 +6,10 @@
  *
  * @category  BEAR
  * @package   BEAR
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: BEAR.php 2580 2011-06-20 09:16:25Z koriyama@bear-project.net $
+ * @version   SVN: Release: @package_version@ $Id: BEAR.php 2580 2011-06-20 09:16:25Z akihito.koriyama@gmail.com $
  * @link      http://www.bear-project.net/
  */
 
@@ -26,13 +26,13 @@ define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
  *
  * @category BEAR
  * @package  BEAR
- * @author   Akihito Koriyama <koriyama@bear-project.net>
+ * @author   Akihito Koriyama <akihito.koriyama@gmail.com>
  * @license  http://opensource.org/licenses/bsd-license.php BSD
- * @version  SVN: Release: @package_version@ $Id: BEAR.php 2580 2011-06-20 09:16:25Z koriyama@bear-project.net $
+ * @version  SVN: Release: @package_version@ $Id: BEAR.php 2580 2011-06-20 09:16:25Z akihito.koriyama@gmail.com $
  * @link     http://www.bear-project.net/
  *
  * <pre>
- * Copyright (c) 2008-2011, Akihito Koriyama.  All rights reserved.
+ * Copyright (c) 2008-2015, Akihito Koriyama.  All rights reserved.
  *
  * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.

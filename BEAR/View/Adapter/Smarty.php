@@ -7,8 +7,8 @@
  * @category   BEAR
  * @package    BEAR_View
  * @subpackage Adapter
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama  All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$ $
  * @link       http://www.bear-project.net/
@@ -20,10 +20,10 @@
  * @category   BEAR
  * @package    BEAR_View
  * @subpackage Adapter
- * @author     Akihito Koriyama <koriyama@bear-project.net>
- * @copyright  2008-2011 Akihito Koriyama  All rights reserved.
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id:$ Page.php 1076 2009-10-20 00:39:19Z koriyama@bear-project.net $
+ * @version    SVN: Release: @package_version@ $Id:$ Page.php 1076 2009-10-20 00:39:19Z akihito.koriyama@gmail.com $
  * @link       http://www.bear-project.net/
  *
  * @Singleton

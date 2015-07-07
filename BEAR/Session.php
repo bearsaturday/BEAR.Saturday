@@ -6,10 +6,10 @@
  *
  * @category  BEAR
  * @package   BEAR_Session
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Session.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
+ * @version   SVN: Release: @package_version@ $Id: Session.php 2486 2011-06-06 07:44:05Z akihito.koriyama@gmail.com $
  * @link      http://www.bear-project.net/
  */
 
@@ -23,10 +23,10 @@
  *
  * @category  BEAR
  * @package   BEAR_Session
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Session.php 2486 2011-06-06 07:44:05Z koriyama@bear-project.net $
+ * @version   SVN: Release: @package_version@ $Id: Session.php 2486 2011-06-06 07:44:05Z akihito.koriyama@gmail.com $
  * @link      http://www.bear-project.net/
  *
  * @Singleton

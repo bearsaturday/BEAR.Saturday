@@ -6,10 +6,10 @@
  *
  * @category  BEAR
  * @package   BEAR_Ro
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Interface.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $ Interface.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
+ * @version   SVN: Release: @package_version@ $Id: Interface.php 2485 2011-06-05 18:47:28Z akihito.koriyama@gmail.com $ Interface.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
  * @link      http://www.bear-project.net/
  */
 
@@ -18,10 +18,10 @@
  *
  * @category  BEAR
  * @package   BEAR_Ro
- * @author    Akihito Koriyama <koriyama@bear-project.net>
- * @copyright 2008-2011 Akihito Koriyama  All rights reserved.
+ * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
+ * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version   SVN: Release: @package_version@ $Id: Interface.php 2485 2011-06-05 18:47:28Z koriyama@bear-project.net $ Interface.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
+ * @version   SVN: Release: @package_version@ $Id: Interface.php 2485 2011-06-05 18:47:28Z akihito.koriyama@gmail.com $ Interface.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
  * @link      http://www.bear-project.net/
  */
 interface BEAR_Ro_Interface

@@ -7,10 +7,10 @@
  * @category   BEAR
  * @package    BEAR
  * @subpackage Bin
- * @author     Akihito Koriyama <koriyama@bear-project.net>
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $
+ * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z akihito.koriyama@gmail.com $
  * @link       http://www.bear-project.net/
  */
 
@@ -41,10 +41,10 @@ set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
  * @category   BEAR
  * @package    BEAR_Dev
  * @subpackage Shell
- * @author     Akihito Koriyama <koriyama@bear-project.net>
+ * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z koriyama@bear-project.net $ bear.php 2458 2011-06-02 13:09:42Z koriyama@bear-project.net $
+ * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z akihito.koriyama@gmail.com $ bear.php 2458 2011-06-02 13:09:42Z akihito.koriyama@gmail.com $
  * @link       http://www.bear-project.net/
  */
 class BEAR_bin_bear

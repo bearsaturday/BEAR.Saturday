@@ -22,7 +22,7 @@
 
  */
 
-$VERSION = '$Id: apc.php 2379 2011-03-07 03:34:27Z koriyama@bear-project.net $';
+$VERSION = '$Id: apc.php 2379 2011-03-07 03:34:27Z akihito.koriyama@gmail.com $';
 
 ////////// READ OPTIONAL CONFIGURATION FILE ////////////
 if (file_exists("apc.conf.php"))
