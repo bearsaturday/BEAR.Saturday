@@ -10,7 +10,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id:$ Interface.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -24,7 +24,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id:$ Interface.php 1510 2010-04-08 17:21:24Z koriyama@users.sourceforge.jp $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 class BEAR_Ro_Prototype_Link extends BEAR_Base
 {

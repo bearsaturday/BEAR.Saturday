@@ -15,7 +15,7 @@
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$ Form.php 1308 2010-01-03 16:20:02Z akihito.koriyama@gmail.com $
  * @link       http://pear.php.net/package/HTML_QuickForm
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  */
 
 /**

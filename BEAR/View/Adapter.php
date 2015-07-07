@@ -10,7 +10,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id:$ Query.php 1021 2009-10-13 04:04:08Z akihito.koriyama@gmail.com $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -22,7 +22,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id:$ Query.php 1021 2009-10-13 04:04:08Z akihito.koriyama@gmail.com $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 abstract class BEAR_View_Adapter extends BEAR_Base
 {

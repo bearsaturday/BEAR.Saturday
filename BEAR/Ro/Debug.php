@@ -10,7 +10,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id:$ Ro.php 1416 2010-02-26 12:18:11Z akihito.koriyama@gmail.com $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -24,7 +24,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id:$ Ro.php 1416 2010-02-26 12:18:11Z akihito.koriyama@gmail.com $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 class BEAR_Ro_Debug extends BEAR_Base
 {

@@ -10,7 +10,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id: BEAR.php 2580 2011-06-20 09:16:25Z akihito.koriyama@gmail.com $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 
 // フレームワークホームパス
@@ -29,7 +29,7 @@ define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
  * @author   Akihito Koriyama <akihito.koriyama@gmail.com>
  * @license  http://opensource.org/licenses/bsd-license.php BSD
  * @version  SVN: Release: @package_version@ $Id: BEAR.php 2580 2011-06-20 09:16:25Z akihito.koriyama@gmail.com $
- * @link     http://www.bear-project.net/
+ * @link     https://github.com/bearsaturday
  *
  * <pre>
  * Copyright (c) 2008-2015, Akihito Koriyama.  All rights reserved.

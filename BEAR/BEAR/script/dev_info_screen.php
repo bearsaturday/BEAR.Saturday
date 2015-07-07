@@ -10,7 +10,7 @@
  * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
  * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  */
 
 if (isset($_GET['_pear_dir'])) {

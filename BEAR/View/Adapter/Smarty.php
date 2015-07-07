@@ -11,7 +11,7 @@
  * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$ $
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -24,7 +24,7 @@
  * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id:$ Page.php 1076 2009-10-20 00:39:19Z akihito.koriyama@gmail.com $
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  *
  * @Singleton
  *

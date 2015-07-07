@@ -11,7 +11,7 @@
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z akihito.koriyama@gmail.com $
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  */
 
 $bearPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))));
@@ -45,7 +45,7 @@ set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
  * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: bear.php 2551 2011-06-14 09:32:14Z akihito.koriyama@gmail.com $ bear.php 2458 2011-06-02 13:09:42Z akihito.koriyama@gmail.com $
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  */
 class BEAR_bin_bear
 {

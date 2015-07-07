@@ -11,7 +11,7 @@
  * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Magick.php 2486 2011-06-06 07:44:05Z akihito.koriyama@gmail.com $
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  */
 /**
  * iMagickクラス
@@ -24,7 +24,7 @@
  *</pre>
  * <code>
  *  $img = BEAR_Img::getInstance(BEAR_Img::ADAPTER_MAGICK);
- *  $img->load('http://www.bear-project.net/images/eye.jpg');
+ *  $img->load('https://github.com/bearsaturdayimages/eye.jpg');
  *  $img->resize(320,240);
  *  $img->show('jpeg');
  * </code>
@@ -34,7 +34,7 @@
  *</pre>
  * <code>
  *  $img = BEAR_Img::getInstance(BEAR_Img::ADAPTER_MAGICK);
- *  $img->load('http://www.bear-project.net/images/eye.jpg');
+ *  $img->load('https://github.com/bearsaturdayimages/eye.jpg');
  *  $img->resize(320,240);
  *  // 木炭画エフェクト
  *  $img->adapter->charcoalImage(1, 1);
@@ -48,7 +48,7 @@
  * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    SVN: Release: @package_version@ $Id: Magick.php 2486 2011-06-06 07:44:05Z akihito.koriyama@gmail.com $
- * @link       http://www.bear-project.net/
+ * @link       https://github.com/bearsaturday
  *
  * @Singleton
  */

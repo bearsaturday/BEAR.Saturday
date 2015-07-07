@@ -10,7 +10,7 @@
  * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version   SVN: Release: @package_version@ $Id: Form.php 2531 2011-06-12 13:54:06Z akihito.koriyama@gmail.com $
- * @link      http://www.bear-project.net/
+ * @link      https://github.com/bearsaturday
  */
 
 /**
@@ -23,7 +23,7 @@
  * @author   Akihito Koriyama <akihito.koriyama@gmail.com>
  * @license  http://opensource.org/licenses/bsd-license.php BSD
  * @version  SVN: Release: @package_version@ $Id: Form.php 2531 2011-06-12 13:54:06Z akihito.koriyama@gmail.com $
- * @link     http://www.bear-project.net/
+ * @link     https://github.com/bearsaturday
  * @see      PEAR::HTML_QuickForm
  *
  * @config string   formName   フォーム名           'form'
