@@ -251,7 +251,7 @@ ____SQL;
             return;
         }
         restore_error_handler();
-        error_reporting(0);
+        error_reporting(1);
         try {
             $isBeardev = isset($_SERVER['__bear']);
             $pageLogPath = _BEAR_APP_HOME . '/logs/' . 'debug' . '.log';
