@@ -37,7 +37,7 @@ function outputAjax(
     $log = BEAR::dependency('BEAR_Log');
     /* @var $log BEAR_Log */
     $log->log('AJAX', $values);
-    $headers = array('X-BEAR-Output: AJAX' => 'Content-Type: text/javascript+json; charset=utf-8');
+    $headers = array('X-BEAR-Output: AJAX', 'Content-Type: text/javascript+json; charset=utf-8');
     $ro = BEAR::factory('BEAR_Ro');
     /* @var $ro BEAR_Ro */
     $ro->setBody($body);
