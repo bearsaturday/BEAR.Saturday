@@ -192,7 +192,7 @@ class BEAR_Util
      * get_object_varsの再帰版
      *
      * @param mixed $data 入力データ
-     *
+     * @param int $maxDepth
      * @return mixed
      */
     public static function getObjectVarsRecursive($data, $maxDepth=10)
