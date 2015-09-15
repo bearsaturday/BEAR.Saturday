@@ -192,23 +192,25 @@ class BEAR_Util
      * get_object_varsの再帰版
      *
      * @param mixed $data 入力データ
-     *
-     * @return string
+     * @param int $maxDepth
+     * @return mixed
      */
-    public static function getObjectVarsRecursive($data)
+    public static function getObjectVarsRecursive($data, $maxDepth=10)
     {
+        $depth = count(debug_backtrace());
+        if($depth > $maxDepth){
+            return '$data had reached max depth!';
+        }
         $ret = array();
         if (is_object($data)) {
             foreach (get_object_vars($data) as $key => $val) {
-                $ret[$key] = self::getObjectVarsRecursive($val);
+                $ret[$key] = self::getObjectVarsRecursive($val, $maxDepth);
             }
-
             return $ret;
         } elseif (is_array($data)) {
             foreach ($data as $key => $val) {
-                $ret[$key] = self::getObjectVarsRecursive($val);
+                $ret[$key] = self::getObjectVarsRecursive($val, $maxDepth);
             }
-
             return $ret;
         } else {
             return $data;
