@@ -86,7 +86,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
         $class = get_class($rootRo);
         assert(method_exists($class, 'onLink'));
         // ルートリソース
-        $firstUri = strtolower(str_replace(DIRECTORY_SEPARATOR, '_', $config['uri']));
+        $firstUri = strtolower(str_replace('/', '_', $config['uri']));
         $link = $body = $rootRo->getBody();
         $isCollection = (count($body) !== count($body, COUNT_RECURSIVE));
         if ($isCollection === true) {
