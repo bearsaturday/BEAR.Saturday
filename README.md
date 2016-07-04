@@ -24,7 +24,4 @@ Hosting
 ln -s MyVendor.MyPackage/htdocs /path/to/vhost_dir
 ```
 
-looking for older versin ? visit the official [BEAR pear-channel][1]
-
-[1]: https://github.com/bearsaturday
 [2]: http://www.youtube.com/watch?v=NKdiNdNbH0Y
