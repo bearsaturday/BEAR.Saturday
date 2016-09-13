@@ -9,8 +9,8 @@ BEAR.Saturday is a PHP 5.2+ resource oriented web framework.
 Requirements
 ------------
 
-BEAR.Saturday is supported on PHP 5.2 and up.
-Use [BEAR.Sunday](http://bearsunday.github.io/) for PHP5.6 and up
+BEAR.Saturday is supported on PHP 5.2+.
+Use [BEAR.Sunday](http://bearsunday.github.io/) for PHP5.6+
 
 
 Create project with BEAR.Saturday
