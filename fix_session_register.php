@@ -5,7 +5,7 @@ if (! function_exists('session_register')) {
     {
         $args = func_get_args();
         foreach ($args as $key){
-            $_SESSION[$key]=$GLOBALS[$key];
+            $_SESSION[$key] = $GLOBALS[$key];
         }
     }
 
