@@ -78,7 +78,7 @@ function outputXml($values, array $options)
     }
     //　return
     $body = $xmlString;
-    $headers = array('X-BEAR-Output: XML' => 'Content-Type: application/xml');
+    $headers = array('X-BEAR-Output: XML', 'Content-Type: application/xml');
     $ro = BEAR::factory('BEAR_Ro');
     $ro->setBody($body);
     $ro->setHeaders($headers);
