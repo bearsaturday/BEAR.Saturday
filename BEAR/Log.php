@@ -274,10 +274,10 @@ ____SQL;
                 include 'BEAR/vendors/debuglib.php';
             }
             $log['var'] = show_vars('trim_tabs:2;show_objects:1;max_y:100;avoid@:1; return:1');
-            if (class_exists('BEAR_Smarty', false)) {
+            if (BEAR::exists('BEAR_Smarty')) {
                 $smarty = BEAR::dependency('BEAR_Smarty');
-                unset($smarty->_tpl_vars['content_for_layout']);
-                $log['smarty'] = $smarty->_tpl_vars;
+                $log['smarty'] = $smarty->get_template_vars();
+                unset($log['smarty']['content_for_layout']);
             } else {
                 $log['smarty'] = '';
             }
