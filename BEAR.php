@@ -7,7 +7,7 @@
  * @category  BEAR
  * @package   BEAR
  * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2015 Akihito Koriyama  All rights reserved.
+ * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
  * @version    @package_version@
  * @link      https://github.com/bearsaturday
@@ -32,7 +32,7 @@ define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
  * @link     https://github.com/bearsaturday
  *
  * <pre>
- * Copyright (c) 2008-2015, Akihito Koriyama.  All rights reserved.
+ * Copyright (c) 2008-2017, Akihito Koriyama.  All rights reserved.
  *
  * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.

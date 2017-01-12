@@ -11,7 +11,7 @@
  * @author     Bertrand Mansion <bmansion@mamasam.com>
  * @author     Alexey Borzov <avb@php.net>
  * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2015 Akihito Koriyama  All rights reserved.
+ * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
  * @version    @package_version@
  * @link       http://pear.php.net/package/HTML_QuickForm
