@@ -16,5 +16,8 @@
     "branch-alias": {
       "dev-develop-2": "0.9.x-dev"
     }
+  },
+  "config":{
+    "secure-http" : false
   }
 }
