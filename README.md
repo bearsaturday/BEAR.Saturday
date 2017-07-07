@@ -1,3 +1,7 @@
+# This package is not maintained anymore and has been superseded. Use [BEAR.Sunday](https://bearsunday.github.io/) Instead.
+
+----
+
 BEAR.Saturday
 ======
 
