@@ -74,7 +74,6 @@ $packagexml->addPackageDepWithChannel('required', 'XML_Serializer', 'pear.php.ne
 $packagexml->addPackageDepWithChannel('required', 'I18N_UnicodeString', 'pear.php.net', '0.2.1');
 $packagexml->addPackageDepWithChannel('required', 'XML_RSS', 'pear.php.net', '0.9.10');
 $packagexml->addPackageDepWithChannel('required', 'MDB2', 'pear.php.net', '2.4.0');
-$packagexml->addPackageDepWithChannel('required', 'MDB2_Driver_mysql', 'pear.php.net', '1.4.0');
 $packagexml->addPackageDepWithChannel('required', 'MDB2_Driver_mysqli', 'pear.php.net', '1.4.0');
 $packagexml->addPackageDepWithChannel('required', 'XML_RSS', 'pear.php.net', '0.7.2');
 $packagexml->addPackageDepWithChannel('required', 'Var_Dump', 'pear.php.net', '1.0.3');
