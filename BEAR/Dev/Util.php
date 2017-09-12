@@ -149,16 +149,16 @@ class BEAR_Dev_Util
             FB::group('errors', array('Collapsed' => true, 'Color' => 'gray'));
             foreach ($errors as $code => $error) {
                 switch (true) {
-                    case ($code == E_WARNING || $code == E_USER_WARNING) :
+                    case ($code == E_WARNING || $code == E_USER_WARNING):
                         $fireLevel = FirePHP::WARN;
                         break;
-                    case ($code == E_NOTICE || $code == E_USER_NOTICE) :
+                    case ($code == E_NOTICE || $code == E_USER_NOTICE):
                         $fireLevel = FirePHP::INFO;
                         break;
-                    case ($code == E_STRICT || $code == E_DEPRECATED) :
+                    case ($code == E_STRICT || $code == E_DEPRECATED):
                         $fireLevel = FirePHP::LOG;
                         break;
-                    default :
+                    default:
                         $fireLevel = FirePHP::ERROR;
                         break;
                 }

@@ -169,8 +169,8 @@ class BEAR_Page_Ajax extends BEAR_Base
     public function addAjax($ajaxCommand, array $data, array $options = array())
     {
         switch ($ajaxCommand) {
-            case 'resource' :
-            case 'init' :
+            case 'resource':
+            case 'init':
                 foreach ($data as $div => $initValueKey) {
                     $page = BEAR::get('page');
                     /** @var $init @page BEAR_Page */
@@ -183,11 +183,11 @@ class BEAR_Page_Ajax extends BEAR_Base
                 );
                 $this->_ajax['html'][] = $htmlData;
                 break;
-            case 'html' :
+            case 'html':
                 $htmlData = array('body' => $data, 'options' => $options);
                 $this->_ajax['html'][] = $htmlData;
                 break;
-            default :
+            default:
                 $this->_ajax[$ajaxCommand][] = $data;
                 break;
         }

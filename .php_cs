@@ -1,7 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude('vendor')
+    ->exclude('vendors')
     ->exclude('data')
     ->in(__DIR__ . '/BEAR');
 

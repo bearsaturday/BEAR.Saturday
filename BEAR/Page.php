@@ -105,12 +105,12 @@ abstract class BEAR_Page extends BEAR_Base
      */
     private $_onClick = null;
 
-//    /**
-//     * 文字コード変換の場合のモバイルの文字コード
-//     *
-//     * @var string
-//     */
-//    private $_codeFromMoble;
+    //    /**
+    //     * 文字コード変換の場合のモバイルの文字コード
+    //     *
+    //     * @var string
+    //     */
+    //    private $_codeFromMoble;
 
     /**
      *  ページにセットされたバリュー
@@ -133,28 +133,28 @@ abstract class BEAR_Page extends BEAR_Base
      */
     protected $_pageRo = array();
 
-//    /**
-//     * ページキャッシュ
-//     *
-//     * @var string
-//     */
-//    private $_cache = array('use_cache' => false, 'headers' => null, 'html' => null);
+    //    /**
+    //     * ページキャッシュ
+    //     *
+    //     * @var string
+    //     */
+    //    private $_cache = array('use_cache' => false, 'headers' => null, 'html' => null);
 
-//    /**
-//     * AJAXコマンドデータ
-//     *
-//     * @var array
-//     */
-//    private $_ajax = array();
+    //    /**
+    //     * AJAXコマンドデータ
+    //     *
+    //     * @var array
+    //     */
+    //    private $_ajax = array();
 
-//    /**
-//     * charset
-//     *
-//     * マルチエージェントの場合のcharset
-//     *
-//     * @var string
-//     */
-//    private static $_charset = null;
+    //    /**
+    //     * charset
+    //     *
+    //     * マルチエージェントの場合のcharset
+    //     *
+    //     * @var string
+    //     */
+    //    private static $_charset = null;
 
     /**
      * クリックをゲット
@@ -194,12 +194,12 @@ abstract class BEAR_Page extends BEAR_Base
      */
     protected $_view = 'view';
 
-//    /**
-//     * ページリソースモード
-//     *
-//     * @var bool
-//     */
-//    private static $_isResourceMode = false;
+    //    /**
+    //     * ページリソースモード
+    //     *
+    //     * @var bool
+    //     */
+    //    private static $_isResourceMode = false;
 
     /**
      * クリックをセット

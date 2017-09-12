@@ -138,17 +138,17 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         // イメージリソース作成
         assert(is_string($this->format));
         switch ($this->format) {
-            case 'gif' :
+            case 'gif':
                 $this->_imgResource = imagecreatefromgif($this->file);
                 break;
-            case 'jpeg' :
-            case 'jpg' :
+            case 'jpeg':
+            case 'jpg':
                 $this->_imgResource = imagecreatefromjpeg($this->file);
                 break;
-            case 'png' :
+            case 'png':
                 $this->_imgResource = imagecreatefrompng($this->file);
                 break;
-            default :
+            default:
                 $info = array('format' => $this->format);
                 throw $this->_exception("load format error", compact("info"));
         }
@@ -249,16 +249,16 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         // clean buffer
         ob_clean();
         switch ($format) {
-            case 'gif' :
+            case 'gif':
                 $this->result = imagegif($this->_imgResource);
                 break;
-            case 'jpeg' :
+            case 'jpeg':
                 $this->result = imagejpeg($this->_imgResource);
                 break;
-            case 'png' :
+            case 'png':
                 $this->result = imagepng($this->_imgResource);
                 break;
-            default :
+            default:
                 trigger_error('format error', $format, E_USER_ERROR);
         }
         $this->_log->log(
@@ -290,18 +290,18 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
     public function save($filePath, $format)
     {
         switch ($format) {
-            case 'gif' :
+            case 'gif':
                 $result = imagegif($this->_imgResource, $filePath);
                 break;
-            case 'jpg' :
-            case 'jpeg' :
+            case 'jpg':
+            case 'jpeg':
                 $result = imagejpeg($this->_imgResource, $filePath);
                 $format = 'jpeg';
                 break;
-            case 'png' :
+            case 'png':
                 $result = imagepng($this->_imgResource, $filePath);
                 break;
-            default :
+            default:
                 $info = compact("formart");
                 throw $this->_exception(
                     'save formart error',

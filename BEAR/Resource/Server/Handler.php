@@ -77,41 +77,41 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
         $method = strtolower($parsed[0]);
         $uri = $parsed[1];
         switch ($method) {
-            case '' :
+            case '':
                 break;
-            case '/info' :
+            case '/info':
                 $info = $this->_server->getClientInfo();
                 $this->_server->sendData($clientId, var_export($info, true));
                 exit();
-            case '/close' :
+            case '/close':
                 $this->_server->closeConnection($clientId);
                 exit();
-            case '/help' :
+            case '/help':
                 $help = 'Usage: <method> <url>' . PHP_EOL;
                 $this->_server->sendData($clientId, $help);
                 exit();
-            default :
+            default:
         }
         $resource = BEAR::dependency('BEAR_Resource');
         $params = array('uri' => $uri);
         switch ($method) {
-            case 'create' :
-            case 'post' :
+            case 'create':
+            case 'post':
                 $resource->create($params);
                 break;
-            case 'read' :
-            case 'broadcast' :
-            case 'get' :
+            case 'read':
+            case 'broadcast':
+            case 'get':
                 $resource->read($params);
                 break;
-            case 'update' :
-            case 'put' :
+            case 'update':
+            case 'put':
                 $resource->update($params);
                 break;
-            case 'delete' :
+            case 'delete':
                 $resource->delete($params);
                 break;
-            default :
+            default:
                 $resource = false;
                 break;
         }

@@ -65,7 +65,7 @@ interface BEAR_Query_Interface
      *
      * @return mixed
      */
-     public function update(array $values, $where, $table, $types = null);
+    public function update(array $values, $where, $table, $types = null);
 
     /**
      * デリート

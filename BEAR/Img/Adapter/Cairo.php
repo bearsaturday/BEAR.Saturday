@@ -205,14 +205,14 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         $this->_fontInfo = cairo_text_extents($this->image, $text);
         $this->_log->log('cairo _fontInfo', $this->_fontInfo);
         switch ($align) {
-            case BEAR_Img::CENTER :
+            case BEAR_Img::CENTER:
                 $x = $this->_srcWidth / 2 - $this->_fontInfo['x_advance'] / 2 + $x;
                 break;
-            case BEAR_Img::RIGHT :
+            case BEAR_Img::RIGHT:
                 $x = $this->_srcWidth - $this->_fontInfo['x_advance'] - $x;
                 break;
-            case BEAR_Img::LEFT :
-            default :
+            case BEAR_Img::LEFT:
+            default:
                 break;
         }
         /** @noinspection PhpUndefinedFunctionInspection */

@@ -164,8 +164,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             try {
                 $html = toInlineCSSDoCoMo::getInstance()->setBaseDir(_BEAR_APP_HOME . '/htdocs')->apply($html);
             } /** @noinspection PhpUndefinedClassInspection */ catch (Expection $e) {
-     //FB::warn($e);
- }
+                //FB::warn($e);
+            }
         }
         // remove JS
         if ($agentConfig['enable_js'] === false) {
@@ -293,13 +293,13 @@ abstract class BEAR_View_Adapter extends BEAR_Base
     {
         $pathinfo = pathinfo($file);
         switch ($pathinfo['dirname']) {
-            case '/' :
+            case '/':
                 $result = $pathinfo['filename'];
                 break;
-            case '.' :
+            case '.':
                 $result = $pathinfo['filename'];
                 break;
-            default :
+            default:
                 $begin = (substr($pathinfo['dirname'], 0, 1) === '/') ? 1 : 0;
                 $result = substr($pathinfo['dirname'], $begin) . '/' . $pathinfo['filename'];
                 break;

@@ -180,21 +180,21 @@ class BEAR_Mdb2 extends BEAR_Factory
     }
 
 
-//    /**
-//     * エラーハンドラー
-//     *
-//     * エラー処理
-//     *
-//     * @param object $paerError PEARエラー
-//     *
-//     * @return void
-//     * @ignore
-//     * @static
-//     */
-//    private static function _errorHandler($paerError)
-//    {
-//        trigger_error('BEAR_Mdb2 Error:' . $paerError->toString(), E_USER_WARNING);
-//    }
+    //    /**
+    //     * エラーハンドラー
+    //     *
+    //     * エラー処理
+    //     *
+    //     * @param object $paerError PEARエラー
+    //     *
+    //     * @return void
+    //     * @ignore
+    //     * @static
+    //     */
+    //    private static function _errorHandler($paerError)
+    //    {
+    //        trigger_error('BEAR_Mdb2 Error:' . $paerError->toString(), E_USER_WARNING);
+    //    }
 
     /**
      * デバック用ハンドラ

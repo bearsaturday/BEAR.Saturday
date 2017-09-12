@@ -292,17 +292,17 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
     public function getExtention($imageType)
     {
         switch ($imageType) {
-            case 'image/bmp' :
+            case 'image/bmp':
                 return 'bmp';
-            case 'image/gif' :
+            case 'image/gif':
                 return 'gif';
-            case 'image/jpeg' :
+            case 'image/jpeg':
                 return 'jpg';
-            case 'image/tiff' :
+            case 'image/tiff':
                 return 'tif';
-            case 'image/png' :
+            case 'image/png':
                 return 'png';
-            default :
+            default:
                 return null;
         }
     }
