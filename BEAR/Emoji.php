@@ -510,20 +510,20 @@ class BEAR_Emoji extends BEAR_Base
         return $string;
     }
 
-//    /**
-//     * AU絵文字変換
-//     *
-//     * <pre>local img形式のAU絵文字を10進エンティティ表記に変換します。</pre>
-//     *
-//     * @return string
-//     */
-//    public function localimg2entity($string)
-//    {
-//        //<img localsrc="334" />
-//        $regex = '/(<img [^>]*localsrc\s*=\s*["\']?)([^>"\']+)(["\']?[^>]*>)/is';
-//        $string = preg_replace_callback($regex, array(__CLASS__, '_onConvertLocalSrcEmoji'), $string);
-//        return $string;
-//    }
+    //    /**
+    //     * AU絵文字変換
+    //     *
+    //     * <pre>local img形式のAU絵文字を10進エンティティ表記に変換します。</pre>
+    //     *
+    //     * @return string
+    //     */
+    //    public function localimg2entity($string)
+    //    {
+    //        //<img localsrc="334" />
+    //        $regex = '/(<img [^>]*localsrc\s*=\s*["\']?)([^>"\']+)(["\']?[^>]*>)/is';
+    //        $string = preg_replace_callback($regex, array(__CLASS__, '_onConvertLocalSrcEmoji'), $string);
+    //        return $string;
+    //    }
 
     /**
      * 絵文字を除去する

@@ -286,32 +286,32 @@ class BEAR_Dev_Shell extends BEAR_Base
             ob_get_clean();
             $commandName = $this->_command->command_name;
             switch ($this->_command->command_name) {
-                case self::CMD_SET_APP :
+                case self::CMD_SET_APP:
                     $path = $this->_command->command->args['path'];
                     $path = $this->_makeFullPath($path);
                     $this->_setApp($path);
                     break;
-                case self::CMD_SHOW_APP :
+                case self::CMD_SHOW_APP:
                     $this->_checkAppExists();
                     $this->_showApp();
                     break;
-                case self::CMD_CLEAR_CACHE :
+                case self::CMD_CLEAR_CACHE:
                     $this->_checkAppExists();
                     $this->clearCache();
                     break;
-                case self::CMD_CLEAR_LOG :
+                case self::CMD_CLEAR_LOG:
                     $this->_checkAppExists();
                     $this->clearLog();
                     break;
-                case self::CMD_CLEAR_ALL :
+                case self::CMD_CLEAR_ALL:
                     $this->_checkAppExists();
                     $this->clearCache();
                     $this->clearLog();
                     break;
-                case self::CMD_CREATE :
-                case self::CMD_READ :
-                case self::CMD_UPDATE :
-                case self::CMD_DELETE :
+                case self::CMD_CREATE:
+                case self::CMD_READ:
+                case self::CMD_UPDATE:
+                case self::CMD_DELETE:
                     $this->_checkAppExists();
                     $uri = $this->_command->command->args['uri'];
                     $values = $this->_command->command->options['file'] ? BEAR::loadValues(
@@ -320,7 +320,7 @@ class BEAR_Dev_Shell extends BEAR_Base
                     $this->_result = $this->_request($commandName, $uri, $values)->getRo();
                     $this->_config['debug'] = true;
                     break;
-                default :
+                default:
                     if ($this->_config['cli']) {
                         $this->_result = "BEAR: {$argv[1]}: command not found, try 'bear --help'";
                     } else {
@@ -395,26 +395,26 @@ class BEAR_Dev_Shell extends BEAR_Base
             }
             if (is_array($body) || is_object($body)) {
                 switch ($this->_command->command->options['format']) {
-                    case 'var' :
+                    case 'var':
                         $result = var_export($body, true);
                         break;
-                    case 'php' :
+                    case 'php':
                         $result = serialize($body);
                         break;
-                    case 'json' :
+                    case 'json':
                         $result = json_encode($body, true);
                         break;
-                    case 'table' :
+                    case 'table':
                         $result = $this->_getTextTable($body);
                         break;
-                    case 'csv' :
+                    case 'csv':
                         $result = $this->_getCsv($body);
                         break;
-                    case 'printa' :
+                    case 'printa':
                         $result .= print_a($body, 'return:1');
                         break;
                     case 'default':
-                    default :
+                    default:
                         $ajax = BEAR::dependency('BEAR_Page_Ajax');
                         if ($ajax->isAjaxRequest()) {
                             $result .= print_a($body, 'return:1');

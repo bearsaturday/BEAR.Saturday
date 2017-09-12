@@ -548,29 +548,29 @@ class BEAR_Main extends BEAR_Base
         $this->end();
     }
 
-//    /**
-//     * AJAXフォームでバリデーションOK
-//     *
-//     * フォームエレメント名をJSONで返す
-//     *
-//     * @param object $form フォームオブジェクト
-//     *
-//     * @return void
-//     * @ignore
-//     */
-//    private function _ajaxValidationOk($form)
-//    {
-//        // ルール
-//        foreach ($form->_rules as $key => $value) {
-//            $ruleKeys[] = $key;
-//        }
-//        BEAR_Page::$formElement = array(
-//            'quickform' => array(
-//                'form_id' => $form->_attributes['id'],
-//                'rules' => $ruleKeys
-//            )
-//        );
-//    }
+    //    /**
+    //     * AJAXフォームでバリデーションOK
+    //     *
+    //     * フォームエレメント名をJSONで返す
+    //     *
+    //     * @param object $form フォームオブジェクト
+    //     *
+    //     * @return void
+    //     * @ignore
+    //     */
+    //    private function _ajaxValidationOk($form)
+    //    {
+    //        // ルール
+    //        foreach ($form->_rules as $key => $value) {
+    //            $ruleKeys[] = $key;
+    //        }
+    //        BEAR_Page::$formElement = array(
+    //            'quickform' => array(
+    //                'form_id' => $form->_attributes['id'],
+    //                'rules' => $ruleKeys
+    //            )
+    //        );
+    //    }
 
     /**
      * エラーの出力フォーマット(CLI or rich HTML)

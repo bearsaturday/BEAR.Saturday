@@ -312,24 +312,24 @@ ____SQL;
         }
     }
 
-//    /**
-//     * AJAX終了処理
-//     *
-//     * ajax.logをlogフォルダに作成する
-//     *
-//     * @return void
-//     */
-//    private function _onShutdownDebugAjax()
-//    {
-//        $ajaxLogPath = _BEAR_APP_HOME . '/logs/ajax.log';
-//        $ajaxLog = file_exists($ajaxLogPath) ? BEAR_Util::unserialize(file_get_contents($ajaxLogPath)) : null;
-//        $log = array('page' => $this->_logs, 'uri' => $_SERVER['REQUEST_URI']);
-//        $ajaxLog[] = $log;
-//        if (count($ajaxLog) > 5) {
-//            array_shift($ajaxLog);
-//        }
-//        file_put_contents(_BEAR_APP_HOME . '/logs/ajax.log', serialize($ajaxLog));
-//    }
+    //    /**
+    //     * AJAX終了処理
+    //     *
+    //     * ajax.logをlogフォルダに作成する
+    //     *
+    //     * @return void
+    //     */
+    //    private function _onShutdownDebugAjax()
+    //    {
+    //        $ajaxLogPath = _BEAR_APP_HOME . '/logs/ajax.log';
+    //        $ajaxLog = file_exists($ajaxLogPath) ? BEAR_Util::unserialize(file_get_contents($ajaxLogPath)) : null;
+    //        $log = array('page' => $this->_logs, 'uri' => $_SERVER['REQUEST_URI']);
+    //        $ajaxLog[] = $log;
+    //        if (count($ajaxLog) > 5) {
+    //            array_shift($ajaxLog);
+    //        }
+    //        file_put_contents(_BEAR_APP_HOME . '/logs/ajax.log', serialize($ajaxLog));
+    //    }
 
     /**
      * ログを記録開始

@@ -3,14 +3,13 @@
  * PEAR_PackageFileManager2, like PEAR_PackageFileManager, is designed to
  * create and manipulate package.xml version 2.0.
  *
- * PHP versions 4 and 5
+ * PHP versions 5 and 7
  *
  * @category  PEAR
  * @package   PEAR_PackageFileManager2
  * @author    Greg Beaver <cellog@php.net>
- * @copyright 2005-2009 The PEAR Group
+ * @copyright 2003-2015 The PEAR Group
  * @license   New BSD, Revised
- * @version    @package_version@
  * @link      http://pear.php.net/package/PEAR_PackageFileManager2
  * @since     File available since Release 1.0.0alpha1
  */
@@ -190,9 +189,9 @@ array(
  * @category  PEAR
  * @package   PEAR_PackageFileManager2
  * @author    Greg Beaver <cellog@php.net>
- * @copyright 2005-2009 The PEAR Group
+ * @copyright 2003-2015 The PEAR Group
  * @license   New BSD, Revised
- * @version    @package_version@
+ * @version   Release: 1.0.4
  * @link      http://pear.php.net/package/PEAR_PackageFileManager2
  * @since     Class available since Release 1.0.0alpha1
  */
@@ -303,18 +302,13 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
                       );
 
     /**
-     * Does nothing, use factory
-     *
-     * The constructor is not used in order to be able to
-     * return a PEAR_Error from setOptions
-     *
      * @see    setOptions()
      * @access public
      * @since  1.0.0a1
      */
-    function PEAR_PackageFileManager2()
+    function __construct()
     {
-        parent::PEAR_PackageFile_v2();
+        parent::__construct();
         $config = &PEAR_Config::singleton();
         $this->setConfig($config);
     }
@@ -663,7 +657,7 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
      * @access public
      * @since  1.0.0a1
      */
-    function &importFromPackageFile1($packagefile, $options = array())
+    public static function &importFromPackageFile1($packagefile, $options = array())
     {
         $z   = &PEAR_Config::singleton();
         $pkg = new PEAR_PackageFile($z);
@@ -691,7 +685,7 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
      * @access public
      * @since  1.0.0a1
      */
-    function &importOptions($packagefile, $options = array())
+    public static function &importOptions($packagefile, $options = array())
     {
         if (is_a($packagefile, 'PEAR_PackageFile_v1')) {
             $gen = &$packagefile->getDefaultGenerator();
@@ -1207,7 +1201,6 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
      * @param string  $i2   (optional) additional specific error info #2
      *
      * @return PEAR_Error
-     * @static
      * @access public
      * @since  1.0.0a1
      */
@@ -1723,7 +1716,7 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
      * @static
      * @since  1.0.0a1
      */
-    function &_getExistingPackageXML($path, $packagefile = 'package.xml', $options = array())
+    protected static function &_getExistingPackageXML($path, $packagefile = 'package.xml', $options = array())
     {
         if (is_string($path) && is_dir($path)) {
             $contents = false;
@@ -1737,10 +1730,10 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
             }
 
             include_once 'PEAR/PackageFile/Parser/v2.php';
-            $pkg = &new PEAR_PackageFile_Parser_v2();
+            $pkg = new PEAR_PackageFile_Parser_v2();
             $z = &PEAR_Config::singleton();
             $pkg->setConfig($z);
-            $pf = &$pkg->parse($contents, $path . $packagefile, false,
+            $pf = $pkg->parse($contents, $path . $packagefile, false,
                 'PEAR_PackageFileManager2');
             if (PEAR::isError($pf)) {
                 return $pf;
@@ -1797,9 +1790,9 @@ class PEAR_PackageFileManager2 extends PEAR_PackageFile_v2_rw
      * @static
      * @since  1.0.0a1
      */
-    function &_generateNewPackageXML()
+    protected static function &_generateNewPackageXML()
     {
-        $pf = &new PEAR_PackageFileManager2();
+        $pf = new PEAR_PackageFileManager2();
         $pf->_oldPackageFile = false;
         return $pf;
     }
