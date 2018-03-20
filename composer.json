@@ -12,6 +12,9 @@
       "email": "akihito.koriyama@gmail.com"
     }
   ],
+  "require": {
+    "smarty/smarty": "2.*"
+  },
   "extra": {
     "branch-alias": {
       "dev-develop-2": "0.9.x-dev"
