@@ -14,11 +14,6 @@
  */
 
 /**
- * Smartyライブラリ読み込み
- */
-require _BEAR_BEAR_HOME . '/BEAR/vendors/Smarty/libs/Smarty.class.php';
-
-/**
  * Smarty factory
  *
  * @category  BEAR
