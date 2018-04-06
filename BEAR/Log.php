@@ -73,7 +73,7 @@ class BEAR_Log extends BEAR_Base
      */
     public function log($logKey, $logValue = null)
     {
-        if ($this->_config['debug'] !== true) {
+        if (!isset($this->_config['debug']) || $this->_config['debug'] !== true) {
             return;
         }
         $this->_logs[][$logKey] = $logValue;

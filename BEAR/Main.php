@@ -119,7 +119,9 @@ class BEAR_Main extends BEAR_Base
             'injector' => (isset($this->_config['injector']) ? $this->_config['injector'] : 'onInject')
         );
         $this->_page = BEAR::factory($this->_config['page_class'], $config, $options);
-        BEAR::set('page', $this->_page);
+        if (!BEAR::exists('page')) {
+            BEAR::set('page', $this->_page);
+        }
         $this->_log = BEAR::dependency('BEAR_Log');
         //$this->_roPrototype = BEAR::dependency('BEAR_Ro_Prototype');
     }
