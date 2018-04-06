@@ -23,10 +23,10 @@
   ],
   "require": {
     "php": ">=5.4",
+    "bearsaturday/panda": "^0.4",
     "smarty/smarty": "^2.6",
     "satomif/session_register": "^0.0",
     "satomif/session_unregister": "^0.0",
-    "bearsaturday/panda": "^0.4",
     "pear-pear.php.net/Cache_Lite": "^1.8",
     "pear-pear.php.net/HTML_QuickForm": "^3.2",
     "pear-pear.php.net/HTML_QuickForm_Renderer_Tableless": "^0.6",
