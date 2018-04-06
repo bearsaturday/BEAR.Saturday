@@ -1,5 +1,6 @@
 <?php
 
+require_once 'vendor/autoload.php';
 //ライブモードで使用するためApp.phpより先に読み込み
 require_once 'BEAR/vendors/debuglib.php';
 require_once 'App.php';

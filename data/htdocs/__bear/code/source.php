@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/__bear/code/page.css">
 
 <?php
+require_once 'vendor/autoload.php';
 require_once 'BEAR/vendors/debuglib.php';
 require_once 'App.php';
 spl_autoload_unregister(array('BEAR', 'onAutoload'));

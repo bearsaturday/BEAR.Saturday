@@ -1,4 +1,5 @@
 <?php
+require_once 'vendor/autoload.php';
 require_once 'BEAR/vendors/debuglib.php';
 $q = (isset($_GET['id'])) ? "&id={$_GET['id']}" : '';
 ?>

@@ -13,6 +13,7 @@
  * failed to open stream: Permission denied エラーが出たファイルに644のパーミッションを与えてください
  *
  */
+require_once 'vendor/autoload.php';
 require_once 'App.php';
 $_SERVER['__bear'] = 1;
 $configPath = _BEAR_APP_HOME . '/App/data/dev.config.php';

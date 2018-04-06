@@ -5,5 +5,6 @@
  *
  * @var string
  */
+require_once 'vendor/autoload.php';
 require_once 'App.php';
 define ('_BEAR_EDIT_ROOT_PATH', _BEAR_APP_HOME);
