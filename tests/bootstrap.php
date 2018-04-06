@@ -1,15 +1,21 @@
 <?php
 
 restore_error_handler();
-error_reporting(E_ALL);
+date_default_timezone_set('Asia/Tokyo');
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+
 // set path
-$bearPath = realpath(dirname(__DIR__));
+$basePath = dirname(__DIR__);
 $bearDemoPath = __DIR__ . '/sites/beardemo.local';
-$pandaPath = dirname(__DIR__) . '/vendors/Panda';
+
 // set autoloder
-set_include_path($bearPath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . $pandaPath . PATH_SEPARATOR . get_include_path());
+set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());
+require_once 'vendor/autoload.php';
+
 spl_autoload_register('bearTestAutolodaer');
-BEAR::set('page', new BEAR_Page_Cli(array()));
+if (!BEAR::exists('page')) {
+    BEAR::set('page', new BEAR_Page_Cli(array()));
+}
 function bearTestAutolodaer($class) {
     $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
     include_once $file;

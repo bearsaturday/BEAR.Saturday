@@ -7,8 +7,6 @@
  * @subpackage resource
  */
 
-$bearMode = 0;
-require_once 'App.php';
 
 /**
  * @category   BEAR
@@ -20,6 +18,8 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $bearMode = 0;
+        require dirname(__DIR__) . '/sites/beardemo.local/App.php';
         restore_error_handler();
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
         restore_exception_handler();
@@ -30,6 +30,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リソーステンプレートを適用しリソースを持つページのテスト
+     * @runInSeparateProcess
      */
     public function testResourceWithTemplate()
     {
@@ -60,6 +61,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
      * テンプレートキャッシュテスト
      *
      * ２回同じURIをreadしたらリソーステンプレートの時刻表時が違うはずです
+     * @runInSeparateProcess
      */
     public function testResourceWithTemplateWithCache()
     {
@@ -82,6 +84,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
      * テンプレートキャッシュテスト
      *
      * テンプレートの時刻表時も同じはずです
+     * @runInSeparateProcess
      */
     public function testResourceWithTemplateWithoutCache()
     {
@@ -102,7 +105,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リンクとテンプレート指定されたリソース
-     *
+     * @runInSeparateProcess
      */
     public function testResourceWithTemplateAndLinkAndCache()
     {
@@ -123,7 +126,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リンクとテンプレート指定されたリソースにページャー付
-     *
+     * @runInSeparateProcess
      */
     public function testResourceWithTemplateAndLinkAndPager()
     {
@@ -143,7 +146,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リンクとテンプレート指定されたリソースにページャー付
-     *
+     * @runInSeparateProcess
      */
     public function testResourceWithTemplateAndLinkAndPagerWithPage2()
     {
@@ -160,7 +163,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
         $expected = '<li class="blog">Athos Blog</li>';
         $this->assertSame($expected, $xml[0]);
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content div#blog ul li.entry span.title');
-        $expected = '<span class="title">Go</span>';
+        $expected = '<span class="title">JavaScript</span>';
         $this->assertSame($expected, $xml[0]);
     }
 }
