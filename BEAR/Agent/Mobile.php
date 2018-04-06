@@ -50,11 +50,11 @@ class BEAR_Agent_Mobile extends BEAR_Factory
     {
         $userAgent = $this->_config['user_agent'];
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        $netUserAgentMobile = Net_UserAgent_Mobile::factory($userAgent);
+        $netUserAgentMobile = @Net_UserAgent_Mobile::factory($userAgent);
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         if (PEAR::isError($netUserAgentMobile)) {
             /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-            $netUserAgentMobile = Net_UserAgent_Mobile::factory('');
+            $netUserAgentMobile = @Net_UserAgent_Mobile::factory('');
         }
 
         return $netUserAgentMobile;

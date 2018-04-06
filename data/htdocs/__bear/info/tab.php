@@ -131,7 +131,7 @@ function printFile($file, $type = "MYSQL")
     if ($hasClass) {
         require_once "Text/Highlighter/Renderer/Html.php";
         if ($type) {
-            $hlSQL = & Text_Highlighter::factory($type);
+            $hlSQL = @Text_Highlighter::factory($type);
             $renderer = new Text_Highlighter_Renderer_Html(array(
                 "numbers" => HL_NUMBERS_LI,
                 "tabsize" => 4));
