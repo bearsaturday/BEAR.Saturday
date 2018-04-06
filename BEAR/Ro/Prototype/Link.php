@@ -149,9 +149,9 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
         $isLink = array_key_exists('_link', $linked);
         $isSet = isset($linked['_link'][$linkFrom]);
         if ($isLink && $isSet) {
-            $valeus = $linked['_link'][$linkFrom]['values'];
+            $values = $linked['_link'][$linkFrom]['values'];
             $class = $linked['_link'][$linkFrom]['class'];
-            $onLinks = call_user_func(array($class, 'onLink'), $valeus);
+            $onLinks = @$class::onLink($values);
             //            $params = $onLinks[$linkTo];
             $config = self::_makeRequestConfig($onLinks, $linkTo);
             $ro = BEAR::factory('BEAR_Resource_Request', $config)->request();
