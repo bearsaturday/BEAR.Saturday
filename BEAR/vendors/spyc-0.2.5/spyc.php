@@ -48,7 +48,7 @@ class YAMLNode
      * @access public
      * @return void
      */
-    public function YAMLNode($nodeId)
+    public function __construct($nodeId)
     {
         $this->id = $nodeId;
     }
