@@ -22,7 +22,7 @@
     "./"
   ],
   "require": {
-    "php": ">=5.4",
+    "php": ">=5.4 <7.2",
     "bearsaturday/panda": "^0.4",
     "smarty/smarty": "^2.6",
     "satomif/session_register": "^0.0",
