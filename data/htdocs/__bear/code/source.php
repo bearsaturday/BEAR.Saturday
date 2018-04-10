@@ -24,7 +24,9 @@ BEAR_Dev_CodeSniff::process($file);
 // Source listを表示
 echo "<div class='info'>Source:$file<div>";
 $renderer = new Text_Highlighter_Renderer_Html(array("numbers" => HL_NUMBERS_TABLE, "tabsize" => 4));
-$hlHtml = @Text_Highlighter::factory("PHP");
+$reporting = error_reporting( E_ALL & ~E_STRICT );
+$hlHtml = Text_Highlighter::factory("PHP");
+error_reporting( $reporting );
 $hlHtml->setRenderer($renderer);
 $fieStr = file_get_contents($file);
 echo $hlHtml->highlight($fieStr);

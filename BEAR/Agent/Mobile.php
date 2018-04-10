@@ -49,12 +49,16 @@ class BEAR_Agent_Mobile extends BEAR_Factory
     public function factory()
     {
         $userAgent = $this->_config['user_agent'];
+        $reporting = error_reporting( E_ALL & ~E_STRICT );
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        $netUserAgentMobile = @Net_UserAgent_Mobile::factory($userAgent);
+        $netUserAgentMobile = Net_UserAgent_Mobile::factory($userAgent);
+        error_reporting( $reporting );
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         if (PEAR::isError($netUserAgentMobile)) {
+            $reporting = error_reporting( E_ALL & ~E_STRICT );
             /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-            $netUserAgentMobile = @Net_UserAgent_Mobile::factory('');
+            $netUserAgentMobile = Net_UserAgent_Mobile::factory('');
+            error_reporting( $reporting );
         }
 
         return $netUserAgentMobile;

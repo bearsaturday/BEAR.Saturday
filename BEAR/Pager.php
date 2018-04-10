@@ -149,7 +149,9 @@ class BEAR_Pager extends BEAR_Base
             $this->_options = array_merge($this->_options, self::$optionsMobile);
         }
         // ページャーオブジェクト
-        $this->pager = @Pager::factory($this->_options);
+        $reporting = error_reporting( E_ALL & ~E_STRICT );
+        $this->pager = Pager::factory($this->_options);
+        error_reporting( $reporting );
     }
 
     /**
