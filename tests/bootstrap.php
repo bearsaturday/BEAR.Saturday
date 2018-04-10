@@ -2,7 +2,6 @@
 
 restore_error_handler();
 date_default_timezone_set('Asia/Tokyo');
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
 // set path
 $basePath = dirname(__DIR__);

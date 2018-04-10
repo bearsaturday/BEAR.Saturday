@@ -14,10 +14,14 @@
  */
 
 // フレームワークホームパス
-define('_BEAR_BEAR_HOME', realpath(dirname(__FILE__)));
+if (!defined('_BEAR_BEAR_HOME')) {
+    define('_BEAR_BEAR_HOME', realpath(dirname(__FILE__)));
+}
 
 // 現在時刻 (W3CDTFフォーマット）
-define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
+if (!defined('_BEAR_DATETIME')) {
+    define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
+}
 
 /**
  * BEARシステムクラス
