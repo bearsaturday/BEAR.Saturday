@@ -10,7 +10,10 @@ cache:
   directories:
     - vendor
     - $HOME/.composer/cache
+git:
+  submodules: false
 before_script:
+  - git submodule update --init
   - composer self-update
   - composer update
 script:
