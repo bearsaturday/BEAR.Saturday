@@ -76,6 +76,8 @@
   "bin": [
     "BEAR/BEAR/bin/bear.sh"
   ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config":{
     "secure-http" : false
   },
