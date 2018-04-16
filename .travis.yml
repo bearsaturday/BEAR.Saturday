@@ -17,4 +17,6 @@ before_script:
   - composer update
   - mysql -uroot bear_demo < vendor/bearsaturday/demo.local/data/entries.sql
 script:
-  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpunit ./tests/page/BEAR_Test_Resource_TemplateTest.php
+  - ./vendor/bin/phpunit ./tests/page/BEAR_Test_BEAR_DemoTest.php
+  - ./vendor/bin/phpunit ./tests/src/BEAR_Test_BEAR_Form_TokenTest.php
