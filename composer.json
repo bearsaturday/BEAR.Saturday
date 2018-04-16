@@ -19,7 +19,7 @@
     },
     {
       "type": "vcs",
-      "url": "https://github.com/satomif/beardemo.local"
+      "url": "https://github.com/satomif/beardemo.local.git"
     }
   ],
   "include-path": [
