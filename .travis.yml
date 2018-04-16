@@ -16,5 +16,6 @@ before_script:
   - mysql -e 'CREATE DATABASE bear_demo;'
   - composer self-update
   - composer update
+  - mysql -uroot < vendor/bearsaturday/demo.local/data/entries.sql
 script:
   - ./vendor/bin/phpunit
