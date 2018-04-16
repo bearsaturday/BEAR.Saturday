@@ -15,6 +15,6 @@ git:
 before_script:
   - mysql -e 'CREATE DATABASE bear_demo;'
   - composer update
-  - mysql -uroot < vendor/bearsaturday/demo.local/data/entries.sql
+  - mysql -uroot bear_demo < vendor/bearsaturday/demo.local/data/entries.sql
 script:
   - ./vendor/bin/phpunit
