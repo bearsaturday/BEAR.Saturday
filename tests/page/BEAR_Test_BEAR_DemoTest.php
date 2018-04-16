@@ -21,6 +21,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
         $basePath = dirname(dirname(__DIR__));
         $bearDemoPath = $basePath . '/vendor/bearsaturday/demo.local';
         set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());
+        require $bearDemoPath . '/App.php';
         error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
         //restore_error_handler();
