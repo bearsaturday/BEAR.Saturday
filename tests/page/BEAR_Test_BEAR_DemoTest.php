@@ -18,7 +18,8 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $bearMode = 0;
-        require dirname(__DIR__) . '/sites/beardemo.local/App.php';
+        $bearDemoPath = dirname(dirname(__DIR__)) . '/vendor/bearsaturday/demo.local';
+        require $bearDemoPath . '/App.php';
         error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
         //restore_error_handler();

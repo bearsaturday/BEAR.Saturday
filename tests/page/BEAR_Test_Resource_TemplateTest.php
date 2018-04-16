@@ -19,7 +19,8 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $bearMode = 0;
-        require dirname(__DIR__) . '/sites/beardemo.local/App.php';
+        $bearDemoPath = dirname(dirname(__DIR__)) . '/vendor/bearsaturday/demo.local';
+        require $bearDemoPath . '/App.php';
         restore_error_handler();
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
         restore_exception_handler();
@@ -120,7 +121,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $xml[0]);
         $html = $this->_resource->read($params)->getBody();
         $xml = $this->_query->getXml($html, 'html#beardemo body div.content div#blog ul ul ul li.thumb');
-        $expected = '<li class="thumb">コメントID(114)の評価(ID=133)</li>';
+        $expected = '<li class="thumb">コメントID(110)の評価(ID=121)</li>';
         $this->assertSame($expected, $xml[1]);
     }
 

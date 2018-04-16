@@ -1,6 +1,7 @@
 <?php
 
-require_once 'App.php';
+$bearDemoPath = dirname(dirname(__DIR__)) . '/vendor/bearsaturday/demo.local';
+require $bearDemoPath . '/App.php';
 
 /**
  * BEAR

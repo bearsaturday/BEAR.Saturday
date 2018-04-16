@@ -5,7 +5,7 @@ date_default_timezone_set('Asia/Tokyo');
 
 // set path
 $basePath = dirname(__DIR__);
-$bearDemoPath = __DIR__ . '/sites/beardemo.local';
+$bearDemoPath = __DIR__ . '../vendor/bearsaturday/demo';
 
 // set autoloder
 set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());

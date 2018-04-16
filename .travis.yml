@@ -13,7 +13,7 @@ cache:
 git:
   submodules: false
 before_script:
-  - git submodule update --init
+  - mysql -e 'CREATE DATABASE bear_demo;'
   - composer self-update
   - composer update
 script:

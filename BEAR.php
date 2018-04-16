@@ -260,10 +260,11 @@ class BEAR
                     $cache->set($key, $yaml);
                     return $yaml;
                 case 'csv':
-                    $conf = File_CSV::discoverFormat($target);
+                    $csvObject = new SplFileObject($target);
+                    $csvObject->setFlags(\SplFileObject::READ_CSV);
                     $csv = array();
-                    while ($fields = File_CSV::read($target, $conf)) {
-                        array_push($csv, $fields);
+                    foreach ($csvObject as $line) {
+                        array_push($csv, $line);
                     }
                     $cache->set($key, $csv);
                     return $csv;
