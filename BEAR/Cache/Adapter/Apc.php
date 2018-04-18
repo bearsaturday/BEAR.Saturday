@@ -8,10 +8,6 @@
 /**
  * APCアダプター
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter

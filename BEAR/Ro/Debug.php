@@ -9,10 +9,6 @@
  * リソースオブジェクトデバッククラス
  *
  * リソース可視化などを行います
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 class BEAR_Ro_Debug extends BEAR_Base
 {

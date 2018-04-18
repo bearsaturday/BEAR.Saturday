@@ -14,9 +14,6 @@
  * 利用する側はインスタンスの生成方法を知る事がなくfactoryパターンで
  * インスタンス提供ができます。
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  * @abstract
  */
 abstract class BEAR_Factory extends BEAR_Base

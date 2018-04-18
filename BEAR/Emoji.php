@@ -17,10 +17,6 @@
  * 対応する絵文字が無い場合はカタカナで表現されます。
  * </pre>
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @cofing string ua     ユーザーエージェントコード（省略可）

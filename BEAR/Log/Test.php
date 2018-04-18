@@ -6,12 +6,6 @@
  */
 
 /**
- * BEAR_Log_Test
- *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Log_Test extends BEAR_Log

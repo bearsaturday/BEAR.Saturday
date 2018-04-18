@@ -32,10 +32,6 @@
  * $resource->create($values, $options)->request();
  * </code>
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface

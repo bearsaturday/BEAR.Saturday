@@ -10,14 +10,9 @@
  *
  * データを分割して表示するページャークラスです。
  *
- * @instance singleton
- * @config void
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
+ *
+ * @config void
  */
 class BEAR_Pager extends BEAR_Base
 {

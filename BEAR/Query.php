@@ -94,10 +94,6 @@
  *
  * </pre>
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @config MDB2    db          DBオブジェクト        *required
  * @config BEAR_Ro ro          リソースオブジェクト    *requi
  * @config string  table       テーブル名

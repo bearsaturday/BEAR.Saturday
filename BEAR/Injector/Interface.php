@@ -19,8 +19,8 @@ interface BEAR_Injector_Interface
      *
      * @param $object
      * @param $config
+     *
+     * @noinspection PhpAbstractStaticMethodInspection
      */
-
-    /** @noinspection PhpAbstractStaticMethodInspection */
     public static function inject($object, $config);
 }

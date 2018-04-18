@@ -10,10 +10,6 @@
  *
  * CLIでレジストリにセットされる仮想pageです。
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Page_Cli extends BEAR_Page

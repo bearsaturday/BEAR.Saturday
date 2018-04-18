@@ -9,10 +9,6 @@
  * アドバイスウイーバー
  *
  * ターゲットにアドバイスを織り込むのに用います。
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 /** @noinspection PhpDocMissingThrowsInspection */
 class BEAR_Aspect_Weaver extends BEAR_Base

@@ -9,10 +9,6 @@
  * リソースオブジェクトリンク
  *
  * リソースリンクを処理します。BEAR_Ro_Prototype::getLinkedBody()から利用されています。
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 class BEAR_Ro_Prototype_Link extends BEAR_Base
 {

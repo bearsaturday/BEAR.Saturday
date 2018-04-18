@@ -32,10 +32,6 @@
  *  $img->save(_BEAR_APP_HOME . '/tmp/picure.jpeg');
  * </code>
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter

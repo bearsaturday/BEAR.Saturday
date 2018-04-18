@@ -6,12 +6,6 @@
  */
 
 /**
- * BEAR_Page_Ajax
- *
- *
- *
- *
- *
  * @Singleton
  *
  * @config bool security_check セッションを用いたダブルサブミットクッキーによりセキュリティチェック true

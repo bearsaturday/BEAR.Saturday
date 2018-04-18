@@ -11,10 +11,6 @@
  * リソースリクエストをキャッシュするクラスです。
  * リソースリクエストキャッシュオプション(['options']['cache'])が指定されているとキャッシュオブジェクトを返し、
  * そうでないとリクエストオブジェクトを返します。
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 class BEAR_Resource_Request_Cache extends BEAR_Factory
 {

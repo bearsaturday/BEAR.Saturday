@@ -16,10 +16,6 @@
  * AgentアダプターはBEAR_Agent_Adapter_*で定義されUAの継承関係や、ビューの時のconfigを設定します。
  * </pre>
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @config  string user_agent ユーザーエージェント（省略すれば$_SERVER['HTTP_USER_AGENT')

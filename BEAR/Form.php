@@ -10,10 +10,7 @@
  *
  * フォームにPEAR::HTML_QuickFormを利用しています。
  *
- * @license  http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link     https://github.com/bearsaturday
- * @see      PEAR::HTML_QuickForm
+ * @see  PEAR::HTML_QuickForm
  *
  * @config string   formName   フォーム名           'form'
  * @config string   method     サブミットメソッド     'post'

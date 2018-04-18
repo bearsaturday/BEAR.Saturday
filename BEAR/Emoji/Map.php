@@ -11,10 +11,6 @@
  * 連想配列でキャリアの相互の絵文字変換情報を格納します。
  * BEAR_Emojiクラスから呼び出されます。
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Emoji_Map

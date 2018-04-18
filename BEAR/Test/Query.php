@@ -10,10 +10,6 @@
  *
  * Zend_Dom_QueryにgetXmlメソッドを追加
  *
- * @license    @license@ http://@license_url@
- *
- * @link       http://@link_url@
- *
  * @Singleton
  */
 class BEAR_Test_Query extends Zend_Dom_Query

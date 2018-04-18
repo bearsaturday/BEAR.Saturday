@@ -13,10 +13,6 @@
  * webクラスターシステムのためのDBまたはmemcacheが選択できます。
  * 詳細設定は　htdocs/.htaccess(またはphp.ini)でも行う必要があります。
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @config mixed    adapter  アダプター

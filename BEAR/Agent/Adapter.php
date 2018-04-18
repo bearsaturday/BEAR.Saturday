@@ -8,10 +8,6 @@
 /**
  * アブストラクトエージェントアダプター
  *
- *
- *
- *
- *
  * @config bool   enable_js         JS可？
  * @config bool   enable_css        CSS可？
  * @config bool   enable_inline_css DocomoのCSS用にtoInlineCSSDoCoMo使用？

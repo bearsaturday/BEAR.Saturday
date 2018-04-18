@@ -17,9 +17,6 @@
  * 3 ADAPTER_APC       APC
  * </pre>
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  * @see       PECL::Memcache, PEAR::Cache_Lite
  *
  * @config mixed adapter キャッシュアダプター,integerならビルトイン、stringならユーザー定義クラス

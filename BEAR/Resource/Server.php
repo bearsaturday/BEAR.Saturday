@@ -31,15 +31,6 @@
  *
  * broadcast user/blog?id=10&blog_id=20
  * </pre>
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Server
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- *
- * @version    @package_version@
- *
  */
 class BEAR_Resource_Server extends BEAR_Base
 {

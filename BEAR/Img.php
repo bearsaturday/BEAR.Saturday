@@ -11,11 +11,7 @@
  * 画像を取り扱うクラスです。画像エンジンにGD2, iMagick(ImageMagick + GraphickMagick),
  * Cairoが選べ切り替えて使う事ができます。
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
- * @instance singleton
+ * @Singleton
  *
  * @config mixed adapter イメージアダプター　stringならイメージアダプタークラス
  */

@@ -10,10 +10,6 @@
  *
  * キャッシュが無効になります
  *
- *
- *
- *
- *
  * @Singleton
  */
 final class BEAR_Cache_Adapter_Void extends BEAR_Base

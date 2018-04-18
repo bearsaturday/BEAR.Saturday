@@ -8,11 +8,7 @@
 /**
  * Smarty factory
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
- * @instance singleton
+ * @Singleton
  *
  * @config string ua UAコード
  * @config string compile_dir

@@ -7,10 +7,6 @@
 
 /**
  * ビューアダプター
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 abstract class BEAR_View_Adapter extends BEAR_Base
 {

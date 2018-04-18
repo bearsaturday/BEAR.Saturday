@@ -17,11 +17,6 @@
  * <li>onAction(array $submit)   フォーム送信後の処理</li>
  * <li>onException(Exception $e) 例外</li>
  * </ul>
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- * @abstract
  */
 abstract class BEAR_Page extends BEAR_Base
 {

@@ -8,10 +8,6 @@
 /**
  * ヘッダー
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface

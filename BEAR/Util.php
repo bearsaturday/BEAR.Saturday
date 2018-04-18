@@ -8,14 +8,8 @@
 /**
  * ユーティリティ
  *
- * <pre>
  * デバックモードの時のみ使用するクラス群です。
  * フレームワークが使用しています。
- * </pre>
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 class BEAR_Util
 {

@@ -7,10 +7,6 @@
 
 /**
  * UAインジェクター
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 class BEAR_Agent_Injector implements BEAR_Injector_Interface
 {

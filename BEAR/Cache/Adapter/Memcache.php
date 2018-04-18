@@ -8,10 +8,6 @@
 /**
  * Memcacheアダプター
  *
- *
- *
- *
- *
  * @Singleton
  *
  * @config int BEAR_Cache_Adapter_Memcache memcacheポート番号

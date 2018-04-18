@@ -8,10 +8,6 @@
 /**
  * アノテーション
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @config string class  クラス

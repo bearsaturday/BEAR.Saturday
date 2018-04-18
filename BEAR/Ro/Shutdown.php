@@ -10,10 +10,6 @@
  *
  * shutdown時にリクエストされるリソースのプロトタイプクラスです。
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface

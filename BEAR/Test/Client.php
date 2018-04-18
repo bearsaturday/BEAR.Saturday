@@ -6,12 +6,6 @@
  */
 
 /**
- * BEAR
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Test_Client extends HTTP_Request2

@@ -10,10 +10,6 @@
  *
  * アドバイスが織り込まれるターゲットクラスのリフレクションを用いて
  * 情報を取得したりメソッドを実行したりできます。
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 class BEAR_Aspect_JoinPoint extends BEAR_Base
 {

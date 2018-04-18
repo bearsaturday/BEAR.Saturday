@@ -35,10 +35,6 @@
  *         'Hiragino Mincho ProN'); $img->resize();
  * </code>
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter

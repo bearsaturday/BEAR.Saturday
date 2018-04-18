@@ -106,10 +106,6 @@
  * @config string dsn     DSN          *required
  * @config array  options MDB2オプション array()
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Mdb2 extends BEAR_Factory

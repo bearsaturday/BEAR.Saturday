@@ -8,10 +8,6 @@
 /**
  * Smartyビューアダプター
  *
- *
- *
- *
- *
  * @Singleton
  *
  * @config   string ua           UAコード

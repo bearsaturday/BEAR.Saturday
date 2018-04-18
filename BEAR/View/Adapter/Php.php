@@ -8,10 +8,6 @@
 /**
  * PHPビューアダプター
  *
- *
- *
- *
- *
  * @Singleton
  *
  * @config   string ua           UAコード

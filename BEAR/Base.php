@@ -8,17 +8,10 @@
 /**
  * BEARクラスの抽象クラス
  *
- * BEARフレームワークで使われる基底クラスです。
- *
- * BEARのクラスはBEAR::factoryやBEAR::dependency()によって以下の順でインスタンス化されます。
+ * BEARフレームワークで使われる基底クラスです。BEARのクラスはBEAR::factoryやBEAR::dependency()によって以下の順でインスタンス化されます。
  *
  * 1) コンストラクタで設定を行う
  * 2) 設定に基づいてインジェクタで必要なサービスをプロパティに用意
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- * @abstract
  */
 abstract class BEAR_Base implements BEAR_Base_Interface
 {

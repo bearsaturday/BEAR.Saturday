@@ -10,10 +10,6 @@
  *
  * 開発時のログを扱います
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Log extends BEAR_Base

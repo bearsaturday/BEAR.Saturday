@@ -55,10 +55,6 @@
  * で返します。
  * </pre>
  *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @config string method      メソッド

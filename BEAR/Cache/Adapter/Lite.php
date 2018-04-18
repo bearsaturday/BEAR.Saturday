@@ -8,13 +8,7 @@
 /**
  * PEAR::Cache_Liteアダプター
  *
- *
- *
- *
- *
  * @Singleton
- *
- * @config
  */
 class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
 {

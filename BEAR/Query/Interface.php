@@ -4,12 +4,9 @@
  *
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
+
 /**
  * BEAR_Queryインターフェイス
- *
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link      https://github.com/bearsaturday
  */
 interface BEAR_Query_Interface
 {

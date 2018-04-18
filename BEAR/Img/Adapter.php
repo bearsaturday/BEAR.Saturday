@@ -6,11 +6,6 @@
  */
 /**
  * イメージアダプター抽象クラス
- *
- *
- *
- *
- * @abstract
  */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUndefinedClassInspection */
