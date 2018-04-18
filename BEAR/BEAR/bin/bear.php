@@ -1,8 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 $bearPath = realpath(dirname(dirname(dirname(__DIR__))));
 $vendorPEARPath = "{$bearPath}/BEAR/vendors/PEAR";

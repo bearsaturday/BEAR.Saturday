@@ -1,12 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- *
- *
- * @link       http://pear.php.net/package/HTML_QuickForm
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**

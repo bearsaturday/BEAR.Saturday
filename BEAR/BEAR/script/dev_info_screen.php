@@ -1,8 +1,8 @@
 <?php
 /**
- * BEAR 開発用info画面
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 if (isset($_GET['_pear_dir'])) {
     // パーミッションチェック
