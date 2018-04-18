@@ -16,10 +16,6 @@
         {
             "type": "pear",
             "url": "https://pear.php.net"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:bearsaturday/beardemo.local.git"
         }
     ],
     "include-path": [
@@ -71,7 +67,7 @@
         "phpunit/phpunit-selenium": "^1.2",
         "zf1s/zend-dom": "^1.12",
         "pear-pear.php.net/PHP_CodeSniffer": "^2.9",
-        "bearsaturday/demo.local": "dev-composer"
+        "bearsaturday/beardemo.local": "dev-composer"
     },
     "bin": [
         "BEAR/BEAR/bin/bear.sh"
