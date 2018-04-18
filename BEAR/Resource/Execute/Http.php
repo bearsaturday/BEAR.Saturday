@@ -3,18 +3,10 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
  * HTTPリソース
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
 {

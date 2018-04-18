@@ -13,10 +13,6 @@
  * リソースリクエストインターフェイス
  *
  * 実行クラスはBEAR/Resource/Request/Excecute/以下に配置します。
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 interface BEAR_Resource_Request_Interface
 {

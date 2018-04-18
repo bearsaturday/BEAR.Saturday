@@ -3,18 +3,10 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
  * Mobileエージェントアダプター
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 {

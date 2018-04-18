@@ -3,18 +3,10 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
  * ヘッダーインターフェイス
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 interface BEAR_Page_Header_Interface extends BEAR_Base_Interface
 {

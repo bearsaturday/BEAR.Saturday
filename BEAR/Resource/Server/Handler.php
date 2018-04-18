@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -25,10 +21,6 @@
  *   (空行)
  *   データ
  * </pre>
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Server_Handler extends Net_Server_Handler
 {

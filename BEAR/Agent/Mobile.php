@@ -11,10 +11,6 @@
 
 /**
  * Mobileエージェント
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Agent_Mobile extends BEAR_Factory
 {

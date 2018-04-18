@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -33,9 +29,9 @@
  *  'func' string ユーザー関数
  * </pre>
  *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
  *
- * @link       https://github.com/bearsaturday
+ *
+ *
  *
  * @param string $params  パラメーター
  * @param string $content HTML

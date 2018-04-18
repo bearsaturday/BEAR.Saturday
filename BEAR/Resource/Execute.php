@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -14,10 +10,6 @@
  *
  * リソースリクエストを実行するクラスです。
  * URIによってどの方法で実行するかををfacotryで判断しています。
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Execute extends BEAR_Factory
 {

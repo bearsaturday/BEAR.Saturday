@@ -3,18 +3,10 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
  * Softbankエージェントアダプター
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Agent_Adapter_Softbank extends BEAR_Agent_Adapter_Mobile implements BEAR_Agent_Adapter_Interface
 {

@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -16,9 +12,9 @@
  * スタティックな絵文字を表示します。テンプレート生成時のみ動作します。
  * </pre>
  *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
  *
- * @link       https://github.com/bearsaturday
+ *
+ *
  *
  * @param string $tagArg
  * @param Smarty &$smarty Smarty object

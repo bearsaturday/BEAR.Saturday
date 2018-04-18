@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 $bearPath = realpath(dirname(dirname(dirname(__DIR__))));
 $vendorPEARPath = "{$bearPath}/BEAR/vendors/PEAR";
@@ -31,10 +27,6 @@ set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
  * clear-all    clear cache and log.
  * make-doc     make application documents.
  * </pre>
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 class BEAR_bin_bear
 {

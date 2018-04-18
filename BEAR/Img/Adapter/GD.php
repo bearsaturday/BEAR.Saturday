@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -14,9 +10,9 @@
  *
  * 画像ライブラリGDを取り扱うクラスです。
  *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
  *
- * @link       https://github.com/bearsaturday
+ *
+ *
  *
  * @Singleton
  */

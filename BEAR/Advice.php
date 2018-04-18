@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -25,10 +21,6 @@
  * before <メソッドの実行前のアドバイス>
  * after  <メソッドの実行後のアドバイス>
  * </code>
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 abstract class BEAR_Aspect extends BEAR_Base
 {

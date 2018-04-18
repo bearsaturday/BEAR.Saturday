@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -39,9 +35,9 @@
  *         'Hiragino Mincho ProN'); $img->resize();
  * </code>
  *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
  *
- * @link       https://github.com/bearsaturday
+ *
+ *
  *
  * @Singleton
  */

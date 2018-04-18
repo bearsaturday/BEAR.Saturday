@@ -3,20 +3,12 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
  * キャッシュアダプター
  *
  * キャッシュ抽象クラスです。BEAR/Cache/Adapter/の各クラスで実装します。
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 abstract class BEAR_Cache_Adapter extends BEAR_Base
 {

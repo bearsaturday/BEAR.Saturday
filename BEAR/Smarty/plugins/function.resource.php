@@ -3,10 +3,6 @@
  * BEAR
  *
  * PHP versions 5
- *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- *
- * @link       https://github.com/bearsaturday
  */
 
 /**
@@ -20,9 +16,9 @@
  * {resource uri='Entry' params=$entryParams tepmplate="resource/entry"}
  * </code>
  *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
  *
- * @link       https://github.com/bearsaturday
+ *
+ *
  *
  * @param mixed  $params
  * @param Smarty &$smarty

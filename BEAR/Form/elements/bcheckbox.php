@@ -4,10 +4,9 @@
  *
  * PHP versions 5
  *
- * @license    http://opensource.org/licenses/bsd-license.php BSD
+ *
  *
  * @link       http://pear.php.net/package/HTML_QuickForm
- * @link       https://github.com/bearsaturday
  */
 
 /**
