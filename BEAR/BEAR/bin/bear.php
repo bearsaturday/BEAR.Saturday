@@ -77,7 +77,9 @@ class BEAR_bin_bear
             /** @noinspection PhpIncludeInspection */
             include_once "{$appPath}/App.php";
             // CLI用ページをセット
-            BEAR::set('page', new BEAR_Page_Cli(array()));
+            if (!BEAR::exists('page')) {
+                BEAR::set('page', new BEAR_Page_Cli(array()));
+            }
         }
         $this->_initBear();
     }

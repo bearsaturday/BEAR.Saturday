@@ -4,7 +4,8 @@
 <phpunit bootstrap="tests/bootstrap.php"
          backupGlobals="false"
          backupStaticAttributes="false"
-         strict="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="false"
          verbose="true">
   <testsuites>
     <testsuite name="page">

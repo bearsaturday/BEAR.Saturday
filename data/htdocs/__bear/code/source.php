@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/__bear/code/page.css">
 
 <?php
+require_once 'vendor/autoload.php';
 require_once 'BEAR/vendors/debuglib.php';
 require_once 'App.php';
 spl_autoload_unregister(array('BEAR', 'onAutoload'));
@@ -23,7 +24,9 @@ BEAR_Dev_CodeSniff::process($file);
 // Source listを表示
 echo "<div class='info'>Source:$file<div>";
 $renderer = new Text_Highlighter_Renderer_Html(array("numbers" => HL_NUMBERS_TABLE, "tabsize" => 4));
+$reporting = error_reporting( E_ALL & ~E_STRICT );
 $hlHtml = Text_Highlighter::factory("PHP");
+error_reporting( $reporting );
 $hlHtml->setRenderer($renderer);
 $fieStr = file_get_contents($file);
 echo $hlHtml->highlight($fieStr);

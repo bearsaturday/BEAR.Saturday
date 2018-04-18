@@ -1,0 +1,22 @@
+language: php
+sudo: false
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7
+  - 7.1
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+git:
+  submodules: false
+before_script:
+  - mysql -e 'CREATE DATABASE bear_demo;'
+  - composer update
+  - mysql -uroot bear_demo < vendor/bearsaturday/demo.local/data/entries.sql
+script:
+  - ./vendor/bin/phpunit ./tests/page/BEAR_Test_Resource_TemplateTest.php
+  - ./vendor/bin/phpunit ./tests/page/BEAR_Test_BEAR_DemoTest.php
+  - ./vendor/bin/phpunit ./tests/src/BEAR_Test_BEAR_Form_TokenTest.php

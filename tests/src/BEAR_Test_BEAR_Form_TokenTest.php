@@ -1,6 +1,7 @@
 <?php
 
-require_once 'App.php';
+$bearDemoPath = dirname(dirname(__DIR__)) . '/vendor/bearsaturday/demo.local';
+require_once $bearDemoPath . '/App.php';
 
 /**
  * BEAR
@@ -83,9 +84,9 @@ class BEAR_Test_BEAR_Form_TokenTest extends PHPUnit_Framework_TestCase
     {
         $val = '03c88eb462460abeeff7' . '6ca881e559ef98901975';
         $_POST['_token'] = $val;
-        $token = new BEAR_Form_Token(array());
+        $token = new BEAR_Form_Token(array('debug' => 0));
         $token->onInject();
-        BEAR::dependency('BEAR_Session')->set(BEAR_Form_Token::SESSION_POE, array($val));
+        BEAR::dependency('BEAR_Session', array('debug' => 0))->set(BEAR_Form_Token::SESSION_POE, array($val));
         $isValid = $token->isTokenPoeValid();
         $this->assertFalse($isValid);
     }

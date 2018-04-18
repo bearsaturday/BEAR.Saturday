@@ -13,6 +13,7 @@
  * failed to open stream: Permission denied エラーが出たファイルに644のパーミッションを与えてください
  *
  */
+require_once 'vendor/autoload.php';
 require_once 'App.php';
 $_SERVER['__bear'] = 1;
 $configPath = _BEAR_APP_HOME . '/App/data/dev.config.php';
@@ -131,7 +132,9 @@ function printFile($file, $type = "MYSQL")
     if ($hasClass) {
         require_once "Text/Highlighter/Renderer/Html.php";
         if ($type) {
-            $hlSQL = & Text_Highlighter::factory($type);
+            $reporting = error_reporting( E_ALL & ~E_STRICT );
+            $hlSQL = Text_Highlighter::factory($type);
+            error_reporting( $reporting );
             $renderer = new Text_Highlighter_Renderer_Html(array(
                 "numbers" => HL_NUMBERS_LI,
                 "tabsize" => 4));

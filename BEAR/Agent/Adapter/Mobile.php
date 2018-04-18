@@ -89,12 +89,19 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 
     /**
      * UTF-8化コールバック関数
+     * 親クラスの関数と引数をあわせるために使用していないパラメータ追加
      *
      * @param string &$value 文字列
      *
      * @return void
      */
-    public static function onUTF8(&$value)
+    public static function onUTF8(
+        &$value,
+        /** @noinspection PhpUnusedParameterInspection */
+        $key = null,
+        /** @noinspection PhpUnusedParameterInspection */
+        $inputEncode = null
+    )
     {
         BEAR::dependency(__CLASS__)->onUTF8($value);
     }

@@ -1,26 +1,87 @@
 {
   "name": "bearsaturday/bearsaturday",
-  "description": "BEAR.Saturday framework for PHP 5.2+",
+  "description": "BEAR.Saturday framework for PHP 5.2+(composer install can use from php5.4)",
   "keywords": [
     "Framework",
     "BEAR.Saturday"
   ],
-  "license": "BSD-3-Closure",
+  "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "Akihito Koriyama",
       "email": "akihito.koriyama@gmail.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "pear",
+      "url": "http://pear.php.net"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/satomif/beardemo.local.git"
+    }
+  ],
+  "include-path": [
+    "./"
+  ],
   "require": {
-    "smarty/smarty": "2.*"
+    "php": ">=5.4 <7.2",
+    "bearsaturday/panda": "^0.4",
+    "smarty/smarty": "^2.6",
+    "satomif/session_register": "^0.0",
+    "satomif/session_unregister": "^0.0",
+    "pear-pear.php.net/Cache_Lite": "^1.8",
+    "pear-pear.php.net/HTML_QuickForm": "^3.2",
+    "pear-pear.php.net/HTML_QuickForm_Renderer_Tableless": "^0.6",
+    "pear-pear.php.net/HTTP_Request2": "^2.3",
+    "pear-pear.php.net/HTTP_Session2": "^0.7",
+    "pear-pear.php.net/Log": "^1.13",
+    "pear-pear.php.net/Net_UserAgent_Mobile": "^1.0",
+    "pear-pear.php.net/Pager": "^2.4",
+    "pear-pear.php.net/Spreadsheet_Excel_Writer": "^0.9",
+    "pear-pear.php.net/XML_RPC": "^1.5",
+    "pear-pear.php.net/XML_Serializer": "^0.21",
+    "pear-pear.php.net/I18N_UnicodeString": "^0.3",
+    "pear-pear.php.net/XML_RSS": "^1.1",
+    "pear-pear.php.net/MDB2": "~2.5.0b5",
+    "pear-pear.php.net/MDB2_Driver_mysqli": "~1.5.0b4",
+    "pear-pear.php.net/Var_Dump": "^1.0",
+    "pear-pear.php.net/Text_Highlighter": "^0.8",
+    "pear-pear.php.net/Config": "^1.10",
+    "pear-pear.php.net/File": "^1.4",
+    "pear-pear.php.net/Console_CommandLine": "^1.2",
+    "pear-pear.php.net/Console_Color": "^1.0",
+    "pear-pear.php.net/Console_Table": "^1.3",
+    "pear-pear.php.net/File_SearchReplace": "^1.1",
+    "pear-pear.php.net/HTML_CSS": "^1.5",
+    "pear-pear.php.net/Net_Server": "^1.0",
+    "pear-pear.php.net/Services_JSON": "^1.0"
   },
   "extra": {
     "branch-alias": {
-      "dev-develop-2": "0.9.x-dev"
+      "dev-php7": "1.0.x-dev"
     }
   },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8",
+    "phpunit/dbunit": "^1.4.1",
+    "doctrine/instantiator": "^1.0.5",
+    "phpunit/php-invoker": "^1.1",
+    "phpunit/phpunit-selenium": "^1.2",
+    "zf1s/zend-dom": "^1.12",
+    "pear-pear.php.net/PHP_CodeSniffer": "^2.9",
+    "bearsaturday/demo.local": "dev-composer"
+  },
+  "bin": [
+    "BEAR/BEAR/bin/bear.sh"
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config":{
     "secure-http" : false
+  },
+  "suggest": {
+    "pear-pear.php.net/PHP_CodeSniffer": "If you use __bear debug, add require-dev ^2.9"
   }
 }

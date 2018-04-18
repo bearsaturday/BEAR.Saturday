@@ -14,10 +14,14 @@
  */
 
 // フレームワークホームパス
-define('_BEAR_BEAR_HOME', realpath(dirname(__FILE__)));
+if (!defined('_BEAR_BEAR_HOME')) {
+    define('_BEAR_BEAR_HOME', realpath(dirname(__FILE__)));
+}
 
 // 現在時刻 (W3CDTFフォーマット）
-define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
+if (!defined('_BEAR_DATETIME')) {
+    define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
+}
 
 /**
  * BEARシステムクラス
@@ -256,10 +260,11 @@ class BEAR
                     $cache->set($key, $yaml);
                     return $yaml;
                 case 'csv':
-                    $conf = File_CSV::discoverFormat($target);
+                    $csvObject = new SplFileObject($target);
+                    $csvObject->setFlags(\SplFileObject::READ_CSV);
                     $csv = array();
-                    while ($fields = File_CSV::read($target, $conf)) {
-                        array_push($csv, $fields);
+                    foreach ($csvObject as $line) {
+                        array_push($csv, $line);
                     }
                     $cache->set($key, $csv);
                     return $csv;

@@ -7,6 +7,7 @@
 
 //ライブモードで使用するためApp.phpより先に読み込み
 //ini_set('display_errors', 0);
+require_once 'vendor/autoload.php';
 require_once 'BEAR/vendors/debuglib.php';
 require_once 'App.php';
 require_once 'BEAR/Util.php';
