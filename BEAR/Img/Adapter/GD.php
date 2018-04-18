@@ -126,7 +126,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
                 $this->format = 'jpeg';
             } elseif (stristr(strtolower($this->file), '.png')) {
                 $this->format = 'png';
-                //unknown file format
+            //unknown file format
             } else {
                 $info = compact($file, $format);
                 throw $this->_exception(

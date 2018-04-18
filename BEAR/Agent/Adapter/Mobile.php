@@ -101,8 +101,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
         $key = null,
         /** @noinspection PhpUnusedParameterInspection */
         $inputEncode = null
-    )
-    {
+    ) {
         BEAR::dependency(__CLASS__)->onUTF8($value);
     }
 

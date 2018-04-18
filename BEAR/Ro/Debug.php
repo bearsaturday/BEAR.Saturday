@@ -74,10 +74,10 @@ class BEAR_Ro_Debug extends BEAR_Base
         if (isset($_GET['_resource'])) {
             if ($_GET['_resource'] === 'html') {
                 $renderer = new Text_Highlighter_Renderer_Html(array('tabsize' => 4));
-                $reporting = error_reporting( E_ALL & ~E_STRICT );
+                $reporting = error_reporting(E_ALL & ~E_STRICT);
                 /** @noinspection PhpDynamicAsStaticMethodCallInspection */
                 $hlHtml = Text_Highlighter::factory("HTML");
-                error_reporting( $reporting );
+                error_reporting($reporting);
                 $hlHtml->setRenderer($renderer);
                 if ($resourceHtml == '') {
                     $resourceHtml = '<span class="hl-all">(*Empty String)</span>';

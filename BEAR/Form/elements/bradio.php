@@ -95,7 +95,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
             $label = '';
         } elseif ($this->_flagFrozen) {
             $label = $this->getChecked() ? $this->_text : '';
-            //            $label = $this->_text;
+        //            $label = $this->_text;
         } else {
             $label = '<label for="' . $this->getAttribute('id') . '">' . $this->_text . '</label>';
         }
