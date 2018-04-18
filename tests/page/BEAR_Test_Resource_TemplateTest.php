@@ -19,7 +19,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $basePath = dirname(dirname(__DIR__));
-        $bearDemoPath = $basePath . '/vendor/bearsaturday/demo.local';
+        $bearDemoPath = $basePath . '/vendor/bearsaturday/beardemo.local';
         set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());
         require_once $bearDemoPath . '/App.php';
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
