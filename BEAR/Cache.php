@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Cache
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -25,13 +17,6 @@
  * 3 ADAPTER_APC       APC
  * </pre>
  *
- * @category  BEAR
- * @package   BEAR_Cache
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  * @see       PECL::Memcache, PEAR::Cache_Lite
  *
  * @config mixed adapter キャッシュアダプター,integerならビルトイン、stringならユーザー定義クラス
@@ -60,13 +45,11 @@ class BEAR_Cache extends BEAR_Factory
 
     /**
      * キャッシュライフタイム無期限
-     *
      */
     const LIFE_UNLIMITED = null;
 
     /**
      * キャッシュライフタイムなし
-     *
      */
     const LIFE_NONE = 0;
 
@@ -91,8 +74,6 @@ class BEAR_Cache extends BEAR_Factory
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {

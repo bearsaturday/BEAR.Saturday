@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Server
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * BEARリソースsocketサーバークライアント
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Server
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Server_Client
 {
@@ -104,6 +86,7 @@ class BEAR_Resource_Server_Client
                 'body' => $body
             );
         }
+
         return $result;
     }
 
@@ -133,6 +116,7 @@ class BEAR_Resource_Server_Client
         }
         $queryStrings = ($values) ? '?' . http_build_query($values) : '';
         $result = $parse['path'] . $queryStrings;
+
         return $result;
     }
 }

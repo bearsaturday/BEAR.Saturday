@@ -1,28 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * BEAR_Roインターフェイス
- *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  */
 interface BEAR_Ro_Interface
 {
@@ -89,8 +73,6 @@ interface BEAR_Ro_Interface
      * リソースのボディ（リソース結果）をセットします。
      *
      * @param mixed $body ボディー
-     *
-     * @return void
      */
     public function setBody($body);
 
@@ -105,8 +87,6 @@ interface BEAR_Ro_Interface
      *
      * @param array $key    キー
      * @param array $header ヘッダー
-     *
-     * @return void
      */
     public function setHeader($key, $header);
 
@@ -115,8 +95,6 @@ interface BEAR_Ro_Interface
      *
      * @param array $key  キー
      * @param array $link リンク
-     *
-     * @return void
      */
     public function setLink($key, $link);
 
@@ -124,8 +102,6 @@ interface BEAR_Ro_Interface
      * 状態コード設定
      *
      * @param int $code コード
-     *
-     * @return void
      */
     public function setCode($code);
 
@@ -138,8 +114,6 @@ interface BEAR_Ro_Interface
 
     /**
      * HTTP出力
-     *
-     * @return void
      */
     public function outputHttp();
 }

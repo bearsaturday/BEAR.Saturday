@@ -1,32 +1,14 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * Voidアダプター
  *
  * キャッシュが無効になります
- *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -36,16 +18,6 @@ final class BEAR_Cache_Adapter_Void extends BEAR_Base
      * @var BEAR_Log
      */
     protected $_log;
-
-    /**
-     * Inject
-     *
-     * @return void
-     */
-    public function onInject()
-    {
-        $this->_log = BEAR::dependency('BEAR_Log');
-    }
 
     /**
      * キャッシュ無効
@@ -63,6 +35,14 @@ final class BEAR_Cache_Adapter_Void extends BEAR_Base
         }
 
         return null;
+    }
+
+    /**
+     * Inject
+     */
+    public function onInject()
+    {
+        $this->_log = BEAR::dependency('BEAR_Log');
     }
 
     /**

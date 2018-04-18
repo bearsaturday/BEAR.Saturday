@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Page
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -25,27 +17,16 @@
  * <li>onAction(array $submit)   フォーム送信後の処理</li>
  * <li>onException(Exception $e) 例外</li>
  * </ul>
- *
- * @category  BEAR
- * @package   BEAR_Page
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
- * @abstract
  */
 abstract class BEAR_Page extends BEAR_Base
 {
     /**
      * アクティブリンク・クリックネーム　クエリーキー
-     *
      */
     const KEY_CLICK_NAME = '_cn';
 
     /**
      * アクティブリンク・クリックバリュ　クエリーキー
-     *
      */
     const KEY_CLICK_VALUE = '_cv';
 
@@ -99,6 +80,48 @@ abstract class BEAR_Page extends BEAR_Base
     protected $_pageLog = array();
 
     /**
+     * ページにセットされたリソース
+     *
+     * @var array
+     */
+    protected $_ro = array();
+
+    /**
+     * 出力されたページをリソースオブジェクトにしたもの
+     *
+     * @var BEAR_Ro
+     */
+    protected $_pageRo = array();
+
+    /**
+     * UAコード
+     *
+     * @var string
+     */
+    protected $_ua = BEAR_Agent::UA_DEFAULT;
+
+    /**
+     * セッション
+     *
+     * @var BEAR_Session
+     */
+    protected $_session;
+
+    /**
+     * リソースアクセス
+     *
+     * @var BEAR_Resource
+     */
+    protected $_resource;
+
+    /**
+     * View
+     *
+     * @var mixed
+     */
+    protected $_view = 'view';
+
+    /**
      * Click名
      *
      * @var string
@@ -120,18 +143,16 @@ abstract class BEAR_Page extends BEAR_Base
     private $_values = array();
 
     /**
-     * ページにセットされたリソース
+     * Constructor
      *
-     * @var array
-     */
-    protected $_ro = array();
-
-    /**
-     * 出力されたページをリソースオブジェクトにしたもの
+     * BEAR_MainからのUA情報があればPageにセットします。
      *
-     * @var BEAR_Ro
+     * @param array $config
      */
-    protected $_pageRo = array();
+    public function __construct(array $config)
+    {
+        parent::__construct($config);
+    }
 
     //    /**
     //     * ページキャッシュ
@@ -166,34 +187,6 @@ abstract class BEAR_Page extends BEAR_Base
         return $this->_onClick;
     }
 
-    /**
-     * UAコード
-     *
-     * @var string
-     */
-    protected $_ua = BEAR_Agent::UA_DEFAULT;
-
-    /**
-     * セッション
-     *
-     * @var BEAR_Session
-     */
-    protected $_session;
-
-    /**
-     * リソースアクセス
-     *
-     * @var BEAR_Resource
-     */
-    protected $_resource;
-
-    /**
-     * View
-     *
-     * @var mixed
-     */
-    protected $_view = 'view';
-
     //    /**
     //     * ページリソースモード
     //     *
@@ -205,8 +198,6 @@ abstract class BEAR_Page extends BEAR_Base
      * クリックをセット
      *
      * @param string $onClick クリック名
-     *
-     * @return void
      */
     public function setOnClick($onClick)
     {
@@ -214,21 +205,7 @@ abstract class BEAR_Page extends BEAR_Base
     }
 
     /**
-     * Constructor
-     *
-     * BEAR_MainからのUA情報があればPageにセットします。
-     *
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        parent::__construct($config);
-    }
-
-    /**
      *　インジェクト
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -245,8 +222,6 @@ abstract class BEAR_Page extends BEAR_Base
      * </pre>
      *
      * @param array $args ページ引数
-     *
-     * @return void
      */
     public function onInit(array $args)
     {
@@ -259,8 +234,6 @@ abstract class BEAR_Page extends BEAR_Base
      * onInit()でページにsetされた値をこのメソッド内で出力します。
      * このメソッドはフォームのバリデーションが行われ、その結果が全てOKだった時のみ_呼び出されません_
      * </pre>
-     *
-     * @return void
      */
     public function onOutput()
     {
@@ -277,8 +250,6 @@ abstract class BEAR_Page extends BEAR_Base
      * </pre>
      *
      * @param array $submit フォーム内容
-     *
-     * @return void
      */
     public function onAction(array $submit)
     {
@@ -292,8 +263,7 @@ abstract class BEAR_Page extends BEAR_Base
      * @param string $tplName テンプレート名
      * @param array  $options オプション
      *
-     * @return void
-     * @internal  $this->_config['mode']がself::CONFIG_MODE_HTMLでないときはunit test用にHTTP出力されません。
+     * @internal  $this->_config['mode']がself::CONFIG_MODE_HTMLでないときはunit test用にHTTP出力されません
      */
     public function display($tplName = null, array $options = array())
     {
@@ -345,47 +315,10 @@ abstract class BEAR_Page extends BEAR_Base
     }
 
     /**
-     * Viewアダプター
-     *
-     * <pre>
-     * Viewにページバリューをアサインして、Viewを返します。
-     * 受け取ったクラインとではfetchかdisplayが利用可能です。
-     * UAスニッフィングがtrueならエージェント
-     * </pre>
-     *
-     * @return BEAR_View_Adapter
-     */
-    protected function _viewAdapter()
-    {
-        $config = $this->_config;
-        if (isset($this->_config['enable_ua_sniffing']) && $this->_config['enable_ua_sniffing'] === true) {
-            $adapter = BEAR::dependency(
-                'BEAR_Agent_Adapter_' . $this->_config['ua'],
-                array('ua' => $this->_config['ua'])
-            );
-            $agentConfig = $adapter->getConfig();
-            $config['agent_config'] = $agentConfig;
-            $config['enable_ua_sniffing'] = true;
-        } else {
-            $config = array();
-            $config['enable_ua_sniffing'] = false;
-            $config['ua'] = 'Default';
-        }
-        $config['values'] = $this->_values;
-        $config['ro'] = $this->_ro;
-        $config['resource_id'] = $this->_config['resource_id'];
-        $this->_view = BEAR::factory('BEAR_View', $config);
-
-        return $this->_view;
-    }
-
-    /**
      * ページバリューをセット
      *
      * @param mixed $key   キー string
      * @param mixed $value 値
-     *
-     * @return void
      */
     public function set($key, $value = null)
     {
@@ -401,8 +334,6 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @param string  $key リソース名
      * @param BEAR_Ro $ro  リソースオブジェクト
-     *
-     * @return void
      */
     public function setRo($key, BEAR_Ro $ro)
     {
@@ -424,6 +355,7 @@ abstract class BEAR_Page extends BEAR_Base
         if (isset($this->_values[$key])) {
             return $this->_values[$key];
         }
+
         return null;
     }
 
@@ -440,7 +372,6 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @param mixed $header HTTPヘッダー
      *
-     * @return void
      * @static
      */
     public function setHeader($header)
@@ -456,7 +387,6 @@ abstract class BEAR_Page extends BEAR_Base
      * 通常はページ出力時に自動で出力されます。
      * </pre>
      *
-     * @return void
      * @static
      */
     public function flushHeader()
@@ -473,7 +403,7 @@ abstract class BEAR_Page extends BEAR_Base
      * 1) /BEAR/Resource/output/
      * 2) /App/output/
      *
-     * @param string $format フォーマット
+     * @param string $format  フォーマット
      * @param array  $options オプション
      *
      * @throws BEAR_Exception
@@ -491,7 +421,7 @@ abstract class BEAR_Page extends BEAR_Base
         }
         /** @noinspection PhpIncludeInspection */
         include_once $formatFile;
-        if (!$isValid || !function_exists('output' . $format)) {
+        if (! $isValid || ! function_exists('output' . $format)) {
             $info = array('format' => $format);
             $msg = 'Output format is unavailable.（アウトプットフォーマットが利用できません)';
             throw $this->_exception($msg, array('info' => $info));
@@ -501,31 +431,15 @@ abstract class BEAR_Page extends BEAR_Base
     }
 
     /**
-     * ページリソースをHTTP出力します
-     *
-     * @param BEAR_Ro $ro
-     *
-     * @return void
-     */
-    protected function _outputHttp(BEAR_Ro $ro)
-    {
-        if ($this->_config['mode'] === self::CONFIG_MODE_HTML) {
-            $ro->outputHttp();
-        }
-    }
-
-    /**
      * ページ引数への変数インジェクト
      *
      * @param string $key     ページ引数キー
      * @param mixed  $val     ページ引数にインジェクトする値
      * @param mixed  $default デフォルト
-     *
-     * @return void
      */
     public function injectArg($key, $val, $default = null)
     {
-        $this->_args[$key] = !is_null($val) ? $val : $default;
+        $this->_args[$key] = ! is_null($val) ? $val : $default;
     }
 
     /**
@@ -538,8 +452,6 @@ abstract class BEAR_Page extends BEAR_Base
      * @param string $key
      * @param string $getKey  $_GETキー
      * @param mixed  $default デフォルト
-     *
-     * @return void
      */
     public function injectGet($key, $getKey = null, $default = null)
     {
@@ -555,8 +467,6 @@ abstract class BEAR_Page extends BEAR_Base
      * ページ引数へ連想配列でインジェクト
      *
      * @param array $args 引数全部
-     *
-     * @return void
      */
     public function injectArgs(array $args)
     {
@@ -568,8 +478,6 @@ abstract class BEAR_Page extends BEAR_Base
      * AJAXリクエストの値をインジェクト
      *
      * AJAXリクエストの値をonInit($args)の$argsにインジェクトします。
-     *
-     * @return void
      */
     public function injectAjaxValues()
     {
@@ -584,7 +492,6 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @deprecated
      * @ignored
-     * @return void
      */
     public function injectAjaxRequest()
     {
@@ -609,7 +516,6 @@ abstract class BEAR_Page extends BEAR_Base
      * @param int    $httpCode HTTPコード
      * @param string $msg      HTTPコードメッセージ(200以外）
      *
-     * @return void
      * @throws Panda_Exception
      */
     public function end($httpCode = 200, $msg = 'Error')
@@ -662,8 +568,6 @@ abstract class BEAR_Page extends BEAR_Base
 
     /**
      * ページキャッシュクリア
-     *
-     * @return void
      */
     public function clearPageCache()
     {
@@ -682,8 +586,6 @@ abstract class BEAR_Page extends BEAR_Base
      * 'value' 変数（多くの場合連想配列）としてsetされます。
      *
      * @todo ajaxオプション実装
-     *
-     * @return void
      */
     public function setPrototypeRo()
     {
@@ -712,6 +614,53 @@ abstract class BEAR_Page extends BEAR_Base
                     $value = $prototypeRo->getValue();
                     $this->set($key, $value);
             }
+        }
+    }
+
+    /**
+     * Viewアダプター
+     *
+     * <pre>
+     * Viewにページバリューをアサインして、Viewを返します。
+     * 受け取ったクラインとではfetchかdisplayが利用可能です。
+     * UAスニッフィングがtrueならエージェント
+     * </pre>
+     *
+     * @return BEAR_View_Adapter
+     */
+    protected function _viewAdapter()
+    {
+        $config = $this->_config;
+        if (isset($this->_config['enable_ua_sniffing']) && $this->_config['enable_ua_sniffing'] === true) {
+            $adapter = BEAR::dependency(
+                'BEAR_Agent_Adapter_' . $this->_config['ua'],
+                array('ua' => $this->_config['ua'])
+            );
+            $agentConfig = $adapter->getConfig();
+            $config['agent_config'] = $agentConfig;
+            $config['enable_ua_sniffing'] = true;
+        } else {
+            $config = array();
+            $config['enable_ua_sniffing'] = false;
+            $config['ua'] = 'Default';
+        }
+        $config['values'] = $this->_values;
+        $config['ro'] = $this->_ro;
+        $config['resource_id'] = $this->_config['resource_id'];
+        $this->_view = BEAR::factory('BEAR_View', $config);
+
+        return $this->_view;
+    }
+
+    /**
+     * ページリソースをHTTP出力します
+     *
+     * @param BEAR_Ro $ro
+     */
+    protected function _outputHttp(BEAR_Ro $ro)
+    {
+        if ($this->_config['mode'] === self::CONFIG_MODE_HTML) {
+            $ro->outputHttp();
         }
     }
 }

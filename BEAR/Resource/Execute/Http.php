@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * HTTPリソース
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
 {
@@ -34,8 +16,9 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
      * リモートURLにアクセスしてRSSだったら配列に、
      * そうでなかったらHTTP Body文字列をリソースとして扱います。
      *
-     * @return BEAR_Ro
      * @throws BEAR_Resource_Execute_Exception
+     *
+     * @return BEAR_Ro
      */
     public function request()
     {
@@ -48,8 +31,8 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
         try {
             // 引数以降省略可能　 config で proxy とかも設定可能
             $request = new HTTP_Request2($this->_config['uri'], $reqMethod[$this->_config['method']]);
-            $request->setHeader("user-agent", 'BEAR/' . BEAR::VERSION);
-            $request->setConfig("follow_redirects", true);
+            $request->setHeader('user-agent', 'BEAR/' . BEAR::VERSION);
+            $request->setConfig('follow_redirects', true);
             if ($this->_config['method'] === BEAR_Resource::METHOD_CREATE || $this->_config['method'] === BEAR_Resource::METHOD_UPDATE
             ) {
                 foreach ($this->_config['values'] as $key => $value) {
@@ -91,6 +74,7 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
         /** @noinspection PhpUndefinedMethodInspection */
         $ro = BEAR::factory('BEAR_Ro')->setBody($body)->setHeaders($headers);
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array('Panda', 'onPearError'));
+
         return $ro;
     }
 }

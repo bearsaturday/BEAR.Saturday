@@ -1,37 +1,17 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Request
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * リソースリクエスト
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Request
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Request extends BEAR_Base
 {
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -41,8 +21,9 @@ class BEAR_Resource_Request extends BEAR_Base
     /**
      * リソースリクエスト
      *
-     * @return BEAR_Ro
      * @throws Exception Ro内部で発生した例外
+     *
+     * @return BEAR_Ro
      */
     public function request()
     {
@@ -52,11 +33,11 @@ class BEAR_Resource_Request extends BEAR_Base
 
         // URIのクエリーと$valuesをmerge
         $parse = parse_url($uri);
-        if (!isset($parse['scheme'])) {
+        if (! isset($parse['scheme'])) {
             $this->_mergeQuery($uri, $values);
         }
         $isNotRead = $this->_config['method'] !== BEAR_Resource::METHOD_READ;
-        if (!$isNotRead) {
+        if (! $isNotRead) {
             $hasCsrfOption = false;
         } elseif (isset($options[BEAR_Resource::OPTION_CSRF]) && $options[BEAR_Resource::OPTION_CSRF] === true) {
             // リソースリクエストオプション
@@ -67,7 +48,7 @@ class BEAR_Resource_Request extends BEAR_Base
         } else {
             $hasCsrfOption = false;
         }
-        if (!$isNotRead) {
+        if (! $isNotRead) {
             $hasPoeOption = false;
         } elseif (isset($options[BEAR_Resource::OPTION_POE]) && $options[BEAR_Resource::OPTION_POE] === true) {
             // リソースリクエストオプション
@@ -94,10 +75,10 @@ class BEAR_Resource_Request extends BEAR_Base
                 $ro->setConfig('uri', $uri);
                 $ro->setConfig('values', $values);
                 $ro->setConfig('options', $options);
+
                 return $ro;
-            } else {
-                $formToken->newSessionToken();
             }
+            $formToken->newSessionToken();
         }
         $config = $this->_config;
         $config['uri'] = $uri;
@@ -147,7 +128,7 @@ class BEAR_Resource_Request extends BEAR_Base
             }
             //エラー (400=bad requset, or 500=server error
             $trace = $e->getTrace();
-            $refTrace =& $trace;
+            $refTrace = &$trace;
             $trace = array_shift($refTrace);
             if (isset($trace['args'])) {
                 /** @noinspection PhpUnusedLocalVariableInspection */
@@ -173,6 +154,7 @@ class BEAR_Resource_Request extends BEAR_Base
         if ($this->_config['debug']) {
             BEAR::dependency('BEAR_Ro_Debug', $this->_config)->debugShowResource($ro);
         }
+
         return $ro;
     }
 
@@ -187,9 +169,9 @@ class BEAR_Resource_Request extends BEAR_Base
      *
      * @param BEAR_Ro &$ro BEAR_Roオブジェクト
      *
-     * @return mixed
-     *
      * @throws BEAR_Resource_Execute_Exception
+     *
+     * @return mixed
      */
     private function _actionPostProcess(BEAR_Ro &$ro)
     {
@@ -199,7 +181,7 @@ class BEAR_Resource_Request extends BEAR_Base
         $info['totalItems'] = count($body);
         $options = $this->_config['options'];
         // ページャーリザルト処理
-        if (PEAR::isError($body) || !$body) {
+        if (PEAR::isError($body) || ! $body) {
             return;
         }
         // ページャーオプション
@@ -260,8 +242,6 @@ class BEAR_Resource_Request extends BEAR_Base
      *
      * @param string &$uri    URI
      * @param array  &$values 引数
-     *
-     * @return void
      */
     private function _mergeQuery(&$uri, array &$values = array())
     {
@@ -269,7 +249,7 @@ class BEAR_Resource_Request extends BEAR_Base
         $parse = parse_url($uri);
         $query = isset($parse['query']) ? $parse['query'] : '';
         parse_str($query, $parsedValues);
-        if ((bool)$parsedValues === false) {
+        if ((bool) $parsedValues === false) {
             return;
         }
         // ?の前を_uriにock

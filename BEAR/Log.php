@@ -1,30 +1,14 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Log
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * ログ
  *
  * 開発時のログを扱います
- *
- * @category  BEAR
- * @package   BEAR_Log
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -68,26 +52,24 @@ class BEAR_Log extends BEAR_Base
      *
      * @param string $logKey   ログキー
      * @param mixed  $logValue 値
-     *
-     * @return void
      */
     public function log($logKey, $logValue = null)
     {
-        if (!isset($this->_config['debug']) || $this->_config['debug'] !== true) {
+        if (! isset($this->_config['debug']) || $this->_config['debug'] !== true) {
             return;
         }
         $this->_logs[][$logKey] = $logValue;
-        $showFirePHP = (isset($_GET['_firelog']) || array_search($logKey, $this->_fbKeys) !== false);
+        $showFirePHP = (isset($_GET['_firelog']) || array_search($logKey, $this->_fbKeys, true) !== false);
         if (class_exists('FB', false) && $showFirePHP) {
             $color = ($logValue) ? 'black' : 'grey';
             FB::group($logKey, array('Collapsed' => true, 'Color' => $color));
             FB::log($logValue);
             FB::groupEnd();
         }
-        if (!is_scalar($logValue)) {
+        if (! is_scalar($logValue)) {
             $logValue = print_r($logValue, true);
             $logValue = str_replace("\n", '', $logValue);
-            $logValue = preg_replace("/\s+/s", " ", $logValue);
+            $logValue = preg_replace("/\s+/s", ' ', $logValue);
         }
     }
 
@@ -102,8 +84,6 @@ class BEAR_Log extends BEAR_Base
      * @param string $uri    URI
      * @param array  $values 引数
      * @param int    $code   コード
-     *
-     * @return void
      */
     public function resourceLog($method, $uri, array $values, $code)
     {
@@ -128,13 +108,11 @@ class BEAR_Log extends BEAR_Base
      * スクリプトシャットダウン時のログ処理
      *
      * shutdown関数から呼ばれます
-     *
-     * @return void
      */
     public static function onShutdownDebug()
     {
         $bearLog = BEAR::dependency('BEAR_Log');
-        if (class_exists("SQLiteDatabase", false)) {
+        if (class_exists('SQLiteDatabase', false)) {
             $bearLog->shutdonwnDbDebug();
         } else {
             $bearLog->shutdownDebug(false);
@@ -146,8 +124,6 @@ class BEAR_Log extends BEAR_Base
 
     /**
      * Write page log onto DB on shutdown
-     *
-     * @return void
      */
     public function shutdonwnDbDebug()
     {
@@ -162,7 +138,7 @@ class BEAR_Log extends BEAR_Base
         $ob = str_replace('@@@log_id@@@', $id, $ob);
         echo $ob;
         // keep only
-        $db->query("DELETE FROM pagelog WHERE rowid IN (SELECT rowid FROM pagelog ORDER BY rowid LIMIT -1 OFFSET 100");
+        $db->query('DELETE FROM pagelog WHERE rowid IN (SELECT rowid FROM pagelog ORDER BY rowid LIMIT -1 OFFSET 100');
     }
 
     /**
@@ -175,7 +151,7 @@ class BEAR_Log extends BEAR_Base
         $file = _BEAR_APP_HOME . '/logs/pagelog.sq3';
         if (file_exists($file) === false) {
             $db = new SQLiteDatabase($file);
-            $sql = <<<____SQL
+            $sql = <<<'____SQL'
 CREATE TABLE pagelog (
      "log" text NOT NULL
 );
@@ -200,7 +176,7 @@ ____SQL;
      */
     public function getPageLog(array $get)
     {
-        if (!class_exists("SQLiteDatabase", false)) {
+        if (! class_exists('SQLiteDatabase', false)) {
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
             include_once 'BEAR/Util.php';
             $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
@@ -215,7 +191,7 @@ ____SQL;
             $result = $db->query("SELECT log FROM pagelog WHERE rowid = {$rowid}");
         } else {
             /** @noinspection PhpVoidFunctionResultUsedInspection */
-            $result = $db->query("SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1");
+            $result = $db->query('SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1');
         }
         if ($result === false) {
             die('Log db is not avalilabe.');
@@ -239,8 +215,9 @@ ____SQL;
      *
      * @param bool $return
      *
-     * @return array
      * @throws Exception
+     *
+     * @return array
      */
     public function shutdownDebug($return = true)
     {
@@ -261,7 +238,7 @@ ____SQL;
             }
             $log = array();
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
-            if (file_exists($pageLogPath) && !is_writable($pageLogPath)) {
+            if (file_exists($pageLogPath) && ! is_writable($pageLogPath)) {
                 // 書き込み権限のエラー
                 Panda::error('Permission denied.', "[$pageLogPath] is not writable.");
 
@@ -270,7 +247,7 @@ ____SQL;
             // page ログ
             $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : '';
             // show_vars
-            if (!function_exists('show_vars')) {
+            if (! function_exists('show_vars')) {
                 include 'BEAR/vendors/debuglib.php';
             }
             $log['var'] = show_vars('trim_tabs:2;show_objects:1;max_y:100;avoid@:1; return:1');
@@ -304,9 +281,8 @@ ____SQL;
             $log['reg'] = $reg;
             if ($return === true) {
                 return $log;
-            } else {
-                file_put_contents($pageLogPath, serialize($log));
             }
+            file_put_contents($pageLogPath, serialize($log));
         } catch (Exception $e) {
             throw $e;
         }
@@ -333,8 +309,6 @@ ____SQL;
 
     /**
      * ログを記録開始
-     *
-     * @return void
      */
     public function start()
     {

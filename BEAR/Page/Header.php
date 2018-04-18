@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Page
- * @subpackage Header
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * ヘッダー
- *
- * @category   BEAR
- * @package    BEAR_Page
- * @subpackage Header
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -51,8 +33,6 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -72,24 +52,11 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
      *
      * @param mixed $header HTTPヘッダー
      *
-     * @return void
      * @static
      */
     public function setHeader($header)
     {
         $this->_headers[] = $header;
-    }
-
-    /**
-     * モバイル用のヘッダーをセット
-     *
-     * @param string $header
-     *
-     * @return void
-     */
-    protected function setMobileHeader($header = 'text/html')
-    {
-        $this->_mobileHeader = $header;
     }
 
     /**
@@ -110,7 +77,6 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
      * 通常はページ出力時に自動で出力されます。
      * </pre>
      *
-     * @return void
      * @static
      */
     public function flushHeader()
@@ -166,8 +132,6 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
      *
      * @param string $uri     URL
      * @param array  $options オプション
-     *
-     * @return void
      */
     public function redirect($uri, array $options = array('val' => null, 'click' => null, 'permanent' => false))
     {
@@ -178,8 +142,8 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
             $page->clearPageCache();
         }
         // ホストがないならホストを付加
-        $remoteAddr = $_SERVER["HTTP_HOST"];
-        if (strpos($uri, "http") === false) {
+        $remoteAddr = $_SERVER['HTTP_HOST'];
+        if (strpos($uri, 'http') === false) {
             if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
                 $uri = "https://{$remoteAddr}$uri";
             } else {
@@ -189,11 +153,11 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
         // 携帯の場合などクッキーが使用できない環境ではセッションクエリーをURLに付加
         $sessionName = session_name();
         $sessionId = session_id();
-        if (!isset($_COOKIE[$sessionName]) && $sessionId && isset($options['session']) && $options['session']) {
+        if (! isset($_COOKIE[$sessionName]) && $sessionId && isset($options['session']) && $options['session']) {
             // セッションクエリーが付いてれば消去
             //        $uri = preg_replace("/&*{$sessionName}=[^&]+/is", '', $uri);
             $uri = preg_replace("/([&\\?]){$sessionName}=[^&]?/is", '$1', $uri);
-            $con = (strpos($uri, "?")) ? '&' : '?';
+            $con = (strpos($uri, '?')) ? '&' : '?';
             $uri .= "{$con}{$sessionName}={$sessionId}";
             if (strlen($sessionId) != 32) {
                 trigger_error('session key error' . $uri, E_USER_WARNING);
@@ -224,7 +188,7 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
             $session->set('val', $options['sval']);
         }
         if (isset($options['permanent']) && $options['permanent']) {
-            $this->setHeader("HTTP/1.1 301 Moved Permanently");
+            $this->setHeader('HTTP/1.1 301 Moved Permanently');
         }
         //　ロケーションヘッダー出力
         $this->setHeader("Location: {$uri}");
@@ -248,10 +212,21 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
         }
         if (function_exists('apache_request_headers')) {
             $headers = apache_request_headers();
-            if (!empty($headers[$header])) {
+            if (! empty($headers[$header])) {
                 return $headers[$header];
             }
         }
+
         return false;
+    }
+
+    /**
+     * モバイル用のヘッダーをセット
+     *
+     * @param string $header
+     */
+    protected function setMobileHeader($header = 'text/html')
+    {
+        $this->_mobileHeader = $header;
     }
 }

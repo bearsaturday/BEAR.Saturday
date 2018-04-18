@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -41,14 +32,9 @@
  *
  * </pre>
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ *
+ *
+ *
  *
  * @param string $params  パラメーター
  * @param string $content HTML
@@ -60,11 +46,11 @@
 function smarty_block_a(
     $params,
     $content,
-    /** @noinspection PhpUnusedParameterInspection */
+    /* @noinspection PhpUnusedParameterInspection */
     &$smarty,
     &$repeat
 ) {
-    if ($repeat || !$content) {
+    if ($repeat || ! $content) {
         return '';
     }
     // hrefの省略を有効なHTMLにする
@@ -82,10 +68,11 @@ function smarty_block_a(
     $params['href'] = $href . '?' . http_build_query($values);
     unset($params['val']);
     $result = '';
-    /** @noinspection PhpWrongForeachArgumentTypeInspection */
+    /* @noinspection PhpWrongForeachArgumentTypeInspection */
     foreach ($params as $key => $value) {
         $result .= ' ' . $key . '="' . $value . '"';
     }
     $result = "<a{$result}>{$content}</a>";
+
     return $result;
 }

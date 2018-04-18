@@ -1,28 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_View
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * ビューアダプター
- *
- * @category  BEAR
- * @package   BEAR_View
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  */
 abstract class BEAR_View_Adapter extends BEAR_Base
 {
@@ -45,7 +29,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         $result = array();
         $pagePath = $this->_getTemplateNameByPageClass($tplName); // ex) user/create
         // エージェントロール対応ページテンプレート
-        if ($role && (!(count($role) === 1 && $role[0] === BEAR_Agent::UA_DEFAULT))) {
+        if ($role && (! (count($role) === 1 && $role[0] === BEAR_Agent::UA_DEFAULT))) {
             foreach ($role as $agent) {
                 $agentExtention = '.' . strtolower($agent);
                 $pagePathFull = _BEAR_APP_HOME . $this->_config['path'] . "pages/{$pagePath}{$agentExtention}.tpl";
@@ -91,9 +75,9 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             );
             $result['layout_file'] = 'layouts/' . $layoutFile;
         }
+
         return $result;
     }
-
 
     /**
      * リソースオブジェクトに変換
@@ -120,6 +104,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         $ro = BEAR::factory('BEAR_Ro');
         /** @var $ro BEAR_Ro */
         $ro = $ro->setHeaders(array($header))->setBody($html);
+
         return $ro;
     }
 
@@ -147,7 +132,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         // QFによりエスケープされてしまった絵文字エンティティをアンエスケープ
         // (フィルターによりバイナリにパックされる）
         // エンティティ絵文字変換 &#ddddd;
-        $html = preg_replace('/&amp;#(\d{5});/s', "&#$1;", $html);
+        $html = preg_replace('/&amp;#(\d{5});/s', '&#$1;', $html);
         /** @noinspection PhpUndefinedMethodInspection */
         $html = BEAR::dependency('BEAR_Emoji')->convertEmojiImage($html);
         // 絵文字バイナリ化
@@ -163,7 +148,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             include _BEAR_BEAR_HOME . '/BEAR/vendors/toInlineCSSDoCoMo/toInlineCSSDoCoMo.php';
             try {
                 $html = toInlineCSSDoCoMo::getInstance()->setBaseDir(_BEAR_APP_HOME . '/htdocs')->apply($html);
-            } /** @noinspection PhpUndefinedClassInspection */ catch (Expection $e) {
+            } /* @noinspection PhpUndefinedClassInspection */ catch (Expection $e) {
                 //FB::warn($e);
             }
         }
@@ -171,30 +156,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         if ($agentConfig['enable_js'] === false) {
             $html = preg_replace('!<script.*?>.*?</script.*?>!is', '', $html);
         }
-        return $html;
-    }
 
-    /**
-     * レイアウトバリューの取得
-     *
-     * レイアウトymlファイルに記述されたスタティック変数がロール通りにあれば使用します。
-     *
-     * @param array $role ロール
-     * @param array $yml  ymlファイルの値
-     *
-     * @return array
-     */
-    private function _getRoleLayoutValue(array $role, array $yml)
-    {
-        $layoutValue = isset($yml['default']) ? $yml['default'] : array();
-        $role = array_reverse($role);
-        foreach ($role as $agent) {
-            $agent = strtolower($agent);
-            if (isset($yml[$agent])) {
-                $layoutValue = array_merge($layoutValue, $yml[$agent]);
-            }
-        }
-        return $layoutValue;
+        return $html;
     }
 
     /**
@@ -221,7 +184,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      */
     protected function _getRoleFile($role, $dir, $fileName, $ext = 'tpl')
     {
-        if (!$role) {
+        if (! $role) {
             return $fileName;
         }
         foreach ($role as $agent) {
@@ -233,7 +196,32 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             }
             $agentFile = $fileName;
         }
+
         return $agentFile;
+    }
+
+    /**
+     * レイアウトバリューの取得
+     *
+     * レイアウトymlファイルに記述されたスタティック変数がロール通りにあれば使用します。
+     *
+     * @param array $role ロール
+     * @param array $yml  ymlファイルの値
+     *
+     * @return array
+     */
+    private function _getRoleLayoutValue(array $role, array $yml)
+    {
+        $layoutValue = isset($yml['default']) ? $yml['default'] : array();
+        $role = array_reverse($role);
+        foreach ($role as $agent) {
+            $agent = strtolower($agent);
+            if (isset($yml[$agent])) {
+                $layoutValue = array_merge($layoutValue, $yml[$agent]);
+            }
+        }
+
+        return $layoutValue;
     }
 
     /**
@@ -265,6 +253,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
             // 先頭の/を除いて返す
             $absPath = $this->_removeExtention($tplName);
             $result = substr($absPath, 0);
+
             return $result;
         }
         // 相対パスの場合はクラス名からベースパスを作成する
@@ -279,6 +268,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         if ($relPath) {
             $relPath .= '/';
         }
+
         return $relPath . $this->_removeExtention($tplName);
     }
 
@@ -304,6 +294,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
                 $result = substr($pathinfo['dirname'], $begin) . '/' . $pathinfo['filename'];
                 break;
         }
+
         return $result;
     }
 
@@ -314,10 +305,12 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      *
      * @return string
      */
+
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function onPackEmoji($match)
     {
         $result = pack('n', $match[1]);
+
         return $result;
     }
 }

@@ -1,32 +1,14 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Ro
- * @subpackage Shutdown
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * onShutdownプロトタイプリソース
  *
  * shutdown時にリクエストされるリソースのプロトタイプクラスです。
- *
- * @category   BEAR
- * @package    BEAR_Ro
- * @subpackage Shutdown
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -45,8 +27,6 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
      * スクリプトShutdown時に実行されるタスクまたはリソースリクエストをセットします。
      *
      * @param BEAR_Ro_Prototype $prototypeRo
-     *
-     * @return void
      */
     public function set(BEAR_Ro_Prototype $prototypeRo)
     {
@@ -55,8 +35,6 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
 
     /**
      * Shutdown時にリクエストされるリソースのリクエスト
-     *
-     * @return void
      */
     public function request()
     {
@@ -72,8 +50,6 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
      * このメソッドをregister_shutdown_functionしておくと
      * shutdown時にrequest()メソッドがコールされます。
      * </pre>
-     *
-     * @return void
      */
     public static function onShutdown()
     {
@@ -88,6 +64,7 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
     public function register()
     {
         register_shutdown_function(array(__CLASS__, 'onShutdown'));
+
         return $this;
     }
 }

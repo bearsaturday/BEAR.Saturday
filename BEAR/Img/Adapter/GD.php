@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -19,14 +10,9 @@
  *
  * 画像ライブラリGDを取り扱うクラスです。
  *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ *
+ *
+ *
  *
  * @Singleton
  */
@@ -48,6 +34,13 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
     protected $result;
 
     /**
+     * イメージアトリビュート
+     *
+     * @var string
+     */
+    protected $_srcAttr;
+
+    /**
      * GDイメージリソース
      *
      * @var resource
@@ -60,13 +53,6 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      * @var string
      */
     private $_srcType;
-
-    /**
-     * イメージアトリビュート
-     *
-     * @var string
-     */
-    protected $_srcAttr;
 
     /**
      * 新イメージ幅
@@ -92,7 +78,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
     public function __construct(array $config)
     {
         parent::__construct($config);
-        if (!function_exists("gd_info")) {
+        if (! function_exists('gd_info')) {
             throw $this->_exception('GD extention is not loaded');
         }
     }
@@ -108,7 +94,6 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      * @param string $file   ファイルパス
      * @param string $format ファイルフォーマット
      *
-     * @return void
      * @throws BEAR_Img_Adapter_GD_Exception
      */
     public function load($file, $format = '')
@@ -126,7 +111,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
                 $this->format = 'jpeg';
             } elseif (stristr(strtolower($this->file), '.png')) {
                 $this->format = 'png';
-                //unknown file format
+            //unknown file format
             } else {
                 $info = compact($file, $format);
                 throw $this->_exception(
@@ -150,10 +135,10 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
                 break;
             default:
                 $info = array('format' => $this->format);
-                throw $this->_exception("load format error", compact("info"));
+                throw $this->_exception('load format error', compact('info'));
         }
         list($width, $height, $type, $attr) = $info = getimagesize($this->file);
-        if (!$info) {
+        if (! $info) {
             $this->_log->log('IMG load error', $file);
             $info = array('file' => $file);
             throw $this->_exception('Image Load Error', array('info' => $info));
@@ -164,7 +149,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         $this->_srcAttr = $attr;
         $log = array();
         $log['load'] = array('load' => $file, 'format' => $format);
-        $log['result'] = array('info' => $info, 'rsc' => (string)$this->_imgResource);
+        $log['result'] = array('info' => $info, 'rsc' => (string) $this->_imgResource);
         $this->_log->log('IMG load', $log);
     }
 
@@ -181,8 +166,6 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      * @param bool|int $width     幅
      * @param bool|int $height    高さ
      * @param bool     $smallOnly 縮小のみ（小さい画像を大きくはしない）
-     *
-     * @return void
      */
     public function resize($width = false, $height = false, $smallOnly = false)
     {
@@ -191,7 +174,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
             return;
         }
         //大きさの変化がないときあるいは指定が無いときはなにもしない
-        if (!$width && !$height || $this->_srcWidth == $width && $this->_srcHeight == $height) {
+        if (! $width && ! $height || $this->_srcWidth == $width && $this->_srcHeight == $height) {
             return;
         }
         if ($width / $this->_srcWidth > $height / $this->_srcHeight) {
@@ -234,14 +217,12 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      * ヘッダーと画像をhttp出力します。
      *
      * @param bool|string $format 画像ファイルの場所(URL or fileパス)
-     *
-     * @return void
      */
     public function show($format = false)
     {
         // clean buffer
         ob_clean();
-        if (!$format) {
+        if (! $format) {
             $format = $this->format;
         } else {
             $format = strtolower($format);
@@ -265,7 +246,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
             'IMG show',
             array(
                 'format' => $format,
-                'rsc' => (string)$this->_imgResource,
+                'rsc' => (string) $this->_imgResource,
                 'result' => $this->result
             )
         );
@@ -284,7 +265,6 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
      * @param string $filePath 保存画像のファイルパス
      * @param string $format   画像ファイルのフォーマット
      *
-     * @return void
      * @throws BEAR_Img_Adapter_GD_Exception
      */
     public function save($filePath, $format)
@@ -302,7 +282,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
                 $result = imagepng($this->_imgResource, $filePath);
                 break;
             default:
-                $info = compact("formart");
+                $info = compact('formart');
                 throw $this->_exception(
                     'save formart error',
                     array(
@@ -315,7 +295,7 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
             array(
                 'format' => $format,
                 'file' => $filePath,
-                'rsc' => (string)$this->_imgResource,
+                'rsc' => (string) $this->_imgResource,
                 'result' => $result
             )
         );

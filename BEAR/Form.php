@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Form
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -18,13 +10,7 @@
  *
  * フォームにPEAR::HTML_QuickFormを利用しています。
  *
- * @category BEAR
- * @package  BEAR_Form
- * @author   Akihito Koriyama <akihito.koriyama@gmail.com>
- * @license  http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link     https://github.com/bearsaturday
- * @see      PEAR::HTML_QuickForm
+ * @see  PEAR::HTML_QuickForm
  *
  * @config string   formName   フォーム名           'form'
  * @config string   method     サブミットメソッド     'post'
@@ -34,13 +20,6 @@
  */
 class BEAR_Form extends BEAR_Factory
 {
-    /**
-     * フォームトークン
-     *
-     * @var BEAR_Form_Token
-     */
-    protected $_formToken;
-
     /**
      * DHTML_TABLELESSを継承したPC/Mobile対応のAppレンダラー
      *
@@ -60,37 +39,31 @@ class BEAR_Form extends BEAR_Factory
      * 完全に妥当な XHTML を出力するレンダラ
      *
      * @see http://pear.php.net/manual/ja/package.html.html-quickform-renderer-tableless.intro.php
-     *
      */
     const RENDERER_DHTML_TABLELESS = 2;
 
     /**
      * JS Alertのメッセージ
-     *
      */
     const JS_WARNING = '入力内容に誤りがあります';
 
     /**
      * 必須項目メッセージ
-     *
      */
     const REQUIRE_NOTES = '<span style="font-size:81%; color:#ff0000;">*</span><span style="font-size:80%;">の項目は必ず入力してください。</span>';
 
     /**
      * エラーテンプレート
-     *
      */
     const TEMPLATE_ERROR = '{if $error}<span style="color:#ff0000;">{$label}</span>{/if}';
 
     /**
      * 必須項目テンプレート
-     *
      */
     const TEMPLATE_REQUIRED = '{$html}{if $required}<span style="font-size:80%; color:#ff0000;">*</span>{/if}';
 
     /**
      * フォームエラーSmarty変数アサイン名
-     *
      */
     const FORM_ERRORS = 'form_errors';
 
@@ -142,13 +115,6 @@ class BEAR_Form extends BEAR_Factory
     public static $jsWarning = self::JS_WARNING;
 
     /**
-     * フォームレンダラ
-     *
-     * @var string
-     */
-    private static $_renderer = self::RENDERER_SMARTY_ARRAY;
-
-    /**
      * フォーム名
      *
      * @var array
@@ -161,11 +127,24 @@ class BEAR_Form extends BEAR_Factory
      * @var string
      */
     public static $method = 'post';
+    /**
+     * フォームトークン
+     *
+     * @var BEAR_Form_Token
+     */
+    protected $_formToken;
 
     /**
      * @var BEAR_Log
      */
     protected $_log;
+
+    /**
+     * フォームレンダラ
+     *
+     * @var string
+     */
+    private static $_renderer = self::RENDERER_SMARTY_ARRAY;
     /**
      * 使用済みトークン
      *
@@ -208,8 +187,6 @@ class BEAR_Form extends BEAR_Factory
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -226,7 +203,7 @@ class BEAR_Form extends BEAR_Factory
      */
     public function factory()
     {
-        $this->_config['action'] = (!isset($this->_config['action']) || $this->_config['action'] == '') ? $_SERVER['REQUEST_URI'] : $this->_config['action'];
+        $this->_config['action'] = (! isset($this->_config['action']) || $this->_config['action'] == '') ? $_SERVER['REQUEST_URI'] : $this->_config['action'];
         $options = array(
             'formName' => 'form',
             'method' => 'post',
@@ -240,7 +217,7 @@ class BEAR_Form extends BEAR_Factory
         }
         $page = BEAR::get('page');
         $onClick = $page->getOnClick();
-        if ($onClick && !($options['action'])) {
+        if ($onClick && ! ($options['action'])) {
             $options['action'] = '?' . BEAR_Page::KEY_CLICK_NAME . '=' . $onClick;
         }
         // フォーム名の登録
@@ -268,41 +245,9 @@ class BEAR_Form extends BEAR_Factory
     }
 
     /**
-     * ファクトリー
-     *
-     * HTML_QuickFormインスタンス生成
-     *
-     * @param mixed $formName フォーム名 | フォーム名配列
-     * @param array $options  オプション
-     *
-     * @return HTML_QuickForm
-     * @access private
-     */
-    private function _factory($formName, array $options)
-    {
-        // QuickForm作成
-        $form = new HTML_QuickForm($formName, $options['method'], $options['action'], $options['target'], $options['attributes'], $options['trackSubmit']);
-        // 必須項目メッセージ日本語化
-        $form->setRequiredNote(self::$requireNotes);
-        // JSメッセージ日本語化
-        $form->setJsWarnings(self::$jsWarning, '');
-        // BEAR使用hidden項目
-        $token = $this->_formToken->getToken();
-        $form->addElement('hidden', '_token', $token);
-        $log = $options;
-        $log['formNames'] = $formName;
-        $log['token'] = $token;
-        $this->_log->log('Form', $log);
-
-        return $form;
-    }
-
-    /**
      * インスタンス解放
      *
      * ページの再生成で使用されます
-     *
-     * @return void
      */
     public static function init()
     {
@@ -318,8 +263,6 @@ class BEAR_Form extends BEAR_Factory
      * self::setRenderer(self::RENDERER_DHTML_TABLELESS); //DHTML
      *
      * @param string $renderer フォームレンダラー
-     *
-     * @return void
      *
      * @see http://pear.php.net/manual/ja/package.html.html-quickform-renderer-tableless.intro.php
      */
@@ -365,8 +308,6 @@ class BEAR_Form extends BEAR_Factory
      * @param HTML_Quick_Form $form  QuickForm
      * @param string          $key   ヘッダーキー
      * @param string          $value ヘッダーの値
-     *
-     * @return void
      */
     public static function setSubmitHeader(HTML_Quick_Form $form, $key, $value)
     {
@@ -390,7 +331,7 @@ class BEAR_Form extends BEAR_Factory
                 $post[substr($key, 1)] = $value;
             }
         }
-        if (!isset($post[$submitHeaderKey])) {
+        if (! isset($post[$submitHeaderKey])) {
             $result = $post;
         } else {
             $result = isset($post[$submitHeaderKey]) ? $post[$submitHeaderKey] : null;
@@ -437,7 +378,7 @@ class BEAR_Form extends BEAR_Factory
         if ($done === true) {
             return $result;
         }
-        $removeJs = !$enableJs;
+        $removeJs = ! $enableJs;
         $done = true;
         $result = array();
         foreach (self::$formNames as $formName) {
@@ -529,5 +470,34 @@ class BEAR_Form extends BEAR_Factory
     public static function getFormNumber()
     {
         return count(self::$formNames);
+    }
+
+    /**
+     * ファクトリー
+     *
+     * HTML_QuickFormインスタンス生成
+     *
+     * @param mixed $formName フォーム名 | フォーム名配列
+     * @param array $options  オプション
+     *
+     * @return HTML_QuickForm
+     */
+    private function _factory($formName, array $options)
+    {
+        // QuickForm作成
+        $form = new HTML_QuickForm($formName, $options['method'], $options['action'], $options['target'], $options['attributes'], $options['trackSubmit']);
+        // 必須項目メッセージ日本語化
+        $form->setRequiredNote(self::$requireNotes);
+        // JSメッセージ日本語化
+        $form->setJsWarnings(self::$jsWarning, '');
+        // BEAR使用hidden項目
+        $token = $this->_formToken->getToken();
+        $form->addElement('hidden', '_token', $token);
+        $log = $options;
+        $log['formNames'] = $formName;
+        $log['token'] = $token;
+        $this->_log->log('Form', $log);
+
+        return $form;
     }
 }

@@ -1,29 +1,11 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category     BEAR
- * @package      BEAR_Test
- * @author       Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright    2008-2017 Akihito Koriyama  All rights reserved.
- * @license      http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link         https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
- * BEAR
- *
- * @category  BEAR
- * @package   BEAR_Test
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Test_Client extends HTTP_Request2
@@ -32,6 +14,7 @@ class BEAR_Test_Client extends HTTP_Request2
      * Http client
      *
      * @var \HTTP_Request2
+     *
      * @see http://pear.php.net/manual/en/package.http.http-client.http-client.http-client.php
      */
     public $request;
@@ -40,6 +23,7 @@ class BEAR_Test_Client extends HTTP_Request2
      * Http response
      *
      * @var HTTP_Request2_Response
+     *
      * @see http://pear.php.net/manual/en/package.http.http-request2.intro.php
      */
     public $response;
@@ -77,6 +61,7 @@ class BEAR_Test_Client extends HTTP_Request2
             $url->setQueryVariables($submit);
         }
         $this->response = $this->request->send();
+
         return $this;
     }
 
@@ -90,6 +75,7 @@ class BEAR_Test_Client extends HTTP_Request2
         $header = $this->response->getHeader();
         $formInfo = json_decode($header['x-bear-form-log'], true);
         $result = isset($formInfo[0]) ? $formInfo[0] : null;
+
         return $result;
     }
 
@@ -102,9 +88,9 @@ class BEAR_Test_Client extends HTTP_Request2
     {
         $formLog = $this->getFormLog();
         $result = (isset($formLog['valid']) && $formLog['valid'] === true) ? true : false;
+
         return $result;
     }
-
 
     /**
      * Get form errors
@@ -115,6 +101,7 @@ class BEAR_Test_Client extends HTTP_Request2
     {
         $formLog = $this->getFormLog();
         $result = isset($formLog['errors']) ? $formLog['errors'] : array();
+
         return $result;
     }
 
@@ -127,6 +114,7 @@ class BEAR_Test_Client extends HTTP_Request2
     {
         $header = $this->response->getHeader();
         $result = isset($header['x-bear-resource-log']) ? json_decode($header['x-bear-resource-log'], true) : array();
+
         return $result;
     }
 }

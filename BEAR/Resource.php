@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Resource
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -39,14 +31,6 @@
  * $options['poe'] = true;
  * $resource->create($values, $options)->request();
  * </code>
- *
- * @category  BEAR
- * @package   BEAR_Resource
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -89,7 +73,6 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
 
     /**
      * リソースオプションキー スタティックリソースキー
-     *
      */
     const OPTION_RESOURCE_FILE_EXTENTION = 'extention';
 
@@ -110,7 +93,6 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
 
     /**
      * リンクキー page
-     *
      */
     const LINK_PAGER = 'pager';
 
@@ -133,8 +115,6 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {

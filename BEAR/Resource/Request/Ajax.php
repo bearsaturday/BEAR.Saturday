@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Request
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * AJAXリソースリクエスト
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Request
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Request_Ajax extends BEAR_Base
 {
@@ -39,6 +21,7 @@ class BEAR_Resource_Request_Ajax extends BEAR_Base
         $params = array('key' => $requestId);
         $json = json_encode($params);
         $js = "<script type=\"text/javascript\">$(\"#{$requestId}\").ready(function(){ $(\"#{$requestId}\").load(\"/bear/r/\", $json); });</scprit>";
+
         return "<span id=\"{$requestId}\">*</span>" . $js;
     }
 }

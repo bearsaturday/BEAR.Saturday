@@ -1,18 +1,9 @@
 <?php
 /**
- * BEAR 開発用info画面
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR
- * @subpackage Debug
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-
 if (isset($_GET['_pear_dir'])) {
     // パーミッションチェック
     $config = new PEAR_Config();
@@ -36,14 +27,14 @@ if (PHP_SAPI !== 'cli') {
     $isWritable = is_writable(_BEAR_APP_HOME . '/logs') && is_writable(_BEAR_APP_HOME . '/tmp/smarty_templates_c');
     $isBearDirExists = file_exists(_BEAR_APP_HOME . '/htdocs/__bear');
     $isPandaExists = file_exists(_BEAR_APP_HOME . '/htdocs/__panda');
-    if (!$isWritable) {
+    if (! $isWritable) {
         $info = '<div><code>sudo chmod -R 777 ' . _BEAR_APP_HOME . '/logs;</code></div>';
         $info .= '<div><code>sudo chmod -R 777 ' . _BEAR_APP_HOME . '/tmp;</code></div>';
         $subHeading = 'このコードをシェルで実行してください';
         Panda::message('フォルダに書き込み権限を与えてください。またはtmp/smarty_templates_cフォルダがあるか確認してください', $subHeading, $info);
         $exit = true;
     }
-    if (isset($_GET['_bearinfo']) || !$isWritable) {
+    if (isset($_GET['_bearinfo']) || ! $isWritable) {
         $ref = new ReflectionClass('Panda');
         $pandaFile = $ref->getFileName();
         $ref = new ReflectionClass('PEAR');

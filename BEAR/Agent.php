@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Agent
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -23,14 +15,6 @@
  * BEAR_Agent_Adapter_(UAコード）でUAアダプタークラスが用意されてないものはグローバルレジストリに先にセットしておきます。
  * AgentアダプターはBEAR_Agent_Adapter_*で定義されUAの継承関係や、ビューの時のconfigを設定します。
  * </pre>
- *
- * @category  BEAR
- * @package   BEAR_Agent
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  *
  * @Singleton
  *
@@ -71,6 +55,7 @@ class BEAR_Agent extends BEAR_Base
      * AU Ezweb
      *
      * @var string
+     *
      * @deprecated
      * @ignore
      */
@@ -121,6 +106,11 @@ class BEAR_Agent extends BEAR_Base
     public $agentMobile;
 
     /**
+     * @var BEAR_Agent_Adapter
+     */
+    public $adapter;
+
+    /**
      * モバイルエージェント
      *
      * PEAR::Net_UserAgent_Mobileオブジェクト
@@ -130,16 +120,23 @@ class BEAR_Agent extends BEAR_Base
     protected $_agentMobile = array('user_agent' => null);
 
     /**
-     * @var BEAR_Agent_Adapter
-     */
-    public $adapter;
-
-    /**
      * UAコード
      *
      * @var string
      */
     protected $_ua = self::UA_DEFAULT;
+
+    /**
+     * __toString
+     *
+     * 文字列として扱うとUAコードを返す
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->_ua;
+    }
 
     /**
      * Inject
@@ -150,8 +147,6 @@ class BEAR_Agent extends BEAR_Base
      * Net_UserAgent_Mobile agentMobile
      * string               _ua UAコード
      * mixed                adapter エージェントアダプター
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -167,18 +162,6 @@ class BEAR_Agent extends BEAR_Base
         } catch (Exception $e) {
             $this->adapter = BEAR::dependency('BEAR_Agent_Adapter_Default', $this->_config);
         }
-    }
-
-    /**
-     * __toString
-     *
-     * 文字列として扱うとUAコードを返す
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->_ua;
     }
 
     /**
@@ -232,13 +215,13 @@ class BEAR_Agent extends BEAR_Base
     /**
      * 画面サイズの縦、横のサイズを取得
      *
-     * @return array　array(width, height)
+     * @return array array(width, height)
      */
     public function getDisplaySize()
     {
         static $size;
 
-        if (!isset($size)) {
+        if (! isset($size)) {
             /** @noinspection PhpUndefinedMethodInspection */
             /** @noinspection PhpUndefinedMethodInspection */
             /** @noinspection PhpUndefinedMethodInspection */
@@ -254,13 +237,13 @@ class BEAR_Agent extends BEAR_Base
      *
      * 携帯の表示可能文字数を取得します。。
      *
-     * @return array　array(width, height)
+     * @return array array(width, height)
      */
     public function getDisplayByteSize()
     {
         static $byteSize;
 
-        if (!isset($byteSize)) {
+        if (! isset($byteSize)) {
             /** @noinspection PhpUndefinedMethodInspection */
             /** @noinspection PhpUndefinedMethodInspection */
             $display = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile)->getDisplay();

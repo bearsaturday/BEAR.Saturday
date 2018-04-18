@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_View
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * Smartyビューアダプター
- *
- * @category   BEAR
- * @package    BEAR_View
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  *
  * @Singleton
  *
@@ -68,12 +50,10 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
-        if (!isset($this->_config['ua'])) {
+        if (! isset($this->_config['ua'])) {
             $this->_config['ua'] = '';
         }
         $smartyConfig = array('ua' => $this->_config['ua']);
@@ -86,8 +66,6 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
      * UAスニッフィングインジェクト
      *
      * UAスニッフィングOnの時のインジェクタです。BEAR_Viewで指定していされています。
-     *
-     * @return void
      */
     public function onInjectUaSniffing()
     {
@@ -102,8 +80,6 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
      * ビューに値をセット
      *
      * @param array $values ビューにセットする値
-     *
-     * @return void
      */
     public function set(array $values)
     {
@@ -148,6 +124,7 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         $ro = $this->_getRo($html);
         // 使用テンプレートのログ
         $this->_log->log('view', $viewInfo);
+
         return $ro;
     }
 
@@ -169,7 +146,7 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         } else {
             $file = _BEAR_APP_HOME . $this->_config['path'] . $tplName;
         }
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             //テンプレートファイルがない
             $info = array(
                 'tpl name' => $tplName,
@@ -182,6 +159,7 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         // ページバリューアサイン
         $this->_smarty->assign($this->_values);
         $html = $this->_smarty->fetch($file);
+
         return $html;
     }
 }

@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 /**
  * iMagickクラス
@@ -41,15 +32,6 @@
  *  $img->save(_BEAR_APP_HOME . '/tmp/picure.jpeg');
  * </code>
  *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
@@ -70,8 +52,8 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
 
     /**
      * Constructor
-     *
      */
+
     /**
      * Constructor
      *
@@ -83,7 +65,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     {
         parent::__construct($config);
         //インストールチェック
-        if (!class_exists('Imagick')) {
+        if (! class_exists('Imagick')) {
             throw $this->_exception('iMagick extention is not loaded');
         }
         $this->adapter = new Imagick();
@@ -97,7 +79,6 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      *
      * @param string $file
      *
-     * @return void
      * @throws BEAR_Img_Adapter_Magick_Exception
      */
     public function load($file)
@@ -108,7 +89,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         if (strpos($file, 'http') !== false) {
             //リモートファイルの取得
             $remoteFile = file_get_contents($file);
-            if (!$remoteFile) {
+            if (! $remoteFile) {
                 $this->_thisError('load', "file_get_contents file is [{$file}]");
             }
             $file = $this->getTmpFileName();
@@ -155,12 +136,12 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
             $this->_thisError('header', $msg);
         }
         if ($this->_isAnimGif) {
-            header("Content-type: image/gif");
+            header('Content-type: image/gif');
         } else {
             $mimeType = strtolower($this->adapter->getImageFormat());
             if ($mimeType) {
-                header("X-Content-type: image/" . $mimeType);
-                header("Content-type: image/" . $mimeType);
+                header('X-Content-type: image/' . $mimeType);
+                header('Content-type: image/' . $mimeType);
             } else {
                 $this->_thisError('header', "image type=[{$mimeType}]");
             }
@@ -182,8 +163,6 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      * @param int  $blur
      * @param bool $fit
      *
-     * @return void
-     *
      * @see http://jp2.php.net/manual/ja/ref.imagick.php
      */
     public function resize($width = 240, $height = 240, $filter = Imagick::FILTER_LANCZOS, $blur = 1, $fit = true)
@@ -199,40 +178,11 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     }
 
     /**
-     * アニメーションGIFのリサイズ
-     *
-     * <pre>
-     * アニメーションGIFをリサイズします。magic関数には用意されていない機能なので
-     * シェルでconvertコマンドを実行しています
-     * </pre>
-     *
-     * @param int $width 画像の幅
-     *
-     * @return void
-     */
-    protected function _resizeAnim($width = 240)
-    {
-        //        convert animt.gif -coalesce -resize 640 -deconstruct resized.gif
-        $fromFile = $this->getTmpFileName();
-        $this->save($fromFile);
-        $toFile = $this->getTmpFileName();
-        $command = "convert {$fromFile} -resize {$width} {$toFile}";
-        $result = '';
-        system($command, $result);
-        if ($result) {
-            trigger_error("imagemagick convert error result=[$result]", E_USER_WARNING);
-        }
-        $this->_animGifFile = $toFile;
-    }
-
-    /**
      * 画像を指定のフォーマットで表示
      *
      * 画像を表示します。
      *
      * @param string $format 画像フォーマット
-     *
-     * @return void
      */
     public function show($format)
     {
@@ -260,9 +210,34 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     {
         $this->adapter->setFormat($format);
         $result = $this->adapter->writeImage($filePath);
-        if (!$result) {
+        if (! $result) {
             trigger_error("iMagick: Image file write error [$filePath]", E_USER_ERROR);
         }
+    }
+
+    /**
+     * アニメーションGIFのリサイズ
+     *
+     * <pre>
+     * アニメーションGIFをリサイズします。magic関数には用意されていない機能なので
+     * シェルでconvertコマンドを実行しています
+     * </pre>
+     *
+     * @param int $width 画像の幅
+     */
+    protected function _resizeAnim($width = 240)
+    {
+        //        convert animt.gif -coalesce -resize 640 -deconstruct resized.gif
+        $fromFile = $this->getTmpFileName();
+        $this->save($fromFile);
+        $toFile = $this->getTmpFileName();
+        $command = "convert {$fromFile} -resize {$width} {$toFile}";
+        $result = '';
+        system($command, $result);
+        if ($result) {
+            trigger_error("imagemagick convert error result=[$result]", E_USER_WARNING);
+        }
+        $this->_animGifFile = $toFile;
     }
 
     /**
@@ -273,7 +248,6 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      * @param string $func コール元のメソッド名
      * @param string $msg  エラーメッセージ
      *
-     * @return void
      * @throws BEAR_Img_Adapter_Magick_Exception
      */
     private function _thisError($func, $msg = null)
@@ -281,10 +255,10 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         //エラーヘッダー
         /** @noinspection PhpUndefinedFunctionInspection */
         /** @noinspection PhpUndefinedFunctionInspection */
-        $reason = (is_resource($this->image)) ? imagick_failedreason($this->image) : "no image resource";
+        $reason = (is_resource($this->image)) ? imagick_failedreason($this->image) : 'no image resource';
         /** @noinspection PhpUndefinedFunctionInspection */
         /** @noinspection PhpUndefinedFunctionInspection */
-        $description = (is_resource($this->image)) ? imagick_faileddescription($this->image) : "no image resource";
+        $description = (is_resource($this->image)) ? imagick_faileddescription($this->image) : 'no image resource';
         $isResource = (is_resource($this->image)) ? 'true' : 'false';
         $msg .= 'iMagcik Error:' . $msg;
         $info = array(

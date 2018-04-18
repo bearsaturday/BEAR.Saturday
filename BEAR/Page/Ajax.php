@@ -1,31 +1,11 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Page
- * @subpackage Ajax
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
- * BEAR_Page_Ajax
- *
- * @category   BEAR
- * @package    BEAR_Page
- * @subpackage Ajax
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @config bool security_check セッションを用いたダブルサブミットクッキーによりセキュリティチェック true
@@ -55,8 +35,6 @@ class BEAR_Page_Ajax extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -74,11 +52,10 @@ class BEAR_Page_Ajax extends BEAR_Base
      * AJAXリクエストが不正なものでないかチェックします。
      *
      * @throws BEAR_Exception
-     * @return void
      */
     public function checkSecurity()
     {
-        if (!$this->isAjaxRequest()) {
+        if (! $this->isAjaxRequest()) {
             return;
         }
         $this->_session = BEAR::dependency('BEAR_Session');
@@ -100,11 +77,11 @@ class BEAR_Page_Ajax extends BEAR_Base
      *
      * prototype.js jQuery他で動作します
      *
-     * @return boolean
+     * @return bool
      */
     public function isAjaxRequest()
     {
-        return ($this->_header->getRequestHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
+        return $this->_header->getRequestHeader('X_REQUESTED_WITH') == 'XMLHttpRequest';
     }
 
     /**
@@ -140,6 +117,7 @@ class BEAR_Page_Ajax extends BEAR_Base
         } else {
             $result = array();
         }
+
         return $result;
     }
 
@@ -163,8 +141,6 @@ class BEAR_Page_Ajax extends BEAR_Base
      * @param string $ajaxCommand AJAXコマンド 'html' | 'resource' |'form' | 'js'
      * @param array  $data        AJAXコマンド引数
      * @param array  $options     AJAXコマンドオプション
-     *
-     * @return void
      */
     public function addAjax($ajaxCommand, array $data, array $options = array())
     {
@@ -215,6 +191,7 @@ class BEAR_Page_Ajax extends BEAR_Base
     {
         $sessionVerify = $this->_header->getRequestHeader('X_BEAR_SESSION_VERIFY');
         $isValid = ($sessionVerify === session_id());
+
         return $isValid;
     }
 }

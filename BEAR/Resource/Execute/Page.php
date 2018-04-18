@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * Pageリソース
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
 {
@@ -37,8 +19,6 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -59,8 +39,9 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      *   2)set()でセットされたリソース結果の集合
      * </pre>
      *
-     * @return mixed
      * @throws BEAR_Exception
+     *
+     * @return mixed
      */
     public function request()
     {
@@ -69,23 +50,23 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
         $url = parse_url($this->_config['uri']);
         $pageRawPath = $url['path'];
         $pageClass = 'page' . str_replace('/', '_', $pageRawPath);
-        if (!class_exists($pageClass, false)) {
+        if (! class_exists($pageClass, false)) {
             $pageFile = str_replace('/', DIRECTORY_SEPARATOR, $pageRawPath) . '.php';
             BEAR_Main::includePage($pageFile);
         }
-        if (!class_exists($pageClass, false)) {
+        if (! class_exists($pageClass, false)) {
             throw new BEAR_Exception("Page class[$pageClass] is not exist.");
         }
         $pageConfig = array('resource_id' => $pageClass, 'mode' => BEAR_Page::CONFIG_MODE_RESOURCE);
         $pageOptions = $this->_config['options'];
         if (isset($this->_config['options']['page'])) {
-            $pageConfig = array_merge($pageConfig, (array)$this->_config['options']['page']);
+            $pageConfig = array_merge($pageConfig, (array) $this->_config['options']['page']);
         }
         if (isset($pageConfig['ua'])) {
             $pageConfig['enable_ua_sniffing'] = true;
         }
         $page = BEAR::factory($pageClass, $pageConfig, $pageOptions);
-        /** @var $page BEAR_Page  */
+        /** @var $page BEAR_Page */
         $method = ($this->_config['method'] === 'read') ? 'onInit' : 'onAction';
         $args = array_merge($page->getArgs(), $this->_config['values']);
         $cnt = $this->_roPrototye->countStack();
@@ -94,11 +75,11 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
         // リソースモード
         switch (true) {
             // resource
-            case (!isset($this->_config['options']['output']) || $this->_config['options']['output'] === 'resource'):
+            case ! isset($this->_config['options']['output']) || $this->_config['options']['output'] === 'resource':
                 $result = $this->_outputResource($page, $cnt);
                 break;
             // html
-            case ($this->_config['options']['output'] === 'html'):
+            case $this->_config['options']['output'] === 'html':
                 $result = $this->_outputHtml($page);
                 break;
             default:
@@ -106,9 +87,10 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
                 throw $this->_exception('Unknown page resource options', compact('info'));
                 break;
         }
-        if (!($result instanceof BEAR_Ro)) {
+        if (! ($result instanceof BEAR_Ro)) {
             $result = BEAR::factory('BEAR_Ro', array())->setBody($result);
         }
+
         return $result;
     }
 
@@ -124,8 +106,6 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      * </ul>
      *
      * @param array $options
-     *
-     * @return void
      */
     protected function _setGetPost(array $options)
     {
@@ -146,8 +126,9 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      * @param BEAR_Page &$page ページ
      * @param int       $cnt   プロトタイプリソースのスタックカウンタ
      *
-     * @return array
      * @throws BEAR_Resource_Execute_Exception
+     *
+     * @return array
      */
     protected function _outputResource(BEAR_Page &$page, $cnt)
     {
@@ -160,7 +141,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             /* @var $prototypeRo BEAR_Ro_Prototype */
             $result[$key] = $prototypeRo->getValue();
         }
-        $result = array_merge($result, (array)$pageValues);
+        $result = array_merge($result, (array) $pageValues);
         // $page->setPrototypeRo();
         return $result;
     }
@@ -177,6 +158,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
         $page->setPrototypeRo();
         $page->onOutput();
         $ro = $page->getPageRo();
+
         return $ro;
     }
 }

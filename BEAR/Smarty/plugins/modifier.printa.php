@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -26,14 +17,9 @@
  * {$body|printa}
  * </code>
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ *
+ *
+ *
  *
  * @param string $string 文字列
  *
@@ -41,10 +27,11 @@
  */
 function smarty_modifier_printa($string)
 {
-    if (!function_exists('print_a')) {
+    if (! function_exists('print_a')) {
         /** @noinspection PhpIncludeInspection */
         include 'BEAR/vendors/debuglib.php';
     }
-    $string = print_a($string, "return:true");
+    $string = print_a($string, 'return:true');
+
     return $string;
 }

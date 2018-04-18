@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Dev
- * @subpackage Shell
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * BEARシェル
- *
- * @category   BEAR
- * @package    BEAR_Dev
- * @subpackage Shell
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Dev_Shell extends BEAR_Base
 {
@@ -94,13 +76,11 @@ class BEAR_Dev_Shell extends BEAR_Base
 
     /**
      * コマンドの実行
-     *
-     * @return void
      */
     public function execute()
     {
         $argv = $this->_config['argv'];
-        if (!isset($argv[1])) {
+        if (! isset($argv[1])) {
             return;
         }
         // parse
@@ -326,30 +306,12 @@ class BEAR_Dev_Shell extends BEAR_Base
                     } else {
                         $this->_result = "BEAR: {$argv[1]}: command not found, try 'help'";
                     }
+
                     return;
             }
         } catch (Exception $e) {
             $parser->displayError($e->getMessage());
         }
-    }
-
-    /**
-     * Make full path
-     *
-     * @param unknown_type $path
-     *
-     * @return string
-     */
-    private function _makeFullPath($path)
-    {
-        if (substr($path, -1) === '/') {
-            $path = substr($path, 0, -1);
-        }
-        if ($path[0] !== '/') {
-            $fullpath = $_SERVER['PWD'] . '/' . $path;
-            $path = $fullpath;
-        }
-        return $path;
     }
 
     /**
@@ -433,120 +395,7 @@ class BEAR_Dev_Shell extends BEAR_Base
         } else {
             $result .= $this->_printR($this->_result);
         }
-        return $result;
-    }
 
-    /**
-     * アプリケーションパスの存在チェック
-     *
-     * @return void
-     */
-    private function _checkAppExists()
-    {
-        if (class_exists('App', false)) {
-            return;
-        }
-        $bearrc = getenv('HOME') . '/.bearrc';
-        if (!file_exists($bearrc)) {
-            $msg = "App path undefined. Please set application path with 'bear set-app' command.\n";
-            $msg .= "ex) $ bear set-app /var/www/bear.test\n";
-            echo $msg;
-            exit;
-        }
-    }
-
-    /**
-     * テキストテーブル文字列の取得
-     *
-     * 文字列でテーブルを描画します。
-     *
-     * @param array $data
-     *
-     * @return string
-     */
-    private function _getTextTable($data)
-    {
-        if (!$data) {
-            return '';
-        }
-        $table = new Console_Table();
-        $table->setAlign(0, CONSOLE_TABLE_ALIGN_LEFT);
-        $data = ($this->isList($data) !== true) ? array($data) : $data;
-        $table->setHeaders(array_keys($data[0]));
-        foreach ($data as $row) {
-            $table->addRow($row);
-        }
-        $result = $table->getTable();
-        return $result;
-    }
-
-    /**
-     * Is array list ?
-     *
-     * @param mixed $data
-     *
-     * @return void
-     */
-    private function isList($data)
-    {
-        $isList = isset($data[0]) && is_array(array_keys($data[0]));
-        return $isList;
-    }
-
-    /**
-     * var_export文字列の取得
-     *
-     * @param string $str 文字列
-     *
-     * @return string
-     */
-    private function _getVarExport($str)
-    {
-        ob_start();
-        var_export($str);
-        $result = ob_get_clean();
-        return $result;
-    }
-
-    /**
-     * Get csv text
-     *
-     * @param unknown_type $data
-     *
-     * @return string
-     * @see http://jp.php.net/fputcsv
-     */
-    private function _getCsv($data)
-    {
-        $data = ($this->isList($data) !== true) ? array($data) : $data;
-        $outstream = fopen("php://temp", 'r+');
-        foreach ($data as $row) {
-            fputcsv($outstream, $row);
-        }
-        rewind($outstream);
-        $csv = '';
-        while (!feof($outstream)) {
-            $buffer = fgets($outstream);
-            $csv .= $buffer;
-        }
-        fclose($outstream);
-        return $csv;
-    }
-
-    /**
-     * print_r文字列の取得
-     *
-     * @param string $var 文字列
-     *
-     * @return string
-     */
-    private function _printR($var)
-    {
-        if ($this->_config['cli']) {
-            $result = print_r($var, true);
-        } else {
-            return print_r($var, true);
-        }
         return $result;
     }
 
@@ -557,78 +406,20 @@ class BEAR_Dev_Shell extends BEAR_Base
      * @param string $color 色
      *
      * @return string
+     *
      * @internal CLIとHTMLで表示を変えています
      */
     public function printStrong($str, $color = 'b')
     {
         if ($this->_config['cli']) {
             return Console_Color::convert("%{$color}{$str}%n");
-        } else {
-            return '<strong>' . $str . '</strong>';
         }
-    }
 
-    /**
-     * リソースリクエスト
-     *
-     * @param string $method メソッド
-     * @param string $uri    　 URI（クエリー付き)
-     * @param array  $values 引数
-     *
-     * @return BEAR_Ro
-     */
-    private function _request($method, $uri, array $values)
-    {
-        $resource = BEAR::dependency('BEAR_Resource');
-        /* @var $resource BEAR_Resource */
-        $params = array('uri' => $uri, 'values' => $values);
-        $ro = $resource->request($method, $uri, $values)->getRo();
-        return $ro;
-    }
-
-    /**
-     * アプリケーションパス設定
-     *
-     * @param string $path アプリケーションパス
-     *
-     * @return void
-     */
-    private function _setApp($path)
-    {
-        $path = realpath($path);
-        if (!$path) {
-            throw new ErrorException('App path is not valid', 0, 0, __FILE__, __LINE__);
-        }
-        $bearrc = getenv('HOME') . '/.bearrc';
-        $config = (file_exists($bearrc)) ? unserialize(file_get_contents($bearrc)) : array();
-        $config['app'] = realpath($path);
-
-        file_put_contents($bearrc, serialize($config));
-    }
-
-    /**
-     * アプリケーションパス表示
-     *
-     * ~/.bearrcを読んで表示します
-     *
-     * @return void
-     */
-    private function _showApp()
-    {
-        $bearrc = getenv('HOME') . '/.bearrc';
-        if (file_exists($bearrc)) {
-            $config = unserialize(file_get_contents($bearrc));
-            $appPath = $config['app'];
-            $this->_result = $appPath;
-        } else {
-            $this->_result = "'{$bearrc}' is not set.";
-        }
+        return '<strong>' . $str . '</strong>';
     }
 
     /**
      * キャッシュクリア
-     *
-     * @return void
      */
     public function clearCache()
     {
@@ -647,19 +438,14 @@ class BEAR_Dev_Shell extends BEAR_Base
 
     /**
      * ログクリア
-     *
-     * @return void
      */
     public function clearLog()
     {
         BEAR_Util::unlinkRecursive(_BEAR_APP_HOME . '/logs/');
     }
 
-
     /**
      * ログクリア
-     *
-     * @return void
      */
     public function clearAll()
     {
@@ -672,8 +458,6 @@ class BEAR_Dev_Shell extends BEAR_Base
      * ドキュメント作成
      *
      * @param string $path ドキュメント保存先パス
-     *
-     * @return void
      */
     public function makeDoc($path)
     {
@@ -690,5 +474,195 @@ class BEAR_Dev_Shell extends BEAR_Base
         echo "$exec\n";
         ob_flush();
         shell_exec("$exec &");
+    }
+
+    /**
+     * Make full path
+     *
+     * @param unknown_type $path
+     *
+     * @return string
+     */
+    private function _makeFullPath($path)
+    {
+        if (substr($path, -1) === '/') {
+            $path = substr($path, 0, -1);
+        }
+        if ($path[0] !== '/') {
+            $fullpath = $_SERVER['PWD'] . '/' . $path;
+            $path = $fullpath;
+        }
+
+        return $path;
+    }
+
+    /**
+     * アプリケーションパスの存在チェック
+     */
+    private function _checkAppExists()
+    {
+        if (class_exists('App', false)) {
+            return;
+        }
+        $bearrc = getenv('HOME') . '/.bearrc';
+        if (! file_exists($bearrc)) {
+            $msg = "App path undefined. Please set application path with 'bear set-app' command.\n";
+            $msg .= "ex) $ bear set-app /var/www/bear.test\n";
+            echo $msg;
+            exit;
+        }
+    }
+
+    /**
+     * テキストテーブル文字列の取得
+     *
+     * 文字列でテーブルを描画します。
+     *
+     * @param array $data
+     *
+     * @return string
+     */
+    private function _getTextTable($data)
+    {
+        if (! $data) {
+            return '';
+        }
+        $table = new Console_Table();
+        $table->setAlign(0, CONSOLE_TABLE_ALIGN_LEFT);
+        $data = ($this->isList($data) !== true) ? array($data) : $data;
+        $table->setHeaders(array_keys($data[0]));
+        foreach ($data as $row) {
+            $table->addRow($row);
+        }
+        $result = $table->getTable();
+
+        return $result;
+    }
+
+    /**
+     * Is array list ?
+     *
+     * @param mixed $data
+     */
+    private function isList($data)
+    {
+        $isList = isset($data[0]) && is_array(array_keys($data[0]));
+
+        return $isList;
+    }
+
+    /**
+     * var_export文字列の取得
+     *
+     * @param string $str 文字列
+     *
+     * @return string
+     */
+    private function _getVarExport($str)
+    {
+        ob_start();
+        var_export($str);
+        $result = ob_get_clean();
+
+        return $result;
+    }
+
+    /**
+     * Get csv text
+     *
+     * @param unknown_type $data
+     *
+     * @return string
+     *
+     * @see http://jp.php.net/fputcsv
+     */
+    private function _getCsv($data)
+    {
+        $data = ($this->isList($data) !== true) ? array($data) : $data;
+        $outstream = fopen('php://temp', 'r+');
+        foreach ($data as $row) {
+            fputcsv($outstream, $row);
+        }
+        rewind($outstream);
+        $csv = '';
+        while (! feof($outstream)) {
+            $buffer = fgets($outstream);
+            $csv .= $buffer;
+        }
+        fclose($outstream);
+
+        return $csv;
+    }
+
+    /**
+     * print_r文字列の取得
+     *
+     * @param string $var 文字列
+     *
+     * @return string
+     */
+    private function _printR($var)
+    {
+        if ($this->_config['cli']) {
+            $result = print_r($var, true);
+        } else {
+            return print_r($var, true);
+        }
+
+        return $result;
+    }
+
+    /**
+     * リソースリクエスト
+     *
+     * @param string $method メソッド
+     * @param string $uri    URI（クエリー付き)
+     * @param array  $values 引数
+     *
+     * @return BEAR_Ro
+     */
+    private function _request($method, $uri, array $values)
+    {
+        $resource = BEAR::dependency('BEAR_Resource');
+        /* @var $resource BEAR_Resource */
+        $params = array('uri' => $uri, 'values' => $values);
+        $ro = $resource->request($method, $uri, $values)->getRo();
+
+        return $ro;
+    }
+
+    /**
+     * アプリケーションパス設定
+     *
+     * @param string $path アプリケーションパス
+     */
+    private function _setApp($path)
+    {
+        $path = realpath($path);
+        if (! $path) {
+            throw new ErrorException('App path is not valid', 0, 0, __FILE__, __LINE__);
+        }
+        $bearrc = getenv('HOME') . '/.bearrc';
+        $config = (file_exists($bearrc)) ? unserialize(file_get_contents($bearrc)) : array();
+        $config['app'] = realpath($path);
+
+        file_put_contents($bearrc, serialize($config));
+    }
+
+    /**
+     * アプリケーションパス表示
+     *
+     * ~/.bearrcを読んで表示します
+     */
+    private function _showApp()
+    {
+        $bearrc = getenv('HOME') . '/.bearrc';
+        if (file_exists($bearrc)) {
+            $config = unserialize(file_get_contents($bearrc));
+            $appPath = $config['app'];
+            $this->_result = $appPath;
+        } else {
+            $this->_result = "'{$bearrc}' is not set.";
+        }
     }
 }

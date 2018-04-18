@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -25,14 +16,9 @@
  * {resource uri='Entry' params=$entryParams tepmplate="resource/entry"}
  * </code>
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ *
+ *
+ *
  *
  * @param mixed  $params
  * @param Smarty &$smarty
@@ -41,10 +27,10 @@
  */
 function smarty_function_resource(
     $params,
-    /** @noinspection PhpUnusedParameterInspection */
+    /* @noinspection PhpUnusedParameterInspection */
     &$smarty
 ) {
-    $config = (array)BEAR::loadValues($params['params']) + array(
+    $config = (array) BEAR::loadValues($params['params']) + array(
         'method' => 'read',
         'uri' => $params['uri'],
         'values' => array(),
@@ -67,5 +53,6 @@ function smarty_function_resource(
             'path' => $app['BEAR_View']['path']
         )
     )->request()->toString();
+
     return $string;
 }

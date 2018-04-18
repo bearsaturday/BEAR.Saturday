@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -44,15 +35,6 @@
  *         'Hiragino Mincho ProN'); $img->resize();
  * </code>
  *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
- *
  * @Singleton
  */
 class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
@@ -72,6 +54,13 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
     protected $_log;
 
     /**
+     * フォント情報
+     *
+     * @var array
+     */
+    private $_fontInfo;
+
+    /**
      * Constructor
      *
      * @param array $config
@@ -80,18 +69,11 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
     {
         parent::__construct($config);
         //インストールチェック
-        if (!function_exists("cairo_create")) {
+        if (! function_exists('cairo_create')) {
             trigger_error('Error: You need Cairo Library', E_ERROR);
             exit();
         }
     }
-
-    /**
-     * フォント情報
-     *
-     * @var array
-     */
-    private $_fontInfo;
 
     /**
      * ファイルのロード
@@ -102,8 +84,6 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
      * </pre>
      *
      * @param string $file ファイル名
-     *
-     * @return void
      */
     public function load($file)
     {
@@ -113,22 +93,22 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         $this->getImageInfo();
         $this->_log->log('$tmpFile', $tmpFile);
         BEAR_Img::$deleteFiles[] = $tmpFile;
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         $this->surface = cairo_image_surface_create_from_png($tmpFile);
-        if (!is_resource($this->surface)) {
+        if (! is_resource($this->surface)) {
             $fileSize = (file_exists($file)) ? filesize($file) : 'none';
-            $this->_thisError("load", "cairo_image_surface_create_from_png filse_size=[{$fileSize}] file=[{$file}] ");
+            $this->_thisError('load', "cairo_image_surface_create_from_png filse_size=[{$fileSize}] file=[{$file}] ");
         }
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         $this->image = cairo_create($this->surface);
-        if (!is_resource($this->image)) {
+        if (! is_resource($this->image)) {
             $this->_thisError('load', 'cairo_create');
         }
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_paint_with_alpha($this->image, 0);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         $this->_srcWidth = cairo_image_surface_get_width($this->surface);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         $this->_srcHeight = cairo_image_surface_get_height($this->surface);
     }
 
@@ -141,17 +121,15 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
      * @param int    $x     X座標
      * @param int    $y     Y座標
      * @param float  $alpha アルファブレンディング(0..1)
-     *
-     * @return void
      */
     public function addImage($file, $x = 0, $y = 0, $alpha = 1.0)
     {
         $file = $this->loadRemoteFile($file);
         /** @noinspection PhpUndefinedFunctionInspection */
         $surfce = cairo_image_surface_create_from_png($file);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_set_source_surface($this->image, $surfce, $x, $y);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_paint_with_alpha($this->image, $alpha);
     }
 
@@ -195,13 +173,13 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         $weight = CAIRO_FONT_WEIGHT_NORMAL
     ) {
         //フォントカラー
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_set_source_rgb($this->image, 0.0, 0.0, 1.0);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_select_font_face($this->image, $font, $slant, $weight);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_set_font_size($this->image, $size);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         $this->_fontInfo = cairo_text_extents($this->image, $text);
         $this->_log->log('cairo _fontInfo', $this->_fontInfo);
         switch ($align) {
@@ -215,38 +193,38 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
             default:
                 break;
         }
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_move_to($this->image, $x, $y + $size);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_text_path($this->image, $text);
         //テキスト中身
         if ($colorOne) {
             $colorOneZero = $colorOne[0] / 255;
             $colorOneOne = $colorOne[1] / 255;
             $colorOneTwo = $colorOne[2] / 255;
-            /** @noinspection PhpUndefinedFunctionInspection */
+            /* @noinspection PhpUndefinedFunctionInspection */
             cairo_set_source_rgba($this->image, $colorOneZero, $colorOneOne, $colorOneTwo, $textAlpha);
         } else {
-            /** @noinspection PhpUndefinedFunctionInspection */
+            /* @noinspection PhpUndefinedFunctionInspection */
             cairo_set_source_rgba($this->image, 1, 1, 1, $textAlpha);
         }
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_fill_preserve($this->image);
         //テキストボーダー
         if ($colorTwo) {
             $colorTwoZero = $colorTwo[0] / 255;
             $colorTwoOne = $colorTwo[1] / 255;
             $colorTwoTwo = $colorTwo[2] / 255;
-            /** @noinspection PhpUndefinedFunctionInspection */
+            /* @noinspection PhpUndefinedFunctionInspection */
             cairo_set_source_rgba($this->image, $colorTwoZero, $colorTwoOne, $colorTwoTwo, $textAlpha);
         } else {
-            /** @noinspection PhpUndefinedFunctionInspection */
+            /* @noinspection PhpUndefinedFunctionInspection */
             cairo_set_source_rgba($this->image, 0, 0, 1, $textAlpha);
         }
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_set_line_width($this->image, $lineWidth);
         //cairo_stroke_preserve($this->image);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_stroke($this->image);
         //cairo_show_page($this->image);
     }
@@ -258,13 +236,11 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
      * image/pngヘッダーを出力してPNG画像を出力します。
      * cairoはpngしか出力できません。
      * </pre>
-     *
-     * @return void
      */
     public function show()
     {
-        header("Content-type: " . 'image/png');
-        /** @noinspection PhpUndefinedFunctionInspection */
+        header('Content-type: ' . 'image/png');
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_show_png($this->surface);
     }
 
@@ -275,13 +251,11 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
      *
      * @param string $filePath 保存画像のファイルパス
      * @param string $format   画像ファイルのフォーマット
-     *
-     * @return void
      */
     public function save($filePath, $format = 'png')
     {
         unset($format);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_write_to_png($this->surface, $filePath);
         $isSaved = file_exists($filePath);
         $log = array(
@@ -293,7 +267,7 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
             'file size' => filesize($filePath)
         );
         $this->_log->log('cairo_surface_write_to_png', $log);
-        /** @noinspection PhpUndefinedFunctionInspection */
+        /* @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_destroy($this->surface);
     }
 

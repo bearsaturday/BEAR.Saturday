@@ -1,21 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Form
- * @subpackage Element
- * @author     Adam Daniel <adaniel1@eesus.jnj.com>
- * @author     Bertrand Mansion <bmansion@mamasam.com>
- * @author     Alexey Borzov <avb@php.net>
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       http://pear.php.net/package/HTML_QuickForm
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -27,13 +14,6 @@ require_once 'HTML/QuickForm/input.php';
 /**
  * HTML class for a "bradio" element
  *
- * @category   BEAR
- * @package    BEAR_Form
- * @subpackage Element
- * @author     Adam Daniel <adaniel1@eesus.jnj.com>
- * @author     Bertrand Mansion <bmansion@mamasam.com>
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @version    @package_version@
  * @link       http://pear.php.net/package/HTML_QuickForm
  * @since      1.0
  */
@@ -43,9 +23,10 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
 
     /**
      * Radio display text
-     * @var       string
+     *
+     * @var string
+     *
      * @since     1.1
-     * @access    private
      */
     public $_text = '';
 
@@ -76,18 +57,19 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
         $this->setType('radio');
         $this->_text = $text;
         $this->_generateId();
-    } //end constructor
+    }
+
+    //end constructor
 
     // }}}
     // {{{ setChecked()
-
 
     /**
      * Returns the radio element in HTML
      *
      * @since     1.0
-     * @access    public
-     * @return    string
+     *
+     * @return string
      */
     public function toHtml()
     {
@@ -95,12 +77,15 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
             $label = '';
         } elseif ($this->_flagFrozen) {
             $label = $this->getChecked() ? $this->_text : '';
-            //            $label = $this->_text;
+        //            $label = $this->_text;
         } else {
             $label = '<label for="' . $this->getAttribute('id') . '">' . $this->_text . '</label>';
         }
+
         return HTML_QuickForm_input::toHtml() . $label;
-    } //end func toHtml
+    }
+
+    //end func toHtml
 
     // }}}
     // {{{ getFrozenHtml()
@@ -109,15 +94,17 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * Returns the value of field without HTML tags
      *
      * @since     1.0
-     * @access    public
-     * @return    string
+     *
+     * @return string
      */
     public function getFrozenHtml()
     {
         if ($this->getChecked()) {
             return '' . $this->_getPersistantData();
-        } else {
-            return '';
         }
-    } //end func getFrozenHtml
+
+        return '';
+    }
+
+    //end func getFrozenHtml
 }

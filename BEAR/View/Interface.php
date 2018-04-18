@@ -1,27 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_View
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
+
 /**
  * BEAR_Viewインターフェイス
- *
- * @category  BEAR
- * @package   BEAR_View
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  */
 interface BEAR_View_Interface
 {
@@ -29,8 +14,6 @@ interface BEAR_View_Interface
      * ビューに値をセット
      *
      * @param array $values バリュー
-     *
-     * @return void
      */
     public function set(array $values);
 
@@ -41,8 +24,6 @@ interface BEAR_View_Interface
      *
      * @param string $tplName テンプレート名
      * @param array  $options オプション
-     *
-     * @return void
      */
     public function display($tplName = null, array $options = array());
 }

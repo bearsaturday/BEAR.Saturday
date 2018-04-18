@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Query
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -20,16 +12,13 @@
  * selectを使用した場合,preparedステートメントを毎回freeします。
  * selectMultipleを使用する場合は、Roクラス内でBEAR::dependencyを使用して呼び出してください。
  * </pre>
- * @category  BEAR
- * @package   BEAR_Query
- * @author    Satomi Fukushima <satomi.fukushima@excite.jp>
  */
 class BEAR_Query_Free extends BEAR_Query
 {
     //prepareステートメント結果を使いまわすために使用
     protected $_stmt = null;
     protected $_count_stmt = null;
-    
+
     /**
      * Constructor
      *
@@ -39,44 +28,44 @@ class BEAR_Query_Free extends BEAR_Query
     {
         parent::__construct($config);
     }
-    
+
     /**
-    * プリペアを使い回すセレクト
-    *
-    * <pre>
-    * 通常のselect文の他にDB結果の一部だけをSELECTする機能と、HTMLページングの機能が合わさった
-    * メソッドです。getAll()メソッドの引数に加えて一画面に表示するデータ数を
-    * 引数に指示するとページング(スライス）されたデータ結果と
-    * エージェントに合わせたリンクHTML文字列が返ります。
-    * $valuesが配列<array($key => $values)>ならWHERE $key1 = $id1 AND $key2 = $id2 ..と条件を作ってselectします。
-    * リソース内で受け取った$valuesを条件にSELETするときに使います。
-    *
-    * $paramsが空だと通常のSQL、連想配列が入っていると$queryをpreparedステートメート文として期待して実行します。
-    * </pre>
-    *
-    * @param string $query  SQL
-    * @param array  $params プリペアードステートメントにする場合にバインドする変数
-    * @param array  $values where条件配列
-    * @param string $id
-    * @param boolean $free  プリペアードステートメントをfreeする時true
-    *
-    * @return BEAR_Ro
-    */
-    public function selectSharePrepare($query, array $params = array(), array $values = null, $id = 'id', $free=false)
+     * プリペアを使い回すセレクト
+     *
+     * <pre>
+     * 通常のselect文の他にDB結果の一部だけをSELECTする機能と、HTMLページングの機能が合わさった
+     * メソッドです。getAll()メソッドの引数に加えて一画面に表示するデータ数を
+     * 引数に指示するとページング(スライス）されたデータ結果と
+     * エージェントに合わせたリンクHTML文字列が返ります。
+     * $valuesが配列<array($key => $values)>ならWHERE $key1 = $id1 AND $key2 = $id2 ..と条件を作ってselectします。
+     * リソース内で受け取った$valuesを条件にSELETするときに使います。
+     *
+     * $paramsが空だと通常のSQL、連想配列が入っていると$queryをpreparedステートメート文として期待して実行します。
+     * </pre>
+     *
+     * @param string $query  SQL
+     * @param array  $params プリペアードステートメントにする場合にバインドする変数
+     * @param array  $values where条件配列
+     * @param string $id
+     * @param bool   $free   プリペアードステートメントをfreeする時true
+     *
+     * @return BEAR_Ro
+     */
+    public function selectSharePrepare($query, array $params = array(), array $values = null, $id = 'id', $free = false)
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
         $db = &$this->_config['db'];
         $ro = $this->_config['ro'];
         $sth = null;
-        
+
         // Row取得
-        if (!is_null($values)) {
+        if (! is_null($values)) {
             if (is_object($this->_stmt)) {
                 $sth = $this->_stmt;
             }
             $result = $this->_selectRow($db, $query, $params, $values, $id, $sth);
-            if (!is_object($sth) && is_null($this->_stmt)) {
+            if (! is_object($sth) && is_null($this->_stmt)) {
                 $this->_stmt = $sth;
             }
             if ($free) {
@@ -101,7 +90,7 @@ class BEAR_Query_Free extends BEAR_Query
         if (isset($this->_config['sort'])) {
             $query = $this->_sort($query);
         }
-        if ((!isset($this->_config['pager']) || !$this->_config['pager']) || $this->_config['perPage'] <= 0) {
+        if ((! isset($this->_config['pager']) || ! $this->_config['pager']) || $this->_config['perPage'] <= 0) {
             if (isset($this->_config['offset']) && $this->_config['perPage'] > 0) {
                 // LIMIT & Offset
                 $query .= ' LIMIT ' . $this->_config['offset'] . ',' . $this->_config['perPage'];
@@ -110,7 +99,7 @@ class BEAR_Query_Free extends BEAR_Query
                 $query .= ' LIMIT ' . $this->_config['perPage'];
             }
             if ($params) {
-                if (!is_object($sth) && is_null($this->_stmt)) {
+                if (! is_object($sth) && is_null($this->_stmt)) {
                     $sth = $db->prepare($query);
                     $this->_stmt = $sth;
                 } else {
@@ -124,17 +113,18 @@ class BEAR_Query_Free extends BEAR_Query
             } else {
                 $result = $db->queryAll($query);
             }
+
             return $result;
         }
         // DBページャー
         $pagerOptions = $this->_config['options'];
         $pagerOptions['perPage'] = $this->_config['perPage'];
-        if (!array_key_exists('totalItems', $pagerOptions)) {
+        if (! array_key_exists('totalItems', $pagerOptions)) {
             if (is_object($this->_stmt)) {
                 $count_sth = $this->_count_stmt;
             }
             $pagerOptions['totalItems'] = $this->_countQuery($query, $params, $count_sth);
-            if (!is_object($count_sth) && is_null($this->_count_stmt)) {
+            if (! is_object($count_sth) && is_null($this->_count_stmt)) {
                 $this->_count_stmt = $count_sth;
             }
             if ($free) {
@@ -162,7 +152,7 @@ class BEAR_Query_Free extends BEAR_Query
         $info['limit'] = $info['to'] - $info['from'] + 1;
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
         if ($params) {
-            if (!is_object($sth) && is_null($this->_stmt)) {
+            if (! is_object($sth) && is_null($this->_stmt)) {
                 $sth = $db->prepare($query);
                 $this->_stmt = $sth;
             } else {
@@ -187,9 +177,10 @@ class BEAR_Query_Free extends BEAR_Query
         $pager = array('links' => $links, 'info' => $info);
         $ro->setLinks(array('pager' => $pager));
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
+
         return $ro;
     }
-    
+
     /**
      * プリペアを毎回freeするセレクト
      *
@@ -218,9 +209,9 @@ class BEAR_Query_Free extends BEAR_Query
         $db = &$this->_config['db'];
         $ro = $this->_config['ro'];
         $prepare_free = (isset($this->_config['prepare_free'])) ? $this->_config['prepare_free'] : 1;
-        
+
         // Row取得
-        if (!is_null($values)) {
+        if (! is_null($values)) {
             $result = $this->_selectRow($db, $query, $params, $values, $id, $stmt);
             // prepareステートメントをfree
             $stmt->free();
@@ -242,7 +233,7 @@ class BEAR_Query_Free extends BEAR_Query
         if (isset($this->_config['sort'])) {
             $query = $this->_sort($query);
         }
-        if ((!isset($this->_config['pager']) || !$this->_config['pager']) || $this->_config['perPage'] <= 0) {
+        if ((! isset($this->_config['pager']) || ! $this->_config['pager']) || $this->_config['perPage'] <= 0) {
             if (isset($this->_config['offset']) && $this->_config['perPage'] > 0) {
                 // LIMIT & Offset
                 $query .= ' LIMIT ' . $this->_config['offset'] . ',' . $this->_config['perPage'];
@@ -258,12 +249,13 @@ class BEAR_Query_Free extends BEAR_Query
             } else {
                 $result = $db->queryAll($query);
             }
+
             return $result;
         }
         // DBページャー
         $pagerOptions = $this->_config['options'];
         $pagerOptions['perPage'] = $this->_config['perPage'];
-        if (!array_key_exists('totalItems', $pagerOptions)) {
+        if (! array_key_exists('totalItems', $pagerOptions)) {
             $pagerOptions['totalItems'] = $this->_countQuery($query, $params, $count_sth);
             // prepareステートメントをfree
             $count_sth->free();
@@ -306,7 +298,43 @@ class BEAR_Query_Free extends BEAR_Query
         $pager = array('links' => $links, 'info' => $info);
         $ro->setLinks(array('pager' => $pager));
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
+
         return $ro;
+    }
+
+    /**
+     * カウントクエリー
+     *
+     * @param string $query
+     * @param array  $params
+     * @param object &$sth
+     *
+     * @return int
+     */
+    protected function _countQuery($query, array $params, &$sth)
+    {
+        $prepare_free = (isset($this->_config['prepare_free'])) ? $this->_config['prepare_free'] : 1;
+        // be smart and try to guess the total number of records
+        $countQuery = $this->_rewriteCountQuery($query);
+        if ($countQuery) {
+            if ($params) {
+                $sth = $this->_config['db']->prepare($countQuery);
+            } else {
+                $totalItems = $this->_config['db']->queryOne($countQuery);
+            }
+            if (PEAR::isError($totalItems)) {
+                return $totalItems;
+            }
+        } else {
+            // GROUP BY => fetch the whole resultset and count the rows returned
+            $res = $this->_config['db']->queryCol($query);
+            if (PEAR::isError($res)) {
+                return $res;
+            }
+            $totalItems = count($res);
+        }
+
+        return $totalItems;
     }
 
     /**
@@ -332,7 +360,7 @@ class BEAR_Query_Free extends BEAR_Query
      * @param array  $params
      * @param array  $values
      * @param mixed  $id
-     * @param object &$sth prepareステートメントオブジェクト
+     * @param object &$sth   prepareステートメントオブジェクト
      *
      * @return mixed
      */
@@ -356,48 +384,14 @@ class BEAR_Query_Free extends BEAR_Query
             $query .= ' WHERE ' . implode(' AND ', $where);
         }
         if ($params) {
-            if (!is_object($sth)) {
+            if (! is_object($sth)) {
                 $sth = $db->prepare($query);
             }
             $result = $sth->execute($params)->fetchRow();
         } else {
             $result = $db->queryRow($query);
         }
-        return $result;
-    }
 
-    /**
-    * カウントクエリー
-    *
-    * @param string $query
-    * @param array  $params
-    * @param object &$sth
-    *
-    * @return int
-    */
-    protected function _countQuery($query, array $params = array(), &$sth)
-    {
-        $prepare_free = (isset($this->_config['prepare_free'])) ? $this->_config['prepare_free'] : 1;
-        // be smart and try to guess the total number of records
-        $countQuery = $this->_rewriteCountQuery($query);
-        if ($countQuery) {
-            if ($params) {
-                $sth = $this->_config['db']->prepare($countQuery);
-            } else {
-                $totalItems = $this->_config['db']->queryOne($countQuery);
-            }
-            if (PEAR::isError($totalItems)) {
-                return $totalItems;
-            }
-        } else {
-            // GROUP BY => fetch the whole resultset and count the rows returned
-            $res = $this->_config['db']->queryCol($query);
-            if (PEAR::isError($res)) {
-                return $res;
-            }
-            $totalItems = count($res);
-        }
-    
-        return $totalItems;
+        return $result;
     }
 }

@@ -1,36 +1,17 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * BEARクラスの抽象クラス
  *
- * BEARフレームワークで使われる基底クラスです。
- *
- * BEARのクラスはBEAR::factoryやBEAR::dependency()によって以下の順でインスタンス化されます。
+ * BEARフレームワークで使われる基底クラスです。BEARのクラスはBEAR::factoryやBEAR::dependency()によって以下の順でインスタンス化されます。
  *
  * 1) コンストラクタで設定を行う
  * 2) 設定に基づいてインジェクタで必要なサービスをプロパティに用意
- *
- * @category  BEAR
- * @package   BEAR
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
- * @abstract
  */
 abstract class BEAR_Base implements BEAR_Base_Interface
 {
@@ -57,8 +38,6 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      * Inject
      *
      * 設定にしたがってサービスをインジェクトします。
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -95,12 +74,12 @@ abstract class BEAR_Base implements BEAR_Base_Interface
         if (isset($key)) {
             if (isset($this->_config[$key])) {
                 return $this->_config[$key];
-            } else {
-                return null;
             }
-        } else {
-            return $this->_config;
+
+            return null;
         }
+
+        return $this->_config;
     }
 
     /**
@@ -108,8 +87,6 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      *
      * @param string $name    サービスキー
      * @param mixed  $service サービス
-     *
-     * @return void
      */
     public function setService($name, $service)
     {
@@ -128,7 +105,7 @@ abstract class BEAR_Base implements BEAR_Base_Interface
     {
         $class = get_class($this) . '_Exception';
         $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-        if (!file_exists(_BEAR_APP_HOME . "/{$file}") && !file_exists(_BEAR_BEAR_HOME . "/{$file}")) {
+        if (! file_exists(_BEAR_APP_HOME . "/{$file}") && ! file_exists(_BEAR_BEAR_HOME . "/{$file}")) {
             $class = 'BEAR_Exception';
         }
 

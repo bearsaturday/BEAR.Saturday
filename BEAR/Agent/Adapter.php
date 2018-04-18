@@ -1,29 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @package    BEAR_Agent
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * アブストラクトエージェントアダプター
- *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  *
  * @config bool   enable_js         JS可？
  * @config bool   enable_css        CSS可？
@@ -38,21 +21,21 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
     /**
      * 携帯絵文字サブミット無変換
      *
-     * @var integer
+     * @var int
      */
     const MOBILE_SUBMIT_PASS = 0;
 
     /**
      * 携帯絵文字サブミット無変換
      *
-     * @var integer
+     * @var int
      */
     const MOBILE_SUBMIT_ENTITY = 1;
 
     /**
      * 携帯絵文字サブミット除去
      *
-     * @var integer
+     * @var int
      */
     const MOBILE_SUBMIT_REMOVE_EMOJI = 2;
 
@@ -62,7 +45,6 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
      * エージェントの設定に応じてサブミットされた$_POSTまたは$_GETの文字列を
      * 絵文字エンティティや文字コード変換をします。
      *
-     * @return void
      * @internal グローバル変数を直接変更してるのはそれに依存してるHTML_Quickformなどのライブラリのためです
      */
     public function submit()
@@ -70,13 +52,13 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
         static $done = false;
 
         $hasSubmit = (isset($_POST['_token']) || isset($_GET['_token'])) ? true : false;
-        if (!$hasSubmit && $done) {
+        if (! $hasSubmit && $done) {
             return;
         }
         if (isset($_POST['_token'])) {
-            $input =& $_POST;
+            $input = &$_POST;
         } elseif (isset($_GET['_token'])) {
-            $input =& $_GET;
+            $input = &$_GET;
         } else {
             return;
         }
@@ -120,16 +102,15 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
      * @param string $key         キー
      * @param string $inputEncode エンコード
      *
-     * @return void
      * @throws BEAR_Agent_Exception
      */
     public static function onUTF8(
         &$value,
-        /** @noinspection PhpUnusedParameterInspection */
+        /* @noinspection PhpUnusedParameterInspection */
         $key,
         $inputEncode
     ) {
-        if (!mb_check_encoding($value, $inputEncode)) {
+        if (! mb_check_encoding($value, $inputEncode)) {
             $msg = 'Illegal Submit Values';
             $info = array('value' => $value);
             throw new BEAR_Agent_Exception($msg, array(
@@ -138,7 +119,7 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
                 ));
         }
         $value = mb_convert_encoding($value, 'utf-8', $inputEncode);
-        if (!mb_check_encoding($value, 'utf-8')) {
+        if (! mb_check_encoding($value, 'utf-8')) {
             $msg = 'Illegal UTF-8';
             $info = array('value' => $value);
             throw new BEAR_Agent_Exception($msg, array(

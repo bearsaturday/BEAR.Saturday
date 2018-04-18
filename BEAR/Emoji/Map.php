@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Emoji
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -18,14 +10,6 @@
  *
  * 連想配列でキャリアの相互の絵文字変換情報を格納します。
  * BEAR_Emojiクラスから呼び出されます。
- *
- * @category  BEAR
- * @package   BEAR_Emoji
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -7640,6 +7624,7 @@ class BEAR_Emoji_Map
                 'e' => null
             )
         );
+
         return $table;
     }
 
@@ -8294,6 +8279,7 @@ class BEAR_Emoji_Map
             821 => '&#62604;',
             822 => '&#62605;'
         );
+
         return $table;
     }
 
@@ -8948,6 +8934,7 @@ class BEAR_Emoji_Map
             '&#62604;' => 821,
             '&#62605;' => 822
         );
+
         return $table;
     }
 }

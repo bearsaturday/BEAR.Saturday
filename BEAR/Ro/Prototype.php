@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Ro
- * @subpackage Prototype
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -19,15 +10,6 @@
  *
  * リソースのリクエストです。
  * リソースプロトタイプがリソースをどのように実行するかを保持し、実行されリソースリクエスト結果が得られます。
- *
- * @category   BEAR
- * @package    BEAR_Ro
- * @subpackage Prototype
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  */
 class BEAR_Ro_Prototype extends BEAR_Ro
 {
@@ -75,8 +57,6 @@ class BEAR_Ro_Prototype extends BEAR_Ro
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -101,6 +81,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     {
         $result = self::$_stack;
         self::$_stack = array();
+
         return $result;
     }
 
@@ -127,17 +108,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function link($link)
     {
         $this->_chainLink[] = is_array($link) ? $link : array($link);
-        return $this;
-    }
 
-    /**
-     * リソースリクエスト実行
-     *
-     * @return void
-     */
-    protected function _doRequest()
-    {
-        $this->_ro = BEAR::factory('BEAR_Resource_Request', $this->_config['request'])->request();
+        return $this;
     }
 
     /**
@@ -149,6 +121,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     {
         $this->_doRequest();
         $this->_setHtml($this->hasChainLink());
+
         return $this->_ro;
     }
 
@@ -171,7 +144,174 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         } else {
             $result = $ro->getBody();
         }
+
         return $result;
+    }
+
+    /**
+     * リソースリクエストをshutdown時に実行
+     *
+     * @return BEAR_Ro
+     */
+    public function requestOnShutdown()
+    {
+        BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($this);
+
+        return $this;
+    }
+
+    /**
+     * リソースセット
+     *
+     * プロトタイプリソースをpageにsetします。$setOptionsでセットのオプションを指定します。
+     *
+     * @param string $key       リソースキー
+     * @param string $setOption セットオプション
+     *
+     * @return BEAR_Ro_Prototype
+     */
+    public function set($key = null, $setOption = 'value')
+    {
+        //キー省略
+        if (! $key) {
+            // 未指定の場合://と/を_に変換してアサイン名に
+            $config = $this->getConfig();
+            $key = strtolower(str_replace('/', '_', $config['request']['uri']));
+        }
+        $this->_setOption = $setOption;
+        // push prototype
+        self::$_stack[] = array($key => $this);
+
+        return $this;
+    }
+
+    /**
+     * リソースボディを取得
+     *
+     * リソースリクエストを行いその結果のボディを返します。
+     *
+     * @param bool $link
+     *
+     * @return array|mixed
+     */
+    public function getBody($link = false)
+    {
+        if ($link === true) {
+            $result = $this->getLinkedBody();
+        } else {
+            $this->_doRequest();
+            $result = $this->_ro->getBody();
+        }
+
+        return $result;
+    }
+
+    /**
+     * リソースヘッダーを取得（アイテム)
+     *
+     * リソースリクエストを行いその結果のヘッダーを返します。
+     *
+     * @param $headerKey
+     */
+    public function getHeader($headerKey)
+    {
+        $this->_doRequest();
+        $result = $this->_ro->getHeader($headerKey);
+
+        return $result;
+    }
+
+    /**
+     * リソースヘッダーを取得（リスト)
+     *
+     * リソースリクエストを行いその結果のヘッダーを返します。
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        $this->_doRequest();
+        $result = $this->_ro->getHeaders();
+
+        return $result;
+    }
+
+    /**
+     * リンクを持つか
+     *
+     * @return bool
+     */
+    public function hasChainLink()
+    {
+        return $this->_chainLink !== array();
+    }
+
+    /**
+     * リンクされたbody配列を取得
+     *
+     * @return array
+     */
+    public function getLinkedBody()
+    {
+        $this->_doRequest();
+        $result = BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink)->chainLink(
+            $this->_ro,
+            $this->_chainLink
+        );
+
+        return $result;
+    }
+
+    /**
+     * Ro取得
+     *
+     * @return BEAR_Ro
+     */
+    public function getRo()
+    {
+        $this->_doRequest();
+        $ro = $this->_ro->getRo();
+
+        return $ro;
+    }
+
+    /**
+     * setオプションの取得
+     *
+     * @var array
+     *
+     * @return string
+     */
+    public function getSetOption()
+    {
+        return $this->_setOption;
+    }
+
+    /**
+     * デバック表示
+     *
+     * <code>
+     * $resource->$read($params)->p();
+     * $resource->$read($params)->set('user')->p();
+     * </code>
+     *
+     * @return BEAR_Ro
+     */
+    public function p()
+    {
+        if ($this->_config['debug'] === true) {
+            $this->_p();
+        }
+
+        return $this;
+    }
+
+    /**
+     * リソースリクエスト実行
+     */
+    protected function _doRequest()
+    {
+        $this->_ro = BEAR::factory('BEAR_Resource_Request', $this->_config['request'])->request();
     }
 
     /**
@@ -189,7 +329,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         $isLinkCache = isset($this->_config['request']['options']['cache']['link']) && $this->_config['request']['options']['cache']['link'];
         if ($isLinked && $isLinkCache === true) {
             $life = $this->_config['request']['options']['cache']['life'];
-        } elseif (!$isLinked && isset($this->_config['request']['options']['cache']['life']) && isset($this->_config['request']['options']['template'])) {
+        } elseif (! $isLinked && isset($this->_config['request']['options']['cache']['life']) && isset($this->_config['request']['options']['template'])) {
             $life = $this->_config['request']['options']['cache']['life'];
         } else {
             $life = false;
@@ -203,10 +343,10 @@ class BEAR_Ro_Prototype extends BEAR_Ro
             $saved = $cache->get($cacheKey);
             if ($saved) {
                 $this->_ro = $saved;
+
                 return;
-            } else {
-                $useCache = true;
             }
+            $useCache = true;
         }
         //実リクエスト
         $body = ($isLinked !== true) ? $this->_ro->getBody() : $this->getLinkedBody();
@@ -260,159 +400,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
                 $result = '<span style="border: 1px solid red;">' . $errorMsg . '</span>';
             }
         }
+
         return $result;
-    }
-
-    /**
-     * リソースリクエストをshutdown時に実行
-     *
-     * @return BEAR_Ro
-     */
-    public function requestOnShutdown()
-    {
-        BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($this);
-        return $this;
-    }
-
-    /**
-     * リソースセット
-     *
-     * プロトタイプリソースをpageにsetします。$setOptionsでセットのオプションを指定します。
-     *
-     * @param string $key       リソースキー
-     * @param string $setOption セットオプション
-     *
-     * @return BEAR_Ro_Prototype
-     */
-    public function set($key = null, $setOption = 'value')
-    {
-        //キー省略
-        if (!$key) {
-            // 未指定の場合://と/を_に変換してアサイン名に
-            $config = $this->getConfig();
-            $key = strtolower(str_replace('/', '_', $config['request']['uri']));
-        }
-        $this->_setOption = $setOption;
-        // push prototype
-        self::$_stack[] = array($key => $this);
-        return $this;
-    }
-
-    /**
-     * リソースボディを取得
-     *
-     * リソースリクエストを行いその結果のボディを返します。
-     *
-     * @param bool $link
-     *
-     * @return array|mixed
-     */
-    public function getBody($link = false)
-    {
-        if ($link === true) {
-            $result = $this->getLinkedBody();
-        } else {
-            $this->_doRequest();
-            $result = $this->_ro->getBody();
-        }
-        return $result;
-    }
-
-    /**
-     * リソースヘッダーを取得（アイテム)
-     *
-     * リソースリクエストを行いその結果のヘッダーを返します。
-     *
-     * @param $headerKey
-     *
-     * @return null
-     */
-    public function getHeader($headerKey)
-    {
-        $this->_doRequest();
-        $result = $this->_ro->getHeader($headerKey);
-        return $result;
-    }
-
-    /**
-     * リソースヘッダーを取得（リスト)
-     *
-     * リソースリクエストを行いその結果のヘッダーを返します。
-     *
-     * @return array
-     */
-    public function getHeaders()
-    {
-        $this->_doRequest();
-        $result = $this->_ro->getHeaders();
-        return $result;
-    }
-
-    /**
-     * リンクを持つか
-     *
-     * @return bool
-     */
-    public function hasChainLink()
-    {
-        return ($this->_chainLink !== array());
-    }
-
-    /**
-     * リンクされたbody配列を取得
-     *
-     * @return array
-     */
-    public function getLinkedBody()
-    {
-        $this->_doRequest();
-        $result = BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink)->chainLink(
-            $this->_ro,
-            $this->_chainLink
-        );
-        return $result;
-    }
-
-    /**
-     * Ro取得
-     *
-     * @return BEAR_Ro
-     */
-    public function getRo()
-    {
-        $this->_doRequest();
-        $ro = $this->_ro->getRo();
-        return $ro;
-    }
-
-    /**
-     * setオプションの取得
-     *
-     * @var array
-     *
-     * @return string
-     */
-    public function getSetOption()
-    {
-        return $this->_setOption;
-    }
-
-    /**
-     * デバック表示
-     *
-     * <code>
-     * $resource->$read($params)->p();
-     * $resource->$read($params)->set('user')->p();
-     * </code>
-     *
-     * @return BEAR_Ro
-     */
-    public function p()
-    {
-        if ($this->_config['debug'] === true) {
-            $this->_p();
-        }
-        return $this;
     }
 
     /**
@@ -428,9 +417,9 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         $place = " in <span style=\"color: gray;\">{$trace['file']}</span> on line {$trace['line']} ";
         if ($this->hasChainLink()) {
             $linkBody = $this->getLinkedBody();
-        } else {
-            //$body = $this->getBody();
         }
+        //$body = $this->getBody();
+
         $headers = $this->_ro->getHeaders();
         $request = $headers['_request'];
         foreach ($headers as $key => $header) {
@@ -462,6 +451,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         echo '</fieldset>';
         $linkLabel = $linkLabel ? ' and link(s)' : '';
         echo "by \"{$request}\"$linkLabel {$place}<br /><br />";
+
         return $this;
     }
 }

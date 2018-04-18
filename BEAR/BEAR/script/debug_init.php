@@ -1,18 +1,9 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR
- * @subpackage Debug
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-
 require_once 'Panda.php';
 
 if ($appConfig['Panda']['firephp'] === true) {
@@ -59,6 +50,7 @@ if (isset($_GET['_error'])) {
     error_reporting(E_ALL);
     restore_error_handler();
     restore_exception_handler();
+
     return;
 }
 // exit

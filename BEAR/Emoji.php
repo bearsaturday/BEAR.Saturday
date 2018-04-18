@@ -1,16 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR_Emoji
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -25,14 +17,6 @@
  * 対応する絵文字が無い場合はカタカナで表現されます。
  * </pre>
  *
- * @category  BEAR
- * @package   BEAR_Emoji
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
- *
  * @Singleton
  *
  * @cofing string ua     ユーザーエージェントコード（省略可）
@@ -42,37 +26,31 @@ class BEAR_Emoji extends BEAR_Base
 {
     /**
      * iモード絵文字10進数エンティティ開始番号
-     *
      */
     const DOCOMO_MIN = 63647; // 0xF89F
 
     /**
      * iモード絵文字10進数エンティティ終了番号
-     *
      */
     const DOCOMO_MAX = 63996; // 0xF9FC
 
     /**
      * Ez絵文字10進数エンティティ開始番号
-     *
      */
     const EZWEB_MIN = 62272; // 0xF340
 
     /**
      * Ez絵文字10進数エンティティ終了番号
-     *
      */
     const EZWEB_MAX = 63484; // 0xF7FC
 
     /**
      * Softbank絵文字10進数エンティティ開始番号
-     *
      */
     const SOFTBANK_MIN = 0xE001;
 
     /**
      * Softbank絵文字10進数エンティティ終了番号
-     *
      */
     const SOFTBANK_MAX = 0xE537;
 
@@ -80,7 +58,6 @@ class BEAR_Emoji extends BEAR_Base
      * 入力文字列
      *
      * @var string
-     * @access private
      */
     private $_string;
 
@@ -88,7 +65,6 @@ class BEAR_Emoji extends BEAR_Base
      * 携帯キャリアコード
      *
      * @var string
-     * @access private
      */
     private static $_uaShortCode;
 
@@ -115,7 +91,7 @@ class BEAR_Emoji extends BEAR_Base
      */
     public function __construct(array $config)
     {
-        if (!isset($config['ua'])) {
+        if (! isset($config['ua'])) {
             $config['ua'] = BEAR::dependency('BEAR_Agent')->getUa();
         }
         parent::__construct($config);
@@ -124,8 +100,6 @@ class BEAR_Emoji extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -227,38 +201,6 @@ class BEAR_Emoji extends BEAR_Base
     }
 
     /**
-     * 正規表現により絵文字を数値エンティティに変換
-     *
-     * makeDecEntity()からコールされます。
-     *
-     * @param string $string 文字列
-     * @param string $emoji  絵文字の正規表現
-     *
-     * @return string
-     */
-    private function _makeEntityBySjisRegex($string, $emoji)
-    {
-        $mbRegexEncoding = mb_regex_encoding();
-        mb_regex_encoding('SJIS');
-        $sjis = '[\x81-\x9F\xE0-\xEF][\x40-\x7E\x80-\xFC]|[\x00-\x7F]|[\xA1-\xDF]';
-        $pattern = "/\G((?:$sjis)*)(?:($emoji))/";
-        // 絵文字を検索
-        preg_match_all($pattern, $string, $arr); // $arr[2]に対象絵文字が格納される
-        // 絵文字を置換
-        $converted = $string;
-        foreach ($arr[2] as $value) {
-            $patternRep = "$value";
-            $emojiCd = unpack("C*", $value);
-            $hex = dechex($emojiCd[1]) . dechex($emojiCd[2]);
-            $replacement = '&#' . hexdec($hex) . ';';
-            $converted = mb_ereg_replace($patternRep, $replacement, $converted);
-        }
-        mb_regex_encoding($mbRegexEncoding);
-
-        return $converted;
-    }
-
-    /**
      * 16進エンティティをつくる
      *
      *  10進エンティティから16進エンティティをつくります。
@@ -282,13 +224,222 @@ class BEAR_Emoji extends BEAR_Base
     }
 
     /**
+     * 絵文字変換
+     *
+     * 絵文字変換マップを使って10進エンティティから
+     * 他キャリアの対応する絵文字に変換します。
+     *
+     * @param mixed $to デフォルトはエージェント
+     *
+     * @return string
+     */
+    public function convert($to = false)
+    {
+        //10進エンティティに
+        $this->makeDecEntity();
+        $toRef = &PEAR::getStaticProperty(__CLASS__, 'to');
+        //toを保存
+        $toRef = ($to) ? $to : self::$_uaShortCode;
+        //変換
+        if ($this->_ua == BEAR_Agent::UA_SOFTBANK) {
+            $regex = '/\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f/is';
+        } else {
+            $regex = '/&#(\d{5});/is';
+        }
+        $this->_string = preg_replace_callback($regex, array(__CLASS__, '_onConvertEmoji'), $this->_string);
+
+        return $this->_string;
+    }
+
+    /**
+     * エンティティ化されている絵文字を含んだ文字列をイメージタグに変換します
+     *
+     * smartyのoutputフィルターなどに使用します。$uaで指定したエージェント
+     * (無指定の場合は使用しているエージェント）の絵文字はバイナリ出力されます。
+     * PC(_BAER_UA_DEFAULT)を指定すると全ての絵文字がイメージタグ表示されます。
+     *
+     * @param $string
+     *
+     * @return mixed
+     */
+    public function convertEmojiImage($string)
+    {
+        //Docomo/Au変換
+        $string = preg_replace_callback('/&#(\d+);/is', array(__CLASS__, '_onEmojiImage'), $string);
+
+        return $string;
+    }
+
+    //    /**
+    //     * AU絵文字変換
+    //     *
+    //     * <pre>local img形式のAU絵文字を10進エンティティ表記に変換します。</pre>
+    //     *
+    //     * @return string
+    //     */
+    //    public function localimg2entity($string)
+    //    {
+    //        //<img localsrc="334" />
+    //        $regex = '/(<img [^>]*localsrc\s*=\s*["\']?)([^>"\']+)(["\']?[^>]*>)/is';
+    //        $string = preg_replace_callback($regex, array(__CLASS__, '_onConvertLocalSrcEmoji'), $string);
+    //        return $string;
+    //    }
+
+    /**
+     * 絵文字を除去する
+     *
+     * @param string $string 文字列
+     *
+     * @return string 文字列
+     */
+    public function removeEmoji($string)
+    {
+        switch ($this->_ua) {
+            // Docomo, Au
+            case BEAR_Agent::UA_DOCOMO:
+            case BEAR_Agent::UA_EZWEB:
+                /* @var $emoji BEAR_Emoji */
+                $decEntity = $this->makeDecEntity($string);
+                $regex = '/&#(\d{5});/is';
+                $string = preg_replace($regex, '', $decEntity);
+                break;
+            // SBモバイル
+            case BEAR_Agent::UA_SOFTBANK:
+                $regex = '/\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f/is';
+                $string = preg_replace($regex, '', $string);
+                break;
+            default:
+                break;
+        }
+
+        return $string;
+    }
+
+    /**
+     * エスケープされた文字列の解除
+     *
+     * <pre>QuciFormバリデーションNGの場合valuesに入った
+     * 文字列がエスケープされます。
+     *
+     * SBの絵文字では"（ダブルクオーテーション）などを使用したものがあり、
+     * 誤動作してしまいます。
+     * この関数をsamrtyのoutputfilterで使用して誤表示を防ぎます。
+     *　HTMLとしては誤った表記になるのでPCでの表示はうまくできませんが
+     * SB端末では正しく表示されます</pre>
+     *
+     * @param string $html HTML
+     *
+     * @return string
+     */
+    public function unescapeSbEmoji($html)
+    {
+        $regex = '/\x1b\x24(.*?)\x0f/is';
+        $result = preg_replace_callback($regex, array(__CLASS__, '_onSbEmoji'), $html);
+
+        return $result;
+    }
+
+    /**
+     * 絵文字を全て除去する
+     *
+     * QuickFormのフィルターなどに使います。
+     *
+     * @param string $string 文字列
+     *
+     * @return string
+     */
+    public static function removeEmojiEntity($string)
+    {
+        // iモード絵文字消去
+        // EZ絵文字消去
+        // SB絵文字消去
+        $regex = '/(&#(\d{5});)|(\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f)/is';
+        $string = preg_replace($regex, '', $string);
+
+        return $string;
+    }
+
+    /**
+     * 絵文字をエンティティに変換
+     *
+     * @param string     &$string
+     * @param array      $keys
+     * @param BEAR_Emoji $emoji
+     */
+    public static function onEntityEmoji(
+        &$string,
+        /* @noinspection PhpUnusedParameterInspection */
+        $keys,
+        $emoji
+    ) {
+        $string = $emoji->makeDecEntity($string);
+    }
+
+    /**
+     * エージェント別固定絵文字の取得
+     *
+     * @param string $emoji SUNなどの絵文字単語
+     *
+     * @return string
+     */
+    public function getAgentEmoji($emoji)
+    {
+        static $emojiChars = array();
+
+        if (! $emojiChars) {
+            $ua = BEAR::dependency('BEAR_Agent')->getUa();
+            $file = _BEAR_BEAR_HOME . "/BEAR/Emoji/Conf/{$ua}.php";
+            if (file_exists($file)) {
+                /** @noinspection PhpIncludeInspection */
+                include $file;
+            } else {
+                include _BEAR_BEAR_HOME . '/BEAR/Emoji/Conf/Default.php';
+            }
+        }
+
+        return $emojiChars[$emoji];
+    }
+
+    /**
+     * 正規表現により絵文字を数値エンティティに変換
+     *
+     * makeDecEntity()からコールされます。
+     *
+     * @param string $string 文字列
+     * @param string $emoji  絵文字の正規表現
+     *
+     * @return string
+     */
+    private function _makeEntityBySjisRegex($string, $emoji)
+    {
+        $mbRegexEncoding = mb_regex_encoding();
+        mb_regex_encoding('SJIS');
+        $sjis = '[\x81-\x9F\xE0-\xEF][\x40-\x7E\x80-\xFC]|[\x00-\x7F]|[\xA1-\xDF]';
+        $pattern = "/\G((?:$sjis)*)(?:($emoji))/";
+        // 絵文字を検索
+        preg_match_all($pattern, $string, $arr); // $arr[2]に対象絵文字が格納される
+        // 絵文字を置換
+        $converted = $string;
+        foreach ($arr[2] as $value) {
+            $patternRep = "$value";
+            $emojiCd = unpack('C*', $value);
+            $hex = dechex($emojiCd[1]) . dechex($emojiCd[2]);
+            $replacement = '&#' . hexdec($hex) . ';';
+            $converted = mb_ereg_replace($patternRep, $replacement, $converted);
+        }
+        mb_regex_encoding($mbRegexEncoding);
+
+        return $converted;
+    }
+
+    /**
      * 16進エンティティ絵文字表記にするための正規表現からコールバックメソッド
      *
      * @param array $matches 検索文字列
      *
      * @return string
-     * @access private
      */
+
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private function _onHexEntity($matches)
     {
@@ -305,9 +456,10 @@ class BEAR_Emoji extends BEAR_Base
      * @param array $matches 検索文字列
      *
      * @return string
-     * @access private
+     *
      * @deprecated
      */
+
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function _onEmojiImage($matches)
     {
@@ -464,114 +616,22 @@ class BEAR_Emoji extends BEAR_Base
     }
 
     /**
-     * 絵文字変換
-     *
-     * 絵文字変換マップを使って10進エンティティから
-     * 他キャリアの対応する絵文字に変換します。
-     *
-     * @param mixed $to デフォルトはエージェント
-     *
-     * @return string
-     */
-    public function convert($to = false)
-    {
-        //10進エンティティに
-        $this->makeDecEntity();
-        $toRef = & PEAR::getStaticProperty(__CLASS__, 'to');
-        //toを保存
-        $toRef = ($to) ? $to : self::$_uaShortCode;
-        //変換
-        if ($this->_ua == BEAR_Agent::UA_SOFTBANK) {
-            $regex = '/\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f/is';
-        } else {
-            $regex = '/&#(\d{5});/is';
-        }
-        $this->_string = preg_replace_callback($regex, array(__CLASS__, '_onConvertEmoji'), $this->_string);
-
-        return $this->_string;
-    }
-
-    /**
-     * エンティティ化されている絵文字を含んだ文字列をイメージタグに変換します
-     *
-     * smartyのoutputフィルターなどに使用します。$uaで指定したエージェント
-     * (無指定の場合は使用しているエージェント）の絵文字はバイナリ出力されます。
-     * PC(_BAER_UA_DEFAULT)を指定すると全ての絵文字がイメージタグ表示されます。
-     *
-     * @param $string
-     *
-     * @return mixed
-     */
-    public function convertEmojiImage($string)
-    {
-        //Docomo/Au変換
-        $string = preg_replace_callback('/&#(\d+);/is', array(__CLASS__, '_onEmojiImage'), $string);
-
-        return $string;
-    }
-
-    //    /**
-    //     * AU絵文字変換
-    //     *
-    //     * <pre>local img形式のAU絵文字を10進エンティティ表記に変換します。</pre>
-    //     *
-    //     * @return string
-    //     */
-    //    public function localimg2entity($string)
-    //    {
-    //        //<img localsrc="334" />
-    //        $regex = '/(<img [^>]*localsrc\s*=\s*["\']?)([^>"\']+)(["\']?[^>]*>)/is';
-    //        $string = preg_replace_callback($regex, array(__CLASS__, '_onConvertLocalSrcEmoji'), $string);
-    //        return $string;
-    //    }
-
-    /**
-     * 絵文字を除去する
-     *
-     * @param string $string 文字列
-     *
-     * @return string　文字列
-     */
-    public function removeEmoji($string)
-    {
-        switch ($this->_ua) {
-            // Docomo, Au
-            case BEAR_Agent::UA_DOCOMO:
-            case BEAR_Agent::UA_EZWEB:
-                /* @var $emoji BEAR_Emoji */
-                $decEntity = $this->makeDecEntity($string);
-                $regex = '/&#(\d{5});/is';
-                $string = preg_replace($regex, '', $decEntity);
-                break;
-            // SBモバイル
-            case BEAR_Agent::UA_SOFTBANK:
-                $regex = '/\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f/is';
-                $string = preg_replace($regex, "", $string);
-                break;
-            default:
-                break;
-        }
-
-        return $string;
-    }
-
-    /**
      * 絵文字変換コールバック
      *
      * @param array $matches 検索文字列
      *
      * @return string
-     * @access private
      */
+
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function _onConvertEmoji($matches = false)
     {
         static $convertMap;
         //変換マップ読み込み
-        if (!is_array($convertMap)) {
+        if (! is_array($convertMap)) {
             $convertMap = BEAR_Emoji_Map::getEmojiConvertArray();
         }
-        $to = & PEAR::getStaticProperty(__CLASS__, 'to');
+        $to = &PEAR::getStaticProperty(__CLASS__, 'to');
         //SB携帯連続絵文字分解
         //
         //最初の文字が1Bで6文字以上の文字列を連続絵文字とする
@@ -589,16 +649,16 @@ class BEAR_Emoji extends BEAR_Base
                 $webcodeDecimalHigh = ord($stirng[2]);
                 $webcodeDecimalLow = ord($emoji);
                 //1B24 (ESC開き)
-                $emojis[$j] = pack("C*", 0x1b);
-                $emojis[$j] .= pack("C*", 0x24);
-                $emojis[$j] .= pack("C*", $webcodeDecimalHigh);
-                $emojis[$j] .= pack("C*", $webcodeDecimalLow);
+                $emojis[$j] = pack('C*', 0x1b);
+                $emojis[$j] .= pack('C*', 0x24);
+                $emojis[$j] .= pack('C*', $webcodeDecimalHigh);
+                $emojis[$j] .= pack('C*', $webcodeDecimalLow);
                 //0F (ESC閉じ)
-                $emojis[$j] .= pack("C*", 0x0f);
+                $emojis[$j] .= pack('C*', 0x0f);
                 $j++;
             }
             //コードの数値配列を文字に
-            $result = $emoji = "";
+            $result = $emoji = '';
             foreach ($emojis as $emoji) {
                 $converted = $convertMap[$emoji][$to];
                 $result .= ($converted) ? $converted : '';
@@ -622,35 +682,11 @@ class BEAR_Emoji extends BEAR_Base
             }
         } else {
             //            $encode =& PEAR::getStaticProperty(__CLASS__, 'encode');
-            $encode = mb_detect_encoding($converted);
+            $encode = mb_detect_encoding($converted, mb_detect_order(), true);
             $converted = mb_convert_kana($converted, 'ak', $encode);
             $converted = str_replace(' ', '', $converted);
             $result = ($converted) ? $converted : '';
         }
-
-        return $result;
-    }
-
-    /**
-     * エスケープされた文字列の解除
-     *
-     * <pre>QuciFormバリデーションNGの場合valuesに入った
-     * 文字列がエスケープされます。
-     *
-     * SBの絵文字では"（ダブルクオーテーション）などを使用したものがあり、
-     * 誤動作してしまいます。
-     * この関数をsamrtyのoutputfilterで使用して誤表示を防ぎます。
-     *　HTMLとしては誤った表記になるのでPCでの表示はうまくできませんが
-     * SB端末では正しく表示されます</pre>
-     *
-     * @param string $html HTML
-     *
-     * @return string
-     */
-    public function unescapeSbEmoji($html)
-    {
-        $regex = '/\x1b\x24(.*?)\x0f/is';
-        $result = preg_replace_callback($regex, array(__CLASS__, '_onSbEmoji'), $html);
 
         return $result;
     }
@@ -661,8 +697,8 @@ class BEAR_Emoji extends BEAR_Base
      * @param array $match 検索文字列
      *
      * @return string
-     * @access private
      */
+
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function _onSbEmoji($match)
     {
@@ -670,68 +706,5 @@ class BEAR_Emoji extends BEAR_Base
         $result = pack('c*', 0x1b, 0x24) . html_entity_decode($emoji) . pack('c*', 0x0f);
 
         return $result;
-    }
-
-    /**
-     * 絵文字を全て除去する
-     *
-     * QuickFormのフィルターなどに使います。
-     *
-     * @param string $string 文字列
-     *
-     * @return string
-     */
-    public static function removeEmojiEntity($string)
-    {
-        // iモード絵文字消去
-        // EZ絵文字消去
-        // SB絵文字消去
-        $regex = '/(&#(\d{5});)|(\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f)/is';
-        $string = preg_replace($regex, "", $string);
-
-        return $string;
-    }
-
-    /**
-     * 絵文字をエンティティに変換
-     *
-     * @param string     &$string
-     * @param array      $keys
-     * @param BEAR_Emoji $emoji
-     *
-     * @return void
-     */
-    public static function onEntityEmoji(
-        &$string,
-        /** @noinspection PhpUnusedParameterInspection */
-        $keys,
-        $emoji
-    ) {
-        $string = $emoji->makeDecEntity($string);
-    }
-
-    /**
-     * エージェント別固定絵文字の取得
-     *
-     * @param string $emoji SUNなどの絵文字単語
-     *
-     * @return string
-     */
-    public function getAgentEmoji($emoji)
-    {
-        static $emojiChars = array();
-
-        if (!$emojiChars) {
-            $ua = BEAR::dependency('BEAR_Agent')->getUa();
-            $file = _BEAR_BEAR_HOME . "/BEAR/Emoji/Conf/{$ua}.php";
-            if (file_exists($file)) {
-                /** @noinspection PhpIncludeInspection */
-                include $file;
-            } else {
-                include _BEAR_BEAR_HOME . '/BEAR/Emoji/Conf/Default.php';
-            }
-        }
-
-        return $emojiChars[$emoji];
     }
 }

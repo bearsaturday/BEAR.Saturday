@@ -1,30 +1,12 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
  * APCアダプター
- *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link       https://github.com/bearsaturday
  *
  * @Singleton
  */
@@ -36,20 +18,20 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
      * @param array $config
      *
      * @see http://jp.php.net/manual/ja/function.Apc-addserver.php
+     *
      * @throws BEAR_Cache_Exception
      */
     public function __construct(array $config)
     {
         parent::__construct($config);
         $this->_config['info'] = $config['info'];
-        if (!extension_loaded('apc') || !(ini_get('apc.enabled')) || !function_exists('apc_sma_info')) {
+        if (! extension_loaded('apc') || ! (ini_get('apc.enabled')) || ! function_exists('apc_sma_info')) {
             throw new BEAR_Cache_Exception('APC extention is not loaded');
-        } else {
-            if ($this->_config['debug']) {
-                $apcSmaInfo = apc_sma_info();
-                /** @noinspection PhpUndefinedMethodInspection */
-                BEAR::dependency('BEAR_Log')->log('APC', $apcSmaInfo);
-            }
+        }
+        if ($this->_config['debug']) {
+            $apcSmaInfo = apc_sma_info();
+            /* @noinspection PhpUndefinedMethodInspection */
+            BEAR::dependency('BEAR_Log')->log('APC', $apcSmaInfo);
         }
     }
 
@@ -82,12 +64,12 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     public function get($key, $default = null)
     {
         $result = apc_fetch($this->_config['prefix'] . $key);
-        if ($result === false && !is_null($default)) {
+        if ($result === false && ! is_null($default)) {
             $result = $default;
         }
         if ($result instanceof BEAR_Ro_Container) {
             $ro = BEAR::factory('BEAR_Ro');
-            /** @var $ro BEAR_Ro */
+            /* @var $ro BEAR_Ro */
             $ro->setCode($result->code)->setHeaders((array) $result->header)->setBody($result->body)->setLinks(
                 $result->links
             )->setHtml($result->html);
