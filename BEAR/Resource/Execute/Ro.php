@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -19,13 +14,8 @@
  *
  * ROクラスはメソッドをもちCRUDインターフェイスに対応します。
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Execute_Ro extends BEAR_Resource_Execute_Adapter
@@ -73,10 +63,10 @@ class BEAR_Resource_Execute_Ro extends BEAR_Resource_Execute_Adapter
             if ($result instanceof BEAR_Ro) {
                 // return RO
                 return $result;
-            } else {
-                $this->_config['obj']->setBody($result);
             }
+            $this->_config['obj']->setBody($result);
         }
+
         return $this->_config['obj'];
     }
 }

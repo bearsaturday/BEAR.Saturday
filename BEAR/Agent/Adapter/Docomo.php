@@ -4,26 +4,16 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
 /**
  * Docomoエージェントアダプター
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 class BEAR_Agent_Adapter_Docomo extends BEAR_Agent_Adapter_Mobile implements BEAR_Agent_Adapter_Interface
@@ -46,7 +36,7 @@ class BEAR_Agent_Adapter_Docomo extends BEAR_Agent_Adapter_Mobile implements BEA
         $this->_config['enable_js'] = false;
         $this->_config['enable_css'] = true;
         $this->_config['enable_inline_css'] = false;
-        /** @todo inline CSS */
+        /* @todo inline CSS */
         $this->_config['role'] = array(BEAR_Agent::UA_DOCOMO, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT);
     }
 }

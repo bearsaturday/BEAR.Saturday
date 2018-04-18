@@ -4,26 +4,16 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Injector
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
 /**
  * UA判別
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Injector
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 class BEAR_Agent_Ua implements BEAR_Injector_Interface
@@ -35,14 +25,13 @@ class BEAR_Agent_Ua implements BEAR_Injector_Interface
      * BEAR_Agentの$config['ua_inject']でこのクラスが指定されています。
      *
      * @param BEAR_Main &$object BEAR_Agentオブジェクト
-     * @param array $config 設定
+     * @param array     $config  設定
      *
-     * @return void
      * @see http://code.google.com/p/bear-project/wiki/agent
      */
     public static function inject($object, $config)
     {
-        if (!isset($config['user_agent'])) {
+        if (! isset($config['user_agent'])) {
             $object->setService('_ua', BEAR_Agent::UA_DEFAULT);
 
             return;

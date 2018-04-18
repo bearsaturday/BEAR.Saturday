@@ -4,76 +4,28 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 /**
  * イメージアダプター抽象クラス
  *
- * @category   BEAR
- * @package    BEAR_Img
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  * @abstract
- *
  */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUndefinedClassInspection */
 abstract class BEAR_Img_Adapter extends BEAR_Base
 {
     /**
-     * @var string
-     */
-    protected $file;
-
-    /**
      * イメージリソース
      *
      * @var resource
      */
     public $image;
-
-    /**
-     * 元画像の幅
-     *
-     * @var integer
-     */
-    protected $_srcWidth;
-
-    /**
-     * 元画像の高さ
-     *
-     * @var integer
-     */
-    protected $_srcHeight;
-
-    /**
-     * 元画像の属性
-     *
-     * @var string
-     */
-    protected $_srcAttr;
-
-    /**
-     * 画像のタイプ
-     *
-     * <pre>
-     * IMAGETYPE_GIF | IMAGETYPE_JPEG | IMAGETYPE_PNG
-     * </pre>
-     *
-     * @var string
-     */
-    private $_srcType;
 
     /**
      * デストラクタで消去するファイルリスト
@@ -88,6 +40,31 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      * @var GD | iMagick | Cariro
      */
     public $adapter;
+    /**
+     * @var string
+     */
+    protected $file;
+
+    /**
+     * 元画像の幅
+     *
+     * @var int
+     */
+    protected $_srcWidth;
+
+    /**
+     * 元画像の高さ
+     *
+     * @var int
+     */
+    protected $_srcHeight;
+
+    /**
+     * 元画像の属性
+     *
+     * @var string
+     */
+    protected $_srcAttr;
 
     /**
      * 出力結果
@@ -102,6 +79,17 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
     protected $_log;
 
     /**
+     * 画像のタイプ
+     *
+     * <pre>
+     * IMAGETYPE_GIF | IMAGETYPE_JPEG | IMAGETYPE_PNG
+     * </pre>
+     *
+     * @var string
+     */
+    private $_srcType;
+
+    /**
      * Constructor.
      *
      * @param array $config
@@ -113,8 +101,6 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -127,8 +113,6 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      * 作業用のファイルを消去リストに追加します。
      *
      * @param string $file ファイル
-     *
-     * @return void
      */
     public function deleteFile($file)
     {
@@ -136,54 +120,6 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
 
         BEAR_Img::$deleteFiles[$cnt] = $file;
         $cnt++;
-    }
-
-    /**
-     * 画像情報の取得
-     *
-     * <pre>
-     * getimagesizeで得られる画像情報を以下のプロパティに格納します。
-     *
-     * _srcWidth int
-     * srcHeight int
-     * srcType   int
-     * srcAttr   string
-     * </pre>
-     *
-     * @return void
-     */
-    protected function getImageInfo()
-    {
-        list($width, $height, $type, $attr) = getimagesize($this->file);
-        // src
-        $this->_srcWidth = $width;
-        $this->_srcHeight = $height;
-        $this->_srcType = $type;
-        $this->_srcAttr = $attr;
-    }
-
-    /**
-     * ヘッダー出力
-     *
-     * @param mixed $format フォーマット
-     * @param int   $expire expire
-     *
-     * @return void
-     */
-    protected function header($format = false, $expire = 0)
-    {
-        if ($format) {
-            $mimeType = 'image/' . strtolower($format);
-        } else {
-            $mimeType = image_type_to_mime_type($this->_srcType);
-        }
-        header("Content-type: " . $mimeType);
-        //        header("Content-Type: image/gif");
-        $exp = gmdate('D, d M Y H:i:s', time() + $expire) . ' GMT';
-        header("Expires: " . $exp);
-        header("Last-Modified: " . gmdate('D, d M Y H:i:s ', time()) . ' GMT');
-        header("Cache-Control: public");
-        header("Pragma: ");
     }
 
     /**
@@ -206,27 +142,26 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
         if ($delete) {
             $this->deleteFile($filePath);
         }
+
         return $filePath;
     }
 
     /**
      * モバイル端末に合わせた画像の最大リサイズ
-     *
-     * @return void
      */
     public function resizeMobile()
     {
         /* @var $agent BEAR_Agent */
         /** @noinspection PhpUndefinedMethodInspection */
         $display = BEAR::dependency('BEAR_Agent')->agentMobile->getDisplay();
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         list($width, $hight) = $display->getSize();
         if ($width == 0) {
             //サイズが取れないときはQVGA
             $width = 240;
             $hight = 320;
         }
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $this->resize($width, $hight, true);
     }
 
@@ -250,7 +185,7 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
             return $file;
         }
         $tmpFile = $this->getTmpFileName($file);
-        if (!file_exists($tmpFile)) {
+        if (! file_exists($tmpFile)) {
             //リモートファイルの取得
             $remoteFile = file_get_contents($file);
             if ($remoteFile === false) {
@@ -259,27 +194,8 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
             file_put_contents($tmpFile, $remoteFile);
             BEAR_Img::$deleteFiles[] = $tmpFile;
         }
-        return $tmpFile;
-    }
 
-    /**
-     * エラー終了
-     *
-     * @param string $errorFunc ファンクション名
-     *
-     * @return void
-     */
-    protected function _error($errorFunc)
-    {
-        //エラーヘッダー
-        header('HTTP/1.0 503 Service Temporarily Unavailable.');
-        $isRes = (is_resource($this->image)) ? 'true' : 'false';
-        if ($this->_config['debug']) {
-            $errMsg = "BEAR_Img error! func=[{$errorFunc}] is_resource=[{$isRes}] ";
-            header("x-imgcairo-error: {$errMsg}");
-            trigger_error($errMsg, E_USER_WARNING);
-        }
-        exit();
+        return $tmpFile;
     }
 
     /**
@@ -305,5 +221,67 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
             default:
                 return null;
         }
+    }
+
+    /**
+     * 画像情報の取得
+     *
+     * <pre>
+     * getimagesizeで得られる画像情報を以下のプロパティに格納します。
+     *
+     * _srcWidth int
+     * srcHeight int
+     * srcType   int
+     * srcAttr   string
+     * </pre>
+     */
+    protected function getImageInfo()
+    {
+        list($width, $height, $type, $attr) = getimagesize($this->file);
+        // src
+        $this->_srcWidth = $width;
+        $this->_srcHeight = $height;
+        $this->_srcType = $type;
+        $this->_srcAttr = $attr;
+    }
+
+    /**
+     * ヘッダー出力
+     *
+     * @param mixed $format フォーマット
+     * @param int   $expire expire
+     */
+    protected function header($format = false, $expire = 0)
+    {
+        if ($format) {
+            $mimeType = 'image/' . strtolower($format);
+        } else {
+            $mimeType = image_type_to_mime_type($this->_srcType);
+        }
+        header('Content-type: ' . $mimeType);
+        //        header("Content-Type: image/gif");
+        $exp = gmdate('D, d M Y H:i:s', time() + $expire) . ' GMT';
+        header('Expires: ' . $exp);
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s ', time()) . ' GMT');
+        header('Cache-Control: public');
+        header('Pragma: ');
+    }
+
+    /**
+     * エラー終了
+     *
+     * @param string $errorFunc ファンクション名
+     */
+    protected function _error($errorFunc)
+    {
+        //エラーヘッダー
+        header('HTTP/1.0 503 Service Temporarily Unavailable.');
+        $isRes = (is_resource($this->image)) ? 'true' : 'false';
+        if ($this->_config['debug']) {
+            $errMsg = "BEAR_Img error! func=[{$errorFunc}] is_resource=[{$isRes}] ";
+            header("x-imgcairo-error: {$errMsg}");
+            trigger_error($errMsg, E_USER_WARNING);
+        }
+        exit();
     }
 }

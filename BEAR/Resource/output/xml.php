@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Output
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -19,13 +14,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Output
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -42,26 +32,26 @@
 function outputXml($values, array $options)
 {
     $defaultOptions = array(
-        "mode" => "",
-        "indent" => "    ",
-        "linebreak" => "\n",
-        "indentAttributes" => true,
-        "typeHints" => false,
-        "scalarAsAttributes" => true,
-        "addDecl" => true,
-        "encoding" => "UTF-8",
-        "rootName" => "rdf:RDF",
-        "rootAttributes" => array(
-            "xmlns" => "http://purl.org/rss/1.0/",
-            "xmlns:rdf" => "http://www.e3.org/1999/02/22-rdf-syntax-ns#",
-            "xmlns:dc" => "http://purl.org/dc/elements/1.1/",
-            "xmlns:sy" => "http://purl.org/rss/1.0/modules/syndication/",
-            "xmlns:admin" => "http://webns.net/mvcb/",
-            "xmlns:content" => "http://purl.org/rss/1.0/modules/content/",
-            "xml:lang" => "ja"
+        'mode' => '',
+        'indent' => '    ',
+        'linebreak' => "\n",
+        'indentAttributes' => true,
+        'typeHints' => false,
+        'scalarAsAttributes' => true,
+        'addDecl' => true,
+        'encoding' => 'UTF-8',
+        'rootName' => 'rdf:RDF',
+        'rootAttributes' => array(
+            'xmlns' => 'http://purl.org/rss/1.0/',
+            'xmlns:rdf' => 'http://www.e3.org/1999/02/22-rdf-syntax-ns#',
+            'xmlns:dc' => 'http://purl.org/dc/elements/1.1/',
+            'xmlns:sy' => 'http://purl.org/rss/1.0/modules/syndication/',
+            'xmlns:admin' => 'http://webns.net/mvcb/',
+            'xmlns:content' => 'http://purl.org/rss/1.0/modules/content/',
+            'xml:lang' => 'ja'
         ),
-        "defaultTagName" => "item",
-        "attributesArray" => "_attributes"
+        'defaultTagName' => 'item',
+        'attributesArray' => '_attributes'
     );
     if (is_array($options)) {
         $options = $options + $defaultOptions;
@@ -82,5 +72,6 @@ function outputXml($values, array $options)
     $ro = BEAR::factory('BEAR_Ro');
     $ro->setBody($body);
     $ro->setHeaders($headers);
+
     return $ro;
 }

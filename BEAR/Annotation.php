@@ -4,24 +4,16 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Annotation
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
 /**
  * アノテーション
  *
- * @category  BEAR
- * @package   BEAR_Resource
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @Singleton
@@ -41,9 +33,9 @@ class BEAR_Annotation extends BEAR_Base
         parent::__construct($config);
         $this->_config['ref']['method'] = new ReflectionMethod($config['class'], $config['method']);
         $this->_config['ref']['class'] = new ReflectionClass($config['class']);
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $this->_config['doc']['class'] = $this->_config['ref']['class']->getDocComment();
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $this->_config['doc']['method'] = $this->_config['ref']['method']->getDocComment();
     }
 
@@ -55,7 +47,6 @@ class BEAR_Annotation extends BEAR_Base
      *
      * @param array $values 配列
      *
-     * @return void
      * @throws BEAR_Annotation_Exception
      */
     public function required(array $values)
@@ -97,7 +88,7 @@ class BEAR_Annotation extends BEAR_Base
             $class = $match[2][$i];
             $aspects[$type][] = $class;
         }
-        if (!$aspects) {
+        if (! $aspects) {
             $method = new ReflectionMethod($this->_config['class'], $this->_config['method']);
 
             return $method;

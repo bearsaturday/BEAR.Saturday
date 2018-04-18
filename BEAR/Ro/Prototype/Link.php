@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -18,12 +14,8 @@
  *
  * リソースリンクを処理します。BEAR_Ro_Prototype::getLinkedBody()から利用されています。
  *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Ro_Prototype_Link extends BEAR_Base
@@ -48,11 +40,11 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
     public function chainLink(BEAR_Ro $rootRo, array $chain)
     {
         if ($chain === array()) {
-            /** @noinspection PhpInconsistentReturnPointsInspection */
+            /* @noinspection PhpInconsistentReturnPointsInspection */
             return;
         }
         $config = $rootRo->getConfig();
-        if (!isset($config['options']['cache']['link'])) {
+        if (! isset($config['options']['cache']['link'])) {
             $result = $this->_chainLink($rootRo, $chain);
         } else {
             $cacheKey = serialize($chain);
@@ -61,10 +53,11 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
                 $cache->setLife($config['options']['cache']['life']);
             }
             $result = $cache->get($cacheKey);
-            if (!$result) {
+            if (! $result) {
                 $result = $this->_chainLink($rootRo, $chain);
             }
         }
+
         return $result;
     }
 
@@ -103,7 +96,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
             $isCollectionRoot = false;
         }
         $ro = $rootRo;
-        //
+
         foreach ($this->_chain as $links) {
             foreach ($links as $link) {
                 if ($hasMultiLink2 === true || $isCollectionRoot) {
@@ -132,6 +125,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
             $ro = $linkRo;
         }
         $this->_cleanUpLink($linked);
+
         return $linked;
     }
 
@@ -141,8 +135,6 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      * @param array  &$linked
      * @param string $linkFrom
      * @param string $linkTo
-     *
-     * @return void
      */
     private static function _changeRecursive(&$linked, $linkFrom, $linkTo)
     {
@@ -176,13 +168,11 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      * <pre>リンクマークを除去</pre>
      *
      * @param array &$data データ
-     *
-     * @return void
      */
     private function _cleanUpLink(&$data)
     {
         $this->_chain = array();
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             return;
         }
         foreach ($data as &$val) {
@@ -204,8 +194,6 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      * @param array   &$body リンクリソース
      * @param string  $link  リンク
      * @param BEAR_Ro $ro    リソースオブジェクト
-     *
-     * @return void
      */
     private static function _makeCollectionChain(array &$body, $link, $ro)
     {
@@ -226,13 +214,14 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      * @param array  $onLinks
      * @param string $link
      *
+     * @throws BEAR_Ro_Prototype_Link_Exception
+     *
      * @return array
      * @ignore
-     * @throws BEAR_Ro_Prototype_Link_Exception
      */
     private static function _makeRequestConfig($onLinks, $link)
     {
-        if (!isset($onLinks[$link])) {
+        if (! isset($onLinks[$link])) {
             $info = array(
                 'link uri' => $link,
                 'available links' => $onLinks
@@ -258,6 +247,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
                 'options' => array()
             );
         }
+
         return $result;
     }
 }

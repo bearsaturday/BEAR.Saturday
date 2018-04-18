@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -20,13 +15,8 @@
  * リソースリクエストを実行するクラスです。
  * URIによってどの方法で実行するかををfacotryで判断しています。
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Execute
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Execute extends BEAR_Factory
@@ -62,8 +52,9 @@ class BEAR_Resource_Execute extends BEAR_Factory
      * URIによってリソースリクエスト実行クラスを確定して
      * インジェクションオブジェクトを生成します
      *
-     * @return BEAR_Resource_Execute_Interface
      * @throws BEAR_Resource_Execute_Exception
+     *
+     * @return BEAR_Resource_Execute_Interface
      */
     public function factory()
     {
@@ -82,9 +73,10 @@ class BEAR_Resource_Execute extends BEAR_Factory
             $exeConfig['file'] = $url['path'];
             $format = self::FORMAT_FILE;
             $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $exeConfig);
+
             return $obj;
         }
-        if (isset($path['filename']) && !(isset($url['host']))) {
+        if (isset($path['filename']) && ! (isset($url['host']))) {
             return self::_localResourceExecute($this->_config['uri']);
         }
         $executer = _BEAR_APP_HOME . '/App/Resource/Execute/' . ucwords($url['scheme']) . '.php';
@@ -92,16 +84,17 @@ class BEAR_Resource_Execute extends BEAR_Factory
         if ($isExecuterExists) {
             $class = 'App_Resource_Execute_' . ucwords($url['scheme']);
             $obj = BEAR::factory($class, $this->_config);
+
             return $obj;
         }
         switch (true) {
-            case (isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https')):
+            case isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https'):
                 $format = self::FORMAT_HTTP;
                 break;
-            case (isset($url['scheme']) && $url['scheme'] == 'socket'):
+            case isset($url['scheme']) && $url['scheme'] == 'socket':
                 $format = self::FORMAT_SOCKET;
                 break;
-            case (isset($url['scheme']) && $url['scheme'] == 'page'):
+            case isset($url['scheme']) && $url['scheme'] == 'page':
                 $format = self::FORMAT_PAGE;
                 break;
             default:
@@ -110,6 +103,7 @@ class BEAR_Resource_Execute extends BEAR_Factory
                 throw $this->_exception($msg, compact('info'));
         }
         $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);
+
         return $obj;
     }
 
@@ -120,8 +114,9 @@ class BEAR_Resource_Execute extends BEAR_Factory
      *
      * @param string $uri
      *
-     * @return stdClass
      * @throws BEAR_Resource_Exception
+     *
+     * @return stdClass
      */
     private function _localResourceExecute($uri)
     {
@@ -130,11 +125,11 @@ class BEAR_Resource_Execute extends BEAR_Factory
             include_once $file;
             $resourcePathName = 'App_Ro_' . str_replace('/', '_', $uri);
             switch (true) {
-                case (class_exists($resourcePathName, false)):
+                case class_exists($resourcePathName, false):
                     $this->_config['class'] = $resourcePathName;
                     $format = 'Ro';
                     break;
-                case (function_exists($resourcePathName)):
+                case function_exists($resourcePathName):
                     // @deprecated
                     $this->_config['function'] = $resourcePathName;
                     $format = 'Function';
@@ -166,6 +161,7 @@ class BEAR_Resource_Execute extends BEAR_Factory
             }
         }
         $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);
+
         return $obj;
     }
 }

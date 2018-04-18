@@ -4,30 +4,40 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
 /**
  * Mobileエージェントアダプター
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 {
+    /**
+     * 携帯サ絵文字ポート対応なし
+     *
+     * @var int
+     */
+    const SUPPORT_NONE = 0;
+
+    /**
+     * 携帯絵文字サポートIMG変換
+     *
+     * @var int
+     */
+    const SUPPORT_IMG = 1;
+
+    /**
+     * 携帯絵文字サポートIMG変換
+     *
+     * @var int
+     */
+    const SUPPORT_CONV = 2;
     /**
      * @var string
      */
@@ -37,27 +47,6 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
      * @var Smarty
      */
     protected $_smarty;
-
-    /**
-     * 携帯サ絵文字ポート対応なし
-     *
-     * @var integer
-     */
-    const SUPPORT_NONE = 0;
-
-    /**
-     * 携帯絵文字サポートIMG変換
-     *
-     * @var integer
-     */
-    const SUPPORT_IMG = 1;
-
-    /**
-     * 携帯絵文字サポートIMG変換
-     *
-     * @var integer
-     */
-    const SUPPORT_CONV = 2;
 
     /**
      * Constructor.
@@ -78,8 +67,6 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -92,8 +79,6 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
      * 親クラスの関数と引数をあわせるために使用していないパラメータ追加
      *
      * @param string &$value 文字列
-     *
-     * @return void
      */
     public static function onUTF8(
         &$value,
@@ -111,12 +96,11 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
      * @param string &$value 文字列
      *
      * @throws BEAR_Exception
-     * @return void
      * @ignore
      */
     public function UTF8(&$value)
     {
-        if (!mb_check_encoding($value, $this->_codeFromMoble)) {
+        if (! mb_check_encoding($value, $this->_codeFromMoble)) {
             $msg = 'Illegal Submit Values';
             $info = array('value' => $value);
             throw $this->_exception(
@@ -128,7 +112,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
             );
         }
         $value = mb_convert_encoding($value, 'utf-8', $this->_codeFromMoble);
-        if (!mb_check_encoding($value, 'utf-8')) {
+        if (! mb_check_encoding($value, 'utf-8')) {
             $msg = 'Illegal UTF-8';
             $info = array('value' => $value);
             throw $this->_exception(

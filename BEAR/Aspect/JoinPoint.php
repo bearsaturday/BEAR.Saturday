@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Aspect
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -19,12 +15,8 @@
  * アドバイスが織り込まれるターゲットクラスのリフレクションを用いて
  * 情報を取得したりメソッドを実行したりできます。
  *
- * @category  BEAR
- * @package   BEAR_Aspect
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Aspect_JoinPoint extends BEAR_Base
@@ -42,6 +34,7 @@ class BEAR_Aspect_JoinPoint extends BEAR_Base
     {
         /** @noinspection PhpUndefinedMethodInspection */
         $result = $this->_config['ref']['method']->invoke($this->_config['object'], $values);
+
         return $result;
     }
 

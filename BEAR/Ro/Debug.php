@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -18,12 +14,8 @@
  *
  * リソース可視化などを行います
  *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Ro_Debug extends BEAR_Base
@@ -37,8 +29,6 @@ class BEAR_Ro_Debug extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -67,7 +57,7 @@ class BEAR_Ro_Debug extends BEAR_Base
         $config = $ro->getConfig();
         $chainLinks = $ro->getHeader('_linked');
         $resourceHtml = $ro->getHtml();
-        if (!(isset($_GET['_resource']))) {
+        if (! (isset($_GET['_resource']))) {
             return $resourceHtml;
         }
         $body = $ro->getBody();
@@ -76,7 +66,7 @@ class BEAR_Ro_Debug extends BEAR_Base
                 $renderer = new Text_Highlighter_Renderer_Html(array('tabsize' => 4));
                 $reporting = error_reporting(E_ALL & ~E_STRICT);
                 /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-                $hlHtml = Text_Highlighter::factory("HTML");
+                $hlHtml = Text_Highlighter::factory('HTML');
                 error_reporting($reporting);
                 $hlHtml->setRenderer($renderer);
                 if ($resourceHtml == '') {
@@ -87,7 +77,7 @@ class BEAR_Ro_Debug extends BEAR_Base
             } elseif ($_GET['_resource'] === 'body') {
                 $resourceHtml = print_a($body, 'return:1');
                 $logs = $ro->getHeader('_log');
-                foreach ((array)$logs as $logKey => $logVal) {
+                foreach ((array) $logs as $logKey => $logVal) {
                     $resourceHtml .= '<div class="bear-resource-info-label">' . $logKey . '</div>';
                     $resourceHtml .= is_scalar($logVal) ? $logVal : print_a($logVal, 'return:1');
                 }
@@ -113,28 +103,13 @@ class BEAR_Ro_Debug extends BEAR_Base
         $result .= '<div class="bear-resource-label">' . $labelUri;
         $result .= '<span class="bear-resource-values">' . $labelVaules . '</span>';
         $result .= '<span class="bear-resource-links">' . $linkLabel . '</span>';
-        $result .= '' . " + (" . '';
+        $result .= '' . ' + (' . '';
         $result .= '<span><a border="0" title="' . $config['options']['template'] . '" href="/__panda/edit/?file=';
         $result .= (_BEAR_APP_HOME . $this->_config['path'] . 'elements/' . $config['options']['template'] . '.tpl') . '">';
         $result .= $config['options']['template'] . '</a>)</span>';
         $result .= '</div>' . $resourceHtml . '</div>';
-        return $result;
-    }
 
-    /**
-     * Get resource class editor link
-     *
-     * @param string $class
-     * @param string $uri
-     *
-     * @return string
-     */
-    private function _getClassEditorLink($class, $uri)
-    {
-        $ref = new ReflectionClass($class);
-        $file = $ref->getFileName();
-        $classEditorLink = "<a href=\"/__panda/edit/?file={$file}\">{$uri}</a>";
-        return $classEditorLink;
+        return $result;
     }
 
     /**
@@ -143,25 +118,23 @@ class BEAR_Ro_Debug extends BEAR_Base
      * firePHPコンソールにリソースを表示します。
      *
      * @param BEAR_Ro $ro リソースオブジェクト
-     *
-     * @return void
      */
     public function debugShowResource(BEAR_Ro $ro)
     {
         $app = BEAR::get('app');
         $config = $ro->getConfig();
-        if (!isset($config['method']) || !function_exists('FB')) {
+        if (! isset($config['method']) || ! function_exists('FB')) {
             return;
         }
         $labelUri = "[resource] {$config['method']} {$config['uri']}";
-        $labelUri .= ($config['values']) ? '?' . http_build_query($config['values']) : "";
+        $labelUri .= ($config['values']) ? '?' . http_build_query($config['values']) : '';
         $body = $ro->getBody();
         if (is_array($body) && isset($body[0]) && is_array($body[0])) {
             // bodyが表構造と仮定
             $table = array();
             $table[] = (array_values(array_keys($body[0])));
-            foreach ((array)$body as $val) {
-                $table[] = array_values((array)$val);
+            foreach ((array) $body as $val) {
+                $table[] = array_values((array) $val);
             }
             FB::table($labelUri, $table);
         } else {
@@ -181,5 +154,22 @@ class BEAR_Ro_Debug extends BEAR_Base
     public function hasResourceDebug()
     {
         return self::$_hasResourceDebug;
+    }
+
+    /**
+     * Get resource class editor link
+     *
+     * @param string $class
+     * @param string $uri
+     *
+     * @return string
+     */
+    private function _getClassEditorLink($class, $uri)
+    {
+        $ref = new ReflectionClass($class);
+        $file = $ref->getFileName();
+        $classEditorLink = "<a href=\"/__panda/edit/?file={$file}\">{$uri}</a>";
+
+        return $classEditorLink;
     }
 }

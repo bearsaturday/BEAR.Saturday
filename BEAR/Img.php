@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Img
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -19,12 +15,8 @@
  * 画像を取り扱うクラスです。画像エンジンにGD2, iMagick(ImageMagick + GraphickMagick),
  * Cairoが選べ切り替えて使う事ができます。
  *
- * @category  BEAR
- * @package   BEAR_Img
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @instance singleton
@@ -35,7 +27,6 @@ class BEAR_Img extends BEAR_Factory
 {
     /**
      * 外部画像ファイルをフェッチするときのUA
-     *
      */
     const UA = 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)';
 
@@ -56,7 +47,6 @@ class BEAR_Img extends BEAR_Factory
 
     /**
      * テンポラリーファイル作成場所
-     *
      */
     const TMP_DIR = '/tmp/misc';
 
@@ -76,19 +66,18 @@ class BEAR_Img extends BEAR_Factory
     const RIGHT = 'r';
 
     /**
-     * シングルトンオブジェクト
-     *
-     * @var object
-     * @access public
-     */
-    private static $_instance;
-
-    /**
      * 消去用テンポラリーファイルリスト配列
      *
      * @var array
      */
     public static $deleteFiles;
+
+    /**
+     * シングルトンオブジェクト
+     *
+     * @var object
+     */
+    private static $_instance;
 
     /**
      * Constructor
@@ -108,13 +97,11 @@ class BEAR_Img extends BEAR_Factory
      * Constructorでシャットダウン時に実行する関数として登録され実行されます。
      * </pre>
      *
-     * @return void
-     * @access private
      * @static
      */
     public static function onShutdown()
     {
-        if (!is_array(self::$deleteFiles)) {
+        if (! is_array(self::$deleteFiles)) {
             return;
         }
         foreach (self::$deleteFiles as $deleteFile) {
@@ -131,8 +118,9 @@ class BEAR_Img extends BEAR_Factory
      * 指定の画像エンジンで画像処理オブジェクトを返します
      * </pre>
      *
-     * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      * @throws BEAR_Img_Exception
+     *
+     * @return BEAR_Img_Adapter_GD | BEAR_Img_Adapter_Magick | BEAR_Img_Adapter_Cairo
      */
     public function factory()
     {
@@ -212,8 +200,6 @@ class BEAR_Img extends BEAR_Factory
 
     /**
      * インスタンス消去
-     *
-     * @return void
      */
     public function destoryInstance()
     {

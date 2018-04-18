@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Query
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -102,12 +98,8 @@
  *
  * </pre>
  *
- * @category  BEAR
- * @package   BEAR_Query
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @config MDB2    db          DBオブジェクト        *required
@@ -152,15 +144,14 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return BEAR_Ro
      */
-
     public function select($query, array $params = array(), array $values = null, $id = 'id')
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
-        $db = & $this->_config['db'];
+        $db = &$this->_config['db'];
         $ro = $this->_config['ro'];
         // Row取得
-        if (!is_null($values)) {
+        if (! is_null($values)) {
             $result = $this->_selectRow($db, $query, $params, $values, $id);
             if ($result !== false) {
                 return $result;
@@ -180,7 +171,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         if (isset($this->_config['sort'])) {
             $query = $this->_sort($query);
         }
-        if ((!isset($this->_config['pager']) || !$this->_config['pager']) || $this->_config['perPage'] <= 0) {
+        if ((! isset($this->_config['pager']) || ! $this->_config['pager']) || $this->_config['perPage'] <= 0) {
             if (isset($this->_config['offset']) && $this->_config['perPage'] > 0) {
                 // LIMIT & Offset
                 $query .= ' LIMIT ' . $this->_config['offset'] . ',' . $this->_config['perPage'];
@@ -200,7 +191,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         // DBページャー
         $pagerOptions = $this->_config['options'];
         $pagerOptions['perPage'] = $this->_config['perPage'];
-        if (!array_key_exists('totalItems', $pagerOptions)) {
+        if (! array_key_exists('totalItems', $pagerOptions)) {
             $pagerOptions['totalItems'] = $this->_countQuery($query, $params);
         }
         // ページング
@@ -241,6 +232,193 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
 
         return $ro;
+    }
+
+    /**
+     * インサート
+     *
+     * @param array $values
+     * @param null  $table
+     * @param null  $types
+     *
+     * @return mixed|mixeds
+     */
+    public function insert(array $values, $table = null, $types = null)
+    {
+        $db = &$this->_config['db'];
+        $table = $table ? $table : $this->_config['table'];
+        $types = $types ? $types : $this->_config['types'];
+        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_INSERT, false, $types);
+
+        return $affectedRow;
+    }
+
+    /**
+     * アップデート
+     *
+     * @param array  $values
+     * @param string $where
+     * @param null   $table
+     * @param null   $types
+     *
+     * @return mixed
+     */
+    public function update(array $values, $where, $table = null, $types = null)
+    {
+        $db = &$this->_config['db'];
+        $table = $table ? $table : $this->_config['table'];
+        $types = $types ? $types : $this->_config['types'];
+        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_UPDATE, $where, $types);
+
+        return $affectedRow;
+    }
+
+    /**
+     * デリート
+     *
+     * @param      $where
+     * @param null $table
+     *
+     * @return mixed
+     */
+    public function delete($where, $table = null)
+    {
+        $db = &$this->_config['db'];
+        $table = $table ? $table : $this->_config['table'];
+        $affectedRow = $db->extended->autoExecute($table, null, MDB2_AUTOQUERY_DELETE, $where);
+
+        return $affectedRow;
+    }
+
+    /**
+     * クオート
+     *
+     * @param $value
+     * @param $type
+     *
+     * @return mixed
+     */
+    public function quote($value, $type)
+    {
+        return $this->_config['db']->quote($value, $type);
+    }
+
+    /**
+     * エラー？
+     *
+     * @param mixed $result DB結果
+     *
+     * @return mixed
+     */
+    public function isError($result)
+    {
+        return PEAR::isError($result);
+    }
+
+    /**
+     * ソート
+     *
+     * クエリーからsort文を作成します。
+     * <pre>
+     * exmaple 1.
+     * ?_sort=id
+     *
+     * ORDER BY ID
+     *
+     * example 2.
+     * ?_sort=id,-flg
+     *
+     * ORDER BY ID, FLG DESC
+     * </pre>
+     *
+     * @param string $sql DWL
+     *
+     * @return string
+     */
+    protected function _sort($sql)
+    {
+        if (stripos($sql, 'ORDER BY') !== false) {
+            return $sql;
+        }
+        $orders = array();
+        $get = $this->_sortGetQuery();
+        foreach ($this->_config['sort'] as $item) {
+            assert(count($item) === 3);
+            list($column, $publicKey, $defaultDir) = $item;
+            if (isset($get[$publicKey])) {
+                $orders[$column] = $get[$publicKey];
+            } else {
+                $orders[$column] = $defaultDir;
+            }
+        }
+        // 文字列作成
+        $arr = array();
+        foreach ($orders as $column => &$dir) {
+            $db = &$this->_config['db'];
+            $arr[] = $db->quoteIdentifier($column) . ' ' . (($dir === '-') ? 'DESC' : 'ASC');
+        }
+        $orderBy = ' ORDER BY ' . implode(', ', $arr);
+        $result = $sql . $orderBy;
+
+        return $result;
+    }
+
+    /**
+     * $_GET['_sort]を扱いやすいように加工
+     *
+     * @ignore
+     *
+     * @return array
+     */
+    protected function _sortGetQuery()
+    {
+        $get = (isset($_GET['_sort'])) ? explode(',', $_GET['_sort']) : array();
+        $result = array();
+        foreach ($get as $item) {
+            if ($item[0] === '-') {
+                $item = substr($item, 1);
+                $order = '-';
+            } else {
+                $order = '+';
+            }
+            $result[$item] = $order;
+        }
+
+        return $result;
+    }
+
+    /**
+     * カウントクエリー
+     *
+     * @param string $query
+     * @param array  $params
+     *
+     * @return int
+     */
+    protected function _countQuery($query, array $params = array())
+    {
+        // be smart and try to guess the total number of records
+        $countQuery = $this->_rewriteCountQuery($query);
+        if ($countQuery) {
+            if ($params) {
+                $sth = $this->_config['db']->prepare($countQuery);
+                $totalItems = $sth->execute($params)->fetchOne();
+            } else {
+                $totalItems = $this->_config['db']->queryOne($countQuery);
+            }
+            if (PEAR::isError($totalItems)) {
+                return $totalItems;
+            }
+        } else {
+            // GROUP BY => fetch the whole resultset and count the rows returned
+            $res = $this->_config['db']->queryCol($query);
+            if (PEAR::isError($res)) {
+                return $res;
+            }
+            $totalItems = count($res);
+        }
+
+        return $totalItems;
     }
 
     /**
@@ -299,193 +477,6 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     }
 
     /**
-     * ソート
-     *
-     * クエリーからsort文を作成します。
-     * <pre>
-     * exmaple 1.
-     * ?_sort=id
-     *
-     * ORDER BY ID
-     *
-     * example 2.
-     * ?_sort=id,-flg
-     *
-     * ORDER BY ID, FLG DESC
-     * </pre>
-     *
-     * @param string $sql DWL
-     *
-     * @return string
-     */
-    protected function _sort($sql)
-    {
-        if (stripos($sql, 'ORDER BY') !== false) {
-            return $sql;
-        }
-        $orders = array();
-        $get = $this->_sortGetQuery();
-        foreach ($this->_config['sort'] as $item) {
-            assert(count($item) === 3);
-            list($column, $publicKey, $defaultDir) = $item;
-            if (isset($get[$publicKey])) {
-                $orders[$column] = $get[$publicKey];
-            } else {
-                $orders[$column] = $defaultDir;
-            }
-        }
-        // 文字列作成
-        $arr = array();
-        foreach ($orders as $column => &$dir) {
-            $db = & $this->_config['db'];
-            $arr[] = $db->quoteIdentifier($column) . ' ' . (($dir === '-') ? 'DESC' : 'ASC');
-        }
-        $orderBy = ' ORDER BY ' . implode(', ', $arr);
-        $result = $sql . $orderBy;
-
-        return $result;
-    }
-
-    /**
-     * $_GET['_sort]を扱いやすいように加工
-     *
-     * @ignore
-     *
-     * @return array
-     */
-    protected function _sortGetQuery()
-    {
-        $get = (isset($_GET['_sort'])) ? explode(',', $_GET['_sort']) : array();
-        $result = array();
-        foreach ($get as $item) {
-            if ($item[0] === '-') {
-                $item = substr($item, 1);
-                $order = '-';
-            } else {
-                $order = '+';
-            }
-            $result[$item] = $order;
-        }
-
-        return $result;
-    }
-
-    /**
-     * インサート
-     *
-     * @param array $values
-     * @param null  $table
-     * @param null  $types
-     *
-     * @return mixed|mixeds
-     */
-    public function insert(array $values, $table = null, $types = null)
-    {
-        $db = & $this->_config['db'];
-        $table = $table ? $table : $this->_config['table'];
-        $types = $types ? $types : $this->_config['types'];
-        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_INSERT, false, $types);
-
-        return $affectedRow;
-    }
-
-    /**
-     * アップデート
-     *
-     * @param array  $values
-     * @param string $where
-     * @param null   $table
-     * @param null   $types
-     *
-     * @return mixed
-     */
-    public function update(array $values, $where, $table = null, $types = null)
-    {
-        $db = & $this->_config['db'];
-        $table = $table ? $table : $this->_config['table'];
-        $types = $types ? $types : $this->_config['types'];
-        $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_UPDATE, $where, $types);
-
-        return $affectedRow;
-    }
-
-    /**
-     * デリート
-     *
-     * @param      $where
-     * @param null $table
-     *
-     * @return mixed
-     */
-    public function delete($where, $table = null)
-    {
-        $db = & $this->_config['db'];
-        $table = $table ? $table : $this->_config['table'];
-        $affectedRow = $db->extended->autoExecute($table, null, MDB2_AUTOQUERY_DELETE, $where);
-
-        return $affectedRow;
-    }
-
-    /**
-     * クオート
-     *
-     * @param $value
-     * @param $type
-     *
-     * @return mixed
-     */
-    public function quote($value, $type)
-    {
-        return $this->_config['db']->quote($value, $type);
-    }
-
-    /**
-     * エラー？
-     *
-     * @param mixed $result DB結果
-     *
-     * @return mixed
-     */
-    public function isError($result)
-    {
-        return PEAR::isError($result);
-    }
-
-    /**
-     * カウントクエリー
-     *
-     * @param string $query
-     * @param array  $params
-     *
-     * @return int
-     */
-    protected function _countQuery($query, array $params = array())
-    {
-        // be smart and try to guess the total number of records
-        $countQuery = $this->_rewriteCountQuery($query);
-        if ($countQuery) {
-            if ($params) {
-                $sth = $this->_config['db']->prepare($countQuery);
-                $totalItems = $sth->execute($params)->fetchOne();
-            } else {
-                $totalItems = $this->_config['db']->queryOne($countQuery);
-            }
-            if (PEAR::isError($totalItems)) {
-                return $totalItems;
-            }
-        } else {
-            // GROUP BY => fetch the whole resultset and count the rows returned
-            $res = $this->_config['db']->queryCol($query);
-            if (PEAR::isError($res)) {
-                return $res;
-            }
-            $totalItems = count($res);
-        }
-
-        return $totalItems;
-    }
-
-    /**
      * カウントクエリーを生成する
      *
      * <pre>SQL文から"SELECT COUNT(*)" を付加したカウントクエリーを生成して返します。
@@ -523,8 +514,8 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             return false;
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount, ) = preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
 
         return trim($queryCount);
     }

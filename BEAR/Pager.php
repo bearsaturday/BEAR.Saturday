@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Pager
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -21,12 +17,8 @@
  * @instance singleton
  * @config void
  *
- * @category  BEAR
- * @package   BEAR_Pager
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @Singleton
@@ -35,7 +27,6 @@ class BEAR_Pager extends BEAR_Base
 {
     /**
      * ページャーキー
-     *
      */
     const PAGER_NUM = '_start';
 
@@ -52,30 +43,6 @@ class BEAR_Pager extends BEAR_Base
     public $pager;
 
     /**
-     * ページャーオプション
-     *
-     * @var array
-     * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
-     */
-    private $_options = array();
-
-    /**
-     * ページャーでスライスされたビュー
-     *
-     * @var array
-     * @access  private
-     */
-    private $_pagerResult;
-
-    /**
-     * ページャーリンクHTML
-     *
-     * @var string
-     * @access private
-     */
-    private $_links;
-
-    /**
      * PC用ページャーオプション
      *
      * @var array
@@ -88,6 +55,29 @@ class BEAR_Pager extends BEAR_Base
      * @var array
      */
     public static $optionsMobile = array();
+
+    /**
+     * ページャーオプション
+     *
+     * @var array
+     *
+     * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
+     */
+    private $_options = array();
+
+    /**
+     * ページャーでスライスされたビュー
+     *
+     * @var array
+     */
+    private $_pagerResult;
+
+    /**
+     * ページャーリンクHTML
+     *
+     * @var string
+     */
+    private $_links;
 
     /**
      * Constructor
@@ -105,8 +95,6 @@ class BEAR_Pager extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -171,8 +159,6 @@ class BEAR_Pager extends BEAR_Base
      * ページングされた結果とページナビゲーションHTMLの生成をプロパティに保持します。
      *
      * @param array $view ページングするデータアイテム
-     *
-     * @return void
      */
     public function makePager(array $view)
     {
@@ -181,16 +167,15 @@ class BEAR_Pager extends BEAR_Base
             $this->_links = null;
 
             return;
-        } else {
-            $this->_options['itemData'] = $view;
-            // Pager オブジェクトを作成
-            $this->pager->setOptions($this->_options);
-            $this->pager->build();
-            // ページデータを取得
-            $this->_pagerResult = $this->pager->getPageData();
-            // リンク
-            $this->_links = $this->pager->getLinks();
         }
+        $this->_options['itemData'] = $view;
+        // Pager オブジェクトを作成
+        $this->pager->setOptions($this->_options);
+        $this->pager->build();
+        // ページデータを取得
+        $this->_pagerResult = $this->pager->getPageData();
+        // リンク
+        $this->_links = $this->pager->getLinks();
     }
 
     /**
@@ -223,7 +208,6 @@ class BEAR_Pager extends BEAR_Base
      * @param string $key    オプションキ-
      * @param string $option オプション値
      *
-     * @return void
      * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
      * @see BEAR_Pager::setOptions(9
      */
@@ -238,8 +222,6 @@ class BEAR_Pager extends BEAR_Base
      * ページャーのオプションを連想配列で指定します。
      *
      * @param array $options オプション
-     *
-     * @return void
      *
      * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
      * @see BEAR_Pager::setOption()
@@ -347,7 +329,7 @@ class BEAR_Pager extends BEAR_Base
      */
     public function setPagerLinks(array $links, array $info)
     {
-        if (!BEAR::exists('pager')) {
+        if (! BEAR::exists('pager')) {
             BEAR::set('pager', new ArrayObject(array('links' => $links, 'info' => $info)));
         }
 

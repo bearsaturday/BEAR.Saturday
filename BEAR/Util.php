@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Util
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -21,12 +17,8 @@
  * フレームワークが使用しています。
  * </pre>
  *
- * @category  BEAR
- * @package   BEAR_Util
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Util
@@ -71,8 +63,6 @@ class BEAR_Util
      * 全てのキャッシュをクリア
      *
      * @param bool $showMessage メッセージ表示？
-     *
-     * @return void
      */
     public static function clearAllCache($showMessage = false)
     {
@@ -91,8 +81,6 @@ class BEAR_Util
      *
      * @param string $msg   メッセージ
      * @param string $color カラー
-     *
-     * @return void
      */
     public static function printStatus($msg, $color = '#dddddd"')
     {
@@ -123,8 +111,6 @@ class BEAR_Util
      * @param string $msg      メッセージ
      * @param int    $code     コード
      *
-     * @return void
-     *
      * @throws BEAR_Exception 必須項目が足りない場合の例外
      */
     public static function required(
@@ -137,7 +123,7 @@ class BEAR_Util
     ) {
         if (count(array_intersect($required, array_keys($values))) != count($required)) {
             $info = array('required' => $required, 'values' => $values);
-            $msg = "Required Exception";
+            $msg = 'Required Exception';
             throw new BEAR_Exception($msg, array('info' => $info));
         }
     }
@@ -148,6 +134,7 @@ class BEAR_Util
      * @return array
      *
      * @ignore
+     *
      * @link http://www.php.net/manual/ja/function.array-merge-recursive.php
      */
     public static function &arrayMergeRecursiveDistinct()
@@ -179,6 +166,7 @@ class BEAR_Util
      * @param mixed $data アンシリアライズするデータ
      *
      * @return string
+     *
      * @deprecated 環境で動作が不安定
      */
     public static function unserialize($data)
@@ -210,9 +198,9 @@ class BEAR_Util
             }
 
             return $ret;
-        } else {
-            return $data;
         }
+
+        return $data;
     }
 
     /**
@@ -222,20 +210,18 @@ class BEAR_Util
      *
      * @param string $dir           ディレクトリパス
      * @param bool   $deleteRootToo 指定ディレクトリも消去するか
-     *
-     * @return void
      */
     public static function unlinkRecursive($dir, $deleteRootToo = false)
     {
         $dh = opendir($dir);
-        if (!$dh) {
+        if (! $dh) {
             return;
         }
         while (false !== ($obj = readdir($dh))) {
             if (substr($obj, 0, 1) == '.') {
                 continue;
             }
-            if (!unlink($dir . '/' . $obj)) {
+            if (! unlink($dir . '/' . $obj)) {
                 self::unlinkRecursive($dir . '/' . $obj, true);
             }
         }

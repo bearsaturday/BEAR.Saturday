@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Server
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -31,13 +26,8 @@
  *   データ
  * </pre>
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Server
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 class BEAR_Resource_Server_Handler extends Net_Server_Handler
@@ -47,15 +37,13 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      */
     public function __construct()
     {
-        echo "start";
+        echo 'start';
     }
 
     /**
      * 接続
      *
      * @param int $clientId クライアント番号
-     *
-     * @return void
      */
     public function onConnect($clientId = 0)
     {
@@ -67,10 +55,8 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      *
      * @param int    $clientId クライアントID
      * @param string $data     受信データ
-     *
-     * @return void
      */
-    public function onReceiveData($clientId = 0, $data = "")
+    public function onReceiveData($clientId = 0, $data = '')
     {
         $data = trim($data);
         $parsed = explode(' ', $data);
@@ -132,12 +118,10 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      * @param int     $clientId クライアントID
      * @param string  $method   リクエストメソッド名
      * @param BEAR_Ro $ro       RO
-     *
-     * @return void
      */
     public function sendData(
         $clientId,
-        /** @noinspection PhpUnusedParameterInspection */
+        /* @noinspection PhpUnusedParameterInspection */
         $method,
         BEAR_Ro $ro
     ) {

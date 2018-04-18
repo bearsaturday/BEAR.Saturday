@@ -34,14 +34,8 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @category HTML
- * @package  HTML_QuickForm_Renderer_Tableless
- * @author   Alexey Borzov <borz_off@cs.msu.su>
- * @author   Adam Daniel <adaniel1@eesus.jnj.com>
- * @author   Bertrand Mansion <bmansion@mamasam.com>
- * @author   Mark Wiesemann <wiesemann@php.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version    @package_version@
+ *
  * @link     http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  * @ignore
  */
@@ -53,14 +47,8 @@
  * You need to specify a stylesheet like the one that you find in
  * data/stylesheet.css to make this work.
  *
- * @category HTML
- * @package  HTML_QuickForm_Renderer_Tableless
- * @author   Alexey Borzov <borz_off@cs.msu.su>
- * @author   Adam Daniel <adaniel1@eesus.jnj.com>
- * @author   Bertrand Mansion <bmansion@mamasam.com>
- * @author   Mark Wiesemann <wiesemann@php.net>
  * @license  http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version    @package_version@
+ *
  * @link     http://pear.php.net/package/HTML_QuickForm_Renderer_Tableless
  * @ignore
  */

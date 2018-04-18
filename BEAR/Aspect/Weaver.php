@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Aspect
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -18,12 +14,8 @@
  *
  * ターゲットにアドバイスを織り込むのに用います。
  *
- * @category  BEAR
- * @package   BEAR_Aspect
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 /** @noinspection PhpDocMissingThrowsInspection */
@@ -73,8 +65,9 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      * @param object $obj    ターゲットオブジェクト
      * @param array  $values メソッド引数
      *
-     * @return mixed
      * @throws Exception $e
+     *
+     * @return mixed
      */
     public function invoke($obj, array $values)
     {
@@ -84,7 +77,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
         $this->_config['entry_values'] = $values;
         // joinPointをセット
         $joinPoint = BEAR::factory('BEAR_Aspect_JoinPoint', $this->_config);
-        /** @var $joinPoint BEAR_Aspect_JoinPoint */
+        /* @var $joinPoint BEAR_Aspect_JoinPoint */
         //beforeアドバイス
         if (isset($this->_config['aspects'][self::ADVICE_BEFORE])) {
             foreach ($this->_config['aspects'][self::ADVICE_BEFORE] as $adviceClass) {
@@ -130,7 +123,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
                 $this->_config['values'] = $result;
             }
         }
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
+        /* @noinspection PhpDynamicAsStaticMethodCallInspection */
         if (isset($result) && (PEAR::isError($result) | $isException)) {
             if (isset($this->_config['aspects'][self::ADVICE_THROWING])) {
                 foreach ($this->_config['aspects'][self::ADVICE_THROWING] as $adviceClass) {
@@ -156,6 +149,7 @@ class BEAR_Aspect_Weaver extends BEAR_Base
                 $this->_config['values'] = $result;
             }
         }
+
         return $result;
     }
 
@@ -167,14 +161,14 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      * @param string $adviceClass アドバイスクラス
      * @param string $interface   インターフェイス
      *
-     * @return void
      * @throws BEAR_Aspect_Exception
      */
     private function _adviceValidation($adviceClass, $interface)
     {
-        $isValid = !$this->_config['debug'] || class_exists($adviceClass, true) && array_search(
+        $isValid = ! $this->_config['debug'] || class_exists($adviceClass, true) && array_search(
             $interface,
-            class_implements($adviceClass)
+            class_implements($adviceClass),
+            true
         );
         if ($isValid === false) {
             $msg = "{$adviceClass} is not valid advice.";

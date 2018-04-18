@@ -4,24 +4,16 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Agent
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
 /**
  * Mobileエージェント
  *
- * @category   BEAR
- * @package    BEAR_Agent
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 class BEAR_Agent_Mobile extends BEAR_Factory
@@ -53,7 +45,7 @@ class BEAR_Agent_Mobile extends BEAR_Factory
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $netUserAgentMobile = Net_UserAgent_Mobile::factory($userAgent);
         error_reporting($reporting);
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
+        /* @noinspection PhpDynamicAsStaticMethodCallInspection */
         if (PEAR::isError($netUserAgentMobile)) {
             $reporting = error_reporting(E_ALL & ~E_STRICT);
             /** @noinspection PhpDynamicAsStaticMethodCallInspection */

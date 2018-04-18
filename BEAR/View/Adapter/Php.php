@@ -4,26 +4,16 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_View
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
 /**
  * PHPビューアダプター
  *
- * @category   BEAR
- * @package    BEAR_View
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  *
  * @Singleton
@@ -49,8 +39,6 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -60,8 +48,6 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
      * UAスニッフィングインジェクト
      *
      * UAスニッフィングOnの時のインジェクタです。BEAR_Viewで指定していされています。
-     *
-     * @return void
      */
     public function onInjectUaSniffing()
     {
@@ -71,8 +57,6 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
      * ビューに値をセット
      *
      * @param array $values ビューにセットする値
-     *
-     * @return void
      */
     public function set(array $values)
     {
@@ -112,7 +96,7 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
         } else {
             $file = _BEAR_APP_HOME . $this->_config['path'] . $tplName;
         }
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             //テンプレートファイルがない
             $info = array(
                 'tpl name' => $tplName,
@@ -125,6 +109,7 @@ class BEAR_View_Adapter_Php extends BEAR_View_Adapter implements BEAR_View_Inter
         // ページバリューアサイン
         $this->_smarty->assign($this->_values);
         $html = $this->_smarty->fetch($file);
+
         return $html;
     }
 }

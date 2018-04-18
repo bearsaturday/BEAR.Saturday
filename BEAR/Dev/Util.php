@@ -4,24 +4,16 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Dev
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
 /**
  * BEAR Devユーティリティ
  *
- * @category  BEAR
- * @package   BEAR_Dev
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Dev_Util
@@ -50,31 +42,31 @@ class BEAR_Dev_Util
     {
         $hasResource = BEAR::factory('BEAR_Ro_Debug')->hasResourceDebug();
         $app = BEAR::get('app');
-        if (!$app['core']['debug']) {
+        if (! $app['core']['debug']) {
             return;
         }
         // エラー統計
-        $errorFgColor = "white";
+        $errorFgColor = 'white';
         $errors = Panda::getAllErrors();
         $errorStat = Panda::getErrorStat();
         $errorMsg = implode("\n", $errors);
         if ($errorStat & E_ERROR || $errorStat & E_USER_ERROR || $errorStat & E_RECOVERABLE_ERROR) {
-            $errorBgColor = "red";
+            $errorBgColor = 'red';
             $errorMsg = "Fatal Error: {$errorMsg}";
-            $bear = "BEAR - Error";
+            $bear = 'BEAR - Error';
         } elseif ($errorStat & E_WARNING || $errorStat & E_USER_WARNING) {
-            $errorBgColor = "yellow";
-            $errorFgColor = "black";
+            $errorBgColor = 'yellow';
+            $errorFgColor = 'black';
             $errorMsg = "WARNING: {$errorMsg}";
-            $bear = "BEAR - Warning";
+            $bear = 'BEAR - Warning';
         } elseif ($errorStat & E_NOTICE || $errorStat & E_USER_NOTICE) {
-            $errorBgColor = "#2D41D7";
+            $errorBgColor = '#2D41D7';
             $errorMsg = "NOTICE: {$errorMsg}";
-            $bear = "BEAR";
+            $bear = 'BEAR';
         } else {
-            $errorBgColor = "green";
+            $errorBgColor = 'green';
             $errorMsg = "{$errorMsg}";
-            $bear = "BEAR";
+            $bear = 'BEAR';
         }
         // デバック情報表示HTML
         // bear.jsを使用する場合はbear_debuggingがtrueになる
@@ -87,21 +79,21 @@ class BEAR_Dev_Util
             $editHtml = '';
         }
         // リソースBoxリンク
-        $color = "blue";
+        $color = 'blue';
         $res = array();
-        if (!isset($_GET['_resource'])) {
+        if (! isset($_GET['_resource'])) {
             $mode = 'box';
-            $title = "Resource Box";
-            $color = "grey";
+            $title = 'Resource Box';
+            $color = 'grey';
         } elseif ($_GET['_resource'] == 'box') {
             $mode = 'body';
-            $title = "Resource Body";
+            $title = 'Resource Body';
         } elseif ($_GET['_resource'] == 'body') {
             $mode = 'html';
-            $title = "Resource HTML";
+            $title = 'Resource HTML';
         } else {
             $mode = false;
-            $title = "No Resource Box";
+            $title = 'No Resource Box';
         }
         $currentMode = isset($_GET['_resource']) ? $_GET['_resource'] : 'none';
         $res = $mode ? array('_resource' => $mode) : array();
@@ -120,9 +112,10 @@ class BEAR_Dev_Util
         $budgeHtml .= '">' . $bear . '</a><a href="?_bearinfo" class="bear_info">i</a></div>';
         $budgeHtml = str_replace(
             '</body>',
-            "$budgeHtml" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . "</body>",
+            "$budgeHtml" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . '</body>',
             $html
         );
+
         return $budgeHtml;
     }
 
@@ -139,8 +132,6 @@ class BEAR_Dev_Util
      * ?_error=akihito.koriyama@gmail.com エラーメール送信
      * ?_error=/tmp/error.log            エラーログファイルを書き込み
      * </code>
-     *
-     * @return void
      */
     public static function onShutdownDebug()
     {
@@ -149,13 +140,13 @@ class BEAR_Dev_Util
             FB::group('errors', array('Collapsed' => true, 'Color' => 'gray'));
             foreach ($errors as $code => $error) {
                 switch (true) {
-                    case ($code == E_WARNING || $code == E_USER_WARNING):
+                    case $code == E_WARNING || $code == E_USER_WARNING:
                         $fireLevel = FirePHP::WARN;
                         break;
-                    case ($code == E_NOTICE || $code == E_USER_NOTICE):
+                    case $code == E_NOTICE || $code == E_USER_NOTICE:
                         $fireLevel = FirePHP::INFO;
                         break;
-                    case ($code == E_STRICT || $code == E_DEPRECATED):
+                    case $code == E_STRICT || $code == E_DEPRECATED:
                         $fireLevel = FirePHP::LOG;
                         break;
                     default:
@@ -172,7 +163,8 @@ class BEAR_Dev_Util
             $errorTo = $_GET['_error'];
             if ($errorTo == '') {
                 $errorCode = Panda::$phpError[$lastError['type']];
-                Panda::error("$errorCode (Last Error)", "{$lastError['message']}", '', (array)$lastError);
+                Panda::error("$errorCode (Last Error)", "{$lastError['message']}", '', (array) $lastError);
+
                 return;
             } elseif (strpos($errorTo, '@')) {
                 error_log($err, 1, $errorTo);

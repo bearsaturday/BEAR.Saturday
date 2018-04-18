@@ -4,24 +4,16 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Exception
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
 /**
  * BEAR_Exception
  *
- * @category  BEAR
- * @package   BEAR_Exception
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Exception extends Exception
@@ -96,6 +88,21 @@ class BEAR_Exception extends Exception
     }
 
     /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $str = "exception '" . get_class($this) . "'\nclass::code '" . $this->_class . '::' . $this->code . "' \n";
+        $str .= "with message '" . $this->message . "' \ninformation " . var_export($this->_info, true) . " \n";
+        $str .= "redirect to '" . $this->_redirect . "' \n";
+        $str .= "Stack trace:\n" . '  ' . str_replace("\n\n  ", '', $this->getTraceAsString());
+
+        return $str;
+    }
+
+    /**
      * 情報取得
      *
      * @return array
@@ -109,25 +116,11 @@ class BEAR_Exception extends Exception
      * リダイレクト先取得
      *
      * @return string
+     *
      * @deprecated
      */
     public function getRedirect()
     {
         return $this->_redirect;
-    }
-
-    /**
-     * __toString
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $str = "exception '" . get_class($this) . "'\nclass::code '" . $this->_class . "::" . $this->code . "' \n";
-        $str .= "with message '" . $this->message . "' \ninformation " . var_export($this->_info, true) . " \n";
-        $str .= "redirect to '" . $this->_redirect . "' \n";
-        $str .= "Stack trace:\n" . "  " . str_replace("\n\n  ", '', $this->getTraceAsString());
-
-        return $str;
     }
 }

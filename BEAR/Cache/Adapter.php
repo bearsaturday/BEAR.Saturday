@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -19,13 +14,8 @@
  *
  * キャッシュ抽象クラスです。BEAR/Cache/Adapter/の各クラスで実装します。
  *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 abstract class BEAR_Cache_Adapter extends BEAR_Base
@@ -34,7 +24,6 @@ abstract class BEAR_Cache_Adapter extends BEAR_Base
      * キャッシュ時間
      *
      * @var int
-     *
      */
     protected $_life = 0;
 
@@ -52,8 +41,6 @@ abstract class BEAR_Cache_Adapter extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {

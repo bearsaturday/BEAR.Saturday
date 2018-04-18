@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Resource
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -20,12 +16,8 @@
  * リソースリクエストキャッシュオプション(['options']['cache'])が指定されているとキャッシュオブジェクトを返し、
  * そうでないとリクエストオブジェクトを返します。
  *
- * @category  BEAR
- * @package   BEAR_Resource
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 class BEAR_Resource_Request_Cache extends BEAR_Factory
@@ -39,12 +31,13 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
      */
     public function factory()
     {
-        $isCacheRequst = isset($this->_config['options']['cache']) && !(isset($_GET['_cc']));
+        $isCacheRequst = isset($this->_config['options']['cache']) && ! (isset($_GET['_cc']));
         if ($isCacheRequst === true) {
             $obj = $this;
         } else {
             $obj = BEAR::factory('BEAR_Resource_Execute', $this->_config);
         }
+
         return $obj;
     }
 
@@ -53,8 +46,9 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
      *
      * スキーマや拡張子に応じたリソースリクエストオブジェクトを返します
      *
-     * @return BEAR_Ro
      * @throws BEAR_Resource_Request_Exception
+     *
+     * @return BEAR_Ro
      */
     public function request()
     {
@@ -99,7 +93,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                 $this->_config['values'],
                 $this->_config['options']
             );
-            if (!PEAR::isError($ro)) {
+            if (! PEAR::isError($ro)) {
                 $save = array(
                     'class' => get_class($ro),
                     'config' => $this->_config,
@@ -119,6 +113,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                 throw $this->_exception($msg, array('info' => $info));
             }
         }
+
         return $ro;
     }
 }

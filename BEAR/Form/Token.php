@@ -4,26 +4,17 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Form
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
 /**
  * BEAR_Form_Token
  *
- * @category  BEAR
- * @package   BEAR_Form
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link      https://github.com/bearsaturday
  *
+ * @link      https://github.com/bearsaturday
  */
 class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
 {
@@ -97,24 +88,6 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
     }
 
     /**
-     * 任意の長さの乱数文字列の取得
-     *
-     * @param string $salt
-     * @param int    $length
-     *
-     * @return string
-     */
-    protected function _getRndToken($salt, $length = null)
-    {
-        $sha = sha1($salt);
-        if ($length === null) {
-            return $sha;
-        }
-        $token = substr($sha, 0, $length);
-        return $token;
-    }
-
-    /**
      * @see BEAR_Form_Token_Interface::getToken()
      */
     public function getToken()
@@ -136,6 +109,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
         $sessToken = substr($sessToken, 0, self::SESSION_POE_LEN);
         $submitToken = substr($this->_submitToken, 0, self::SESSION_CSRF_LEN);
         $isValid = is_string($sessToken) && ($sessToken === $submitToken);
+
         return $isValid;
     }
 
@@ -146,7 +120,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
     {
         $poes = $this->_tokenStrage->get(self::SESSION_POE);
         $poes = is_array($poes) ? $poes : array();
-        $isDoubleSubmit = in_array($this->_submitToken, $poes);
+        $isDoubleSubmit = in_array($this->_submitToken, $poes, true);
         if ($isDoubleSubmit) {
             return false;
         }
@@ -156,6 +130,26 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
             $poes = array_slice($poes, 1, 3);
         }
         $this->_tokenStrage->set(self::SESSION_POE, $poes);
+
         return true;
+    }
+
+    /**
+     * 任意の長さの乱数文字列の取得
+     *
+     * @param string $salt
+     * @param int    $length
+     *
+     * @return string
+     */
+    protected function _getRndToken($salt, $length = null)
+    {
+        $sha = sha1($salt);
+        if ($length === null) {
+            return $sha;
+        }
+        $token = substr($sha, 0, $length);
+
+        return $token;
     }
 }

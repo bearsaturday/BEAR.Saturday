@@ -4,26 +4,16 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
 /**
  * Memcacheアダプター
  *
- * @category   BEAR
- * @package    BEAR_Cache
- * @subpackage Adapter
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  *
  * @Singleton
@@ -43,12 +33,13 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
      * @param array $config
      *
      * @see http://jp.php.net/manual/ja/function.memcache-addserver.php
+     *
      * @throws BEAR_Cache_Exception
      */
     public function __construct(array $config)
     {
         parent::__construct($config);
-        if (!extension_loaded('memcache')) {
+        if (! extension_loaded('memcache')) {
             throw new BEAR_Cache_Exception('Memcached extention is not loaded');
         }
         $this->_adapter = new Memcache();
@@ -64,9 +55,9 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         }
         $log = array();
         if ($this->_config['debug'] && isset($this->_config['path'])) {
-            /** @noinspection PhpVoidFunctionResultUsedInspection */
+            /* @noinspection PhpVoidFunctionResultUsedInspection */
             $log['Ver'] = $this->_adapter->getVersion();
-            /** @noinspection PhpUndefinedMethodInspection */
+            /* @noinspection PhpUndefinedMethodInspection */
             BEAR::dependency('BEAR_Log')->log('Memcache', $log);
         }
 
@@ -85,7 +76,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
     {
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $result = $this->_adapter->replace($this->_config['prefix'] . $key, $value, MEMCACHE_COMPRESSED, $this->_life);
-        if (!$result) {
+        if (! $result) {
             $result = $this->_adapter->set($this->_config['prefix'] . $key, $value, MEMCACHE_COMPRESSED, $this->_life);
         }
         $this->_log->log('Memcache[W]', array('key' => $key, 'result' => $result));
@@ -106,7 +97,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
     public function get($key, $default = null)
     {
         $result = $this->_adapter->get($this->_config['prefix'] . $key);
-        if ($result === false && !is_null($default)) {
+        if ($result === false && ! is_null($default)) {
             $result = $default;
         }
         if ($result instanceof BEAR_Ro_Container) {
@@ -146,7 +137,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
      */
     public function deleteAll()
     {
-        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        /* @noinspection PhpVoidFunctionResultUsedInspection */
 
         return $this->_adapter->flush();
     }

@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Main
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -32,12 +28,8 @@
  * //10分間のページキャッシュ
  * </code>
  *
- * @category  BEAR
- * @package   BEAR_Main
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @Singleton
@@ -80,7 +72,6 @@ class BEAR_Main extends BEAR_Base
      * BEAR_Page::queryMethodプロパティの設定に依存します
      *
      * @var mixed
-     * @access private
      */
     private $_submit = false;
 
@@ -103,8 +94,6 @@ class BEAR_Main extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -119,7 +108,7 @@ class BEAR_Main extends BEAR_Base
             'injector' => (isset($this->_config['injector']) ? $this->_config['injector'] : 'onInject')
         );
         $this->_page = BEAR::factory($this->_config['page_class'], $config, $options);
-        if (!BEAR::exists('page')) {
+        if (! BEAR::exists('page')) {
             BEAR::set('page', $this->_page);
         }
         $this->_log = BEAR::dependency('BEAR_Log');
@@ -135,20 +124,19 @@ class BEAR_Main extends BEAR_Base
      * @param array  $config    設定
      * @param array  $options   オプション
      *
-     * @return void
      * @throws BEAR_Page_Exception
      */
     public static function run($pageClass, array $config = array(), array $options = array())
     {
         // include
         if (self::$_isRunnable === false) {
-            BEAR::dependency('BEAR_Log')->log("Page Include", $pageClass);
+            BEAR::dependency('BEAR_Log')->log('Page Include', $pageClass);
 
             return;
         }
         self::$_isRunnable = false;
         // ページクラス存在チェック
-        if (!$pageClass || !class_exists($pageClass, false)) {
+        if (! $pageClass || ! class_exists($pageClass, false)) {
             $info = array('page_class' => $pageClass);
             throw new BEAR_Page_Exception('Page class is not defined.（ページクラスが定義されていません)', array('info' => $info));
         }
@@ -163,7 +151,7 @@ class BEAR_Main extends BEAR_Base
             $main->_run($pageClass);
         } catch (BEAR_Exception $e) {
             $redirect = $e->getRedirect();
-            if (!is_null($redirect)) {
+            if (! is_null($redirect)) {
                 if ($redirect === false) {
                     $main->end();
                 } else {
@@ -172,7 +160,7 @@ class BEAR_Main extends BEAR_Base
                 }
             }
             $log = BEAR::dependency('BEAR_Log');
-            $log->log("BEAR_Page_Exception", $e);
+            $log->log('BEAR_Page_Exception', $e);
             if (isset($main->_page) && method_exists($main->_page, 'onException')) {
                 $main->_page->onException($e);
             } else {
@@ -181,6 +169,113 @@ class BEAR_Main extends BEAR_Base
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * ページ終了処理
+     *
+     * ヘッダーとコンテンツを出力して終了します。
+     *
+     * @param null $initCache
+     *
+     * @throws BEAR_Exception
+     */
+    public function end($initCache = null)
+    {
+        $body = ob_get_contents();
+        // ページキャッシュ書き込み
+        if (isset($this->_config['cache']['type'])) {
+            if ($this->_config['cache']['type'] === 'page') {
+                $cacheData = array('type' => 'page', 'headers' => headers_list(), 'body' => $body);
+                $this->_writeCache($cacheData);
+            } elseif ((! $initCache) && $this->_config['cache']['type'] === 'init') {
+                $cacheData = array('type' => 'init', 'init' => $this->_page->get());
+                $this->_writeCache($cacheData);
+            } elseif ($this->_config['cache']['type'] !== 'init' && $this->_config['cache']['type'] !== 'page') {
+                throw $this->_exception('Invalid Cache Type', $this->_config);
+            }
+        }
+
+        if ($this->_config['debug'] === true) {
+            $body = BEAR_Dev_Util::onOutpuHtmlDebug($body);
+            // cancel with ob_clean(), then rewrite debug budge.
+            ob_clean();
+            echo $body;
+        }
+        $this->exitMain();
+    }
+
+    /**
+     * Main終了
+     *
+     * exit()の実行をここに集約しています。
+     */
+    public function exitMain()
+    {
+        unset($this->_page);
+        if ($this->_config['exit_on_end']) {
+            exit();
+        }
+    }
+
+    //    /**
+    //     * AJAXフォームでバリデーションOK
+    //     *
+    //     * フォームエレメント名をJSONで返す
+    //     *
+    //     * @param object $form フォームオブジェクト
+    //     *
+    //     * @return void
+    //     * @ignore
+    //     */
+    //    private function _ajaxValidationOk($form)
+    //    {
+    //        // ルール
+    //        foreach ($form->_rules as $key => $value) {
+    //            $ruleKeys[] = $key;
+    //        }
+    //        BEAR_Page::$formElement = array(
+    //            'quickform' => array(
+    //                'form_id' => $form->_attributes['id'],
+    //                'rules' => $ruleKeys
+    //            )
+    //        );
+    //    }
+
+    /**
+     * エラーの出力フォーマット(CLI or rich HTML)
+     *
+     * @return bool
+     */
+    public static function isCliErrorOutput()
+    {
+        static $result = null;
+
+        if (is_null($result)) {
+            $ajax = BEAR::dependency('BEAR_Page_Ajax');
+            $result = $ajax->isAjaxRequest();
+        }
+
+        return $result;
+    }
+
+    /**
+     * ページファイルのインクルード
+     *
+     * @param string $pageFile ページファイル
+     *
+     * @throws BEAR_Main_Exception
+     */
+    public static function includePage($pageFile)
+    {
+        self::$_isRunnable = false;
+        $fullPathPageFile = _BEAR_APP_HOME . '/htdocs/' . $pageFile;
+        if (! file_exists($fullPathPageFile)) {
+            throw new BEAR_Main_Exception('Page file is not exit', array('info' => array('file' => $fullPathPageFile)));
+        }
+        /** @noinspection PhpIncludeInspection */
+        include_once $fullPathPageFile;
+        self::$_isRunnable = true;
     }
 
     /**
@@ -232,8 +327,6 @@ class BEAR_Main extends BEAR_Base
      * フォームがサブミットされた場合の処理を行います。
      * サブミットされたらバリデーションを自動で行いOKならPage::onAction(), NGならPage::onOutput()をコールします。
      * </pre>
-     *
-     * @return void
      */
     protected function _runSubmit()
     {
@@ -281,8 +374,6 @@ class BEAR_Main extends BEAR_Base
      * ページのonClickメソッドをコールします。
      *
      * @param array $args 引数
-     *
-     * @return void
      */
     protected function _runClick(array $args)
     {
@@ -309,7 +400,6 @@ class BEAR_Main extends BEAR_Base
      *
      * @param array $args ページ引数
      *
-     * @return void
      * @throws Panda_Exception
      */
     protected function _runInit(array $args)
@@ -333,8 +423,6 @@ class BEAR_Main extends BEAR_Base
      * 出力前のバッファの消去
      *
      * debugモード時はdebug出力エリアとして出力します。
-     *
-     * @return void
      */
     protected function _runPreOnOutput()
     {
@@ -342,7 +430,7 @@ class BEAR_Main extends BEAR_Base
         ob_start();
         if ($this->_config['debug'] && $buff) {
             $ajax = BEAR::dependency('BEAR_Page_Ajax');
-            if (!$ajax->isAjaxRequest()) {
+            if (! $ajax->isAjaxRequest()) {
                 echo '<div style="border-style: dotted;">' . $buff . '</div>';
             }
         }
@@ -350,8 +438,6 @@ class BEAR_Main extends BEAR_Base
 
     /**
      * セッションスタート
-     *
-     * @return void
      */
     protected function _sessionStart()
     {
@@ -365,40 +451,6 @@ class BEAR_Main extends BEAR_Base
         } elseif ($app['BEAR_Session']['adapter'] != 0) {
             BEAR::dependency('BEAR_Session')->start();
         }
-    }
-
-    /**
-     * ページ終了処理
-     *
-     * ヘッダーとコンテンツを出力して終了します。
-     *
-     * @param null $initCache
-     *
-     * @throws BEAR_Exception
-     */
-    public function end($initCache = null)
-    {
-        $body = ob_get_contents();
-        // ページキャッシュ書き込み
-        if (isset($this->_config['cache']['type'])) {
-            if ($this->_config['cache']['type'] === 'page') {
-                $cacheData = array('type' => 'page', 'headers' => headers_list(), 'body' => $body);
-                $this->_writeCache($cacheData);
-            } elseif ((!$initCache) && $this->_config['cache']['type'] === 'init') {
-                $cacheData = array('type' => 'init', 'init' => $this->_page->get());
-                $this->_writeCache($cacheData);
-            } elseif ($this->_config['cache']['type'] !== 'init' && $this->_config['cache']['type'] !== 'page') {
-                throw $this->_exception('Invalid Cache Type', $this->_config);
-            }
-        }
-
-        if ($this->_config['debug'] === true) {
-            $body = BEAR_Dev_Util::onOutpuHtmlDebug($body);
-            // cancel with ob_clean(), then rewrite debug budge.
-            ob_clean();
-            echo $body;
-        }
-        $this->exitMain();
     }
 
     /**
@@ -416,7 +468,7 @@ class BEAR_Main extends BEAR_Base
     {
         // キャッシュ初期化
         $type = isset($this->_config['cache']['type']) && $this->_config['cache']['type'];
-        if (!$type) {
+        if (! $type) {
             return false;
         }
         $cache = BEAR::dependency('BEAR_Cache');
@@ -424,11 +476,11 @@ class BEAR_Main extends BEAR_Base
         $cache->setLife($this->_config['cache']['life']);
         // キーの生成（内部で保持）
         $key = $this->_page->getCacheKey();
-        if (!$type || isset($_GET['_token']) || (isset($_POST['_token'])) || (isset($_GET['_cn']))) {
+        if (! $type || isset($_GET['_token']) || (isset($_POST['_token'])) || (isset($_GET['_cn']))) {
             return false;
         }
         $cacheData = $cache->get($key);
-        if (!$cacheData) {
+        if (! $cacheData) {
             $this->_log->log('Page/Init Cache[No hit]', $key);
             // write lazy cache
             return false;
@@ -454,8 +506,6 @@ class BEAR_Main extends BEAR_Base
      * ヘッダーとコンテンツをキャッシュに保存
      *
      * @param string $cacheData キャッシュ
-     *
-     * @return void
      */
     private function _writeCache($cacheData)
     {
@@ -474,8 +524,6 @@ class BEAR_Main extends BEAR_Base
      *
      * @param object $form
      * @param object $formName
-     *
-     * @return void
      */
     private function _formValidationOk($form, $formName = null)
     {
@@ -503,28 +551,11 @@ class BEAR_Main extends BEAR_Base
     }
 
     /**
-     * Main終了
-     *
-     * exit()の実行をここに集約しています。
-     *
-     * @return void
-     */
-    public function exitMain()
-    {
-        unset($this->_page);
-        if ($this->_config['exit_on_end']) {
-            exit();
-        }
-    }
-
-    /**
      * AJAXフォームでバリデーションNG
      *
      * エラーフォームエレメント名とエラーメッセージの連想配列をJSONで返す
      *
      * @param object $form フォームオブジェクト
-     *
-     * @return void
      */
     private function _ajaxValidationNG($form)
     {
@@ -548,66 +579,5 @@ class BEAR_Main extends BEAR_Base
         $ajax->addAjax('quickform', $formResult);
         $this->_page->output('ajax');
         $this->end();
-    }
-
-    //    /**
-    //     * AJAXフォームでバリデーションOK
-    //     *
-    //     * フォームエレメント名をJSONで返す
-    //     *
-    //     * @param object $form フォームオブジェクト
-    //     *
-    //     * @return void
-    //     * @ignore
-    //     */
-    //    private function _ajaxValidationOk($form)
-    //    {
-    //        // ルール
-    //        foreach ($form->_rules as $key => $value) {
-    //            $ruleKeys[] = $key;
-    //        }
-    //        BEAR_Page::$formElement = array(
-    //            'quickform' => array(
-    //                'form_id' => $form->_attributes['id'],
-    //                'rules' => $ruleKeys
-    //            )
-    //        );
-    //    }
-
-    /**
-     * エラーの出力フォーマット(CLI or rich HTML)
-     *
-     * @return bool
-     */
-    public static function isCliErrorOutput()
-    {
-        static $result = null;
-
-        if (is_null($result)) {
-            $ajax = BEAR::dependency('BEAR_Page_Ajax');
-            $result = $ajax->isAjaxRequest();
-        }
-
-        return $result;
-    }
-
-    /**
-     * ページファイルのインクルード
-     *
-     * @param string $pageFile ページファイル
-     *
-     * @return void
-     * @throws BEAR_Main_Exception
-     */
-    public static function includePage($pageFile)
-    {
-        self::$_isRunnable = false;
-        $fullPathPageFile = _BEAR_APP_HOME . '/htdocs/' . $pageFile;
-        if (!file_exists($fullPathPageFile)) {
-            throw new BEAR_Main_Exception('Page file is not exit', array('info' => array('file' => $fullPathPageFile)));
-        }
-        /** @noinspection PhpIncludeInspection */
-        include_once $fullPathPageFile;
-        self::$_isRunnable = true;
     }
 }

@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Session
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -21,12 +17,8 @@
  * webクラスターシステムのためのDBまたはmemcacheが選択できます。
  * 詳細設定は　htdocs/.htaccess(またはphp.ini)でも行う必要があります。
  *
- * @category  BEAR
- * @package   BEAR_Session
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @Singleton
@@ -77,8 +69,6 @@ class BEAR_Session extends BEAR_Base
 
     /**
      * Inject
-     *
-     * @return void
      */
     public function onInject()
     {
@@ -86,9 +76,100 @@ class BEAR_Session extends BEAR_Base
     }
 
     /**
-     * セッションスタート
+     * セッション変数取得
      *
-     * @return void
+     * セッション変数を取得します。変数の無い場合に$defaultを指定することができます
+     *
+     * @param string $key     セッション変数名
+     * @param string $default デフォルト
+     *
+     * @return mixed セッション変数
+     * @static
+     */
+    public function &get($key, $default = null)
+    {
+        $this->_start();
+        $key = $this->_config['prefix'] . $key;
+        $values = HTTP_Session2::get($key, $default);
+        $this->_log->log('Session[R]', array($key));
+
+        return $values;
+    }
+
+    /**
+     * セッション変数セット
+     *
+     * @param string $key    セッションキー
+     * @param mixed  $values 値
+     */
+    public function set($key, $values)
+    {
+        $this->_start();
+        $key = $this->_config['prefix'] . $key;
+        $return = HTTP_Session2::set($key, $values);
+        $log = array('name' => $key, 'val' => $values, 'return' => $return);
+        $this->_log->log('Session[W]', $log);
+    }
+
+    /**
+     * セッション変数マージ
+     *
+     * 既存の値とマージしてセッション保存します。
+     *
+     * @param string $key    キー
+     * @param mixed  $values 値
+     */
+    public function merge($key, $values)
+    {
+        $this->_start();
+        $key = $this->_config['prefix'] . $key;
+        $old = HTTP_Session2::get($key);
+        if (is_array($old)) {
+            $values = array_merge_recursive($old, $values);
+        }
+        $return = HTTP_Session2::set($key, $values);
+        $log = array('key' => $key, 'val' => $values, 'result' => $return);
+        $this->_log->log('Session[Merge]', $log);
+    }
+
+    /**
+     * セッション変数消去
+     *
+     * @param string $key セッションキー
+     */
+    public function unregister($key)
+    {
+        $this->_start();
+        HTTP_Session2::unregister($this->_config['prefix'] . $key);
+        $this->_log->log('Session[DEL]', array('name' => $key));
+    }
+
+    /**
+     * セッション開始
+     */
+    public function start()
+    {
+        $this->_start();
+    }
+
+    /**
+     * アイドル更新
+     */
+    public function updateIdle()
+    {
+        HTTP_Session2::updateIdle();
+    }
+
+    /**
+     * セッション破棄
+     */
+    public function destroy()
+    {
+        HTTP_Session2::destroy();
+    }
+
+    /**
+     * セッションスタート
      */
     private function _start()
     {
@@ -160,7 +241,7 @@ class BEAR_Session extends BEAR_Base
     private static function _httpSession2Start()
     {
         session_start();
-        if (!isset($_SESSION['__HTTP_Session2_Info'])) {
+        if (! isset($_SESSION['__HTTP_Session2_Info'])) {
             $_SESSION['__HTTP_Session2_Info'] = HTTP_Session2::STARTED;
         } else {
             $_SESSION['__HTTP_Session2_Info'] = HTTP_Session2::CONTINUED;
@@ -172,7 +253,6 @@ class BEAR_Session extends BEAR_Base
      *
      * @param array $config
      *
-     * @return void
      * @throws BEAR_Session_Exception
      */
     private function _setAdapter(array $config)
@@ -180,8 +260,8 @@ class BEAR_Session extends BEAR_Base
         // セッションハンドラ初期化
         switch ($config['adapter']) {
             case self::ADAPTER_MEMCACHE:
-                ini_set("session.save_handler", 'memcache');
-                ini_set("session.save_path", $config['path']);
+                ini_set('session.save_handler', 'memcache');
+                ini_set('session.save_path', $config['path']);
                 break;
             case self::ADAPTER_DB:
                 // DSN を指定します
@@ -198,7 +278,7 @@ class BEAR_Session extends BEAR_Base
                 break;
             case self::ADAPTER_FILE:
                 if (isset($config['path']) && file_exists($config['path'])) {
-                    ini_set("session.save_path", $config['path']);
+                    ini_set('session.save_path', $config['path']);
                 }
                 break;
             case self::ADAPTER_NONE:
@@ -210,110 +290,5 @@ class BEAR_Session extends BEAR_Base
                 $info = array('adapter' => $config['adapter']);
                 throw $this->_exception($msg, array('info' => $info));
         }
-    }
-
-    /**
-     * セッション変数取得
-     *
-     * セッション変数を取得します。変数の無い場合に$defaultを指定することができます
-     *
-     * @param string $key     セッション変数名
-     * @param string $default デフォルト
-     *
-     * @return mixed セッション変数
-     * @static
-     */
-    public function &get($key, $default = null)
-    {
-        $this->_start();
-        $key = $this->_config['prefix'] . $key;
-        $values = HTTP_Session2::get($key, $default);
-        $this->_log->log('Session[R]', array($key));
-
-        return $values;
-    }
-
-    /**
-     * セッション変数セット
-     *
-     * @param string $key    セッションキー
-     * @param mixed  $values 値
-     *
-     * @return void
-     */
-    public function set($key, $values)
-    {
-        $this->_start();
-        $key = $this->_config['prefix'] . $key;
-        $return = HTTP_Session2::set($key, $values);
-        $log = array('name' => $key, 'val' => $values, 'return' => $return);
-        $this->_log->log('Session[W]', $log);
-    }
-
-    /**
-     * セッション変数マージ
-     *
-     * 既存の値とマージしてセッション保存します。
-     *
-     * @param string $key    キー
-     * @param mixed  $values 値
-     *
-     * @return void
-     */
-    public function merge($key, $values)
-    {
-        $this->_start();
-        $key = $this->_config['prefix'] . $key;
-        $old = HTTP_Session2::get($key);
-        if (is_array($old)) {
-            $values = array_merge_recursive($old, $values);
-        }
-        $return = HTTP_Session2::set($key, $values);
-        $log = array('key' => $key, 'val' => $values, 'result' => $return);
-        $this->_log->log('Session[Merge]', $log);
-    }
-
-    /**
-     * セッション変数消去
-     *
-     * @param string $key セッションキー
-     *
-     * @return void
-     */
-    public function unregister($key)
-    {
-        $this->_start();
-        HTTP_Session2::unregister($this->_config['prefix'] . $key);
-        $this->_log->log('Session[DEL]', array('name' => $key));
-    }
-
-    /**
-     * セッション開始
-     *
-     * @return void
-     */
-    public function start()
-    {
-        $this->_start();
-    }
-
-    /**
-     * アイドル更新
-     *
-     * @return void
-     */
-    public function updateIdle()
-    {
-        HTTP_Session2::updateIdle();
-    }
-
-    /**
-     * セッション破棄
-     *
-     * @return void
-     */
-    public function destroy()
-    {
-        HTTP_Session2::destroy();
     }
 }

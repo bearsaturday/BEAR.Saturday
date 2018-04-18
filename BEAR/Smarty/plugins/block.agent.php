@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -38,13 +33,8 @@
  *  'func' string ユーザー関数
  * </pre>
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  *
  * @param string $params  パラメーター
@@ -57,7 +47,7 @@
 function smarty_block_agent(
     $params,
     $content,
-    /** @noinspection PhpUnusedParameterInspection */
+    /* @noinspection PhpUnusedParameterInspection */
     &$smarty,
     &$repeat
 ) {
@@ -67,28 +57,30 @@ function smarty_block_agent(
         $valid = false;
         if (array_key_exists('in', $params)) {
             $in = explode(',', $params['in']);
-            if (in_array($ua, $in)) {
+            if (in_array($ua, $in, true)) {
                 $valid = true;
             }
         }
-        if (!$valid) {
+        if (! $valid) {
             if (array_key_exists('out', $params)) {
                 $out = explode(',', $params['out']);
-                if (!in_array($ua, $out)) {
+                if (! in_array($ua, $out, true)) {
                     $valid = true;
                 }
             }
         }
-        if (!$valid) {
+        if (! $valid) {
             $repeat = false;
         }
     } else {
         if (array_key_exists('func', $params)) {
             assert(function_exists($params['func']));
+
             return call_user_func($params['func'], $content);
-        } else {
-            return $content;
         }
+
+        return $content;
     }
+
     return '';
 }

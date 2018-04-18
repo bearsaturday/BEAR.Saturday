@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Output
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -24,7 +19,7 @@
  */
 function outputPhp(
     $values,
-    /** @noinspection PhpUnusedParameterInspection */
+    /* @noinspection PhpUnusedParameterInspection */
     array $options
 ) {
     $body = serialize($values);
@@ -32,5 +27,6 @@ function outputPhp(
     $ro = BEAR::factory('BEAR_Ro');
     $ro->setBody($body);
     $ro->setHeaders($headers);
+
     return $ro;
 }

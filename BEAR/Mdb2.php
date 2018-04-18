@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Mdb2
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -114,12 +110,8 @@
  * @config string dsn     DSN          *required
  * @config array  options MDB2オプション array()
  *
- * @category  BEAR
- * @package   BEAR_Mdb2
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @Singleton
@@ -149,8 +141,9 @@ class BEAR_Mdb2 extends BEAR_Factory
      * MDB2を生成して設定（エラーハンドラーの設定やフェッチモードをASSOC）しています。
      * $dsnを省略すればApp_DB::$config['db']['default']がDSNとして利用されます。
      *
-     * @return MDB2_Driver_Datatype_mysqli
      * @throws BEAR_Mdb2_Exception
+     *
+     * @return MDB2_Driver_Datatype_mysqli
      */
     public function factory()
     {
@@ -176,9 +169,9 @@ class BEAR_Mdb2 extends BEAR_Factory
         }
         $mdb2->setFetchMode(MDB2_FETCHMODE_ASSOC);
         $_instance[$this->_config['dsn']] = $mdb2;
+
         return $mdb2;
     }
-
 
     //    /**
     //     * エラーハンドラー
@@ -199,12 +192,10 @@ class BEAR_Mdb2 extends BEAR_Factory
     /**
      * デバック用ハンドラ
      *
-     * @param object  &$db     MDB2オブジェクト
-     * @param string  $scope   スコープ
-     * @param string  $message メッセージ
-     * @param boolean $isManip 不明
-     *
-     * @return void
+     * @param object &$db     MDB2オブジェクト
+     * @param string $scope   スコープ
+     * @param string $message メッセージ
+     * @param bool   $isManip 不明
      */
     public static function onDebug(&$db, $scope, $message, $isManip = null)
     {
@@ -216,7 +207,7 @@ class BEAR_Mdb2 extends BEAR_Factory
         if ($scope == 'query') {
             $log['message'] = $message . $db->getOption('log_line_break');
         }
-        if (!is_null($isManip)) {
+        if (! is_null($isManip)) {
             $log['isManip'] = $isManip;
         }
         $bearLog = BEAR::dependency('BEAR_Log');

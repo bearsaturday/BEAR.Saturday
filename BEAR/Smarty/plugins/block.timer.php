@@ -4,13 +4,8 @@
  *
  * PHP versions 5
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  */
 
@@ -31,13 +26,8 @@
  * 'to'   string 終了時間
  * </pre>
  *
- * @category   BEAR
- * @package    BEAR_Smarty
- * @subpackage Plugin
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama  All rights reserved.
  * @license    http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link       https://github.com/bearsaturday
  *
  * @param string $params  パラメーター
@@ -46,15 +36,16 @@
  * @param bool   &$repeat &$repeat 呼び出し回数
  *
  * @return string
+ *
  * @see        http://jp2.php.net/manual/ja/function.strtotime.php strtotime
  * @see        http://www.gnu.org/software/tar/manual/html_node/Date-input-formats.html Date-input-formats
  */
 function smarty_block_timer(
     $params,
     $content,
-    /** @noinspection PhpUnusedParameterInspection */
+    /* @noinspection PhpUnusedParameterInspection */
     &$smarty,
-    /** @noinspection PhpUnusedParameterInspection */
+    /* @noinspection PhpUnusedParameterInspection */
     &$repeat
 ) {
     $from = (strtotime($params['from']));
@@ -65,5 +56,6 @@ function smarty_block_timer(
     } else {
         $result = '';
     }
+
     return $result;
 }

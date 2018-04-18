@@ -4,12 +4,8 @@
  *
  * PHP versions 5
  *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  */
 
@@ -63,12 +59,8 @@
  * で返します。
  * </pre>
  *
- * @category  BEAR
- * @package   BEAR_Ro
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
  * @license   http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
+ *
  * @link      https://github.com/bearsaturday
  *
  * @Singleton
@@ -101,6 +93,13 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * set() configキー
      */
     const CONFIG_PAGER = 'pager';
+
+    /**
+     * コンフィグ
+     *
+     * @var array
+     */
+    protected $_config = array();
 
     /**
      * ボディ
@@ -147,13 +146,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     private static $_page = 'page';
 
     /**
-     * コンフィグ
-     *
-     * @var array
-     */
-    protected $_config = array();
-
-    /**
      * Constructor
      *
      * @param array $config
@@ -169,9 +161,38 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     }
 
     /**
-     * Inject
+     * マジックメソッド - 文字列化
      *
-     * @return void
+     * @return string
+     */
+    public function __toString()
+    {
+        try {
+            $string = $this->toString();
+        } catch (Exception $e) {
+            return '';
+        }
+
+        return $string;
+    }
+
+    /**
+     * 関数としての振る舞い
+     *
+     * @param array $values
+     *
+     * @return mixed
+     */
+    public function __invoke(array $values)
+    {
+        $config = array_merge($this->_config, array('values' => $values));
+        $ro = BEAR::factory('BEAR_Resource_Request', $config)->request();
+
+        return $ro;
+    }
+
+    /**
+     * Inject
      */
     public function onInject()
     {
@@ -252,7 +273,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * @return array
      */
     public function onLink(
-        /** @noinspection PhpUnusedParameterInspection */
+        /* @noinspection PhpUnusedParameterInspection */
         $values
     ) {
         return array();
@@ -271,12 +292,11 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * @param bool   $bool 条件
      * @param string $msg  エラー例外のinfo
      *
-     * @return void
      * @throws Exception
      */
     public function assert($bool, $msg = 'Bad Resource Request (assert)')
     {
-        if (!$bool) {
+        if (! $bool) {
             throw $this->_exception(
                 $msg,
                 array(
@@ -299,9 +319,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * @param array $keys   必須キー配列
      * @param array $values テストする配列
      *
-     * @return void
      * @throws BEAR_Exception
-     * @deprecated @requierdを用います。
+     *
+     * @deprecated @requierdを用います
      */
     public function assertRequired(array $keys, $values)
     {
@@ -342,8 +362,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * リソースヘッダーの取得
      *
      * @param $headerKey
-     *
-     * @return null
      */
     public function getHeader($headerKey)
     {
@@ -533,37 +551,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     }
 
     /**
-     * マジックメソッド - 文字列化
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        try {
-            $string = $this->toString();
-        } catch (Exception $e) {
-            return '';
-        }
-
-        return $string;
-    }
-
-    /**
-     * 関数としての振る舞い
-     *
-     * @param array $values
-     *
-     * @return mixed
-     */
-    public function __invoke(array $values)
-    {
-        $config = array_merge($this->_config, array('values' => $values));
-        $ro = BEAR::factory('BEAR_Resource_Request', $config)->request();
-
-        return $ro;
-    }
-
-    /**
      * HTTP出力
      *
      * <pre>
@@ -571,28 +558,26 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * _codeプロパティがレスポンスコード、_header配列プロパティのうち
      * 文字列のものがHTTPヘッダー,_bodyプロパティがHTTPボディとして出力されます。
      * </pre>
-     *
-     * @return void
      */
     public function outputHttp()
     {
         // ヘッダー
         switch ($this->_code) {
             case BEAR::CODE_BAD_REQUEST:
-                header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
-                if (!$this->_body) {
+                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
+                if (! $this->_body) {
                     $this->setBody('400 Bad Request (BEAR)');
                 }
                 break;
             case BEAR::CODE_ERROR:
-                header($_SERVER["SERVER_PROTOCOL"] . ' 500 Server Error');
-                if (!$this->_body) {
+                header($_SERVER['SERVER_PROTOCOL'] . ' 500 Server Error');
+                if (! $this->_body) {
                     $this->setBody('500 Server Error (BEAR)');
                 }
                 break;
             case BEAR::CODE_OK:
             default:
-                header($_SERVER["SERVER_PROTOCOL"] . ' 200 OK');
+                header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
         }
         // this RO headers
         if (is_array($this->_headers)) {
@@ -644,7 +629,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * @param mixed $offset セットするオフセット
      * @param mixed $value  セットする値
      *
-     * @return void
      * @ignore
      */
     public function offsetSet($offset, $value)
@@ -678,7 +662,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      *
      * @param mixed $offset オフセット
      *
-     * @return void
      * @ignore
      */
     public function offsetUnset($offset)
@@ -790,7 +773,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     public function set($key = null)
     {
         // キー省略
-        if (!$key) {
+        if (! $key) {
             // 未指定の場合://と/を_に変換してアサイン名に
             $config = $this->getConfig();
             $key = strtolower(str_replace('/', '_', $config['uri']));
@@ -834,9 +817,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     {
         if (isset($key)) {
             return $this->_config[$key];
-        } else {
-            return $this->_config;
         }
+
+        return $this->_config;
     }
 
     /**
@@ -844,31 +827,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      *
      * @param string $name    プロパティ
      * @param object $service サービス
-     *
-     * @return void
      */
     public function setService($name, $service)
     {
         $this->$name = $service;
-    }
-
-    /**
-     * 例外の作成
-     *
-     * @param string $msg
-     * @param array  $config
-     *
-     * @return Exception
-     */
-    protected function _exception($msg, array $config)
-    {
-        $class = get_class($this) . '_Exception';
-        $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-        if (!file_exists(_BEAR_APP_HOME . "/{$file}") && !file_exists(_BEAR_BEAR_HOME . "/{$file}")) {
-            $class = 'BEAR_Ro_Exception';
-        }
-
-        return new $class($msg, $config);
     }
 
     /**
@@ -896,6 +858,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     /**
      * @deprecated
      * @ignore
+     *
      * @return string
      */
     public function getRequestText()
@@ -905,5 +868,24 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         ) : '');
 
         return $result;
+    }
+
+    /**
+     * 例外の作成
+     *
+     * @param string $msg
+     * @param array  $config
+     *
+     * @return Exception
+     */
+    protected function _exception($msg, array $config)
+    {
+        $class = get_class($this) . '_Exception';
+        $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+        if (! file_exists(_BEAR_APP_HOME . "/{$file}") && ! file_exists(_BEAR_BEAR_HOME . "/{$file}")) {
+            $class = 'BEAR_Ro_Exception';
+        }
+
+        return new $class($msg, $config);
     }
 }
