@@ -15,11 +15,11 @@
     "repositories": [
         {
             "type": "pear",
-            "url": "http://pear.php.net"
+            "url": "https://pear.php.net"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/satomif/beardemo.local.git"
+            "url": "git@github.com:bearsaturday/beardemo.local.git"
         }
     ],
     "include-path": [
