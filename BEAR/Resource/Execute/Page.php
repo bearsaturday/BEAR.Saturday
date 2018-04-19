@@ -137,7 +137,8 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
         $result = array();
         for ($i = 0; $i < $cnt; $i++) {
             $item = $this->_roPrototye->pop();
-            list($key, $prototypeRo) = each($item);
+            $key = key($item);
+            $prototypeRo = current($item);
             /* @var $prototypeRo BEAR_Ro_Prototype */
             $result[$key] = $prototypeRo->getValue();
         }
