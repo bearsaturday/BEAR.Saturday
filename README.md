@@ -1,4 +1,3 @@
-# This package is not maintained anymore and has been superseded. Use [BEAR.Sunday](https://bearsunday.github.io/) Instead.
 
 ----
 
@@ -8,12 +7,18 @@ BEAR.Saturday
 What is BEAR.Satruday ?
 -----------------
 
-BEAR.Saturday is a PHP 5.2+ resource oriented web framework. 
+BEAR.Saturday is a resource oriented web framework. 
+
+Install
+-------
+
+composer require bearsaturday/bearsaturday ^0.10
 
 Requirements
 ------------
 
-BEAR.Saturday is supported on PHP 5.2+.
+ * PHP 5.4 - 7.1 
+
 Use [BEAR.Sunday](http://bearsunday.github.io/) for PHP5.6+
 
 
