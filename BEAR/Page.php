@@ -592,27 +592,28 @@ abstract class BEAR_Page extends BEAR_Base
         // initでsetされたroをバリューに
         $stackedRos = BEAR::dependency('BEAR_Ro_Prototype')->popAll();
         foreach ($stackedRos as $item) {
-            list($key, $prototypeRo) = each($item);
-            /* @var $prototypeRo BEAR_Ro_Prototype */
-            $setOption = $prototypeRo->getSetOption();
-            switch ($setOption) {
-                case 'ajax':
-                    $prototypeRo->setConfig('is_ajax_set', true);
-                    break;
-                case 'lazy':
-                    $this->set($key, $prototypeRo);
-                    break;
-                case 'object':
-                    $ro = $prototypeRo->request();
-                    $this->set($key, $ro);
-                    break;
-                case 'shutdown':
-                    BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($prototypeRo);
-                    break;
-                case 'value':
-                default:
-                    $value = $prototypeRo->getValue();
-                    $this->set($key, $value);
+            foreach ($item as $key => $prototypeRo) {
+                /* @var $prototypeRo BEAR_Ro_Prototype */
+                $setOption = $prototypeRo->getSetOption();
+                switch ($setOption) {
+                    case 'ajax':
+                        $prototypeRo->setConfig('is_ajax_set', true);
+                        break;
+                    case 'lazy':
+                        $this->set($key, $prototypeRo);
+                        break;
+                    case 'object':
+                        $ro = $prototypeRo->request();
+                        $this->set($key, $ro);
+                        break;
+                    case 'shutdown':
+                        BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($prototypeRo);
+                        break;
+                    case 'value':
+                    default:
+                        $value = $prototypeRo->getValue();
+                        $this->set($key, $value);
+                }
             }
         }
     }
