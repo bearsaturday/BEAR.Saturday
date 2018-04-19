@@ -9,7 +9,7 @@ $bearDemoPath = __DIR__ . '../vendor/bearsaturday/beardemo.local';
 
 // set autoloder
 set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());
-require_once 'vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 spl_autoload_register('bearTestAutolodaer');
 if (!BEAR::exists('page')) {
