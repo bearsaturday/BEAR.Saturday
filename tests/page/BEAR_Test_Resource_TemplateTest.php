@@ -15,6 +15,15 @@
  */
 class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var BEAR_Resource
+     */
+    private $_resource;
+    
+    /**
+     * @var BEAR_Test_Query
+     */
+    private $_query;
 
     public function setUp()
     {

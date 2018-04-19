@@ -19,6 +19,11 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      */
     private $_resource;
     
+    /**
+     * @var BEAR_Test_Query
+     */
+    private $_query;
+    
     public function setUp()
     {
         $basePath = dirname(dirname(__DIR__));
