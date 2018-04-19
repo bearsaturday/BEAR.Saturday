@@ -1,6 +1,6 @@
 {
     "name": "bearsaturday/bearsaturday",
-    "description": "BEAR.Saturday framework for PHP 5.2+(composer install can use from php5.4)",
+    "description": "BEAR.Saturday framework",
     "keywords": [
         "Framework",
         "BEAR.Saturday"
@@ -11,15 +11,6 @@
             "name": "Akihito Koriyama",
             "email": "akihito.koriyama@gmail.com"
         }
-    ],
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.php.net"
-        }
-    ],
-    "include-path": [
-        "./"
     ],
     "require": {
         "php": ">=5.4",
@@ -55,11 +46,6 @@
         "pear-pear.php.net/Services_JSON": "^1.0",
         "mustangostang/spyc": "^0.6.2"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-php7": "1.0.x-dev"
-        }
-    },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
         "phpunit/dbunit": "^1.4.1",
@@ -71,14 +57,43 @@
         "bearsaturday/beardemo.local": "dev-master"
     },
     "bin": [
-        "BEAR/BEAR/bin/bear.sh"
+        "BEAR/BEAR/bin/bear.php"
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "https://pear.php.net"
+        }
+    ],
+    "include-path": [
+        "./"
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-php7": "0.10.x-dev"
+        }
+    },
     "config":{
         "secure-http" : false
     },
-    "suggest": {
-        "pear-pear.php.net/PHP_CodeSniffer": "If you use __bear debug, add require-dev ^2.9"
+    "scripts": {
+        "test": ["bin/test.php"],
+        "tests": [
+            "@cs",
+            "phpmd src text ./phpmd.xml",
+            "phpstan analyse -l max src tests -c phpstan.neon --no-progress",
+            "@test"
+        ],
+        "coverage": ["php -dzend_extension=xdebug.so ./phpunit --coverage-text --coverage-html=build/coverage"],
+        "cs": [
+            "php-cs-fixer fix -v --dry-run",
+            "phpcs --standard=phpcs.xml src;"
+        ],
+        "cs-fix": [
+            "php-cs-fixer fix -v",
+            "phpcbf src tests"
+        ]
     }
 }
