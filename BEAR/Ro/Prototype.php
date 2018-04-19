@@ -338,15 +338,17 @@ class BEAR_Ro_Prototype extends BEAR_Ro
             // キャッシュ読み込み
             $cache = BEAR::dependency('BEAR_Cache')->setLife($life);
             $pagerKey = isset($_GET['_start']) ? $_GET['_start'] : '';
-            $ua = BEAR::get('page')->getConfig('ua');
-            $cacheKey = $ua . md5(serialize($this->_config['request']) . "-{$pagerKey}");
-            $saved = $cache->get($cacheKey);
-            if ($saved) {
-                $this->_ro = $saved;
-
-                return;
+            if (BEAR::exists('page')) {
+                $ua = BEAR::get('page')->getConfig('ua');
+                $cacheKey = $ua . md5(serialize($this->_config['request']) . "-{$pagerKey}");
+                $saved = $cache->get($cacheKey);
+                if ($saved) {
+                    $this->_ro = $saved;
+        
+                    return;
+                }
+                $useCache = true;
             }
-            $useCache = true;
         }
         //実リクエスト
         $body = ($isLinked !== true) ? $this->_ro->getBody() : $this->getLinkedBody();
