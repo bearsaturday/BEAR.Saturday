@@ -52,7 +52,8 @@
         "pear-pear.php.net/File_SearchReplace": "^1.1",
         "pear-pear.php.net/HTML_CSS": "^1.5",
         "pear-pear.php.net/Net_Server": "^1.0",
-        "pear-pear.php.net/Services_JSON": "^1.0"
+        "pear-pear.php.net/Services_JSON": "^1.0",
+        "mustangostang/spyc": "^0.6.2"
     },
     "extra": {
         "branch-alias": {
