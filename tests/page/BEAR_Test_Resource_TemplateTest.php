@@ -31,7 +31,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リソーステンプレートを適用しリソースを持つページのテスト
-     * @runInSeparateProcess
+     *
      */
     public function testResourceWithTemplate()
     {
@@ -62,7 +62,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
      * テンプレートキャッシュテスト
      *
      * ２回同じURIをreadしたらリソーステンプレートの時刻表時が違うはずです
-     * @runInSeparateProcess
+     *
      */
     public function testResourceWithTemplateWithCache()
     {
@@ -85,7 +85,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
      * テンプレートキャッシュテスト
      *
      * テンプレートの時刻表時も同じはずです
-     * @runInSeparateProcess
+     *
      */
     public function testResourceWithTemplateWithoutCache()
     {
@@ -106,7 +106,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リンクとテンプレート指定されたリソース
-     * @runInSeparateProcess
+     *
      */
     public function testResourceWithTemplateAndLinkAndCache()
     {
@@ -127,7 +127,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リンクとテンプレート指定されたリソースにページャー付
-     * @runInSeparateProcess
+     *
      */
     public function testResourceWithTemplateAndLinkAndPager()
     {
@@ -147,7 +147,7 @@ class BEAR_resources_Test extends PHPUnit_Framework_TestCase
 
     /**
      * リンクとテンプレート指定されたリソースにページャー付
-     * @runInSeparateProcess
+     *
      */
     public function testResourceWithTemplateAndLinkAndPagerWithPage2()
     {

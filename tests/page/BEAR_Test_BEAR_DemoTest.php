@@ -33,7 +33,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      * リソーステンプレート
      *
      * page://self/resource/template
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplate()
     {
@@ -56,7 +56,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * リソース +リンク +テンプレート
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplateLink()
     {
@@ -80,7 +80,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * リソース +リンク +テンプレート + ページャー
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplateLinkPage1()
     {
@@ -100,7 +100,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * リソース +リンク +テンプレート + ページャー
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplateLinkPage2()
     {
@@ -120,7 +120,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * HTTPリソース
-     * @runInSeparateProcess
+     *
      */
     public function atestResourceHttp()
     {
@@ -143,7 +143,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Docomo出力テスト
-     * @runInSeparateProcess
+     *
      */
     public function testPageResourceDocomo()
     {
@@ -166,7 +166,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Pageリソースのページのリソース
-     * @runInSeparateProcess
+     *
      */
     public function testResourcePage()
     {
@@ -189,7 +189,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      * セットオプション
      *
      * page://self/resource/template
-     * @runInSeparateProcess
+     *
      */
     public function testResourceSetIndex()
     {
@@ -213,7 +213,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * CSVリソース
-     * @runInSeparateProcess
+     *
      */
     public function testResourceCsv()
     {
@@ -244,7 +244,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      * AOPテスト
      *
      * test/aop.php
-     * @runInSeparateProcess
+     *
      */
     public function testTestAop()
     {
