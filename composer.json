@@ -12,15 +12,6 @@
             "email": "akihito.koriyama@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.php.net"
-        }
-    ],
-    "include-path": [
-        "./"
-    ],
     "require": {
         "php": ">=5.4",
         "bearsaturday/panda": "^0.4",
@@ -28,8 +19,7 @@
         "satomif/session_register": "^0.0",
         "satomif/session_unregister": "^0.0",
         "pear-pear.php.net/Cache_Lite": "^1.8",
-        "pear-pear.php.net/HTML_QuickForm": "^3.2",
-        "pear-pear.php.net/HTML_QuickForm_Renderer_Tableless": "^0.6",
+        "openpsa/quickform": "^3.3.2.1",
         "pear-pear.php.net/HTTP_Request2": "^2.3",
         "pear-pear.php.net/HTTP_Session2": "^0.7",
         "pear-pear.php.net/Log": "^1.13",
@@ -52,15 +42,11 @@
         "pear-pear.php.net/File_SearchReplace": "^1.1",
         "pear-pear.php.net/HTML_CSS": "^1.5",
         "pear-pear.php.net/Net_Server": "^1.0",
-        "pear-pear.php.net/Services_JSON": "^1.0"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-0.10.0": "0.10.x-dev"
-        }
+        "pear-pear.php.net/Services_JSON": "^1.0",
+        "mustangostang/spyc": "^0.6.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8",
+        "phpunit/phpunit": "^4.8 | ^5.7",
         "phpunit/dbunit": "^1.4.1",
         "doctrine/instantiator": "^1.0.5",
         "phpunit/php-invoker": "^1.1",
@@ -74,7 +60,39 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "https://pear.php.net"
+        }
+    ],
+    "include-path": [
+        "./"
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-php7": "0.10.x-dev"
+        }
+    },
     "config":{
         "secure-http" : false
+    },
+    "scripts": {
+        "test": ["bin/test.php"],
+        "tests": [
+            "@cs",
+            "phpmd src text ./phpmd.xml",
+            "phpstan analyse -l max src tests -c phpstan.neon --no-progress",
+            "@test"
+        ],
+        "coverage": ["php -dzend_extension=xdebug.so ./phpunit --coverage-text --coverage-html=build/coverage"],
+        "cs": [
+            "php-cs-fixer fix -v --dry-run",
+            "phpcs --standard=phpcs.xml src;"
+        ],
+        "cs-fix": [
+            "php-cs-fixer fix -v",
+            "phpcbf src tests"
+        ]
     }
 }

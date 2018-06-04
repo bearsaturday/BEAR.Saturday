@@ -20,7 +20,7 @@ if (!defined('_BEAR_BEAR_HOME')) {
 
 // 現在時刻 (W3CDTFフォーマット）
 if (!defined('_BEAR_DATETIME')) {
-    define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
+    define('_BEAR_DATETIME', date("Y-m-d H:i:s"));
 }
 
 /**
@@ -254,7 +254,7 @@ class BEAR
                         $content = file_get_contents($target);
                         $yaml = syck_load($content);
                     } else {
-                        include_once 'BEAR/vendors/spyc-0.2.5/spyc.php';
+                        require_once __DIR__ . '/vendor/mustangostang/spyc/Spyc.php';
                         $yaml = Spyc::YAMLLoad($target);
                     }
                     $cache->set($key, $yaml);
@@ -323,7 +323,7 @@ class BEAR
             $appYaml = yaml_parse_file($target);
             $bearYaml = yaml_parse_file(_BEAR_BEAR_HOME . '/BEAR/BEAR/bear.yml');
         } else {
-            include_once 'BEAR/vendors/spyc-0.2.5/spyc.php';
+            require_once __DIR__ . '/vendor/mustangostang/spyc/Spyc.php';
             $appYaml = Spyc::YAMLLoad($target);
             $bearYaml = Spyc::YAMLLoad(file_get_contents(_BEAR_BEAR_HOME . '/BEAR/BEAR/bear.yml'));
         }

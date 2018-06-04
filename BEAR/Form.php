@@ -175,11 +175,6 @@ class BEAR_Form extends BEAR_Factory
      */
     private static $_renderConfig = array();
 
-    /**
-     * Constructor
-     *
-     * @param array $config
-     */
     public function __construct(array $config)
     {
         parent::__construct($config);
@@ -198,10 +193,8 @@ class BEAR_Form extends BEAR_Factory
      * ファクトリー
      *
      * Quick_Formオブエクトを生成して設定します。
-     *
-     * @return HTML_QuickForm
      */
-    public function factory()
+    public function factory() : HTML_QuickForm
     {
         $this->_config['action'] = (! isset($this->_config['action']) || $this->_config['action'] == '') ? $_SERVER['REQUEST_URI'] : $this->_config['action'];
         $options = array(
@@ -280,21 +273,6 @@ class BEAR_Form extends BEAR_Factory
     {
         return self::$_renderer;
     }
-
-    //    /**
-    //     * セッショントークンの取得
-    //     *
-    //     * セッション開始時につくられるトークンを取得します
-    //     *
-    //     * @return string
-    //     * @static
-    //     */
-    //    public static function getSessionToken()
-    //    {
-    //        $session = BEAR::dependency('BEAR_Session');
-    //        $result = $session->get(BEAR_Session::SESSION_TOKEN);
-    //        return $result;
-    //    }
 
     /**
      * Add submit header
@@ -481,6 +459,7 @@ class BEAR_Form extends BEAR_Factory
      * @param array $options  オプション
      *
      * @return HTML_QuickForm
+     * @throws HTML_QuickForm_Error
      */
     private function _factory($formName, array $options)
     {

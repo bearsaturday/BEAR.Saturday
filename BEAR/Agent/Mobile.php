@@ -33,7 +33,7 @@ class BEAR_Agent_Mobile extends BEAR_Factory
     public function factory()
     {
         $userAgent = $this->_config['user_agent'];
-        $reporting = error_reporting(E_ALL & ~E_STRICT);
+        $reporting = error_reporting(E_ALL ^ E_STRICT ^ E_DEPRECATED);
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $netUserAgentMobile = Net_UserAgent_Mobile::factory($userAgent);
         error_reporting($reporting);

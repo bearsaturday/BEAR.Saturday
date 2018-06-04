@@ -14,14 +14,23 @@
  */
 class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @var BEAR_Resource
+     */
+    private $_resource;
+    
+    /**
+     * @var BEAR_Test_Query
+     */
+    private $_query;
+    
     public function setUp()
     {
         $basePath = dirname(dirname(__DIR__));
         $bearDemoPath = $basePath . '/vendor/bearsaturday/beardemo.local';
         set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());
         require_once $bearDemoPath . '/App.php';
-        error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+        error_reporting(E_ALL);
 
         //restore_error_handler();
         $this->_resource = new BEAR_Resource(array());
@@ -33,7 +42,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      * リソーステンプレート
      *
      * page://self/resource/template
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplate()
     {
@@ -56,7 +65,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * リソース +リンク +テンプレート
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplateLink()
     {
@@ -80,7 +89,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * リソース +リンク +テンプレート + ページャー
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplateLinkPage1()
     {
@@ -100,7 +109,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * リソース +リンク +テンプレート + ページャー
-     * @runInSeparateProcess
+     *
      */
     public function testResourceTemplateLinkPage2()
     {
@@ -120,7 +129,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * HTTPリソース
-     * @runInSeparateProcess
+     *
      */
     public function atestResourceHttp()
     {
@@ -143,7 +152,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Docomo出力テスト
-     * @runInSeparateProcess
+     *
      */
     public function testPageResourceDocomo()
     {
@@ -166,7 +175,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Pageリソースのページのリソース
-     * @runInSeparateProcess
+     *
      */
     public function testResourcePage()
     {
@@ -189,7 +198,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      * セットオプション
      *
      * page://self/resource/template
-     * @runInSeparateProcess
+     *
      */
     public function testResourceSetIndex()
     {
@@ -213,7 +222,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
 
     /**
      * CSVリソース
-     * @runInSeparateProcess
+     *
      */
     public function testResourceCsv()
     {
@@ -244,7 +253,7 @@ class BEAR_Test_BEAR_DemoTest extends PHPUnit_Framework_TestCase
      * AOPテスト
      *
      * test/aop.php
-     * @runInSeparateProcess
+     *
      */
     public function testTestAop()
     {
