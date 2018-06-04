@@ -55,6 +55,10 @@
         "pear-pear.php.net/PHP_CodeSniffer": "^2.9",
         "bearsaturday/beardemo.local": "dev-master"
     },
+    "autoload": {
+        "classmap": ["BEAR"],
+        "files": ["BEAR.php"]
+    },
     "bin": [
         "BEAR/BEAR/bin/bear.php"
     ],
