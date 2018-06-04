@@ -20,7 +20,7 @@ if (!defined('_BEAR_BEAR_HOME')) {
 
 // 現在時刻 (W3CDTFフォーマット）
 if (!defined('_BEAR_DATETIME')) {
-    define('_BEAR_DATETIME', date('c', $_SERVER['REQUEST_TIME']));
+    define('_BEAR_DATETIME', date("Y-m-d H:i:s"));
 }
 
 /**
