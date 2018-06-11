@@ -40,7 +40,7 @@ Run demo site [beardemo.local](https://github.com/bearsaturday/beardemo.local)
 
 コーディングの参考にしてください
 
-Youtube
+YouTube
 ----
 See [Hello World demo][2] in youtube. 
 
