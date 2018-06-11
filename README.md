@@ -17,7 +17,7 @@ composer require bearsaturday/bearsaturday ^0.10
 Requirements
 ------------
 
- * PHP 5.4 - 7.1 
+ * PHP 5.4 - 7.2 
 
 Use [BEAR.Sunday](http://bearsunday.github.io/) for PHP5.6+
 
@@ -35,6 +35,12 @@ ln -s MyVendor.MyPackage/htdocs /path/to/vhost_dir
 ```
 
 Demo
+----
+Run demo site [beardemo.local](https://github.com/bearsaturday/beardemo.local)
+
+コーディングの参考にしてください
+
+Youtube
 ----
 See [Hello World demo][2] in youtube. 
 
