@@ -48,6 +48,9 @@
     "require-dev": {
         "phpunit/phpunit": "^5.7"
     },
+    "include-path": [
+        "./"
+    ],
     "autoload": {
         "classmap": ["BEAR"],
         "files": ["BEAR.php"]
