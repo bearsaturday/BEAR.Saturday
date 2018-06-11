@@ -5,7 +5,14 @@
 
 ## What is BEAR.Satruday ?
 
-BEAR.Saturday is a resource oriented web framework. 
+BEAR.Saturday is a resource oriented web framework for PHP5.2+
+
+Use [BEAR.Sunday](http://bearsunday.github.io/) for new project.
+
+Requirements
+------------
+
+ * PHP 5.2 - 7.2 
 
 ## Install
 
@@ -20,14 +27,6 @@ composer require bearsaturday/bearsaturday ^0.9
 ```
 composer require bearsaturday/bearsaturday ^0.10
 ```
-
-Requirements
-------------
-
- * PHP 5.4 - 7.2 
-
-Use [BEAR.Sunday](http://bearsunday.github.io/) for PHP5.6+
-
 
 Create project with BEAR.Saturday
 -------------
