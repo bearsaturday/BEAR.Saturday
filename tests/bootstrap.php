@@ -1,21 +1,11 @@
 <?php
 
-restore_error_handler();
-date_default_timezone_set('Asia/Tokyo');
-
 // set path
-$basePath = dirname(__DIR__);
-$bearDemoPath = __DIR__ . '../vendor/bearsaturday/beardemo.local';
-
-// set autoloder
-set_include_path($basePath . PATH_SEPARATOR . $bearDemoPath . PATH_SEPARATOR . get_include_path());
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-
+$bearPath = realpath(dirname(__DIR__));
 spl_autoload_register('bearTestAutolodaer');
-if (!BEAR::exists('page')) {
-    BEAR::set('page', new BEAR_Page_Cli(array()));
-}
 function bearTestAutolodaer($class) {
     $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
     include_once $file;
 }
+BEAR::set('page', new BEAR_Page_Cli(array()));
+BEAR::set('BEAR_Session', BEAR::factory('BEAR_Session', array('adapter' => 0, 'prefix' => '')));
