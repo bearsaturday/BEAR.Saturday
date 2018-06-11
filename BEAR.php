@@ -323,7 +323,6 @@ class BEAR
             $appYaml = yaml_parse_file($target);
             $bearYaml = yaml_parse_file(_BEAR_BEAR_HOME . '/BEAR/BEAR/bear.yml');
         } else {
-            require_once __DIR__ . '/vendor/mustangostang/spyc/Spyc.php';
             $appYaml = Spyc::YAMLLoad($target);
             $bearYaml = Spyc::YAMLLoad(file_get_contents(_BEAR_BEAR_HOME . '/BEAR/BEAR/bear.yml'));
         }
