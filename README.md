@@ -53,3 +53,6 @@ See [Hello World demo][2] in youtube.
 
 [2]: http://www.youtube.com/watch?v=NKdiNdNbH0Y
 
+---
+
+First public release: 31 July 2008
