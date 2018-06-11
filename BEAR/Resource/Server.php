@@ -1,17 +1,8 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category   BEAR
- * @package    BEAR_Resource
- * @subpackage Server
- * @author     Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright  2008-2017 Akihito Koriyama All rights reserved.
- *
- * @version    @package_version@
- *
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 /**
@@ -42,7 +33,6 @@ class BEAR_Resource_Server extends BEAR_Base
      * @param string $handlerName サーバーハンドラ名
      * @param bool   $ipAddress   サーバーIP
      *
-     * @return void
      * @see http://pear.php.net/manual/ja/package.networking.net-server.net-server.create.php
      */
     public function start(
@@ -52,13 +42,13 @@ class BEAR_Resource_Server extends BEAR_Base
         $ipAddress = false
     ) {
         $type = $isFork ? 'fork' : 'sequential';
-        if (!$ipAddress) {
+        if (! $ipAddress) {
             $hostname = exec('uname -n');
             $ipAddress = gethostbyname($hostname);
         }
         if (class_exists($handlerName)) {
-            $server = &Net_Server::create($type, $ipAddress, $port);
-            $handler = &new $handlerName();
+            $server = Net_Server::create($type, $ipAddress, $port);
+            $handler = new $handlerName();
             $server->setCallbackObject($handler);
             $server->_debug = $this->_config['debug'];
             $this->_printStartUpinfo("$ipAddress $port", $type);
@@ -76,8 +66,6 @@ class BEAR_Resource_Server extends BEAR_Base
      *
      * @param string $ipAddress IPアドレス
      * @param string $type      サーバータイプ
-     *
-     * @return void
      */
     private function _printStartUpinfo($ipAddress, $type)
     {
