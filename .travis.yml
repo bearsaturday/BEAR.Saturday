@@ -1,4 +1,5 @@
 language: php
+dist: precise
 sudo: false
 php:
   - 5.4
