@@ -1,18 +1,25 @@
 
 ----
 
-BEAR.Saturday
-======
+# BEAR.Saturday
 
-What is BEAR.Satruday ?
------------------
+## What is BEAR.Satruday ?
 
 BEAR.Saturday is a resource oriented web framework. 
 
-Install
--------
+## Install
 
+### PHP 5.x
+
+```
+composer require bearsaturday/bearsaturday ^0.9
+```
+
+### PHP 7.x
+
+```
 composer require bearsaturday/bearsaturday ^0.10
+```
 
 Requirements
 ------------
