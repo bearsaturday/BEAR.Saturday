@@ -64,7 +64,7 @@ class BEAR_Ro_Debug extends BEAR_Base
                 if ($resourceHtml == '') {
                     $resourceHtml = '<span class="hl-all">(*Empty String)</span>';
                 } else {
-                    $resourceHtml = '<span class="hl-all">' . $hlHtml->highlight($resourceHtml) . '</span>';
+                    $resourceHtml = '<span class="hl-all">' . highlight_string($resourceHtml, true) . '</span>';
                 }
             } elseif ($_GET['_resource'] === 'body') {
                 $resourceHtml = print_a($body, 'return:1');

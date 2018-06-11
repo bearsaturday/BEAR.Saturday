@@ -229,8 +229,9 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * インサート
      *
-     * @return mixed|mixed
      * @throws PEAR_Exception
+     *
+     * @return mixed|mixed
      */
     public function insert(array $values, $table = null, $types = null)
     {
@@ -239,9 +240,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $types = $types ? $types : $this->_config['types'];
         $affectedRow = $db->extended->autoExecute($table, $values, MDB2_AUTOQUERY_INSERT, false, $types);
         if (Pear::isError($affectedRow)) {
-            /** @var PEAR_Error $affectedRow */
+            /* @var PEAR_Error $affectedRow */
             throw new PEAR_Exception(($affectedRow->getUserInfo()));
         }
+
         return $affectedRow;
     }
 

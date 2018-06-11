@@ -254,7 +254,6 @@ class BEAR
                         $content = file_get_contents($target);
                         $yaml = syck_load($content);
                     } else {
-                        require_once __DIR__ . '/vendor/mustangostang/spyc/Spyc.php';
                         $yaml = Spyc::YAMLLoad($target);
                     }
                     $cache->set($key, $yaml);

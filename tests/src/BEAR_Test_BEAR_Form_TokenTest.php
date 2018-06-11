@@ -1,21 +1,5 @@
 <?php
 
-$bearDemoPath = dirname(dirname(__DIR__)) . '/vendor/bearsaturday/beardemo.local';
-require_once $bearDemoPath . '/App.php';
-
-/**
- * BEAR
- *
- * @category   BEAR
- * @package    Test
- * @subpackage BEAR_Form
- */
-
-/**
- * @category   BEAR
- * @package    Test
- * @subpackage resource
- */
 class BEAR_Test_BEAR_Form_TokenTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -25,10 +9,6 @@ class BEAR_Test_BEAR_Form_TokenTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        restore_error_handler();
-        if (!BEAR::exists('BEAR_Session')) {
-            BEAR::set('BEAR_Session', BEAR::factory('BEAR_Session', array('adapter' => 0, 'prefix' => '')));
-        }
         $this->_token = new BEAR_Form_Token(array());
         $this->_token->onInject();
     }
@@ -43,7 +23,7 @@ class BEAR_Test_BEAR_Form_TokenTest extends PHPUnit_Framework_TestCase
     public function testgetToken()
     {
         $this->_token->newSessionToken();
-        $_POST['_tone'] = $_SESSION['beardemo0.0.20stoken'];
+        $_POST['_tone'] = $_SESSION['bear-test1.0.01stoken'];
         $token = $this->_token->getToken();
         $this->assertTrue(is_string($token));
     }

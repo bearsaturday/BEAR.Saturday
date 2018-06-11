@@ -344,7 +344,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
                 $saved = $cache->get($cacheKey);
                 if ($saved) {
                     $this->_ro = $saved;
-        
+
                     return;
                 }
                 $useCache = true;

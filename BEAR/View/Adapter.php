@@ -20,7 +20,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      *
      * @param string $tplName テンプレート名（省略可）
      * @param array  $role    エージェントロール
-     * @param        $ext     $ext     拡張子
+     * @param string $ext     拡張子
      *
      * @return array
      */

@@ -8,8 +8,8 @@
          convertNoticesToExceptions="false"
          verbose="true">
   <testsuites>
-    <testsuite name="page">
-      <directory suffix="Test.php">tests/page</directory>
+    <testsuite name="src">
+      <directory suffix="Test.php">tests/src</directory>
     </testsuite>
   </testsuites>
   <filter>

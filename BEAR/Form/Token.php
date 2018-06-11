@@ -4,7 +4,6 @@
  *
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-
 class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
 {
     /**

@@ -458,8 +458,9 @@ class BEAR_Form extends BEAR_Factory
      * @param mixed $formName フォーム名 | フォーム名配列
      * @param array $options  オプション
      *
-     * @return HTML_QuickForm
      * @throws HTML_QuickForm_Error
+     *
+     * @return HTML_QuickForm
      */
     private function _factory($formName, array $options)
     {

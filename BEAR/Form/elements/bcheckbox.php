@@ -9,7 +9,6 @@
  * Base class
  */
 /** @noinspection PhpIncludeInspection */
-require_once 'HTML/QuickForm/checkbox.php';
 
 /**
  * HTML class for a "bcheckbox" element
@@ -30,9 +29,9 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
      *
      * @since     1.0
      */
-    public function HTML_QuickForm_bcheckbox($elementName = null, $elementLabel = null, $text = '', $attributes = null)
+    public function __construct($elementName = null, $elementLabel = null, $text = '', $attributes = null)
     {
-        HTML_QuickForm_input::HTML_QuickForm_input($elementName, $elementLabel, $attributes);
+        parent::__construct($elementName, $elementLabel, $attributes);
         $this->_persistantFreeze = true;
         $this->_text = $text;
         $this->setType('checkbox');

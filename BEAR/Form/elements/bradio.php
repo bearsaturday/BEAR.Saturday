@@ -9,7 +9,6 @@
  * Base class for <input /> form elements
  */
 /** @noinspection PhpIncludeInspection */
-require_once 'HTML/QuickForm/input.php';
 
 /**
  * HTML class for a "bradio" element
@@ -42,14 +41,14 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
      * @param null $value
      * @param null $attributes
      */
-    public function HTML_QuickForm_bradio(
+    public function __construct(
         $elementName = null,
         $elementLabel = null,
         $text = null,
         $value = null,
         $attributes = null
     ) {
-        $this->HTML_QuickForm_element($elementName, $elementLabel, $attributes);
+        parent::__construct($elementName, $elementLabel, $attributes);
         if (isset($value)) {
             $this->setValue($value);
         }
