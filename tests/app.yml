@@ -1,0 +1,44 @@
+core:
+  # 開発モード
+  debug: 1
+  # 基本情報
+  info:
+    id: bear-test
+    version: 1.0.0
+
+BEAR_Cache:
+  # int  キャッシュアダプター 0 なし | 1 PEAR::Cache_Lite | 2 MEMCACHE | 3 APC
+  adapter: 0
+
+BEAR_Session:
+  # mixed アダプター 0 なし | 1 File | 2 DB | 3 memchache
+  adapter: 1
+  # string セッションキーにつけるプリフィックス
+  prefix: ''
+  # path: dsn | session file path | memcache host(s)
+  path: '/tmp/sess'
+  #int アイドル時間
+  idle  : 3600
+
+
+BEAR_Form:
+  # メソッド
+  method: 'post'
+  # アトリビュート
+  attributes: null
+  errors: 'errors'
+  
+BEAR_Ro:
+ # debug用リソースボーダー
+ show_box: true
+
+BEAR_Page_Ajax:
+  # double submit cookieチェック
+  security_check: false
+
+BEAR_Emoji:
+  sumbit: 'entity'
+
+BEAR_Resource_Request:
+  poe: false
+  csrf: false
