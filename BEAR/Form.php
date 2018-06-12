@@ -193,8 +193,10 @@ class BEAR_Form extends BEAR_Factory
      * ファクトリー
      *
      * Quick_Formオブエクトを生成して設定します。
+     *
+     * @return HTML_QuickForm
      */
-    public function factory() : HTML_QuickForm
+    public function factory()
     {
         $this->_config['action'] = (! isset($this->_config['action']) || $this->_config['action'] == '') ? $_SERVER['REQUEST_URI'] : $this->_config['action'];
         $options = array(
