@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.4",
         "bearsaturday/panda": "^0.4",
-        "smarty/smarty": "^2.6",
+        "smarty/smarty": "^2.6|^3.1",
         "satomif/session_register": "^0.0",
         "satomif/session_unregister": "^0.0",
         "pear-pear.php.net/Cache_Lite": "^1.8",
