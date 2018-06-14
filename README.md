@@ -16,38 +16,72 @@ Requirements
 
 ## Install
 
-### PHP 5.x
-
-```
-composer require bearsaturday/bearsaturday ^0.9
-```
-
-### PHP 7.x
 
 ```
 composer require bearsaturday/bearsaturday ^0.10
 ```
 
-Create project with BEAR.Saturday
--------------
+## Upgrade from PEAR installed project
+
+Here is the minimum `composer.json` to convert composer based project for exisitng PEAR-installed base project.
+
+```json
+{
+    "name": "my-vendor/my-project",
+    "description": "",
+    "license": "proprietary",
+    "require": {
+        "php": ">=5.4",
+        "bearsaturday/bearsaturday": "^0.10"
+    },
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "https://pear.php.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "include-path": [
+        "./"
+    ],
+    "autoload": {
+        "classmap": [
+            "App"
+        ]
+    }
+}
+
+```
+
+Create project
+--------------
+
+It is NOT recommended becuase newer project should be created newer framework BEAR.Sunday. But you still install BEAR.Saturday from scrach.
+
+** NOT RECOMMENDED **
+
 ```
 composer create-project bearsaturday/skeleton MyVendor.MyPackage
-````
+```
 
 Hosting
--------------
+-------
+
 ```
 ln -s MyVendor.MyPackage/htdocs /path/to/vhost_dir
 ```
 
 Demo
 ----
+
 Run demo site [beardemo.local](https://github.com/bearsaturday/beardemo.local)
 
 コーディングの参考にしてください
 
 YouTube
-----
+-------
+
 See [Hello World demo][2] in youtube. 
 
 
