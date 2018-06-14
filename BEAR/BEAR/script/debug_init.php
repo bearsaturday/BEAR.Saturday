@@ -4,7 +4,6 @@
  *
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-require_once 'Panda.php';
 
 if ($appConfig['Panda']['firephp'] === true) {
     require_once dirname(dirname(__DIR__)) . '/vendors/FirePHPCore/FirePHP.class.php';
