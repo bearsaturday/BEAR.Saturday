@@ -14,6 +14,11 @@ Requirements
 
  * PHP 5.2 - 7.2 
 
+Documentation
+-------------
+
+（日本語） https://github.com/bearsaturday/manual
+
 ## Install
 
 ```
