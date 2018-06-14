@@ -3,11 +3,11 @@
 
 # BEAR.Saturday
 
+© 2008-2018
+
 ## What is BEAR.Satruday ?
 
-BEAR.Saturday is a resource oriented web framework for PHP5.2+  (deprecated)
-
-[BEAR.Sunday](http://bearsunday.github.io/) is available for the new project.
+BEAR.Saturday is a resource oriented web framework for PHP5.2+
 
 Requirements
 ------------
@@ -61,7 +61,7 @@ Here is the minimum `composer.json` to convert composer based project for exisit
 Create project
 --------------
 
-It is NOT recommended becuase newer project should be created newer framework [BEAR.Sunday](https://bearsunday.github.io/). But you still install BEAR.Saturday from scrach.
+It is NOT recommended to create new BEAR.Saturday project. Use [BEAR.Sunday](http://bearsunday.github.io/) instead.
 
 ```
 composer create-project bearsaturday/skeleton MyVendor.MyPackage
