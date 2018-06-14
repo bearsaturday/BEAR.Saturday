@@ -151,10 +151,7 @@ class BEAR
      *
      * @param string $class クラス名
      *
-     * @return void
-     *
      * @see http://groups.google.com/group/php-standards/web/psr-0-final-proposal
-     * @throws BEAR_Exception
      */
     public static function onAutoload($class)
     {
@@ -162,18 +159,9 @@ class BEAR
             return;
         }
         $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-        /** @noinspection PhpIncludeInspection */
-        include_once $file;
-        // クラス宣言を含むかどうか確認する
-        if (class_exists($class, false) || interface_exists($class, false)) {
-            return;
+        if (file_exists($file)) {
+            require $file;
         }
-        // auto loader error
-        if (!class_exists('BEAR_Exception', false)) {
-            include _BEAR_BEAR_HOME . '/BEAR/Exception.php';
-        }
-        $info = array('class' => $class, 'file' => $file);
-        throw new BEAR_Exception("BEAR Auto loader failed for [$class]", compact('info'));
     }
 
     /**
