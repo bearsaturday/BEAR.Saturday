@@ -227,14 +227,8 @@ class BEAR_Form extends BEAR_Factory
         $page->setConfig('redner_form', true);
         self::$_renderConfig[$formName] = $this->_config;
         // extra elements
-        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bcheckbox'] = array(
-            _BEAR_BEAR_HOME . '/BEAR/Form/elements/bcheckbox.php',
-            'HTML_QuickForm_bcheckbox'
-        );
-        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bradio'] = array(
-            _BEAR_BEAR_HOME . '/BEAR/Form/elements/bradio.php',
-            'HTML_QuickForm_bradio'
-        );
+        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bcheckbox'] = 'HTML_QuickForm_bcheckbox';
+        $GLOBALS['HTML_QUICKFORM_ELEMENT_TYPES']['bradio'] = 'HTML_QuickForm_bradio';
 
         return $formObject;
     }
