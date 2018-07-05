@@ -193,7 +193,9 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
             if (is_array($row)) {
                 $row['_link'][$link] = array('values' => $row, 'class' => get_class($ro));
             } else {
-                $body['_link'][$link] = array('values' => $body, 'class' => get_class($ro));
+                if (!isset($body['_link'][$link])) {
+                    $body['_link'][$link] = array('values' => $body, 'class' => get_class($ro));
+                }
             }
         }
     }
