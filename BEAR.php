@@ -158,9 +158,17 @@ class BEAR
         if (class_exists($class, false)) {
             return;
         }
-        $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+        $file = ucwords(str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php', DIRECTORY_SEPARATOR);
         if (file_exists($file)) {
             require $file;
+            return;
+        }
+        $includePath = explode(":", get_include_path());
+        foreach($includePath as $path){
+            if (file_exists($path . DIRECTORY_SEPARATOR . $file)) {
+                require $file;
+                return;
+            }
         }
     }
 

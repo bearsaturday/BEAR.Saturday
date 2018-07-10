@@ -192,7 +192,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
         foreach ($body as &$row) {
             if (is_array($row)) {
                 $row['_link'][$link] = array('values' => $row, 'class' => get_class($ro));
-            } else {
+            } elseif (!isset($body['_link'][$link])) {
                 $body['_link'][$link] = array('values' => $body, 'class' => get_class($ro));
             }
         }

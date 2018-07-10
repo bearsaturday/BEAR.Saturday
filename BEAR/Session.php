@@ -44,6 +44,10 @@ class BEAR_Session extends BEAR_Base
     const ADAPTER_MEMCACHE = 3;
 
     /**
+     * memcachedセッション
+     */
+    const ADAPTER_MEMCACHED = 4;
+    /**
      * @var BEAR_Log
      */
     protected $_log;
@@ -253,6 +257,10 @@ class BEAR_Session extends BEAR_Base
         switch ($config['adapter']) {
             case self::ADAPTER_MEMCACHE:
                 ini_set('session.save_handler', 'memcache');
+                ini_set('session.save_path', $config['path']);
+                break;
+            case self::ADAPTER_MEMCACHED:
+                ini_set('session.save_handler', 'memcached');
                 ini_set('session.save_path', $config['path']);
                 break;
             case self::ADAPTER_DB:
