@@ -178,6 +178,11 @@ class BEAR_Session extends BEAR_Base
         $hasStarted = true;
         $this->_setAdapter($this->_config);
 
+        // GCが働くまでの時間
+        if (isset($this->_config['gc_max_lifetime']) && $this->_config['gc_max_lifetime']) {
+            HTTP_Session2::setGcMaxLifeTime($this->_config['gc_max_lifetime']);
+        }
+
         // セッションスタート
         $this->_httpSession2Start();
 
@@ -214,10 +219,7 @@ class BEAR_Session extends BEAR_Base
                 }
             }
         }
-        // GCが働くまでの時間
-        if (isset($this->_config['gc_max_lifetime']) && $this->_config['gc_max_lifetime']) {
-            HTTP_Session2::setGcMaxLifeTime($this->_config['gc_max_lifetime']);
-        }
+
         // セッションスタート
         $this->_log->log(
             'Session Start',
