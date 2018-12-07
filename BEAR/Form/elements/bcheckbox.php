@@ -31,7 +31,7 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
      */
     public function __construct($elementName = null, $elementLabel = null, $text = '', $attributes = null)
     {
-        parent::__construct($elementName, $elementLabel, $attributes);
+        parent::__construct($elementName, $elementLabel, $text, $attributes);
         $this->_persistantFreeze = true;
         $this->_text = $text;
         $this->setType('checkbox');

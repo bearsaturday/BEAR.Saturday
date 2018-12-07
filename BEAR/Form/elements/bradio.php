@@ -48,7 +48,7 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
         $value = null,
         $attributes = null
     ) {
-        parent::__construct($elementName, $elementLabel, $attributes);
+        parent::__construct($elementName, $elementLabel, $text, $value, $attributes);
         if (isset($value)) {
             $this->setValue($value);
         }
