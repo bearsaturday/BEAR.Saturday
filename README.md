@@ -16,12 +16,6 @@ Documentation
 
 （日本語） https://github.com/bearsaturday/manual
 
-## Install
-
-```
-composer require bearsaturday/bearsaturday ^0.10
-```
-
 ## Upgrade from PEAR installed project
 
 Here is the minimum `composer.json` to convert composer based project for exisitng PEAR-installed base project.
