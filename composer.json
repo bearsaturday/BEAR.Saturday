@@ -18,32 +18,30 @@
         "smarty/smarty": "^2.6",
         "satomif/session_register": "^0.0.1",
         "satomif/session_unregister": "^0.0.1",
-        "pear-pear.php.net/Cache_Lite": "^1.8",
+        "pear/Cache_Lite": "^1.8",
         "openpsa/quickform": "^3.3.2.1",
-        "pear-pear.php.net/HTTP_Request2": "^2.3",
-        "pear-pear.php.net/HTTP_Session2": "^0.7",
-        "pear-pear.php.net/Log": "^1.13",
-        "pear-pear.php.net/Net_UserAgent_Mobile": "^1.0",
-        "pear-pear.php.net/Pager": "^2.4",
-        "pear-pear.php.net/Spreadsheet_Excel_Writer": "^0.9",
-        "pear-pear.php.net/XML_RPC": "^1.5",
-        "pear-pear.php.net/XML_Serializer": "^0.21",
-        "pear-pear.php.net/I18N_UnicodeString": "^0.3",
-        "pear-pear.php.net/XML_RSS": "^1.1",
-        "pear-pear.php.net/MDB2": "~2.5.0b5",
-        "pear-pear.php.net/MDB2_Driver_mysqli": "~1.5.0b4",
-        "pear-pear.php.net/Var_Dump": "^1.0",
-        "pear-pear.php.net/Text_Highlighter": "^0.8",
-        "pear-pear.php.net/Config": "^1.10",
-        "pear-pear.php.net/File": "^1.4",
-        "pear-pear.php.net/Console_CommandLine": "^1.2",
-        "pear-pear.php.net/Console_Color": "^1.0",
-        "pear-pear.php.net/Console_Table": "^1.3",
-        "pear-pear.php.net/File_SearchReplace": "^1.1",
-        "pear-pear.php.net/HTML_CSS": "^1.5",
-        "pear-pear.php.net/Net_Server": "^1.0",
-        "pear-pear.php.net/Services_JSON": "^1.0",
-        "mustangostang/spyc": "^0.6.2"
+        "pear/http_request2": "^2.3",
+        "pear/Log": "^1.13",
+        "pear/Pager": "^2.4",
+        "pear/Spreadsheet_Excel_Writer": "^0.9",
+        "pear/XML_Serializer": "^0.21",
+        "pear/Text_Highlighter": "^0.8",
+        "pear/Console_CommandLine": "^1.2",
+        "pear/Console_Table": "^1.3",
+        "mustangostang/spyc": "^0.6.2",
+        "pear/xml_rpc": "dev-master",
+        "pear/i18n_unicodestring": "dev-master",
+        "pear/xml_rss": "dev-master",
+        "pear/mdb2": "dev-master",
+        "pear/var_dump": "dev-master",
+        "pear/config": "dev-master",
+        "pear/file": "dev-master",
+        "pear/console_color": "dev-master",
+        "pear/file_searchreplace": "dev-master",
+        "pear/html_css": "dev-master",
+        "pear/services_json": "dev-master",
+        "pear/net_server": "dev-master",
+        "pear/http_session2": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.7"
@@ -62,8 +60,128 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "pear",
-            "url": "https://pear.php.net"
+            "type":"package",
+            "package": {
+                "name": "pear/xml_rpc",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/XML_RPC.git",
+                    "type": "git",
+                    "reference":"trunk"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/mdb2",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/MDB2.git",
+                    "type": "git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/var_dump",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/Var_Dump.git",
+                    "type": "git",
+                    "reference":"trunk"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/config",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/Config.git",
+                    "type": "git",
+                    "reference":"trunk"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/file",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/File.git",
+                    "type": "git",
+                    "reference":"trunk"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/console_color",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/Console_Color.git",
+                    "type": "git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/file_searchreplace",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/File_SearchReplace.git",
+                    "type": "git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/html_css",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/HTML_CSS.git",
+                    "type": "git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/I18N_UnicodeString"
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/XML_RSS"
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/HTML_CSS"
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/Net_Server"
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/Services_JSON"
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/Console_Color"
+        },
+        {
+            "type":"git",
+            "url": "https://github.com/pear/HTTP_Session2"
         }
     ],
     "extra": {
