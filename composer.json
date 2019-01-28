@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": ">=5.4",
+        "ext-mbstring": "*",
         "bearsaturday/panda": "~0.4",
         "smarty/smarty": "^2.6",
         "satomif/session_register": "^0.0.1",
