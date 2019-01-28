@@ -211,6 +211,7 @@ class BEAR_Form extends BEAR_Factory
             $options = array_merge($options, $this->_config);
         }
         $page = BEAR::get('page');
+        /* @var BEAR_Page $page */
         $onClick = $page->getOnClick();
         if ($onClick && ! ($options['action'])) {
             $options['action'] = '?' . BEAR_Page::KEY_CLICK_NAME . '=' . $onClick;
