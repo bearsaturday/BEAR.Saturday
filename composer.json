@@ -197,11 +197,6 @@
             "url": "https://github.com/pear/HTTP_Session2"
         }
     ],
-    "extra": {
-        "branch-alias": {
-            "dev-php7": "0.10.x-dev"
-        }
-    },
     "scripts": {
         "cs": [
             "php-cs-fixer fix -v --dry-run"
