@@ -216,7 +216,7 @@ ____SQL;
      *
      * @throws Exception
      *
-     * @return array
+     * @return array|void
      */
     public function shutdownDebug($return = true)
     {
@@ -251,6 +251,7 @@ ____SQL;
             }
             $log['var'] = show_vars('trim_tabs:2;show_objects:1;max_y:100;avoid@:1; return:1');
             if (BEAR::exists('BEAR_Smarty')) {
+                /** @var Smarty $smarty */
                 $smarty = BEAR::dependency('BEAR_Smarty');
                 $log['smarty'] = $smarty->get_template_vars();
                 unset($log['smarty']['content_for_layout']);
