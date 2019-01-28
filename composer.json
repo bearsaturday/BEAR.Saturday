@@ -41,7 +41,8 @@
         "pear/html_css": "dev-master",
         "pear/services_json": "dev-master",
         "pear/net_server": "dev-master",
-        "pear/http_session2": "dev-master"
+        "pear/http_session2": "dev-master",
+        "pear/net_useragent_mobile": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.7"
@@ -152,6 +153,18 @@
                     "url": "https://github.com/pear/HTML_CSS.git",
                     "type": "git",
                     "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "pear/net_useragent_mobile",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/pear/Net_UserAgent_Mobile.git",
+                    "type": "git",
+                    "reference":"trunk"
                 }
             }
         },
