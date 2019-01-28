@@ -187,6 +187,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             $pagerOptions['totalItems'] = $this->_countQuery($query, $params);
         }
         // ページング
+        /** @var BEAR_Pager $pager */
         $pager = BEAR::dependency('BEAR_Pager');
         // totalItems以外のBEAR_Pagerデフォルトオプションを使用
         $defaultPagerOptions = $pager->getPagerOptions();
@@ -348,6 +349,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         // 文字列作成
         $arr = array();
         foreach ($orders as $column => &$dir) {
+            /** @var MDB2_Driver_Common $db */
             $db = &$this->_config['db'];
             $arr[] = $db->quoteIdentifier($column) . ' ' . (($dir === '-') ? 'DESC' : 'ASC');
         }
@@ -393,19 +395,21 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     {
         // be smart and try to guess the total number of records
         $countQuery = $this->_rewriteCountQuery($query);
+        /** @var MDB2_Driver_Common $db */
+        $db = $this->_config['db'];
         if ($countQuery) {
             if ($params) {
-                $sth = $this->_config['db']->prepare($countQuery);
+                $sth = $db->prepare($countQuery);
                 $totalItems = $sth->execute($params)->fetchOne();
             } else {
-                $totalItems = $this->_config['db']->queryOne($countQuery);
+                $totalItems = $db->queryOne($countQuery);
             }
             if (PEAR::isError($totalItems)) {
                 return $totalItems;
             }
         } else {
             // GROUP BY => fetch the whole resultset and count the rows returned
-            $res = $this->_config['db']->queryCol($query);
+            $res = $db->queryCol($query);
             if (PEAR::isError($res)) {
                 return $res;
             }

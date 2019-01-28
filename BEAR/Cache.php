@@ -69,7 +69,6 @@ class BEAR_Cache extends BEAR_Factory
     {
         parent::__construct($config);
         $this->_config['prefix'] = isset($this->_config['prefix']) ? $this->_config['prefix'] : ($this->_config['info']['id'] . $this->_config['info']['version'] . (int) $this->_config['debug']);
-        include_once 'MDB2.php'; // PEAR::MDB2
     }
 
     /**
@@ -91,12 +90,15 @@ class BEAR_Cache extends BEAR_Factory
         switch ($this->_config['adapter']) {
             case self::ADAPTER_MEMCACHE:
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Memcache', $this->_config);
+                /* @var BEAR_Cache_Adapter_Memcache $instance */
                 break;
             case self::ADAPTER_CACHELITE:
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Lite', $this->_config);
+                /* @var BEAR_Cache_Adapter_Lite $instance */
                 break;
             case self::ADAPTER_APC:
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Apc', $this->_config);
+                /* @var BEAR_Cache_Adapter_Apc $instance */
                 break;
             default:
                 if (is_string($this->_config['adapter'])) {
@@ -104,6 +106,7 @@ class BEAR_Cache extends BEAR_Factory
                     break;
                 }
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Void', $this->_config);
+                /* @var BEAR_Cache_Adapter_Void $instance */
         }
 
         return $instance;

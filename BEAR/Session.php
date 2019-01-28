@@ -188,7 +188,9 @@ class BEAR_Session extends BEAR_Base
 
         // セッションを通じた固定トークン
         if (HTTP_Session2::isNew()) {
-            BEAR::dependency('BEAR_Form_Token')->newSessionToken();
+            /** @var BEAR_Form_Token $token */
+            $token = BEAR::dependency('BEAR_Form_Token');
+            $token->newSessionToken();
         }
         // 有効期限
         if (isset($this->_config['idle']) && $this->_config['idle']) {
@@ -251,7 +253,7 @@ class BEAR_Session extends BEAR_Base
      *
      * @param array $config
      *
-     * @throws BEAR_Session_Exception
+     * @throws HTTP_Session2_Exception
      */
     private function _setAdapter(array $config)
     {

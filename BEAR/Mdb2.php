@@ -202,6 +202,7 @@ class BEAR_Mdb2 extends BEAR_Factory
         if (! is_null($isManip)) {
             $log['isManip'] = $isManip;
         }
+        /** @var BEAR_Log $bearLog */
         $bearLog = BEAR::dependency('BEAR_Log');
         self::$_lastLog[] = $log;
         $bearLog->log('Mdb2', $log);

@@ -312,6 +312,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * @param array $values テストする配列
      *
      * @throws BEAR_Exception
+     * @throws Exception
      *
      * @deprecated @requierdを用います
      */
@@ -772,7 +773,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         }
         // ページ
         $page = BEAR::dependency('App_Page', self::$_page);
-        /* @var $page App_Page */
+        /* @var $page BEAR_Page */
         $val = (isset($config['ro']) && $config['ro'] === true) ? $this : $this->_body;
         $page->set($key, $val);
 
@@ -830,7 +831,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      *
      * link()がついてるリソースでもgetRo()で取得されるのは最初のリソースです。
      *
-     * @return App_Ro
+     * @return BEAR_Ro
      */
     public function getRo()
     {

@@ -195,6 +195,7 @@ class BEAR_Form extends BEAR_Factory
      * Quick_Formオブエクトを生成して設定します。
      *
      * @return HTML_QuickForm
+     * @throws HTML_QuickForm_Error
      */
     public function factory()
     {
@@ -211,6 +212,7 @@ class BEAR_Form extends BEAR_Factory
             $options = array_merge($options, $this->_config);
         }
         $page = BEAR::get('page');
+        /* @var BEAR_Page $page */
         $onClick = $page->getOnClick();
         if ($onClick && ! ($options['action'])) {
             $options['action'] = '?' . BEAR_Page::KEY_CLICK_NAME . '=' . $onClick;
@@ -343,6 +345,7 @@ class BEAR_Form extends BEAR_Factory
      * @param bool   $enableJs JS有効?
      *
      * @return string
+     * @throws Exception
      */
     public static function renderForms(Smarty &$smarty, $ua, $enableJs = false)
     {
@@ -358,6 +361,7 @@ class BEAR_Form extends BEAR_Factory
         foreach (self::$formNames as $formName) {
             $renderConfig = self::$_renderConfig[$formName];
             $adapter = isset($renderConfig['adapter']) ? $renderConfig['adapter'] : self::RENDERER_APP;
+            /** @var HTML_QuickForm $form */
             $form = BEAR::get('BEAR_Form_' . $formName);
             $formErrors = false;
             $callback = (isset($renderConfig['callback']) && is_callable(
@@ -372,7 +376,7 @@ class BEAR_Form extends BEAR_Factory
                         $renderer = BEAR::dependency('App_Form_Renderer_' . $ua);
                     } catch (BEAR_Exception $e) {
                         $renderer = BEAR::dependency('BEAR_Form_Renderer_' . $ua);
-                    } catch (Excption $e) {
+                    } catch (Exception $e) {
                         throw $e;
                     }
                     assert(is_object($renderer));

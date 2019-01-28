@@ -398,6 +398,7 @@ class BEAR_Main extends BEAR_Base
     {
         $config['class'] = get_class($this->_page);
         $config['method'] = 'onInit';
+        /** @var BEAR_Annotation $annotation */
         $annotation = BEAR::factory('BEAR_Annotation', $config);
         try {
             $annotation->required($args);
@@ -421,6 +422,7 @@ class BEAR_Main extends BEAR_Base
         $buff = ob_get_clean();
         ob_start();
         if ($this->_config['debug'] && $buff) {
+            /** @var BEAR_Page_Ajax $ajax */
             $ajax = BEAR::dependency('BEAR_Page_Ajax');
             if (! $ajax->isAjaxRequest()) {
                 echo '<div style="border-style: dotted;">' . $buff . '</div>';
@@ -501,6 +503,7 @@ class BEAR_Main extends BEAR_Base
      */
     private function _writeCache($cacheData)
     {
+        /** @var BEAR_Cache_Adapter $cache */
         $cache = BEAR::dependency('BEAR_Cache');
         $cache->setLife($this->_config['cache']['life']);
         $key = $this->_page->getCacheKey();

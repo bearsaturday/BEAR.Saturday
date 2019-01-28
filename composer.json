@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": ">=5.4",
+        "ext-mbstring": "*",
         "bearsaturday/panda": "~0.4",
         "smarty/smarty": "^2.6",
         "satomif/session_register": "^0.0.1",
@@ -197,11 +198,6 @@
             "url": "https://github.com/pear/HTTP_Session2"
         }
     ],
-    "extra": {
-        "branch-alias": {
-            "dev-php7": "0.10.x-dev"
-        }
-    },
     "scripts": {
         "cs": [
             "php-cs-fixer fix -v --dry-run"

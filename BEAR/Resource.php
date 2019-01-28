@@ -282,6 +282,7 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
     public function request($method, $uri, array $values = array(), array $options = array())
     {
         $config = compact('method', 'uri', 'values', 'options');
+        /** @var BEAR_Ro_Prototype $ro */
         $ro = BEAR::factory('BEAR_Ro_Prototype', array('request' => $config, 'path' => $this->_config['path']));
 
         return $ro;
