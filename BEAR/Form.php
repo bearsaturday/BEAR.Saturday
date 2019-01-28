@@ -195,6 +195,7 @@ class BEAR_Form extends BEAR_Factory
      * Quick_Formオブエクトを生成して設定します。
      *
      * @return HTML_QuickForm
+     * @throws HTML_QuickForm_Error
      */
     public function factory()
     {
