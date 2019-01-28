@@ -16,9 +16,9 @@
 class BEAR_Annotation extends BEAR_Base
 {
     /**
-     * Constructor
-     *
      * @param array $config
+     *
+     * @throws ReflectionException
      */
     public function __construct(array $config)
     {
@@ -66,7 +66,8 @@ class BEAR_Annotation extends BEAR_Base
     /**
      * アスペクトアノテーション
      *
-     * @return BEAR_Aspect_Weaver
+     * @return BEAR_Aspect_Weaver|ReflectionMethod
+     * @throws ReflectionException
      */
     public function aspect()
     {
@@ -88,7 +89,7 @@ class BEAR_Annotation extends BEAR_Base
         $this->_config['aspects'] = $aspects;
         // weaver
         $weaver = BEAR::factory('BEAR_Aspect_Weaver', $this->_config);
-
+        /* @var BEAR_Aspect_Weaver $weaver */
         return $weaver;
     }
 }
