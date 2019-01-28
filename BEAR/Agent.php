@@ -245,11 +245,7 @@ class BEAR_Agent extends BEAR_Base
 
         if (! isset($byteSize)) {
             /** @noinspection PhpUndefinedMethodInspection */
-            /** @noinspection PhpUndefinedMethodInspection */
             $display = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile)->getDisplay();
-            /** @noinspection PhpUndefinedMethodInspection */
-            /** @noinspection PhpUndefinedMethodInspection */
-            /** @noinspection PhpUndefinedMethodInspection */
             /** @noinspection PhpUndefinedMethodInspection */
             $byteSize = array($display->getWidthBytes(), $display->getHeightBytes());
         }
