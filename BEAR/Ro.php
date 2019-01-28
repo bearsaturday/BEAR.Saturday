@@ -831,7 +831,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      *
      * link()がついてるリソースでもgetRo()で取得されるのは最初のリソースです。
      *
-     * @return App_Ro
+     * @return BEAR_Ro
      */
     public function getRo()
     {
