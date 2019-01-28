@@ -374,7 +374,7 @@ class BEAR_Form extends BEAR_Factory
                         $renderer = BEAR::dependency('App_Form_Renderer_' . $ua);
                     } catch (BEAR_Exception $e) {
                         $renderer = BEAR::dependency('BEAR_Form_Renderer_' . $ua);
-                    } catch (Excption $e) {
+                    } catch (Exception $e) {
                         throw $e;
                     }
                     assert(is_object($renderer));
