@@ -29,7 +29,7 @@ class BEAR_Pager extends BEAR_Base
     /**
      * PEARページャークラス
      *
-     * @var PEAR:pager
+     * @var Pager_Common
      */
     public $pager;
 
