@@ -361,6 +361,7 @@ class BEAR_Form extends BEAR_Factory
         foreach (self::$formNames as $formName) {
             $renderConfig = self::$_renderConfig[$formName];
             $adapter = isset($renderConfig['adapter']) ? $renderConfig['adapter'] : self::RENDERER_APP;
+            /** @var HTML_QuickForm $form */
             $form = BEAR::get('BEAR_Form_' . $formName);
             $formErrors = false;
             $callback = (isset($renderConfig['callback']) && is_callable(
