@@ -16,6 +16,7 @@ class BEAR_Resource_Request_Test extends BEAR_Resource_Request
      * @return BEAR_Ro
      *
      * @see BEAR_Resource_Request::request()
+     * @throws Exception
      */
     public function request()
     {
