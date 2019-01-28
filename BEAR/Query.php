@@ -187,6 +187,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             $pagerOptions['totalItems'] = $this->_countQuery($query, $params);
         }
         // ページング
+        /** @var BEAR_Pager $pager */
         $pager = BEAR::dependency('BEAR_Pager');
         // totalItems以外のBEAR_Pagerデフォルトオプションを使用
         $defaultPagerOptions = $pager->getPagerOptions();
