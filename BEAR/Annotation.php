@@ -16,8 +16,6 @@
 class BEAR_Annotation extends BEAR_Base
 {
     /**
-     * @param array $config
-     *
      * @throws ReflectionException
      */
     public function __construct(array $config)
@@ -43,22 +41,23 @@ class BEAR_Annotation extends BEAR_Base
      */
     public function required(array $values)
     {
-        $match = array();
-        $result = preg_match_all("/@required\s+(\w+)/is", $this->_config['doc']['method'], $match);
+        $match = [];
+        $result = preg_match_all('/@required\\s+(\\w+)/is', $this->_config['doc']['method'], $match);
         if ($result !== false) {
             // メソッド優先
             try {
                 BEAR_Util::required($match[1], $values);
             } catch (Exception $e) {
-                $info = array(
+                $info = [
                     'RO' => $this->_config['ref']['method']->class . '::' . $this->_config['ref']['method']->name,
                     'required' => $match[1],
                     'values' => $values,
                     'doc' => $this->_config['doc']['method']
-                );
+                ];
                 $required = implode($match[1], ',');
                 $msg = "@required item[{$required}] is missing.";
-                throw $this->_exception($msg, array('code' => BEAR::CODE_BAD_REQUEST, 'info' => $info));
+
+                throw $this->_exception($msg, ['code' => BEAR::CODE_BAD_REQUEST, 'info' => $info]);
             }
         }
     }
@@ -66,14 +65,15 @@ class BEAR_Annotation extends BEAR_Base
     /**
      * アスペクトアノテーション
      *
-     * @return BEAR_Aspect_Weaver|ReflectionMethod
      * @throws ReflectionException
+     *
+     * @return BEAR_Aspect_Weaver|ReflectionMethod
      */
     public function aspect()
     {
-        $match = array();
-        preg_match_all("/@aspect\s+(\w+)\s+(\w+)/is", $this->_config['doc']['method'], $match);
-        $aspects = array();
+        $match = [];
+        preg_match_all('/@aspect\\s+(\\w+)\\s+(\\w+)/is', $this->_config['doc']['method'], $match);
+        $aspects = [];
         // <アドバイスタイプ> => <アドバイスクラス>の連想配列
         $max = count($match[0]);
         for ($i = 0; $i < $max; $i++) {
@@ -82,14 +82,11 @@ class BEAR_Annotation extends BEAR_Base
             $aspects[$type][] = $class;
         }
         if (! $aspects) {
-            $method = new ReflectionMethod($this->_config['class'], $this->_config['method']);
-
-            return $method;
+            return new ReflectionMethod($this->_config['class'], $this->_config['method']);
         }
         $this->_config['aspects'] = $aspects;
         // weaver
-        $weaver = BEAR::factory('BEAR_Aspect_Weaver', $this->_config);
+        return BEAR::factory('BEAR_Aspect_Weaver', $this->_config);
         /* @var BEAR_Aspect_Weaver $weaver */
-        return $weaver;
     }
 }

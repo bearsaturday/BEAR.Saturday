@@ -14,8 +14,6 @@ interface BEAR_Ro_Interface
      * リソース作成
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onCreate($values);
 
@@ -23,8 +21,6 @@ interface BEAR_Ro_Interface
      * リソース読み込み
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onRead($values);
 
@@ -32,8 +28,6 @@ interface BEAR_Ro_Interface
      * リソース変更
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onUpdate($values);
 
@@ -41,15 +35,11 @@ interface BEAR_Ro_Interface
      * リソース削除
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onDelete($values);
 
     /**
      * リソースボディの取得
-     *
-     * @return mixed
      */
     public function getBody();
 

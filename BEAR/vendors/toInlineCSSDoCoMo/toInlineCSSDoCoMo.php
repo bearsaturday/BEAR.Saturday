@@ -1,8 +1,8 @@
 <?php
 /**
- * toInlineCSSDoCoMo.php
+ * This file is part of the BEAR.Saturday package.
  *
- * @author Daichi Kamemoto <daichi@asial.co.jp>
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 /**
  * The MIT License
@@ -27,7 +27,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 require_once 'selectorToXPath.php';
 @require_once 'HTML/CSS.php';
 
@@ -36,133 +35,122 @@ require_once 'selectorToXPath.php';
  *   PerlのHTML::DoCoMoCSS
  *   ( http://search.cpan.org/~tokuhirom/HTML-DoCoMoCSS-0.01/lib/HTML/DoCoMoCSS.pm )
  *   のPHP移殖版
- *
- * @author Daichi Kamemoto
- * @version 0.1.1
  */
 class toInlineCSSDoCoMo
 {
-	private $base_dir = './';
+    private $base_dir = './';
 
-	public function setBaseDir($base_dir)
-	{
-		$this->base_dir = $base_dir;
-		return $this;
-	}
+    public function setBaseDir($base_dir)
+    {
+        $this->base_dir = $base_dir;
 
-	public static function getInstance()
-	{
-		return new toInlineCSSDoCoMo();
-	}
+        return $this;
+    }
 
-	public function apply($document, $base_dir = '')
-	{
-		if (!$base_dir)
-		{
-			$base_dir = $this->base_dir;
-		}
+    public static function getInstance()
+    {
+        return new self();
+    }
 
-		// XHTMLをパース
-		$dom = new DOMDocument();
-		$dom->loadHTML($document);
-		$dom_xpath = new DOMXPath($dom);
+    public function apply($document, $base_dir = '')
+    {
+        if (! $base_dir) {
+            $base_dir = $this->base_dir;
+        }
 
-		// 外部参照のCSSファイルを抽出する
-		$nodes = $dom_xpath->query('//link[@rel="stylesheet" or @type="text/css"] | //style[@type="text/css"]');
+        // XHTMLをパース
+        $dom = new DOMDocument();
+        $dom->loadHTML($document);
+        $dom_xpath = new DOMXPath($dom);
 
+        // 外部参照のCSSファイルを抽出する
+        $nodes = $dom_xpath->query('//link[@rel="stylesheet" or @type="text/css"] | //style[@type="text/css"]');
 
-		$add_style = array();
-		$psudo_classes = array('a:hover', 'a:link', 'a:focus', 'a:visited');
-		foreach ($nodes as $key => $node)
-		{
-			// CSSをパース
-			$html_css = new HTML_CSS();
-			if ($node->tagName == 'link' && $href = $node->attributes->getNamedItem('href'))
-			{
-				// linkタグの場合
-				if (!file_exists($base_dir . $href->nodeValue))
-				{
-					throw new UnexpectedValueException('ERROR: ' . $base_dir . $href->nodeValue . ' file does not exist');
-				}
+        $add_style = [];
+        $psudo_classes = ['a:hover', 'a:link', 'a:focus', 'a:visited'];
+        foreach ($nodes as $key => $node) {
+            // CSSをパース
+            $html_css = new HTML_CSS();
+            if ($node->tagName == 'link' && $href = $node->attributes->getNamedItem('href')) {
+                // linkタグの場合
+                if (! file_exists($base_dir . $href->nodeValue)) {
+                    throw new UnexpectedValueException('ERROR: ' . $base_dir . $href->nodeValue . ' file does not exist');
+                }
 
-				#TODO: @importのサポート
-				$css_string = file_get_contents($base_dir . $href->nodeValue);
-			}
-			else if ($node->tagName == 'style')
-			{
-				// styleタグの場合
-				$css_string = $node->nodeValue;
-			}
+                #TODO: @importのサポート
+                $css_string = file_get_contents($base_dir . $href->nodeValue);
+            } elseif ($node->tagName == 'style') {
+                // styleタグの場合
+                $css_string = $node->nodeValue;
+            }
 
-			$css_error = $html_css->parseString($css_string);
-			if ($css_error) 
-			{
-				throw new RuntimeException('ERROR: css parse error');
-			}
+            $css_error = $html_css->parseString($css_string);
+            if ($css_error) {
+                throw new RuntimeException('ERROR: css parse error');
+            }
 
-			// a:hover, a:link, a:focus a:visited を退避
-			foreach ($psudo_classes as $psude_class)
-			{
-				$block = $html_css->toInline($psude_class);
-				if (!$block) continue;
+            // a:hover, a:link, a:focus a:visited を退避
+            foreach ($psudo_classes as $psude_class) {
+                $block = $html_css->toInline($psude_class);
+                if (! $block) {
+                    continue;
+                }
 
-				$add_style[] = $psude_class . '{' . $block . '}';
-			}
+                $add_style[] = $psude_class . '{' . $block . '}';
+            }
 
-			// CSSをインライン化
-			$css = $html_css->toArray();
-			foreach ($css as $selector => $style)
-			{
-				#TODO: 疑似要素のサポート
-				// 疑似要素と@ルールはスルー(selectorToXPath的にバグでやすい)
-				if (strpos($selector, '@') !== false) continue;
-				if (strpos($selector, ':') !== false) continue;
+            // CSSをインライン化
+            $css = $html_css->toArray();
+            foreach ($css as $selector => $style) {
+                #TODO: 疑似要素のサポート
+                // 疑似要素と@ルールはスルー(selectorToXPath的にバグでやすい)
+                if (strpos($selector, '@') !== false) {
+                    continue;
+                }
+                if (strpos($selector, ':') !== false) {
+                    continue;
+                }
 
-				$xpath = selectorToXPath::toXPath($selector);
-				$elements = $dom_xpath->query($xpath);
+                $xpath = selectorToXPath::toXPath($selector);
+                $elements = $dom_xpath->query($xpath);
 
-				if ($elements->length == 0) continue;
-				// inlineにするCSS文を構成(toInline($selector)だとh2, h3 などでうまくいかないバグ？があったため)
-				$inline_style = '';
-				foreach ($style as $k => $v)
-				{
-					$inline_style .= $k . ':' . $v . ';';
-				}
-				foreach ($elements as $element) 
-				{
-					if ($attr_style = $element->attributes->getNamedItem('style'))
-					{
-						// style要素が存在する場合は追記
-						if (substr($attr_style->nodeValue, -1) != ';')
-						{
-							$inline_style = ';' . $inline_style;
-						}
-						$attr_style->nodeValue .= $inline_style;
-					}
-					else
-					{
-						// style要素が存在しない場合は追加
-						$element->setAttribute('style', $inline_style);
-					}
-				}
-			}
+                if ($elements->length == 0) {
+                    continue;
+                }
+                // inlineにするCSS文を構成(toInline($selector)だとh2, h3 などでうまくいかないバグ？があったため)
+                $inline_style = '';
+                foreach ($style as $k => $v) {
+                    $inline_style .= $k . ':' . $v . ';';
+                }
+                foreach ($elements as $element) {
+                    if ($attr_style = $element->attributes->getNamedItem('style')) {
+                        // style要素が存在する場合は追記
+                        if (substr($attr_style->nodeValue, -1) != ';') {
+                            $inline_style = ';' . $inline_style;
+                        }
+                        $attr_style->nodeValue .= $inline_style;
+                    } else {
+                        // style要素が存在しない場合は追加
+                        $element->setAttribute('style', $inline_style);
+                    }
+                }
+            }
 
-			// 読み込み終わったノードを削除
-			$parent = $node->parentNode;
-			$parent->removeChild($node);
-		}
+            // 読み込み終わったノードを削除
+            $parent = $node->parentNode;
+            $parent->removeChild($node);
+        }
 
-		// 疑似クラスを<style>タグとして追加
-		if (!empty($add_style))
-		{
-			$new_style = implode(PHP_EOL, $add_style);
-			$new_style = implode(PHP_EOL, array('<![CDATA[', $new_style, ']]>'));
+        // 疑似クラスを<style>タグとして追加
+        if (! empty($add_style)) {
+            $new_style = implode(PHP_EOL, $add_style);
+            $new_style = implode(PHP_EOL, ['<![CDATA[', $new_style, ']]>']);
 
-			$head = $dom_xpath->query('//head');
-			$new_style_node = new DOMElement('style', $new_style);
-			$head->item(0)->appendChild($new_style_node)->setAttribute('type', 'text/css');
-		}
+            $head = $dom_xpath->query('//head');
+            $new_style_node = new DOMElement('style', $new_style);
+            $head->item(0)->appendChild($new_style_node)->setAttribute('type', 'text/css');
+        }
 
-		return $dom->saveHTML();
-	}
+        return $dom->saveHTML();
+    }
 }

@@ -24,7 +24,7 @@ class BEAR_Agent_Injector implements BEAR_Injector_Interface
         foreach ($role as $agent) {
             $method = 'onInject' . $agent;
             if (method_exists($object, $method)) {
-                $object->$method();
+                $object->{$method}();
 
                 return;
             }

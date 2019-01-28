@@ -115,12 +115,10 @@ class BEAR_Mdb2 extends BEAR_Factory
      *
      * @var array
      */
-    private static $_lastLog = array();
+    private static $_lastLog = [];
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -146,18 +144,18 @@ class BEAR_Mdb2 extends BEAR_Factory
         }
         $options = (isset($this->_config['options']) && is_array(
             $this->_config['options']
-        )) ? $this->_config['options'] : array();
+        )) ? $this->_config['options'] : [];
         // MDB2インスタンス生成
         if ($this->_config['debug']) {
             // Debugモード オプション
             $options['debug'] = true;
-            $options['debug_handler'] = array('BEAR_Mdb2', 'onDebug');
+            $options['debug_handler'] = ['BEAR_Mdb2', 'onDebug'];
         } else {
             $options['debug'] = false;
         }
         $mdb2 = MDB2::factory($this->_config['dsn'], $options);
         if (PEAR::isError($mdb2)) {
-            throw $this->_exception('db connection error', 503, array('dsn' => $this->_config['dsn']));
+            throw $this->_exception('db connection error', 503, ['dsn' => $this->_config['dsn']]);
         }
         $mdb2->setFetchMode(MDB2_FETCHMODE_ASSOC);
         $_instance[$this->_config['dsn']] = $mdb2;
@@ -199,7 +197,7 @@ class BEAR_Mdb2 extends BEAR_Factory
         if ($scope == 'query') {
             $log['message'] = $message . $db->getOption('log_line_break');
         }
-        if (! is_null($isManip)) {
+        if ($isManip !== null) {
             $log['isManip'] = $isManip;
         }
         /** @var BEAR_Log $bearLog */

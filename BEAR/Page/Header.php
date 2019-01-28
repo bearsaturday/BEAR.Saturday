@@ -22,7 +22,7 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
      *
      * @var array
      */
-    private $_headers = array();
+    private $_headers = [];
 
     /**
      * モバイル出力ヘッダー
@@ -133,7 +133,7 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
      * @param string $uri     URL
      * @param array  $options オプション
      */
-    public function redirect($uri, array $options = array('val' => null, 'click' => null, 'permanent' => false))
+    public function redirect($uri, array $options = ['val' => null, 'click' => null, 'permanent' => false])
     {
         // .なら現在のファイルでページキャッシュもクリアする
         if ($uri == '.' || $uri == './') {
@@ -165,18 +165,18 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
         }
         //argsオプション
         if (isset($options['val'])) {
-            $query = array('_cv' => $options['val']);
+            $query = ['_cv' => $options['val']];
         } else {
             $query = '';
         }
         if (isset($options['click'])) {
-            $click = array(
+            $click = [
                 BEAR_Page::KEY_CLICK_NAME => $options['click']
-            );
+            ];
             if (is_array($query)) {
                 $query = array_merge($query, $click);
             } else {
-                $query = array_merge(array('_sc' => $query), $click);
+                $query = array_merge(['_sc' => $query], $click);
             }
         }
         if ($query) {
@@ -202,7 +202,7 @@ class BEAR_Page_Header extends BEAR_Base implements BEAR_Page_Header_Interface
      *
      * @param string $header HTTPヘッダー名
      *
-     * @return string|false HTTPヘッダー値、みつからなければfalse
+     * @return false|string HTTPヘッダー値、みつからなければfalse
      */
     public function getRequestHeader($header)
     {

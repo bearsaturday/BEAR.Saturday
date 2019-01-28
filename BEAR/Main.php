@@ -55,7 +55,7 @@ class BEAR_Main extends BEAR_Base
      *
      * @var BEAR_Page
      */
-    private $_page = null;
+    private $_page;
 
     /**
      * サブミット値
@@ -76,8 +76,6 @@ class BEAR_Main extends BEAR_Base
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -90,15 +88,15 @@ class BEAR_Main extends BEAR_Base
     public function onInject()
     {
         // ページを生成してレジストリにセット
-        $config = array(
+        $config = [
             'resource_id' => $this->_config['page_class'],
             'enable_ua_sniffing' => $this->_config['enable_ua_sniffing'],
             'ua' => $this->_config['ua'],
             'mode' => BEAR_Page::CONFIG_MODE_HTML
-        );
-        $options = array(
+        ];
+        $options = [
             'injector' => (isset($this->_config['injector']) ? $this->_config['injector'] : 'onInject')
-        );
+        ];
         $this->_page = BEAR::factory($this->_config['page_class'], $config, $options);
         if (! BEAR::exists('page')) {
             BEAR::set('page', $this->_page);
@@ -118,7 +116,7 @@ class BEAR_Main extends BEAR_Base
      *
      * @throws BEAR_Page_Exception
      */
-    public static function run($pageClass, array $config = array(), array $options = array())
+    public static function run($pageClass, array $config = [], array $options = [])
     {
         // include
         if (self::$_isRunnable === false) {
@@ -129,8 +127,9 @@ class BEAR_Main extends BEAR_Base
         self::$_isRunnable = false;
         // ページクラス存在チェック
         if (! $pageClass || ! class_exists($pageClass, false)) {
-            $info = array('page_class' => $pageClass);
-            throw new BEAR_Page_Exception('Page class is not defined.（ページクラスが定義されていません)', array('info' => $info));
+            $info = ['page_class' => $pageClass];
+
+            throw new BEAR_Page_Exception('Page class is not defined.（ページクラスが定義されていません)', ['info' => $info]);
         }
         // フォーム初期化
         if (class_exists('BEAR_Form', false)) {
@@ -143,7 +142,7 @@ class BEAR_Main extends BEAR_Base
             $main->_run($pageClass);
         } catch (BEAR_Exception $e) {
             $redirect = $e->getRedirect();
-            if (! is_null($redirect)) {
+            if ($redirect !== null) {
                 if ($redirect === false) {
                     $main->end();
                 } else {
@@ -168,8 +167,6 @@ class BEAR_Main extends BEAR_Base
      *
      * ヘッダーとコンテンツを出力して終了します。
      *
-     * @param null $initCache
-     *
      * @throws BEAR_Exception
      */
     public function end($initCache = null)
@@ -178,10 +175,10 @@ class BEAR_Main extends BEAR_Base
         // ページキャッシュ書き込み
         if (isset($this->_config['cache']['type'])) {
             if ($this->_config['cache']['type'] === 'page') {
-                $cacheData = array('type' => 'page', 'headers' => headers_list(), 'body' => $body);
+                $cacheData = ['type' => 'page', 'headers' => headers_list(), 'body' => $body];
                 $this->_writeCache($cacheData);
             } elseif ((! $initCache) && $this->_config['cache']['type'] === 'init') {
-                $cacheData = array('type' => 'init', 'init' => $this->_page->get());
+                $cacheData = ['type' => 'init', 'init' => $this->_page->get()];
                 $this->_writeCache($cacheData);
             } elseif ($this->_config['cache']['type'] !== 'init' && $this->_config['cache']['type'] !== 'page') {
                 throw $this->_exception('Invalid Cache Type', $this->_config);
@@ -204,7 +201,7 @@ class BEAR_Main extends BEAR_Base
      */
     public function exitMain()
     {
-        unset($this->_page);
+        $this->_page = null;
         if ($this->_config['exit_on_end']) {
             exit();
         }
@@ -243,7 +240,7 @@ class BEAR_Main extends BEAR_Base
     {
         static $result = null;
 
-        if (is_null($result)) {
+        if ($result === null) {
             $ajax = BEAR::dependency('BEAR_Page_Ajax');
             $result = $ajax->isAjaxRequest();
         }
@@ -263,7 +260,7 @@ class BEAR_Main extends BEAR_Base
         self::$_isRunnable = false;
         $fullPathPageFile = _BEAR_APP_HOME . '/htdocs/' . $pageFile;
         if (! file_exists($fullPathPageFile)) {
-            throw new BEAR_Main_Exception('Page file is not exit', array('info' => array('file' => $fullPathPageFile)));
+            throw new BEAR_Main_Exception('Page file is not exit', ['info' => ['file' => $fullPathPageFile]]);
         }
         /** @noinspection PhpIncludeInspection */
         include_once $fullPathPageFile;
@@ -280,7 +277,7 @@ class BEAR_Main extends BEAR_Base
     protected function _run($pageClass)
     {
         if ($this->_config['enable_onshutdown'] === true) {
-            register_shutdown_function(array($pageClass, 'onShutdown'));
+            register_shutdown_function([$pageClass, 'onShutdown']);
         }
         $this->_sessionStart();
         // debugログ
@@ -339,16 +336,16 @@ class BEAR_Main extends BEAR_Base
         if ($isValidate) {
             // submit OK
             $this->_formValidationOk($form, $formName);
-            $this->_log->log('form', array('valid' => true, 'errors' => array()));
+            $this->_log->log('form', ['valid' => true, 'errors' => []]);
         } else {
             // submit NG
             $this->_log->log(
                 'form',
-                array(
+                [
                     'valid' => false,
                     'rules' => $form->_rules,
                     'errors' => $form->_errors
-                )
+                ]
             );
             if ($this->_isAjaxSubmit) {
                 // AJAXバリデーションNG
@@ -378,8 +375,8 @@ class BEAR_Main extends BEAR_Base
         if ($isActiveLink && $hasMethod) {
             $this->_page->setOnClick($_GET[BEAR_Page::KEY_CLICK_NAME]);
             $args['click'] = isset($_GET[BEAR_Page::KEY_CLICK_VALUE]) ? $_GET[BEAR_Page::KEY_CLICK_VALUE] : null;
-            $this->_log->log('onClick', array('click' => $this->_page->getOnClick(), 'args' => $args));
-            $this->_page->$onClickMethod($args);
+            $this->_log->log('onClick', ['click' => $this->_page->getOnClick(), 'args' => $args]);
+            $this->_page->{$onClickMethod}($args);
         } else {
             if (method_exists($this->_page, 'onClickNone')) {
                 $this->_page->onClickNone($args);
@@ -406,7 +403,7 @@ class BEAR_Main extends BEAR_Base
             if (method_exists($this->_page, 'onException')) {
                 $this->_page->onException($e);
             } else {
-                throw new Panda_Exception('Bad Request', 400, array('info' => $e->getInfo()));
+                throw new Panda_Exception('Bad Request', 400, ['info' => $e->getInfo()]);
             }
         }
         $this->_page->onInit($args);
@@ -478,7 +475,8 @@ class BEAR_Main extends BEAR_Base
             $this->_log->log('Page/Init Cache[No hit]', $key);
             // write lazy cache
             return false;
-        } elseif ($cacheData['type'] === 'page') {
+        }
+        if ($cacheData['type'] === 'page') {
             // read page cache
             $this->_log->log('Page Cache[R]', $key);
             if (is_array($cacheData['headers'])) {
@@ -541,7 +539,7 @@ class BEAR_Main extends BEAR_Base
         if ($methodExists) {
             // onAction.フォーム名() コール
             $actionMethodName = 'onAction' . $formName;
-            $this->_page->$actionMethodName($submit);
+            $this->_page->{$actionMethodName}($submit);
         }
     }
 
@@ -557,19 +555,19 @@ class BEAR_Main extends BEAR_Base
         foreach ($form->_rules as $key => $value) {
             $ruleKeys[] = $key;
         }
-        $ajaxErrorResult = array(
-            'quickform' => array(
+        $ajaxErrorResult = [
+            'quickform' => [
                 'form_id' => $form->_attributes['id'],
                 'rules' => $ruleKeys,
                 'errors' => $form->_errors
-            )
-        );
+            ]
+        ];
         $this->_log->log('AJAX Form NG', $ajaxErrorResult);
-        $formResult = array(
+        $formResult = [
             'validate' => false,
             'id' => $form->_attributes['id'],
             'errors' => $form->_errors
-        );
+        ];
         $ajax = BEAR::dependency('BEAR_Page_Ajax');
         $ajax->addAjax('quickform', $formResult);
         $this->_page->output('ajax');

@@ -64,9 +64,8 @@ class BEAR_Resource_Execute extends BEAR_Factory
             $exeConfig['path'] = $path;
             $exeConfig['file'] = $url['path'];
             $format = self::FORMAT_FILE;
-            $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $exeConfig);
 
-            return $obj;
+            return BEAR::factory('BEAR_Resource_Execute_' . $format, $exeConfig);
         }
         if (isset($path['filename']) && ! (isset($url['host']))) {
             return self::_localResourceExecute($this->_config['uri']);
@@ -75,28 +74,30 @@ class BEAR_Resource_Execute extends BEAR_Factory
         $isExecuterExists = file_exists($executer);
         if ($isExecuterExists) {
             $class = 'App_Resource_Execute_' . ucwords($url['scheme']);
-            $obj = BEAR::factory($class, $this->_config);
 
-            return $obj;
+            return BEAR::factory($class, $this->_config);
         }
         switch (true) {
             case isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https'):
                 $format = self::FORMAT_HTTP;
+
                 break;
             case isset($url['scheme']) && $url['scheme'] == 'socket':
                 $format = self::FORMAT_SOCKET;
+
                 break;
             case isset($url['scheme']) && $url['scheme'] == 'page':
                 $format = self::FORMAT_PAGE;
+
                 break;
             default:
                 $msg = 'URI is not valid.';
-                $info = array('uri' => $this->_config['uri']);
+                $info = ['uri' => $this->_config['uri']];
+
                 throw $this->_exception($msg, compact('info'));
         }
-        $obj = BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);
 
-        return $obj;
+        return BEAR::factory('BEAR_Resource_Execute_' . $format, $this->_config);
     }
 
     /**
@@ -120,24 +121,27 @@ class BEAR_Resource_Execute extends BEAR_Factory
                 case class_exists($resourcePathName, false):
                     $this->_config['class'] = $resourcePathName;
                     $format = 'Ro';
+
                     break;
                 case function_exists($resourcePathName):
                     // @deprecated
                     $this->_config['function'] = $resourcePathName;
                     $format = 'Function';
+
                     break;
                 default:
                     $msg = 'Mismatch resource class/function error.（ファイル名とクラス/関数名がミスマッチです。)';
-                    $info = array(
+                    $info = [
                         'resource name' => $resourcePathName,
                         'resource file' => $file
-                    );
+                    ];
+
                     throw $this->_exception(
                         $msg,
-                        array(
+                        [
                             'code' => BEAR::CODE_BAD_REQUEST,
                             'info' => $info
-                        )
+                        ]
                     );
             }
         } else {
@@ -148,7 +152,7 @@ class BEAR_Resource_Execute extends BEAR_Factory
             } else {
                 throw $this->_exception(
                     "Resource file[{$file}] is not exists.",
-                    array('info' => array('uri' => $uri, 'file' => $file))
+                    ['info' => ['uri' => $uri, 'file' => $file]]
                 );
             }
         }

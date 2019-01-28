@@ -1,5 +1,10 @@
 <?php
-#############################################################
+/**
+ * This file is part of the BEAR.Saturday package.
+ *
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ */
+
 ## Name          : debuglib for PHP5
 ## Author        : Thomas Schüßler <debuglib at atomar dot de>
 ## Last changed  : 31.03.2009 10:15:13
@@ -26,44 +31,200 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
 */
-if (function_exists('print_a')) :
+if (function_exists('print_a')) {
     return;
- // debuglib was already included before
-else :
-    if (!defined('USE_DEBUGLIB'))
-        define('USE_DEBUGLIB', TRUE);
-    if (!array_key_exists('DEBUGLIB_LVL', $GLOBALS))
-        $GLOBALS['DEBUGLIB_LVL'] = 99; // 99 debug levels should be enough for everyone
-    if (!array_key_exists('DEBUGLIB_MAX_Y', $GLOBALS))
-        $GLOBALS['DEBUGLIB_MAX_Y'] = 50; // how much items per level should get displayed (max_y)
-    if (!array_key_exists('DEBUGLIB_MAIL_ENCODING', $GLOBALS))
-        $GLOBALS['DEBUGLIB_MAIL_ENCODING'] = 'utf-8'; // encoding for the mail option
-    if (!array_key_exists('USE_DEBUGLIB', $GLOBALS))
-        $GLOBALS['USE_DEBUGLIB'] = USE_DEBUGLIB; // you can set this to TRUE if you have to overwrite the setting in a live environment
-    $GLOBALS['DbugL_Globals'] = array();
-    $GLOBALS['DbugL_Globals']['microtime_start'] = microtime(TRUE);
+// debuglib was already included before
+} else {
+    if (! defined('USE_DEBUGLIB')) {
+        define('USE_DEBUGLIB', true);
+    }
+    if (! array_key_exists('DEBUGLIB_LVL', $GLOBALS)) {
+        $GLOBALS['DEBUGLIB_LVL'] = 99;
+    } // 99 debug levels should be enough for everyone
+    if (! array_key_exists('DEBUGLIB_MAX_Y', $GLOBALS)) {
+        $GLOBALS['DEBUGLIB_MAX_Y'] = 50;
+    } // how much items per level should get displayed (max_y)
+    if (! array_key_exists('DEBUGLIB_MAIL_ENCODING', $GLOBALS)) {
+        $GLOBALS['DEBUGLIB_MAIL_ENCODING'] = 'utf-8';
+    } // encoding for the mail option
+    if (! array_key_exists('USE_DEBUGLIB', $GLOBALS)) {
+        $GLOBALS['USE_DEBUGLIB'] = USE_DEBUGLIB;
+    } // you can set this to TRUE if you have to overwrite the setting in a live environment
+    $GLOBALS['DbugL_Globals'] = [];
+    $GLOBALS['DbugL_Globals']['microtime_start'] = microtime(true);
     $GLOBALS['DbugL_Globals']['initial_globals_count'] = count($GLOBALS);
     class DbugL
     {
+        const runtime_precision = 6; # used for the seconds output of script_runtime()
 
-        public static $first_call = TRUE;
+        const object_key_marker = '<:~!OBJECT_KEY!~:>'; #TODO# hackish
+
+        // default colors for the gradient start
+        const key_bg_color_default = '00456A';
+
+        const key_bg_color_array = '10187E';
+
+        const key_bg_color_object = '60008F';
+
+        const key_bg_color_object_data = '60008F';
+
+        const color_step_width = 10;
+
+        public static $first_call = true;
 
         // shortcuts for the pros
-        public static $alt_parameter_names = array(
-            'trim_tabs' => array('tt'),
-            'label' => array('l'),
-            'max_y' => array('y'),
-            'return' => array('r'),
-            'window' => array('w'),
-            'window_link' => array('wl'),
-            'debug_level' => array('lvl'),
-            'show_objects' => array('so'),
-            'pickle' => array('p'),
-            'mail' => array('m'),
-            'mail_encoding' => array('me'),
-            'escape_html' => array('e'));
+        public static $alt_parameter_names = [
+            'trim_tabs' => ['tt'],
+            'label' => ['l'],
+            'max_y' => ['y'],
+            'return' => ['r'],
+            'window' => ['w'],
+            'window_link' => ['wl'],
+            'debug_level' => ['lvl'],
+            'show_objects' => ['so'],
+            'pickle' => ['p'],
+            'mail' => ['m'],
+            'mail_encoding' => ['me'],
+            'escape_html' => ['e']];
 
-        public static function help($return_mode = FALSE)
+        public $window_open_tracker = [];
+
+        public $options = [];
+
+        public $single_value_flag = false;
+
+        public static $css = '
+            <style type="text/css" media="screen">
+
+                *.DbugL                { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; }
+
+                pre.DbugL              { display:inline; background:#F1F1F1; font-size:8pt; }
+                div.DbugL              { margin-bottom:5px; }
+
+                a.DbugL_window_link    { font-size:xx-small; color:black; border:1px solid darkorange; padding:3px; background:#F1F1F1; margin:2px;}
+
+                div.DbugL_pre          { font-size:8pt; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; margin-bottom:10px; }
+
+                /* Profont is a monospace bitmap font which absolutely rocks! see: http://www.tobias-jung.de/seekingprofont/  */
+                span.DbugL_multi       { font-size:9pt; font-family: ProFontWindows, ProFont, Lucida Console, monospace, Courier New; background:#F0F0F9; line-height:100%; }
+                span.DbugL_outer_space { background:gold; }
+                span.DbugL_tabs        { border-right:1px solid #DDD; }
+
+                /* arrgh.. if someone has a fix for the wrong widths of the fieldsets in IE7 please let me know :| */
+                fieldset.DbugL_normal    { display:table-cell; border:1px solid black; padding:2px; }
+                fieldset.DbugL_pickled   { width:90%; border:1px solid black; padding:2px; }
+                legend.DbugL             { font-size:9pt; font-weight:bold; color:black; }
+                div.DbugL_runtime        { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; font-size:9pt; font-weight:normal; color:black; background:yellow; padding:2px; }
+                span.DbugL_runtime_label { font-weight:bold; }
+                span.DbugL_type_other    { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; font-size:8pt; background:#ECEDFE; color:red;}
+                span.DbugL_value_other   { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; font-size:8pt; white-space:nowrap; color:black;}
+
+                table.DbugL                       { background:#D5D5EA; font-size:8pt; border-collapse:separate; }
+                table.DbugL th                    { background:#1E32C8; color:white; text-align:left; padding-left:2px; padding-right:2px; font-weight:normal; }
+                table.DbugL td                    { background:#DEDEEF; font-weight:normal; }
+
+                table.DbugL th.key_single_value   { background:#FFFF00 !important; color:black !important; font-weight:normal !important; padding:3px;}
+                table.DbugL th.key_string         { color:white; }
+                table.DbugL th.key_number         { color:green; }
+                table.DbugL th.key_array          { color:white; font-weight:bold; }
+                table.DbugL th.key_object         { color:white; font-weight:bold; }
+
+                table.DbugL td.value              { padding:0px; }
+                table.DbugL td.value_bool_true    { color:#5BA800; padding:1px; }
+                table.DbugL td.value_bool_false   { color:#D90062; padding:1px; }
+                table.DbugL td.value_string       { color:black; padding:1px; }
+                table.DbugL td.value_integer      { color:green; padding:1px; }
+                table.DbugL td.value_double       { color:blue; padding:1px; }
+                table.DbugL td.value_null         { color:darkorange; padding:1px; }
+                table.DbugL td.value_empty_array  { color:darkorange; padding:1px; }
+                table.DbugL td.value_empty_string { color:darkorange; padding:1px; }
+                table.DbugL td.value_skipped      { color:#666666; padding:1px; }
+
+                div.DbugL_SG                { color:black; font-weight:bold; font-size:9pt; }
+                table.DbugL_SG              { width:100%; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif;  font-size:8pt; }
+                table.DbugL_SG td           { }
+                table.DbugL_SG td.globals   { background:#7ACCC8; padding:2px; }
+                table.DbugL_SG td.get       { background:#7DA7D9; padding:2px; }
+                table.DbugL_SG td.post      { background:#F49AC1; padding:2px; }
+                table.DbugL_SG td.files     { background:#82CA9C; padding:2px; }
+                table.DbugL_SG td.session   { background:#FCDB26; padding:2px; }
+                table.DbugL_SG td.cookie    { background:#A67C52; padding:2px; }
+                table.DbugL_SG td.server    { background:#A186BE; padding:2px; }
+                table.DbugL_SG td.env       { background:#7ACCC8; padding:2px; }
+
+
+                div.DbugL_js_hr_first         { width:100%; border-bottom:1px dashed black; margin:10px 0px 10px 0px; font-size:xx-small; text-align:right; background:gold; }
+                div.DbugL_js_hr               { width:100%; border-bottom:1px dashed black; margin:10px 0px 10px 0px; font-size:xx-small; text-align:right; background:#EFEFEF }
+                div.DbugL_window_content      { padding-top:20px; }
+                div.DbugL_window_clear_button { text-align:center; font-size:x-small; position:fixed; top:0px; left:0px; background:orange; width:100%; border-bottom:1px solid black; }
+
+            </style>
+
+            <style type="text/css" media="print">
+                table.DbugL_Show_vars {
+                    display:none;
+                    visibility:invisible;
+                }
+            </style>
+        ';
+
+        private $default_options = ['label' => null,
+            'window' => null,
+            'window_link' => false,
+            'max_y' => 0,
+            'test_for_recursions' => false,
+            'show_objects' => true,
+            'trim_tabs' => null,
+            'avoid@' => false,
+            'return' => false,
+            'pickle' => false,
+            'export' => false,
+            'escape_html' => 2,
+            'mail' => null,
+            'mail_encoding' => 'utf-8',  // iso-8859-1
+            'debug_level' => 0];
+
+        private $element_counter = 0;
+
+        private $window_html;
+
+        private $color_cache = []; # cache the gradient colors
+
+        private $open_windows = [];
+
+        public function __construct()
+        {
+            $this->window_html = '
+                <html>
+                    <head>
+                        ' . self::$css . '
+                        <script type="text/javascript">
+                            //<![CDATA[
+
+                            var DbugL_test_var = true;
+
+                            function append_html(html) {
+                                document.getElementById("content").innerHTML += html;
+                                window.scrollTo(0, 1000000);
+                                window.focus();
+                            }
+
+                            function cls() {
+                                document.getElementById("content").innerHTML = "";
+                            }
+
+                            //]]>
+                        <\/script>
+                    </head>
+                    <body style="padding:2px;">
+                        <div class="DbugL DbugL_window_clear_button" onmouseup="cls();">- clear window -</div>
+                        <div id="content" class="DbugL DbugL_window_content"></div>
+                    </body>
+                </html>
+            ';
+        }
+
+        public static function help($return_mode = false)
         {
             $html = '
                 <style type="text/css">
@@ -168,161 +329,8 @@ else :
             ';
             if ($return_mode) {
                 return $html;
-            } else {
-                print $html;
             }
-        }
-
-        public $window_open_tracker = array();
-
-        private $default_options = array('label' => NULL,
-            'window' => NULL,
-            'window_link' => FALSE,
-            'max_y' => 0,
-            'test_for_recursions' => FALSE,
-            'show_objects' => TRUE,
-            'trim_tabs' => NULL,
-            'avoid@' => FALSE,
-            'return' => FALSE,
-            'pickle' => FALSE,
-            'export' => FALSE,
-            'escape_html' => 2,
-            'mail' => NULL,
-            'mail_encoding' => 'utf-8',  // iso-8859-1
-            'debug_level' => 0);
-
-        public $options = array();
-
-        public $single_value_flag = FALSE;
-
-        private $element_counter = 0;
-
-        private $window_html;
-
-        private $color_cache = array(); # cache the gradient colors
-
-        private $open_windows = array();
-
-        const runtime_precision = 6; # used for the seconds output of script_runtime()
-
-        const object_key_marker = '<:~!OBJECT_KEY!~:>'; #TODO# hackish
-
-        // default colors for the gradient start
-        const key_bg_color_default = '00456A';
-
-        const key_bg_color_array = '10187E';
-
-        const key_bg_color_object = '60008F';
-
-        const key_bg_color_object_data = '60008F';
-
-        const color_step_width = 10;
-
-        public static $css = '
-            <style type="text/css" media="screen">
-
-                *.DbugL                { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; }
-
-                pre.DbugL              { display:inline; background:#F1F1F1; font-size:8pt; }
-                div.DbugL              { margin-bottom:5px; }
-
-                a.DbugL_window_link    { font-size:xx-small; color:black; border:1px solid darkorange; padding:3px; background:#F1F1F1; margin:2px;}
-
-                div.DbugL_pre          { font-size:8pt; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; margin-bottom:10px; }
-
-                /* Profont is a monospace bitmap font which absolutely rocks! see: http://www.tobias-jung.de/seekingprofont/  */
-                span.DbugL_multi       { font-size:9pt; font-family: ProFontWindows, ProFont, Lucida Console, monospace, Courier New; background:#F0F0F9; line-height:100%; }
-                span.DbugL_outer_space { background:gold; }
-                span.DbugL_tabs        { border-right:1px solid #DDD; }
-
-                /* arrgh.. if someone has a fix for the wrong widths of the fieldsets in IE7 please let me know :| */
-                fieldset.DbugL_normal    { display:table-cell; border:1px solid black; padding:2px; }
-                fieldset.DbugL_pickled   { width:90%; border:1px solid black; padding:2px; }
-                legend.DbugL             { font-size:9pt; font-weight:bold; color:black; }
-                div.DbugL_runtime        { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; font-size:9pt; font-weight:normal; color:black; background:yellow; padding:2px; }
-                span.DbugL_runtime_label { font-weight:bold; }
-                span.DbugL_type_other    { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; font-size:8pt; background:#ECEDFE; color:red;}
-                span.DbugL_value_other   { font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif; font-size:8pt; white-space:nowrap; color:black;}
-
-                table.DbugL                       { background:#D5D5EA; font-size:8pt; border-collapse:separate; }
-                table.DbugL th                    { background:#1E32C8; color:white; text-align:left; padding-left:2px; padding-right:2px; font-weight:normal; }
-                table.DbugL td                    { background:#DEDEEF; font-weight:normal; }
-
-                table.DbugL th.key_single_value   { background:#FFFF00 !important; color:black !important; font-weight:normal !important; padding:3px;}
-                table.DbugL th.key_string         { color:white; }
-                table.DbugL th.key_number         { color:green; }
-                table.DbugL th.key_array          { color:white; font-weight:bold; }
-                table.DbugL th.key_object         { color:white; font-weight:bold; }
-
-                table.DbugL td.value              { padding:0px; }
-                table.DbugL td.value_bool_true    { color:#5BA800; padding:1px; }
-                table.DbugL td.value_bool_false   { color:#D90062; padding:1px; }
-                table.DbugL td.value_string       { color:black; padding:1px; }
-                table.DbugL td.value_integer      { color:green; padding:1px; }
-                table.DbugL td.value_double       { color:blue; padding:1px; }
-                table.DbugL td.value_null         { color:darkorange; padding:1px; }
-                table.DbugL td.value_empty_array  { color:darkorange; padding:1px; }
-                table.DbugL td.value_empty_string { color:darkorange; padding:1px; }
-                table.DbugL td.value_skipped      { color:#666666; padding:1px; }
-
-                div.DbugL_SG                { color:black; font-weight:bold; font-size:9pt; }
-                table.DbugL_SG              { width:100%; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif;  font-size:8pt; }
-                table.DbugL_SG td           { }
-                table.DbugL_SG td.globals   { background:#7ACCC8; padding:2px; }
-                table.DbugL_SG td.get       { background:#7DA7D9; padding:2px; }
-                table.DbugL_SG td.post      { background:#F49AC1; padding:2px; }
-                table.DbugL_SG td.files     { background:#82CA9C; padding:2px; }
-                table.DbugL_SG td.session   { background:#FCDB26; padding:2px; }
-                table.DbugL_SG td.cookie    { background:#A67C52; padding:2px; }
-                table.DbugL_SG td.server    { background:#A186BE; padding:2px; }
-                table.DbugL_SG td.env       { background:#7ACCC8; padding:2px; }
-
-
-                div.DbugL_js_hr_first         { width:100%; border-bottom:1px dashed black; margin:10px 0px 10px 0px; font-size:xx-small; text-align:right; background:gold; }
-                div.DbugL_js_hr               { width:100%; border-bottom:1px dashed black; margin:10px 0px 10px 0px; font-size:xx-small; text-align:right; background:#EFEFEF }
-                div.DbugL_window_content      { padding-top:20px; }
-                div.DbugL_window_clear_button { text-align:center; font-size:x-small; position:fixed; top:0px; left:0px; background:orange; width:100%; border-bottom:1px solid black; }
-
-            </style>
-
-            <style type="text/css" media="print">
-                table.DbugL_Show_vars {
-                    display:none;
-                    visibility:invisible;
-                }
-            </style>
-        ';
-
-        public function __construct()
-        {
-            $this->window_html = '
-                <html>
-                    <head>
-                        ' . self::$css . '
-                        <script type="text/javascript">
-                            //<![CDATA[
-
-                            var DbugL_test_var = true;
-
-                            function append_html(html) {
-                                document.getElementById("content").innerHTML += html;
-                                window.scrollTo(0, 1000000);
-                                window.focus();
-                            }
-
-                            function cls() {
-                                document.getElementById("content").innerHTML = "";
-                            }
-
-                            //]]>
-                        <\/script>
-                    </head>
-                    <body style="padding:2px;">
-                        <div class="DbugL DbugL_window_clear_button" onmouseup="cls();">- clear window -</div>
-                        <div id="content" class="DbugL DbugL_window_content"></div>
-                    </body>
-                </html>
-            ';
+            echo $html;
         }
 
         // merge user options into default options
@@ -331,15 +339,16 @@ else :
             $this->options_string = $options_string;
             $this->default_options['max_y'] = $GLOBALS['DEBUGLIB_MAX_Y'];
             $this->default_options['mail_encoding'] = $GLOBALS['DEBUGLIB_MAIL_ENCODING'];
-            $this->options = array_merge($this->default_options, self::parse_options($options_string, DbugL::$alt_parameter_names));
+            $this->options = array_merge($this->default_options, self::parse_options($options_string, self::$alt_parameter_names));
         }
 
         // wrapper function.. #TODO#
         public static function get_type($value)
         {
-            if ( get_class($value) === 'Imagick' ) {
+            if (get_class($value) === 'Imagick') {
                 return 'Imagick';
             }
+
             return gettype($value);
         }
 
@@ -347,29 +356,30 @@ else :
         public static function html_prefix()
         {
             if (self::$first_call) {
-                self::$first_call = FALSE;
-                return DbugL::$css;
-            } else {
-                return '';
+                self::$first_call = false;
+
+                return self::$css;
             }
+
+            return '';
         }
 
         // #TODO#
         public static function test_level($level)
         {
             if (is_array($GLOBALS['DEBUGLIB_LVL'])) {
-                return in_array($level, $GLOBALS['DEBUGLIB_LVL']);
-            } else {
-                return $level <= $GLOBALS['DEBUGLIB_LVL'];
+                return in_array($level, $GLOBALS['DEBUGLIB_LVL'], true);
             }
+
+            return $level <= $GLOBALS['DEBUGLIB_LVL'];
         }
 
         // remove leading tabs
-        public static function trim_leading_tabs($string, $tab_padding = NULL)
+        public static function trim_leading_tabs($string, $tab_padding = null)
         {
             /* remove whitespace lines at the start and end of the string */
-            $string = preg_replace(array('/^\s*\n/', '/\s*$/'), array('',
-                ''), $string);
+            $string = preg_replace(['/^\s*\n/', '/\s*$/'], ['',
+                ''], $string);
             // find the smallest leading tab count
             preg_match_all('/^\t+/', $string, $matches);
             if (count($matches[0]) > 0) {
@@ -377,6 +387,7 @@ else :
                 // und entfernen
                 $string = preg_replace('/^\t{' . $min_tab_count . ',' . $min_tab_count . '}/m', (isset($tab_padding) ? str_repeat("\t", $tab_padding) : ''), $string);
             }
+
             return $string;
         }
 
@@ -384,18 +395,18 @@ else :
         {
             // replace 2 or more spaces with nobreaks (for special markup)
             $string = preg_replace_callback('/ {2,}/', create_function('$matches', 'return str_repeat("&nbsp;", strlen($matches[0]));'), $string);
-            $string = preg_replace(array('/&nbsp;$/', '/^&nbsp;/'), '<span class="DbugL_outer_space">&nbsp;</span>', $string); # mark spaces at the start/end of the string with red underscores
-            $string = str_replace("\t", '&nbsp;&nbsp;<span class="DbugL_tabs">&nbsp;</span>', $string); # replace tabulators with '  »'
-            return $string;
+            $string = preg_replace(['/&nbsp;$/', '/^&nbsp;/'], '<span class="DbugL_outer_space">&nbsp;</span>', $string); # mark spaces at the start/end of the string with red underscores
+            return str_replace("\t", '&nbsp;&nbsp;<span class="DbugL_tabs">&nbsp;</span>', $string); # replace tabulators with '  »'
         }
 
         // format strings for output to html
-        public static function format_string($string, $trim_tabs = NULL, $escape_html = 2)
+        public static function format_string($string, $trim_tabs = null, $escape_html = 2)
         {
             $escape_html == 2 and $string = htmlspecialchars($string);
-            if ($escape_html == 0)
+            if ($escape_html == 0) {
                 return $string;
-            $is_multiline = strpos($string, "\n") !== FALSE;
+            }
+            $is_multiline = strpos($string, "\n") !== false;
             if ($is_multiline && isset($trim_tabs)) {
                 $string = self::trim_leading_tabs($string, $trim_tabs);
             }
@@ -404,29 +415,32 @@ else :
             if ($is_multiline) {
                 $string = '<span class="DbugL_multi">' . $string . '</span>';
             }
+
             return $string;
         }
 
         // parse the options string in css syntax
-        public static function parse_options($options_string = NULL, $alt_parameter_names = array())
+        public static function parse_options($options_string = null, $alt_parameter_names = [])
         {
-            $options = array();
-            $alt_parameter_mapping = array();
+            $options = [];
+            $alt_parameter_mapping = [];
             foreach ($alt_parameter_names as $parameter_name => $alt_names) {
                 $alt_parameter_mapping[$parameter_name] = $parameter_name;
                 foreach ($alt_names as $alt_name) {
                     $alt_parameter_mapping[$alt_name] = $parameter_name;
                 }
             }
-            if (!$options_string)
+            if (! $options_string) {
                 return $options;
-            if (strpos($options_string, ':') !== FALSE) {
+            }
+            if (strpos($options_string, ':') !== false) {
                 $pairs = explode(';', $options_string);
                 foreach ($pairs as &$pair) {
                     $pair = trim($pair);
-                    if ($pair == '')
+                    if ($pair == '') {
                         continue;
-                    if (strpos($pair, ':') !== FALSE) {
+                    }
+                    if (strpos($pair, ':') !== false) {
                         list($option, $value) = explode(':', $pair);
                         if (isset($alt_parameter_mapping[$option])) {
                             $options[$alt_parameter_mapping[$option]] = $value;
@@ -438,141 +452,8 @@ else :
             } else { // if the options string has no ":" in it, consider it to be the label
                 $options['label'] = $options_string;
             }
+
             return $options;
-        }
-
-        #TODO#
-        private function _block_s($class = 'null', $title = NULL)
-        {
-            return '<table ' . (isset($title) ? 'title="' . $title . '" ' : '') . ' cellpadding="0" cellspacing="1" class="DbugL">';
-        }
-
-        private function _block_e()
-        {
-            return '</table>';
-        }
-
-        private function _row_s($class = 'null')
-        {
-            return '<tr>';
-        }
-
-        private function _row_e()
-        {
-            return '</tr>';
-        }
-
-        private function _key_s($bg_color, $class, $value)
-        {
-            $value_type = self::get_type($value);
-            if ($this->single_value_flag == TRUE)
-                $class .= ' key_single_value';
-            if ($value_type == 'array' && count($value) == 0)
-                $value_type = 'array (empty)';
-            if ($value_type == 'string' && $value == '')
-                $value_type = 'string (empty)';
-            $html = '<th ' . (isset($class) ? 'class="' . $class . '"' : '') . ' style="background:#' . $bg_color . '" title="' . $value_type . '">';
-            if ($this->single_value_flag == TRUE)
-                $this->single_value_flag = FALSE;
-            return $html;
-        }
-
-        private function _key_e()
-        {
-            return '</th>';
-        }
-
-        private function _value_s($class = 'null')
-        {
-            return '<td class="value ' . $class . '">';
-        }
-
-        private function _value_e()
-        {
-            return '</td>';
-        }
-
-        // lighten up the key background color with each iteration
-        private function _make_key_bg_color($base_color, $iter)
-        {
-            if (!isset($this->color_cache[$base_color][$iter])) {
-                if ($iter) {
-                    for ($i = 0; $i < 6; $i += 2) {
-                        $component = substr($base_color, $i, 2);
-                        $component = hexdec($component);
-                        ($component += self::color_step_width * $iter) > 255 and $component = 255;
-                        isset($tmp_key_bg_color) or $tmp_key_bg_color = '';
-                        $tmp_key_bg_color .= sprintf("%02X", $component);
-                    }
-                    $key_bg_color = $tmp_key_bg_color;
-                }
-                $this->color_cache[$base_color][$iter] = $key_bg_color; // save the color so we dont have to compute it again for this level
-            }
-            return $this->color_cache[$base_color][$iter];
-        }
-
-        // format the key
-        private function _format_key($key, $value, $iter, $special_type = NULL)
-        {
-            $this->element_counter++;
-            $key_type = self::get_type($key);
-            $value_type = self::get_type($value);
-            if (strpos($key, self::object_key_marker) !== FALSE) {
-                $key = str_replace(self::object_key_marker, '', $key);
-                $value_type = 'OBJECT_DATA';
-            }
-            switch ($value_type) {
-            case 'array' :
-                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_array, $iter), 'key_array', $value) . $key . self::_key_e();
-                break;
-            case 'object' :
-                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_object, $iter), 'key_object', $value) . '<span title="Class: ' . (get_class($value)) . '">' . $key . '</span>' . self::_key_e();
-                break;
-            case 'OBJECT_DATA' :
-                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_object_data, $iter), 'key_object_data', $value) . $key . self::_key_e();
-                break;
-            default :
-                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_default, $iter), NULL, $value) . self::format_string($key, $this->options['trim_tabs']) . self::_key_e();
-                break;
-            }
-            return self::_key_s('key_string') . $key . self::_key_e();
-        }
-
-        // format the value
-        private function _format_value($value)
-        {
-            $value_type = self::get_type($value);
-            switch ($value_type) {
-            case 'boolean' :
-                if ($value == TRUE) {
-                    return self::_value_s('value_bool_true') . 'TRUE' . self::_value_e();
-                } else {
-                    return self::_value_s('value_bool_false') . 'FALSE' . self::_value_e();
-                }
-                break;
-            case 'string' :
-                if ($value == '') {
-                    return self::_value_s('value_empty_string') . "''" . self::_value_e();
-                } else {
-                    return self::_value_s('value_string') . self::format_string($value, $this->options['trim_tabs'], $this->options['escape_html']) . self::_value_e();
-                }
-                break;
-            case 'integer' :
-                return self::_value_s('value_integer') . $value . self::_value_e();
-                break;
-            case 'double' :
-                return self::_value_s('value_double') . $value . self::_value_e();
-                break;
-            case 'NULL' :
-                return self::_value_s('value_null') . 'NULL' . self::_value_e();
-                break;
-            case 'array' :
-                return self::_value_s('value_empty_array') . '[]' . self::_value_e();
-                break;
-            case 'object' :
-                return self::_value_s('value_empty_array') . '{}' . self::_value_e();
-                break;
-            }
         }
 
         // called by the global interface function
@@ -581,37 +462,39 @@ else :
             $iter++;
             $input_type = self::get_type($input);
             // input was neither an array nor an object
-            if (!in_array($input_type, array(
+            if (! in_array($input_type, [
                 'array',
-                'object'))) {
+                'object'], true)) {
                 if ($input_type == 'resource') {
                     $html = '<span nowrap="nowrap" class="DbugL_value_other"><span class="DbugL_type_other">(' . $input_type . ')</span> ' . $input . '</span>';
                 } else {
                     $html = '<span nowrap="nowrap" class="DbugL_value_other"><span class="DbugL_type_other">(' . $input_type . ')</span> ' . self::format_string($input, $this->options['trim_tabs']) . '</span>';
                 }
+
                 return;
             }
             if ($iter == 1) {
                 $bt = debug_backtrace();
                 $bt = $bt[1];
                 $title = "({$bt['line']}) {$bt['file']}";
-                #TODO# .(isset($bt['function']) ? '    function:'.$bt['function'] : '');
+            #TODO# .(isset($bt['function']) ? '    function:'.$bt['function'] : '');
             } else {
-                $title = NULL;
+                $title = null;
             }
-            $html .= self::_block_s(NULL, $title);
+            $html .= self::_block_s(null, $title);
             $loop_i = 0;
             foreach ($input as $key => $value) {
                 $html .= self::_row_s();
                 if ($this->options['max_y'] > 0 && $loop_i >= $this->options['max_y']) {
                     $html .= $this->_format_key('...', $value, $iter);
                     $html .= self::_value_s('value_skipped') . '<span title="' . (count($input) - $loop_i) . ' items at this level were skipped (max_y=' . $this->options['max_y'] . ').">[' . (count($input) - $loop_i) . '&nbsp;skipped]</span>' . self::_value_e();
+
                     break;
                 }
                 $html .= $this->_format_key($key, $value, $iter);
                 if ($this->options['avoid@'] == '1' && $key[0] == '@') {
                     $html .= $this->_format_value('Recursion');
-                } elseif (is_array($value) && !empty($value)) {
+                } elseif (is_array($value) && ! empty($value)) {
                     $html .= self::_value_s();
                     $this->print_a($value, $html, $iter);
                     $html .= self::_value_e();
@@ -640,13 +523,14 @@ else :
             if (array_key_exists($window_name, $this->window_open_tracker)) {
                 $hr_class = 'DbugL_js_hr';
             } else {
-                $this->window_open_tracker[$window_name] = TRUE;
+                $this->window_open_tracker[$window_name] = true;
                 $hr_class = 'DbugL_js_hr_first';
             }
-            $print_css = in_array($window_name, $this->open_windows) ? FALSE : TRUE;
+            $print_css = in_array($window_name, $this->open_windows, true) ? false : true;
             $this->open_windows[] = $window_name;
-            $debugwindow_origin = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            $debugwindow_origin = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             $html = self::escape_js($html);
+
             return '
 
                 ' . ($this->options['window_link'] ? '<a class="DbugL_window_link" href="javascript:open_' . $window_name . '();">print_a( $array, ' . $this->options_string . ' )</a>' : '') . '
@@ -691,30 +575,30 @@ else :
 
         public static function escape_js($string)
         {
-            $string = str_replace(array("\r\n", "\n", "\r"), '\n', $string);
+            $string = str_replace(["\r\n", "\n", "\r"], '\n', $string);
             $string = str_replace('</', '<\\/', $string);
-            $string = str_replace('"', '\"', $string);
-            return $string;
+
+            return str_replace('"', '\"', $string);
         }
 
         public function get_html($html)
         {
             if (isset($this->options['label'])) {
-                if ($this->options['pickle'] == TRUE || $this->options['export'] == TRUE) {
+                if ($this->options['pickle'] == true || $this->options['export'] == true) {
                     $html = '<form"><fieldset class="DbugL_pickled"><legend class="DbugL">' . $this->options['label'] . '</legend>' . $html . '</fieldset></form>';
                 } else {
                     $html = '<form style="display:table;"><fieldset class="DbugL_normal"><legend class="DbugL">' . $this->options['label'] . '</legend>' . $html . '</fieldset></form>';
                 }
             }
-            $html = '<div class="DbugL">' . $html . '</div>';
-            return $html;
+
+            return '<div class="DbugL">' . $html . '</div>';
         }
 
         // used by show_vars to get all globals defined in a script (minus the core PHP stuff)
         public static function script_globals()
         {
             $varcount = 0;
-            $script_globals = array();
+            $script_globals = [];
             foreach ($GLOBALS as $variable_name => $variable_value) {
                 if (++$varcount > $GLOBALS['DbugL_Globals']['initial_globals_count']) {
                     /* die wollen wir nicht! */
@@ -724,48 +608,205 @@ else :
                 }
             }
             unset($GLOBALS['DbugL_Globals']['initial_globals_count']);
+
             return $script_globals;
+        }
+
+        #TODO#
+        private function _block_s($class = 'null', $title = null)
+        {
+            return '<table ' . (isset($title) ? 'title="' . $title . '" ' : '') . ' cellpadding="0" cellspacing="1" class="DbugL">';
+        }
+
+        private function _block_e()
+        {
+            return '</table>';
+        }
+
+        private function _row_s($class = 'null')
+        {
+            return '<tr>';
+        }
+
+        private function _row_e()
+        {
+            return '</tr>';
+        }
+
+        private function _key_s($bg_color, $class, $value)
+        {
+            $value_type = self::get_type($value);
+            if ($this->single_value_flag == true) {
+                $class .= ' key_single_value';
+            }
+            if ($value_type == 'array' && count($value) == 0) {
+                $value_type = 'array (empty)';
+            }
+            if ($value_type == 'string' && $value == '') {
+                $value_type = 'string (empty)';
+            }
+            $html = '<th ' . (isset($class) ? 'class="' . $class . '"' : '') . ' style="background:#' . $bg_color . '" title="' . $value_type . '">';
+            if ($this->single_value_flag == true) {
+                $this->single_value_flag = false;
+            }
+
+            return $html;
+        }
+
+        private function _key_e()
+        {
+            return '</th>';
+        }
+
+        private function _value_s($class = 'null')
+        {
+            return '<td class="value ' . $class . '">';
+        }
+
+        private function _value_e()
+        {
+            return '</td>';
+        }
+
+        // lighten up the key background color with each iteration
+        private function _make_key_bg_color($base_color, $iter)
+        {
+            if (! isset($this->color_cache[$base_color][$iter])) {
+                if ($iter) {
+                    for ($i = 0; $i < 6; $i += 2) {
+                        $component = substr($base_color, $i, 2);
+                        $component = hexdec($component);
+                        ($component += self::color_step_width * $iter) > 255 and $component = 255;
+                        isset($tmp_key_bg_color) or $tmp_key_bg_color = '';
+                        $tmp_key_bg_color .= sprintf('%02X', $component);
+                    }
+                    $key_bg_color = $tmp_key_bg_color;
+                }
+                $this->color_cache[$base_color][$iter] = $key_bg_color; // save the color so we dont have to compute it again for this level
+            }
+
+            return $this->color_cache[$base_color][$iter];
+        }
+
+        // format the key
+        private function _format_key($key, $value, $iter, $special_type = null)
+        {
+            $this->element_counter++;
+            $key_type = self::get_type($key);
+            $value_type = self::get_type($value);
+            if (strpos($key, self::object_key_marker) !== false) {
+                $key = str_replace(self::object_key_marker, '', $key);
+                $value_type = 'OBJECT_DATA';
+            }
+            switch ($value_type) {
+            case 'array':
+                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_array, $iter), 'key_array', $value) . $key . self::_key_e();
+
+                break;
+            case 'object':
+                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_object, $iter), 'key_object', $value) . '<span title="Class: ' . (get_class($value)) . '">' . $key . '</span>' . self::_key_e();
+
+                break;
+            case 'OBJECT_DATA':
+                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_object_data, $iter), 'key_object_data', $value) . $key . self::_key_e();
+
+                break;
+            default:
+                return self::_key_s($this->_make_key_bg_color(self::key_bg_color_default, $iter), null, $value) . self::format_string($key, $this->options['trim_tabs']) . self::_key_e();
+
+                break;
+            }
+
+            return self::_key_s('key_string') . $key . self::_key_e();
+        }
+
+        // format the value
+        private function _format_value($value)
+        {
+            $value_type = self::get_type($value);
+            switch ($value_type) {
+            case 'boolean':
+                if ($value == true) {
+                    return self::_value_s('value_bool_true') . 'TRUE' . self::_value_e();
+                }
+
+                    return self::_value_s('value_bool_false') . 'FALSE' . self::_value_e();
+
+                break;
+            case 'string':
+                if ($value == '') {
+                    return self::_value_s('value_empty_string') . "''" . self::_value_e();
+                }
+
+                    return self::_value_s('value_string') . self::format_string($value, $this->options['trim_tabs'], $this->options['escape_html']) . self::_value_e();
+
+                break;
+            case 'integer':
+                return self::_value_s('value_integer') . $value . self::_value_e();
+
+                break;
+            case 'double':
+                return self::_value_s('value_double') . $value . self::_value_e();
+
+                break;
+            case 'NULL':
+                return self::_value_s('value_null') . 'NULL' . self::_value_e();
+
+                break;
+            case 'array':
+                return self::_value_s('value_empty_array') . '[]' . self::_value_e();
+
+                break;
+            case 'object':
+                return self::_value_s('value_empty_array') . '{}' . self::_value_e();
+
+                break;
+            }
         }
     } // DbugL
 
     // ------------------------------- here come the global user functions ------------------------------- //
-    function pre($string, $options_string = NULL)
+    function pre($string, $options_string = null)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
+        }
         $options = DbugL::parse_options($options_string);
-        if (isset($options['debug_level']) && $options['debug_level'] > $GLOBALS['DEBUGLIB_LVL'])
+        if (isset($options['debug_level']) && $options['debug_level'] > $GLOBALS['DEBUGLIB_LVL']) {
             return;
+        }
         if (isset($options['trim_tabs'])) {
             $string = DbugL::trim_leading_tabs($string, $options['trim_tabs']);
         }
         $html = DbugL::html_prefix() . '<div class="DbugL_pre"><span>' . DbugL::format_string($string) . '</span></div>';
         if (isset($options['return']) && $options['return'] == '1') {
             return $html;
-        } else {
-            print $html;
         }
+        echo $html;
     }
 
-    function pre_die($string, $options_string = NULL)
+    function pre_die($string, $options_string = null)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
+        }
         pre($string, $options_string);
         die();
     }
 
     // shows time elapsed since last call
-    function script_runtime($label = '', $style = '', $return_mode = FALSE)
+    function script_runtime($label = '', $style = '', $return_mode = false)
     {
         $bt = debug_backtrace();
         $bt = $bt[1];
         $title = "({$bt['line']}) {$bt['file']}";
-        if ($label != '')
+        if ($label != '') {
             $label = '<span class="DbugL_runtime_label">[' . $label . ']</span> ';
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        }
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
-        $now_time = microtime(TRUE);
+        }
+        $now_time = microtime(true);
         if (isset($GLOBALS['DbugL_Globals']['last_microtime'])) {
             $step_time = $now_time - $GLOBALS['DbugL_Globals']['last_microtime'];
         }
@@ -774,42 +815,44 @@ else :
         $html = DbugL::html_prefix() . '<div class="DbugL_runtime" style="' . $style . '" title="' . $title . '">' . $label . ' time: ' . $elapsed_time . (isset($step_time) ? ' (' . sprintf('%01.' . DbugL::runtime_precision . 'f', $step_time) . ' since last call)' : '') . '</div>';
         if ($return_mode) {
             return $html;
-        } else {
-            print $html;
         }
+        echo $html;
     }
 
     // the interface function for Debuglib::_print_a()
-    function print_a($input, $options_string = NULL)
+    function print_a($input, $options_string = null)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
-        static $DbugL;
-        if (!$DbugL)
-            $DbugL = new DbugL();
-        $DbugL->set_options($options_string);
-        if (!is_array($input) && !is_object($input) || (is_array($input) && count($input) == 0)) {
-            $DbugL->single_value_flag = TRUE; #hackish
-            $input = array('(' . gettype($input) . ')' => $input);
         }
-        if (!Dbugl::test_level($DbugL->options['debug_level']))
+        static $DbugL;
+        if (! $DbugL) {
+            $DbugL = new DbugL();
+        }
+        $DbugL->set_options($options_string);
+        if (! is_array($input) && ! is_object($input) || (is_array($input) && count($input) == 0)) {
+            $DbugL->single_value_flag = true; #hackish
+            $input = ['(' . gettype($input) . ')' => $input];
+        }
+        if (! Dbugl::test_level($DbugL->options['debug_level'])) {
             return;
+        }
         $html = '';
         // use print_r() to check for a recursion in the structure
-        if ($DbugL->options['test_for_recursions'] && strpos(print_r($input, 1), '*RECURSION*') !== FALSE) {
+        if ($DbugL->options['test_for_recursions'] && strpos(print_r($input, 1), '*RECURSION*') !== false) {
             $html = 'RECURSION detected!';
         } else {
             $DbugL->print_a($input, $html);
         }
         // open a window for the output?
         if (isset($DbugL->options['window'])) {
-            if ($DbugL->options['pickle'] == TRUE) {
+            if ($DbugL->options['pickle'] == true) {
                 $pickled_input = serialize($input);
-                $pickled_input = str_replace("'", "\\\'", $pickled_input);
+                $pickled_input = str_replace("'", "\\\\'", $pickled_input);
                 $pickled_input = '<textarea style="width:100%;height:200px;">' . $pickled_input . '</textarea>';
                 $html = $DbugL->js_for_popup($DbugL->get_html($pickled_input));
-            } elseif ($DbugL->options['export'] == TRUE) {
-                $export_input = var_export($input, TRUE);
+            } elseif ($DbugL->options['export'] == true) {
+                $export_input = var_export($input, true);
                 $export_input = '<textarea style="width:100%;height:200px;">' . $export_input . '</textarea>';
                 $html = $DbugL->js_for_popup($DbugL->get_html($export_input));
             } else {
@@ -828,72 +871,77 @@ else :
         } elseif ($DbugL->options['return'] == '1') {
             return $html;
         } else {
-            print $html;
+            echo $html;
         }
     }
 
     // call print_a() and die (RIP)
-    function print_a_die($input, $options_string = NULL)
+    function print_a_die($input, $options_string = null)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
+        }
         print_a($input, $options_string);
         die();
     }
 
     // deprecated
-    function die_a($input, $options_string = NULL)
+    function die_a($input, $options_string = null)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
+        }
         print_a($input, $options_string);
         die();
     }
 
     // good for printing all kind of superglobals at the bottom of a page
-    function show_vars($options_string = NULL)
+    function show_vars($options_string = null)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
+        }
         $options = DbugL::parse_options($options_string, DbugL::$alt_parameter_names);
         $print_a_options = $options_string . ';return:1;';
-        $superglobals = array('Script $GLOBALS' => DbugL::script_globals(),
+        $superglobals = ['Script $GLOBALS' => DbugL::script_globals(),
             '$_GET' => $_GET,
             '$_POST' => $_POST,
             '$_FILES' => $_FILES,
             '$_SESSION' => $_SESSION,
-            '$_COOKIE' => $_COOKIE);
+            '$_COOKIE' => $_COOKIE];
         if (isset($options['verbose']) && $options['verbose'] == '1') {
             $superglobals['$_SERVER'] = $_SERVER;
             $superglobals['$_ENV'] = $_ENV;
         }
-        $html = DbugL::html_prefix() . script_runtime('before show_vars', 'background:#BBB;', TRUE, TRUE);
+        $html = DbugL::html_prefix() . script_runtime('before show_vars', 'background:#BBB;', true, true);
         $html .= '<table class="DbugL_SG" cellpadding="0" cellspacing="0">';
         foreach ($superglobals as $name => $reference) {
-            if (empty($reference))
+            if (empty($reference)) {
                 continue;
+            }
             $class_name = $name == 'Script $GLOBALS' ? 'globals' : strtolower(str_replace('$_', '', $name));
             $html .= '<tr><td class="' . $class_name . '"><div class="DbugL_SG">' . $name . '</div>';
             $html .= print_a($reference, $print_a_options);
             $html .= '</td></tr>';
         }
-        $html .= '</table>' . script_runtime('after show_vars', 'background:#BBB;', TRUE, TRUE);
+        $html .= '</table>' . script_runtime('after show_vars', 'background:#BBB;', true, true);
         if (@$options['return'] == '1') {
             return $html;
-        } else {
-            print $html;
         }
+        echo $html;
     }
 
     // prints out a mysql result.. work in progress.. use at your own risk
-    function print_mysql_result($mysql_result, $return_mode = FALSE)
+    function print_mysql_result($mysql_result, $return_mode = false)
     {
-        if (!$GLOBALS['USE_DEBUGLIB'])
+        if (! $GLOBALS['USE_DEBUGLIB']) {
             return;
-        if (!$mysql_result || mysql_num_rows($mysql_result) < 1)
+        }
+        if (! $mysql_result || mysql_num_rows($mysql_result) < 1) {
             return;
+        }
         $field_count = mysql_num_fields($mysql_result);
-        $tables = array();
+        $tables = [];
         for ($i = 0; $i < $field_count; $i++) {
             if (isset($tables[mysql_field_table($mysql_result, $i)])) {
                 $tables[mysql_field_table($mysql_result, $i)]++;
@@ -930,7 +978,7 @@ else :
         $html .= '<table class="DbugL_PR" cellspacing="1" cellpadding="1">';
         $html .= '<tr>';
         foreach ($tables as $tableName => $tableCount) {
-            (!isset($col) || $col == '#006F05') ? $col = '#00A607' : $col = '#006F05';
+            (! isset($col) || $col == '#006F05') ? $col = '#00A607' : $col = '#006F05';
             $html .= '<th colspan="' . $tableCount . '" class="t_name" style="background:' . $col . ';">' . $tableName . '</th>';
         }
         $html .= '</tr>';
@@ -942,25 +990,25 @@ else :
         }
         $html .= '</tr>';
         mysql_data_seek($mysql_result, 0);
-        $toggle = FALSE;
+        $toggle = false;
         $pointer = 0;
-        $table_id = str_replace('.', '', microtime(TRUE));
+        $table_id = str_replace('.', '', microtime(true));
         while ($db_row = mysql_fetch_array($mysql_result, MYSQL_NUM)) {
             $pointer++;
             if ($toggle) {
-                $col1 = "#E6E6E6";
-                $col2 = "#DADADA";
+                $col1 = '#E6E6E6';
+                $col2 = '#DADADA';
             } else {
-                $col1 = "#E1F0FF";
-                $col2 = "#DAE8F7";
+                $col1 = '#E1F0FF';
+                $col2 = '#DAE8F7';
             }
-            $toggle = !$toggle;
+            $toggle = ! $toggle;
             $id = 'DbugL_' . $table_id . '_' . $pointer;
             $html .= '<tr id="' . $id . '" onMouseDown="DbugL_highlight(\'' . $id . '\');">';
             foreach ($db_row as $i => $value) {
                 $col == $col1 ? $col = $col2 : $col = $col1;
                 $flags = mysql_field_flags($mysql_result, $i);
-                $primary_flag = strpos($flags, 'primary_key') !== FALSE;
+                $primary_flag = strpos($flags, 'primary_key') !== false;
                 $html .= '<td style="background:' . $col . ';' . ($primary_flag ? 'font-weight:bold;' : '') . '" nowrap="nowrap">' . nl2br($value) . '</td>';
             }
             $html .= '</tr>';
@@ -969,11 +1017,10 @@ else :
         mysql_data_seek($mysql_result, 0);
         if ($return_mode) {
             return $html;
-        } else {
-            print $html;
         }
+        echo $html;
     }
-endif;
+}
 
 #TODO#
 /*

@@ -16,27 +16,25 @@ class BEAR_Resource_Execute_Ro extends BEAR_Resource_Execute_Adapter
      * リソースリクエスト実行
      *
      * App/Ro下のROリソースのリクエストを行います。
-     *
-     * @return mixed
      */
     public function request()
     {
         // ROクラスDI
-        $config = array(
+        $config = [
             'method' => $this->_config['method'],
             'uri' => $this->_config['uri'],
             'class' => $this->_config['class']
-        );
+        ];
         if (isset($this->_config['options']['config'])) {
             $roConfig = array_merge($this->_config, $this->_config['options']['config']);
         } else {
             $roConfig = $this->_config;
         }
         if (isset($this->_config['options']['injector'])) {
-            $roOptions = array('injector' => $this->_config['options']['injector']);
+            $roOptions = ['injector' => $this->_config['options']['injector']];
         } else {
             // デフォルトインジェクト
-            $roOptions = array();
+            $roOptions = [];
         }
         $this->_config['obj'] = BEAR::factory($this->_config['class'], $roConfig, $roOptions);
         // アノテーションクラスDI

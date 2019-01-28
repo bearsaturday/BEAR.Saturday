@@ -20,14 +20,12 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      *
      * @var array
      */
-    protected $_config = array();
+    protected $_config = [];
 
     /**
      * Universal constructor
      *
      * 設定を_configプロパティに代入します。
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -66,8 +64,6 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      * Get config
      *
      * @param string $key 設定キー、指定なければ全ての設定を取得
-     *
-     * @return mixed
      */
     public function getConfig($key = null)
     {
@@ -90,7 +86,7 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      */
     public function setService($name, $service)
     {
-        $this->$name = $service;
+        $this->{$name} = $service;
     }
 
     /**
@@ -101,7 +97,7 @@ abstract class BEAR_Base implements BEAR_Base_Interface
      *
      * @return BEAR_Exception
      */
-    protected function _exception($msg, array $config = array())
+    protected function _exception($msg, array $config = [])
     {
         $class = get_class($this) . '_Exception';
         $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';

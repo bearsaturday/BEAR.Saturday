@@ -9,11 +9,11 @@ if (isset($_GET['_pear_dir'])) {
     $config = new PEAR_Config();
     $pearDataPath = $config->get('data_dir');
     if (strpos(_BEAR_BEAR_HOME, $pearDataPath)) {
-        $dataDir = "$pearDataPath/BEAR";
+        $dataDir = "${pearDataPath}/BEAR";
     } else {
         $dataDir = _BEAR_BEAR_HOME . '/data/';
     }
-    if (file_exists("$pearDataPath/BEAR")) {
+    if (file_exists("${pearDataPath}/BEAR")) {
         $dataDir = '$pearDataPath/BEAR';
     } elseif (file_exists($pearDataPath . '/data')) {
         $dataDir = 'BEAR/data';

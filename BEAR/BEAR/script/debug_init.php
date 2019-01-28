@@ -14,26 +14,26 @@ if ($appConfig['Panda']['firephp'] === true) {
 }
 
 // シャットダウン関数登録
-if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && substr($_SERVER['REQUEST_URI'], 1, 2) !== '__') {
-    register_shutdown_function(array('BEAR_Dev_Util', 'onShutdownDebug'));
-    register_shutdown_function(array('BEAR_Log', 'onShutdownDebug'));
+if (isset($_SERVER, $_SERVER['REQUEST_URI']) && substr($_SERVER['REQUEST_URI'], 1, 2) !== '__') {
+    register_shutdown_function(['BEAR_Dev_Util', 'onShutdownDebug']);
+    register_shutdown_function(['BEAR_Log', 'onShutdownDebug']);
 }
 
 // エラー初期化(Panda)
 if (defined('_BEAR_APP_HOME')) {
-    $validPath = array(_BEAR_APP_HOME . '/htdocs', _BEAR_APP_HOME . '/App');
+    $validPath = [_BEAR_APP_HOME . '/htdocs', _BEAR_APP_HOME . '/App'];
 } else {
-    $validPath = array();
+    $validPath = [];
 }
 // BEAR developperのみBEAR内のエラー表示
 if (isset($_SERVER['beardev']) && $_SERVER['beardev']) {
     $validPath[] = _BEAR_BEAR_HOME;
 }
-$pandaConfig = array(
+$pandaConfig = [
     Panda::CONFIG_DEBUG => $appConfig['core']['debug'], // デバックモード
     Panda::CONFIG_VALID_PATH => $validPath, // エラーレポートするファイルパス
     Panda::CONFIG_LOG_PATH => _BEAR_APP_HOME . '/logs/' // fatalエラーログを保存するパス
-);
+];
 if (isset($appConfig['Panda'])) {
     $pandaConfig = array_merge($pandaConfig, $appConfig['Panda']);
 }
@@ -67,7 +67,7 @@ if (isset($_GET['_cc'])) {
 }
 
 // log
-$log = array();
+$log = [];
 $log['BEAR'] = BEAR::VERSION;
 if (isset($_SERVER['REQUEST_URI'])) {
     $log['URI'] = $_SERVER['REQUEST_URI'];

@@ -8,7 +8,7 @@ $bearPath = realpath(dirname(dirname(dirname(__DIR__))));
 $vendorPEARPath = "{$bearPath}/BEAR/vendors/PEAR";
 ini_set('include_path', $bearPath . PATH_SEPARATOR . $vendorPEARPath . PATH_SEPARATOR . get_include_path());
 ini_set('error_log', 'syslog');
-set_error_handler(array('BEAR_Bin_Bear', 'errorHandler'));
+set_error_handler(['BEAR_Bin_Bear', 'errorHandler']);
 
 /**
  * BEAR CLI
@@ -55,7 +55,7 @@ class BEAR_bin_bear
             include_once "{$appPath}/App.php";
             // CLI用ページをセット
             if (! BEAR::exists('page')) {
-                BEAR::set('page', new BEAR_Page_Cli(array()));
+                BEAR::set('page', new BEAR_Page_Cli([]));
             }
         }
         $this->_initBear();
@@ -69,11 +69,11 @@ class BEAR_bin_bear
         if ($_SERVER['argc'] == 1) {
             /* @noinspection PhpExpressionResultUnusedInspection */
             $_SERVER['argc'] == 2;
-            $argv = array('bear.php', '--help');
+            $argv = ['bear.php', '--help'];
         } else {
             $argv = $_SERVER['argv'];
         }
-        $config = array('argv' => $argv, 'cli' => true);
+        $config = ['argv' => $argv, 'cli' => true];
         $shell = BEAR::dependency('BEAR_Dev_Shell', $config, true);
         /* @var $shell BEAR_Dev_Shell */
         $shell->execute();
@@ -93,7 +93,7 @@ class BEAR_bin_bear
      */
     public function getBearMode($appPath)
     {
-        $matches = array();
+        $matches = [];
         $path = $appPath . '/htdocs/.htaccess';
         if (! file_exists($path)) {
             return 0;
@@ -121,39 +121,35 @@ class BEAR_bin_bear
         /* @noinspection PhpUnusedParameterInspection */
         $errcontext
     ) {
-        {
-            if ($errno & E_DEPRECATED || $errno & E_STRICT) {
-                return;
-            }
-            $errortype = array(
-                E_ERROR => 'Error',
-                E_WARNING => 'Warning',
-                E_PARSE => 'Parsing Error',
-                E_NOTICE => 'Notice',
-                E_CORE_ERROR => 'Core Error',
-                E_CORE_WARNING => 'Core Warning',
-                E_COMPILE_ERROR => 'Compile Error',
-                E_COMPILE_WARNING => 'Compile Warning',
-                E_USER_ERROR => 'User Error',
-                E_USER_WARNING => 'User Warning',
-                E_USER_NOTICE => 'User Notice'
-            );
-            $prefix = $errortype[$errno];
-            error_log("{$prefix}[{$errno}]: $errmsg in $file on line $line\n", 0);
+        if ($errno & E_DEPRECATED || $errno & E_STRICT) {
+            return;
         }
+        $errortype = [
+            E_ERROR => 'Error',
+            E_WARNING => 'Warning',
+            E_PARSE => 'Parsing Error',
+            E_NOTICE => 'Notice',
+            E_CORE_ERROR => 'Core Error',
+            E_CORE_WARNING => 'Core Warning',
+            E_COMPILE_ERROR => 'Compile Error',
+            E_COMPILE_WARNING => 'Compile Warning',
+            E_USER_ERROR => 'User Error',
+            E_USER_WARNING => 'User Warning',
+            E_USER_NOTICE => 'User Notice'
+        ];
+        $prefix = $errortype[$errno];
+        error_log("{$prefix}[{$errno}]: ${errmsg} in ${file} on line ${line}\n", 0);
     }
 
     /**
      * Get App path by -app or ~/.bearrc
-     *
-     * @return mixed
      */
     private function _getAppPath()
     {
         $argv = $_SERVER['argv'];
         $count = count($argv);
         $count--;
-        $hasLastOption = $count > 0 && isset($argv[$count]) && isset($argv[$count - 1]);
+        $hasLastOption = $count > 0 && isset($argv[$count], $argv[$count - 1]);
         $hasAppOption = ($hasLastOption && $argv[$count - 1] === '--app') || ($hasLastOption && $argv[$count - 1] === '-a');
         if ($hasAppOption === true) {
             $appPath = realpath($argv[$count]);

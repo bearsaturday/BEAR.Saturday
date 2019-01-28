@@ -62,8 +62,6 @@ class BEAR_Cache extends BEAR_Factory
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -103,6 +101,7 @@ class BEAR_Cache extends BEAR_Factory
             default:
                 if (is_string($this->_config['adapter'])) {
                     $instance = BEAR::dependency('App_Cache_Adapter_' . $this->_config['adapter']);
+
                     break;
                 }
                 $instance = BEAR::dependency('BEAR_Cache_Adapter_Void', $this->_config);

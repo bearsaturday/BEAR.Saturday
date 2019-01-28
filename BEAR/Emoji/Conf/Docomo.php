@@ -8,7 +8,7 @@
 /**
  * スタティック絵文字データ for Docomo
  */
-$emojiChars = array(
+$emojiChars = [
     'SUN' => '<span style="color:#FF0000">&#63647;</span>',
     'CLOUD' => '<span style="color:#0000FF">&#63648;</span>',
     'RAIN' => '<span style="color:#0000FF">&#63649;</span>',
@@ -259,4 +259,4 @@ $emojiChars = array(
     'PIG' => '<span style="color:#FF8C00">&#63994;</span>',
     'WINE' => '<span style="color:#6A5ACD">&#63995;</span>',
     'FACE20' => '<span style="color:#6A5ACD">&#63996;</span>',
-);
+];

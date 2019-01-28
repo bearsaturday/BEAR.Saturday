@@ -62,8 +62,6 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -185,9 +183,11 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         switch ($align) {
             case BEAR_Img::CENTER:
                 $x = $this->_srcWidth / 2 - $this->_fontInfo['x_advance'] / 2 + $x;
+
                 break;
             case BEAR_Img::RIGHT:
                 $x = $this->_srcWidth - $this->_fontInfo['x_advance'] - $x;
+
                 break;
             case BEAR_Img::LEFT:
             default:
@@ -258,14 +258,14 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         /* @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_write_to_png($this->surface, $filePath);
         $isSaved = file_exists($filePath);
-        $log = array(
+        $log = [
             'isSaved' => $isSaved,
             'surface' => $this->surface,
             'is_res' => is_resource($this->surface),
             'file path' => $filePath,
             'file_exists' => file_exists($filePath),
             'file size' => filesize($filePath)
-        );
+        ];
         $this->_log->log('cairo_surface_write_to_png', $log);
         /* @noinspection PhpUndefinedFunctionInspection */
         cairo_surface_destroy($this->surface);
@@ -290,6 +290,7 @@ class BEAR_Img_Adapter_Cairo extends BEAR_Img_Adapter
         header('HTTP/1.0 503 Service Temporarily Unavailable.');
         $isRes = (is_resource($this->image)) ? 'true' : false;
         $info = compact('msg', 'errorFunc', 'isRes');
-        throw $this->_exception($msg, array('info' => $info));
+
+        throw $this->_exception($msg, ['info' => $info]);
     }
 }

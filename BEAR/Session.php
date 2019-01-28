@@ -47,6 +47,7 @@ class BEAR_Session extends BEAR_Base
      * memcachedセッション
      */
     const ADAPTER_MEMCACHED = 4;
+
     /**
      * @var BEAR_Log
      */
@@ -54,8 +55,6 @@ class BEAR_Session extends BEAR_Base
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -87,7 +86,7 @@ class BEAR_Session extends BEAR_Base
         $this->_start();
         $key = $this->_config['prefix'] . $key;
         $values = HTTP_Session2::get($key, $default);
-        $this->_log->log('Session[R]', array($key));
+        $this->_log->log('Session[R]', [$key]);
 
         return $values;
     }
@@ -103,7 +102,7 @@ class BEAR_Session extends BEAR_Base
         $this->_start();
         $key = $this->_config['prefix'] . $key;
         $return = HTTP_Session2::set($key, $values);
-        $log = array('name' => $key, 'val' => $values, 'return' => $return);
+        $log = ['name' => $key, 'val' => $values, 'return' => $return];
         $this->_log->log('Session[W]', $log);
     }
 
@@ -124,7 +123,7 @@ class BEAR_Session extends BEAR_Base
             $values = array_merge_recursive($old, $values);
         }
         $return = HTTP_Session2::set($key, $values);
-        $log = array('key' => $key, 'val' => $values, 'result' => $return);
+        $log = ['key' => $key, 'val' => $values, 'result' => $return];
         $this->_log->log('Session[Merge]', $log);
     }
 
@@ -137,7 +136,7 @@ class BEAR_Session extends BEAR_Base
     {
         $this->_start();
         HTTP_Session2::unregister($this->_config['prefix'] . $key);
-        $this->_log->log('Session[DEL]', array('name' => $key));
+        $this->_log->log('Session[DEL]', ['name' => $key]);
     }
 
     /**
@@ -199,7 +198,7 @@ class BEAR_Session extends BEAR_Base
             if (HTTP_Session2::isIdle()) {
                 if (isset($this->_config['callback']) && is_callable($this->_config['callback'])) {
                     $method = $this->_config['callback'][1];
-                    BEAR::dependency($this->_config['callback'][0], array())->$method();
+                    BEAR::dependency($this->_config['callback'][0], [])->{$method}();
                 } else {
                     // コールバック指定がないとセッション破壊
                     HTTP_Session2::destroy();
@@ -214,7 +213,7 @@ class BEAR_Session extends BEAR_Base
             if (HTTP_Session2::isExpired()) {
                 if (isset($this->_config['expire_callback']) && is_callable($this->_config['expire_callback'])) {
                     $method = $this->_config['expire_callback'][1];
-                    BEAR::dependency($this->_config['expire_callback'][0], array())->$method();
+                    BEAR::dependency($this->_config['expire_callback'][0], [])->{$method}();
                 } else {
                     // コールバック指定がないとセッション破壊
                     HTTP_Session2::destroy();
@@ -225,11 +224,11 @@ class BEAR_Session extends BEAR_Base
         // セッションスタート
         $this->_log->log(
             'Session Start',
-            array(
+            [
                 'id' => session_id(),
                 'module' => session_module_name() . '/' . $this->_config['adapter'],
                 'gc_maxlifetime' => ini_get('session.gc_maxlifetime')
-            )
+            ]
         );
     }
 
@@ -251,8 +250,6 @@ class BEAR_Session extends BEAR_Base
     /**
      * セッションアダプターのセット
      *
-     * @param array $config
-     *
      * @throws HTTP_Session2_Exception
      */
     private function _setAdapter(array $config)
@@ -262,10 +259,12 @@ class BEAR_Session extends BEAR_Base
             case self::ADAPTER_MEMCACHE:
                 ini_set('session.save_handler', 'memcache');
                 ini_set('session.save_path', $config['path']);
+
                 break;
             case self::ADAPTER_MEMCACHED:
                 ini_set('session.save_handler', 'memcached');
                 ini_set('session.save_path', $config['path']);
+
                 break;
             case self::ADAPTER_DB:
                 // DSN を指定します
@@ -273,17 +272,19 @@ class BEAR_Session extends BEAR_Base
                 if (isset($config['auto_optimize']) && is_bool($config['auto_optimize'])) {
                     $autoOptimize = $config['auto_optimize'];
                 }
-                $config = array(
+                $config = [
                     'dsn' => $config['path'],
                     'table' => 'sessiondata',
                     'autooptimize' => $autoOptimize
-                );
+                ];
                 HTTP_Session2::setContainer('MDB2', $config);
+
                 break;
             case self::ADAPTER_FILE:
                 if (isset($config['path']) && file_exists($config['path'])) {
                     ini_set('session.save_path', $config['path']);
                 }
+
                 break;
             case self::ADAPTER_NONE:
                 // no cache
@@ -291,8 +292,9 @@ class BEAR_Session extends BEAR_Base
             default:
                 // error
                 $msg = 'Invalid Session Engine.';
-                $info = array('adapter' => $config['adapter']);
-                throw $this->_exception($msg, array('info' => $info));
+                $info = ['adapter' => $config['adapter']];
+
+                throw $this->_exception($msg, ['info' => $info]);
         }
     }
 }

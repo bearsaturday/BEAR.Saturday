@@ -24,9 +24,9 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      *
      * @return array
      */
-    protected function _getViewInfo($tplName = null, array $role = array(), $ext = 'tpl')
+    protected function _getViewInfo($tplName = null, array $role = [], $ext = 'tpl')
     {
-        $result = array();
+        $result = [];
         $pagePath = $this->_getTemplateNameByPageClass($tplName); // ex) user/create
         // エージェントロール対応ページテンプレート
         if ($role && (! (count($role) === 1 && $role[0] === BEAR_Agent::UA_DEFAULT))) {
@@ -41,7 +41,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         } else {
             $agentExtention = '';
         }
-        $matches = array();
+        $matches = [];
         preg_match('/(.+?)[\.]/', $pagePath, $matches);
         if (is_array($matches)) {
             // $firstWordForConfig = index.
@@ -63,8 +63,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         } else {
             $configFilePath = false;
         }
-        $yml = $configFilePath ? BEAR::loadValues($configFilePath) : array();
-        $layoutValue = ($yml !== array()) ? $this->_getRoleLayoutValue($role, $yml) : array();
+        $yml = $configFilePath ? BEAR::loadValues($configFilePath) : [];
+        $layoutValue = ($yml !== []) ? $this->_getRoleLayoutValue($role, $yml) : [];
         $result['page_template'] = $templatePath;
         $result['layout_value'] = $layoutValue;
         if (isset($yml['layout'])) {
@@ -94,7 +94,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
     protected function _getRo($html)
     {
         // ヘッダーを出力
-        $header = isset($this->_config['agent_config']['header']) ? $this->_config['agent_config']['header'] : array();
+        $header = isset($this->_config['agent_config']['header']) ? $this->_config['agent_config']['header'] : [];
         // 絵文字＆（&文字コード）フィルター
         if (isset($this->_config['agent_config']['agent_filter']) && $this->_config['agent_config']['agent_filter'] === true
         ) {
@@ -103,9 +103,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         // ボディ出力
         $ro = BEAR::factory('BEAR_Ro');
         /** @var $ro BEAR_Ro */
-        $ro = $ro->setHeaders(array($header))->setBody($html);
-
-        return $ro;
+        return $ro->setHeaders([$header])->setBody($html);
     }
 
     /**
@@ -137,7 +135,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         $html = BEAR::dependency('BEAR_Emoji')->convertEmojiImage($html);
         // 絵文字バイナリ化
         if (isset($this->_config['ua']) && $this->_config['ua'] !== BEAR_Agent::UA_SOFTBANK) {
-            $html = preg_replace_callback('/&#(\d{5});/s', array(__CLASS__, 'onPackEmoji'), $html);
+            $html = preg_replace_callback('/&#(\d{5});/s', [__CLASS__, 'onPackEmoji'], $html);
         }
         // remove CSS
         if ($agentConfig['enable_css'] === false) {
@@ -189,8 +187,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         }
         foreach ($role as $agent) {
             $agentExtention = '.' . strtolower($agent);
-            $agentFile = str_replace(".{$ext}", "$agentExtention.{$ext}", $fileName);
-            $fullPath = "$dir/{$agentFile}";
+            $agentFile = str_replace(".{$ext}", "${agentExtention}.{$ext}", $fileName);
+            $fullPath = "${dir}/{$agentFile}";
             if (file_exists($fullPath)) {
                 break;
             }
@@ -212,7 +210,7 @@ abstract class BEAR_View_Adapter extends BEAR_Base
      */
     private function _getRoleLayoutValue(array $role, array $yml)
     {
-        $layoutValue = isset($yml['default']) ? $yml['default'] : array();
+        $layoutValue = isset($yml['default']) ? $yml['default'] : [];
         $role = array_reverse($role);
         foreach ($role as $agent) {
             $agent = strtolower($agent);
@@ -252,9 +250,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         if (substr($tplName, 0, 1) == '/') {
             // 先頭の/を除いて返す
             $absPath = $this->_removeExtention($tplName);
-            $result = substr($absPath, 0);
 
-            return $result;
+            return substr($absPath, 0);
         }
         // 相対パスの場合はクラス名からベースパスを作成する
         $pageClass = preg_replace('/^page_/i', '', $this->_config['resource_id']);
@@ -285,13 +282,16 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         switch ($pathinfo['dirname']) {
             case '/':
                 $result = $pathinfo['filename'];
+
                 break;
             case '.':
                 $result = $pathinfo['filename'];
+
                 break;
             default:
                 $begin = (substr($pathinfo['dirname'], 0, 1) === '/') ? 1 : 0;
                 $result = substr($pathinfo['dirname'], $begin) . '/' . $pathinfo['filename'];
+
                 break;
         }
 
@@ -309,8 +309,6 @@ abstract class BEAR_View_Adapter extends BEAR_Base
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private static function onPackEmoji($match)
     {
-        $result = pack('n', $match[1]);
-
-        return $result;
+        return pack('n', $match[1]);
     }
 }

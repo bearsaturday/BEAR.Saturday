@@ -19,7 +19,7 @@ class BEAR_Log extends BEAR_Base
      *
      * @var array
      */
-    private $_logs = array();
+    private $_logs = [];
 
     /**
      * テンポラリーログ記録開始オフセット
@@ -33,14 +33,14 @@ class BEAR_Log extends BEAR_Base
      *
      * @var array
      */
-    private $_resourceLog = array();
+    private $_resourceLog = [];
 
     /**
      * FirePHP表示もするログキー
      *
      * @var string
      */
-    private $_fbKeys = array('onInit');
+    private $_fbKeys = ['onInit'];
 
     /**
      * アプリケーションログを記録
@@ -62,14 +62,14 @@ class BEAR_Log extends BEAR_Base
         $showFirePHP = (isset($_GET['_firelog']) || array_search($logKey, $this->_fbKeys, true) !== false);
         if (class_exists('FB', false) && $showFirePHP) {
             $color = ($logValue) ? 'black' : 'grey';
-            FB::group($logKey, array('Collapsed' => true, 'Color' => $color));
+            FB::group($logKey, ['Collapsed' => true, 'Color' => $color]);
             FB::log($logValue);
             FB::groupEnd();
         }
         if (! is_scalar($logValue)) {
             $logValue = print_r($logValue, true);
             $logValue = str_replace("\n", '', $logValue);
-            $logValue = preg_replace("/\s+/s", ' ', $logValue);
+            $logValue = preg_replace('/\\s+/s', ' ', $logValue);
         }
     }
 
@@ -93,8 +93,8 @@ class BEAR_Log extends BEAR_Base
         if ($method == BEAR_Resource::METHOD_READ) {
             return;
         }
-        if (is_callable(array('App', 'onCall'))) {
-            $result = call_user_func(array('App', 'onCall'), 'resource', array('uri' => $fullUri));
+        if (is_callable(['App', 'onCall'])) {
+            $result = call_user_func(['App', 'onCall'], 'resource', ['uri' => $fullUri]);
         } else {
             $result = true;
         }
@@ -170,17 +170,14 @@ ____SQL;
     /**
      * Get page log
      *
-     * @param array $get
-     *
      * @return array|mixed|string
      */
     public function getPageLog(array $get)
     {
         if (! class_exists('SQLiteDatabase', false)) {
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
-            $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
 
-            return $pageLog;
+            return file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : [];
         }
         $db = $this->getPageLogDb();
         if (isset($get['id'])) {
@@ -196,9 +193,8 @@ ____SQL;
             die('Log db is not avalilabe.');
         }
         $log = $result->fetchAll();
-        $pageLog = unserialize($log[0]['log']);
 
-        return $pageLog;
+        return unserialize($log[0]['log']);
     }
 
     /**
@@ -235,11 +231,11 @@ ____SQL;
             if ($isBeardev || PHP_SAPI === 'cli') {
                 return;
             }
-            $log = array();
+            $log = [];
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
             if (file_exists($pageLogPath) && ! is_writable($pageLogPath)) {
                 // 書き込み権限のエラー
-                Panda::error('Permission denied.', "[$pageLogPath] is not writable.");
+                Panda::error('Permission denied.', "[${pageLogPath}] is not writable.");
 
                 return;
             }
@@ -258,24 +254,24 @@ ____SQL;
             } else {
                 $log['smarty'] = '';
             }
-            $oldPageLog = isset($pageLog['page']) ? $pageLog['page'] : array();
-            $newPageLog = array(
+            $oldPageLog = isset($pageLog['page']) ? $pageLog['page'] : [];
+            $newPageLog = [
                 'page' => $this->_logs,
                 'uri' => $_SERVER['REQUEST_URI']
-            );
+            ];
             $oldPageLog[] = $newPageLog;
             if (count($oldPageLog) > 3) {
                 array_shift($oldPageLog);
             }
-            $log += array(
+            $log += [
                 'page' => $oldPageLog,
                 'include' => get_included_files(),
                 'class' => get_declared_classes()
-            );
+            ];
             if (isset($_SERVER['REQUEST_URI'])) {
-                $log += array(
+                $log += [
                     'uri' => $_SERVER['REQUEST_URI']
-                );
+                ];
             }
             $reg = BEAR_Util::getObjectVarsRecursive(BEAR::getAll());
             $log['reg'] = $reg;
@@ -317,14 +313,11 @@ ____SQL;
 
     /**
      * ログを記録開始
-     *
-     * @return mixed
      */
     public function stop()
     {
         $length = count($this->_logs) - $this->_temporaryOffset;
-        $result = array_slice($this->_logs, $this->_temporaryOffset, $length);
 
-        return $result;
+        return array_slice($this->_logs, $this->_temporaryOffset, $length);
     }
 }

@@ -12,8 +12,6 @@ class BEAR_Agent_Adapter_Ipad extends BEAR_Agent_Adapter implements BEAR_Agent_A
 {
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -23,6 +21,6 @@ class BEAR_Agent_Adapter_Ipad extends BEAR_Agent_Adapter implements BEAR_Agent_A
         $this->_config['header'] = 'Content-Type: ' . $contentType . '; charset=utf-8';
         $this->_config['charset'] = 'utf-8';
         $this->_config['enable_js'] = true;
-        $this->_config['role'] = array(BEAR_Agent::UA_IPAD, BEAR_Agent::UA_DEFAULT);
+        $this->_config['role'] = [BEAR_Agent::UA_IPAD, BEAR_Agent::UA_DEFAULT];
     }
 }

@@ -1,26 +1,18 @@
 <?php
 /**
- * BEAR
+ * This file is part of the BEAR.Saturday package.
  *
- * PHP versions 5
- *
- * @category  BEAR
- * @package   BEAR
- * @author    Akihito Koriyama <akihito.koriyama@gmail.com>
- * @copyright 2008-2017 Akihito Koriyama  All rights reserved.
- *
- * @version    @package_version@
- *
+ * @license http://opensource.org/licenses/bsd-license.php BSD
  */
 
 // フレームワークホームパス
-if (!defined('_BEAR_BEAR_HOME')) {
-    define('_BEAR_BEAR_HOME', realpath(dirname(__FILE__)));
+if (! defined('_BEAR_BEAR_HOME')) {
+    define('_BEAR_BEAR_HOME', realpath(__DIR__));
 }
 
 // 現在時刻 (W3CDTFフォーマット）
-if (!defined('_BEAR_DATETIME')) {
-    define('_BEAR_DATETIME', date("Y-m-d H:i:s"));
+if (! defined('_BEAR_DATETIME')) {
+    define('_BEAR_DATETIME', date('Y-m-d H:i:s'));
 }
 
 /**
@@ -28,12 +20,9 @@ if (!defined('_BEAR_DATETIME')) {
  *
  * 初期化、クラスの生成に関するスタティックメソッドを持ちます。
  *
- * @category BEAR
- * @package  BEAR
- * @author   Akihito Koriyama <akihito.koriyama@gmail.com>
  * @license  http://opensource.org/licenses/bsd-license.php BSD
- * @version    @package_version@
- * @link     https://github.com/bearsaturday
+ *
+ * @see     https://github.com/bearsaturday
  *
  * <pre>
  * Copyright (c) 2008-2017, Akihito Koriyama.  All rights reserved.
@@ -82,17 +71,17 @@ class BEAR
      *
      * @var array
      */
-    private static $_registry = array();
+    private static $_registry = [];
 
     /**
      * 設定
      */
-    private static $_config = array();
+    private static $_config = [];
 
     /**
      * Constructor - static only
      */
-    final private function __construct()
+    private function __construct()
     {
     }
 
@@ -103,10 +92,8 @@ class BEAR
      * オートローダー、エラーハンドラの設定、デバック用機能有効化などを行います。
      *
      * @param array $appConfig アプリケーション別クラス設定
-     *
-     * @return void
      */
-    public static function init(array $appConfig = array('core' => array('debug' => false)))
+    public static function init(array $appConfig = ['core' => ['debug' => false]])
     {
         static $_run = false;
 
@@ -121,9 +108,9 @@ class BEAR
         self::set('app', new ArrayObject($appConfig));
         self::$_config = $appConfig['core'];
         if (self::$_config['debug'] === false) {
-            spl_autoload_register(array(__CLASS__, 'onAutoload'));
+            spl_autoload_register([__CLASS__, 'onAutoload']);
             //Panda (live)
-            $pandaConfig = isset($appConfig['Panda']) ? $appConfig['Panda'] : array();
+            $pandaConfig = isset($appConfig['Panda']) ? $appConfig['Panda'] : [];
             $pandaConfig[Panda::CONFIG_DEBUG] = false; // デバックモードオフ
             if (defined('_BEAR_APP_HOME')) {
                 $pandaConfig[Panda::CONFIG_LOG_PATH] = _BEAR_APP_HOME . '/logs/';
@@ -133,7 +120,7 @@ class BEAR
             if (isset($appConfig['BEAR']['autoload'])) {
                 spl_autoload_register($appConfig['BEAR']['autoload']);
             } else {
-                spl_autoload_register(array(__CLASS__, 'onAutoload'));
+                spl_autoload_register([__CLASS__, 'onAutoload']);
             }
 
             include _BEAR_BEAR_HOME . '/BEAR/BEAR/script/debug_init.php';
@@ -161,12 +148,14 @@ class BEAR
         $file = ucwords(str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php', DIRECTORY_SEPARATOR);
         if (file_exists($file)) {
             require $file;
+
             return;
         }
-        $includePath = explode(":", get_include_path());
-        foreach($includePath as $path){
+        $includePath = explode(':', get_include_path());
+        foreach ($includePath as $path) {
             if (file_exists($path . DIRECTORY_SEPARATOR . $file)) {
                 require $file;
+
                 return;
             }
         }
@@ -199,52 +188,54 @@ class BEAR
      * @param mixed $target  ターゲット　ファイルパス,URLなど
      * @param array $options オプション
      *
+     * @throws BEAR_Exception
+     *
      * @return array
      *
      * @see http://pear.php.net/manual/ja/package.configuration.config.php
      * @see BEAR/test/files/example.ini
      * @see BEAR/test/files/example.xml
      * @see BEAR/test/files/example.php
-     * @throws BEAR_Exception
      */
-    public static function loadValues($target, $options = array())
+    public static function loadValues($target, $options = [])
     {
-        if (!is_file((string)$target)) {
+        if (! is_file((string) $target)) {
             // arrayならそのまま
             if (is_array($target) || is_object($target)) {
-                return (array)$target;
+                return (array) $target;
             }
             // false | null なら 設定な
-            if (!$target) {
+            if (! $target) {
                 return null;
             }
             // クエリーがあるときはクエリーをパースした連想配列を返す
             $parseUrl = parse_url($target);
             if (isset($parseUrl['query'])) {
-                $options = array();
+                $options = [];
                 parse_str($parseUrl['query'], $options);
+
                 return $options;
-            } else {
-                return null;
             }
-        } else {
-            $cache = self::factory('BEAR_Cache');
-            $cache->setLife(BEAR_Cache::LIFE_UNLIMITED);
-            $key = $target . filemtime($target);
-            $cacheResult = $cache->get($key);
-            if ($cacheResult) {
-                return $cacheResult;
-            }
-            // PEAR::Configを使って設定ファイルをパース
-            $pathinfo = pathinfo($target);
-            // 相対パスなら絶対パスに (/:linux :win)
-            $target = (substr($target, 0, 1) == '/' || substr(
+
+            return null;
+        }
+        $cache = self::factory('BEAR_Cache');
+        $cache->setLife(BEAR_Cache::LIFE_UNLIMITED);
+        $key = $target . filemtime($target);
+        $cacheResult = $cache->get($key);
+        if ($cacheResult) {
+            return $cacheResult;
+        }
+        // PEAR::Configを使って設定ファイルをパース
+        $pathinfo = pathinfo($target);
+        // 相対パスなら絶対パスに (/:linux :win)
+        $target = (substr($target, 0, 1) == '/' || substr(
                 $target,
                 1,
                 1
             ) == ':') ? $target : _BEAR_APP_HOME . '/App/Ro/' . $target;
-            $extension = isset($options['extention']) ? $options['extention'] : $pathinfo['extension'];
-            switch ($extension) {
+        $extension = isset($options['extention']) ? $options['extention'] : $pathinfo['extension'];
+        switch ($extension) {
                 case 'yml':
                     if (function_exists('syck_load')) {
                         $content = file_get_contents($target);
@@ -253,18 +244,21 @@ class BEAR
                         $yaml = Spyc::YAMLLoad($target);
                     }
                     $cache->set($key, $yaml);
+
                     return $yaml;
                 case 'csv':
                     $csvObject = new SplFileObject($target);
                     $csvObject->setFlags(\SplFileObject::READ_CSV);
-                    $csv = array();
+                    $csv = [];
                     foreach ($csvObject as $line) {
                         array_push($csv, $line);
                     }
                     $cache->set($key, $csv);
+
                     return $csv;
                 case 'ini':
                     $parse = 'inicommented';
+
                     break;
                 case 'xml':
                     $unserializer = new XML_Unserializer();
@@ -272,27 +266,31 @@ class BEAR
                     $xml = file_get_contents($target);
                     $unserializer->unserialize($xml);
                     $result = $unserializer->getUnserializedData();
+
                     return $result;
+
                     break;
                 case 'php':
                     $parse = 'PHPConstants';
+
                     break;
                 default:
                     return file_get_contents($target, FILE_TEXT);
+
                     break;
             }
-            $config = new Config();
-            $root = & $config->parseConfig($target, $parse);
-            if (PEAR::isError($root)) {
-                $msg = '設定を読み込む際のエラー: ';
-                $msg .= $root->getMessage();
-                $info = array('parse' => $parse, 'input' => $target);
-                throw new BEAR_Exception($msg, compact('info'));
-            } else {
-                $result = $root->toArray();
-                return $result['root'];
-            }
+        $config = new Config();
+        $root = &$config->parseConfig($target, $parse);
+        if (PEAR::isError($root)) {
+            $msg = '設定を読み込む際のエラー: ';
+            $msg .= $root->getMessage();
+            $info = ['parse' => $parse, 'input' => $target];
+
+            throw new BEAR_Exception($msg, compact('info'));
         }
+        $result = $root->toArray();
+
+        return $result['root'];
     }
 
     /**
@@ -333,6 +331,7 @@ class BEAR
         if (isset($configKey)) {
             apc_store($configKey, $appYaml);
         }
+
         return $appYaml;
     }
 
@@ -350,23 +349,25 @@ class BEAR
      * @param array  $config  クラス用コンフィグ
      * @param array  $options オプション
      *
-     * @return stdClass
      * @throws BEAR_Exception
+     *
+     * @return stdClass
      */
-    public static function factory($class, array $config = array(), array $options = array())
+    public static function factory($class, array $config = [], array $options = [])
     {
         // class
-        $class = isset(self::$_registry['app'][$class]) && isset(self::$_registry['app'][$class]['__class']) ? self::$_registry['app'][$class]['__class'] : $class;
+        $class = isset(self::$_registry['app'][$class], self::$_registry['app'][$class]['__class']) ? self::$_registry['app'][$class]['__class'] : $class;
         // auto loader
         if (class_exists($class, false) === false) {
             try {
                 self::onAutoload($class);
             } catch (Exception $e) {
                 $info = compact('class');
-                throw new BEAR_Exception("Auto loader failed for class [$class]", array(
-                        'code' => self::CODE_BAD_REQUEST,
-                        'info' => $info
-                    ));
+
+                throw new BEAR_Exception("Auto loader failed for class [${class}]", [
+                    'code' => self::CODE_BAD_REQUEST,
+                    'info' => $info
+                ]);
             }
         }
         // config;
@@ -378,13 +379,13 @@ class BEAR
             $config
         ) : $config;
         // merge common 'core' config
-        $config += (array)self::$_registry['app']['core'];
+        $config += (array) self::$_registry['app']['core'];
         $object = new $class($config);
         // inject
-        $injector = isset($options['injector']) ? $options['injector'] : ((isset(self::$_registry['app'][$class]) && isset(self::$_registry['app'][$class]['__injector']) ? self::$_registry['app'][$class]['__injector'] : 'onInject'));
+        $injector = isset($options['injector']) ? $options['injector'] : ((isset(self::$_registry['app'][$class], self::$_registry['app'][$class]['__injector']) ? self::$_registry['app'][$class]['__injector'] : 'onInject'));
         if (is_string($injector)) {
             if (method_exists($object, $injector)) {
-                $object->$injector();
+                $object->{$injector}();
             } else {
                 if (method_exists($object, 'onInject')) {
                     $object->onInject();
@@ -392,15 +393,15 @@ class BEAR
             }
         } else {
             if (is_array($injector)) {
-                if (is_callable(array($injector[0], $injector[1]))) {
+                if (is_callable([$injector[0], $injector[1]])) {
                     $className = $injector[0];
                     $method = $injector[1];
-                    call_user_func_array(array($className, $method), array($object, $config));
+                    call_user_func_array([$className, $method], [$object, $config]);
                 } else {
-                    throw new BEAR_Exception('Injector is not valid.', array(
+                    throw new BEAR_Exception('Injector is not valid.', [
                         'code' => self::CODE_BAD_REQUEST,
                         'info' => compact('injector')
-                    ));
+                    ]);
                 }
             }
         }
@@ -408,6 +409,7 @@ class BEAR
         if ($object instanceof BEAR_factory) {
             $object = $object->factory();
         }
+
         return $object;
     }
 
@@ -451,13 +453,14 @@ class BEAR
      * @param mixed  $config  array=クラスコンフィグ string=サービスキー　object=そのまま返る
      * @param mixed  $options (array) オプション　(bool) deprecated
      *
+     * @throws BEAR_Exception
+     *
      * @return stdClass
      *
      * @see Core J2EE Patterns - Service Locator
      * @see http://java.sun.com/blueprints/corej2eepatterns/Patterns/ServiceLocator.html
-     * @throws BEAR_Exception
      */
-    public static function dependency($class, $config = array(), $options = true)
+    public static function dependency($class, $config = [], $options = true)
     {
         // 代入
         if (is_object($config)) {
@@ -468,6 +471,7 @@ class BEAR
             if (is_array(self::$_registry[$class])) {
                 self::$_registry[$class] = self::factory(self::$_registry[$class][0], self::$_registry[$class][1]);
             }
+
             return self::$_registry[$class];
         }
         // persistent
@@ -480,30 +484,31 @@ class BEAR
         }
         // サービスロケーター
         if (is_string($config)) {
-            if (!isset(self::$_registry[$config])) {
+            if (! isset(self::$_registry[$config])) {
                 $msg = 'Service is not exists';
-                $info = array('service' => $config);
+                $info = ['service' => $config];
+
                 throw new BEAR_Exception($msg, compact('info'));
             }
             $service = self::$_registry[$config];
             if (is_object($service)) {
                 return self::$_registry[$config];
-            } else {
-                if (is_array($service)) {
-                    // 遅延ロード
-                    self::$_registry[$service[0]] = self::factory($service[0], $service[1]);
-                    return self::$_registry[$service[0]];
-                } else {
-                    $msg = 'No service in self::dependency';
-                    $info = array('class' => $class);
-                    throw new BEAR_Exception($msg, array('info' => $info));
-                }
             }
+            if (is_array($service)) {
+                // 遅延ロード
+                self::$_registry[$service[0]] = self::factory($service[0], $service[1]);
+
+                return self::$_registry[$service[0]];
+            }
+            $msg = 'No service in self::dependency';
+            $info = ['class' => $class];
+
+            throw new BEAR_Exception($msg, ['info' => $info]);
         }
         if (is_array($options)) {
-            $options = array_merge(array('is_singleton' => true, 'inject' => 'onInject'), $options);
+            $options = array_merge(['is_singleton' => true, 'inject' => 'onInject'], $options);
         } else {
-            $options = array('is_singleton' => $options);
+            $options = ['is_singleton' => $options];
         }
         //オブジェクト作成
         if ($options['is_singleton']) {
@@ -523,6 +528,7 @@ class BEAR
         } else {
             $object = self::factory($class, $config, $options);
         }
+
         return $object;
     }
 
@@ -542,15 +548,15 @@ class BEAR
      * @param string $key     サービスオブジェクトキー
      * @param mixed  $service サービス object | array($class, $config) lazy-load
      *
-     * @return void
      * @throws BEAR_Exception
      */
     public static function set($key, $service)
     {
         if (self::exists($key)) {
             $msg = 'Service Already Exists （self::dependencyでキーがすでに登録されています)';
-            $info = array('key' => $key);
-            throw new BEAR_Exception($msg, array('info' => $info));
+            $info = ['key' => $key];
+
+            throw new BEAR_Exception($msg, ['info' => $info]);
         }
         self::$_registry[$key] = $service;
     }
@@ -562,19 +568,22 @@ class BEAR
      *
      * @param string $key サービスキー
      *
-     * @return stdClass
      * @throws BEAR_Exception
+     *
+     * @return stdClass
      */
     public static function get($key)
     {
-        if (!isset(self::$_registry[$key])) {
+        if (! isset(self::$_registry[$key])) {
             $msg = "Service[{$key}] is not Exists";
-            $info = array('service key' => $key);
-            throw new BEAR_Exception($msg, array('info' => $info));
+            $info = ['service key' => $key];
+
+            throw new BEAR_Exception($msg, ['info' => $info]);
         }
         if (is_array(self::$_registry[$key])) {
             self::$_registry[$key] = self::factory(self::$_registry[$key][0], self::$_registry[$key][1]);
         }
+
         return self::$_registry[$key];
     }
 
@@ -587,7 +596,7 @@ class BEAR
      */
     public static function exists($key)
     {
-        return (isset(self::$_registry[$key]));
+        return isset(self::$_registry[$key]);
     }
 
     /**

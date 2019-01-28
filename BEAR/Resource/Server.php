@@ -51,7 +51,7 @@ class BEAR_Resource_Server extends BEAR_Base
             $handler = new $handlerName();
             $server->setCallbackObject($handler);
             $server->_debug = $this->_config['debug'];
-            $this->_printStartUpinfo("$ipAddress $port", $type);
+            $this->_printStartUpinfo("${ipAddress} ${port}", $type);
             $server->start();
             if (PEAR::isError($server)) {
                 echo $server->getMessage() . "\n";
@@ -73,6 +73,6 @@ class BEAR_Resource_Server extends BEAR_Base
         echo 'App : ' . _BEAR_APP_HOME . PHP_EOL;
         echo 'BEAR: ' . BEAR::VERSION . PHP_EOL;
         echo "TYPE: {$type}" . PHP_EOL;
-        echo "IP  : $ipAddress" . PHP_EOL . PHP_EOL;
+        echo "IP  : ${ipAddress}" . PHP_EOL . PHP_EOL;
     }
 }

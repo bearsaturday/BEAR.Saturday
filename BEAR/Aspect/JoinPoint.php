@@ -19,15 +19,11 @@ class BEAR_Aspect_JoinPoint extends BEAR_Base
      * アドバイス織り込み対象元のメソッドを実行します。
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function proceed(array $values)
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        $result = $this->_config['ref']['method']->invoke($this->_config['object'], $values);
-
-        return $result;
+        return $this->_config['ref']['method']->invoke($this->_config['object'], $values);
     }
 
     /**

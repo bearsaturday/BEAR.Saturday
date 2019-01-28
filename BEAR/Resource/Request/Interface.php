@@ -19,8 +19,6 @@ interface BEAR_Resource_Request_Interface
      * @param string $uri     URI
      * @param array  $values  引数
      * @param array  $options オプション
-     *
-     * @return mixed
      */
-    public function request($method, $uri, array $values = array(), array $options = array());
+    public function request($method, $uri, array $values = [], array $options = []);
 }

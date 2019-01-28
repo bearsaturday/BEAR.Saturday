@@ -55,7 +55,7 @@ class BEAR_Ro_Debug extends BEAR_Base
         $body = $ro->getBody();
         if (isset($_GET['_resource'])) {
             if ($_GET['_resource'] === 'html') {
-                $renderer = new Text_Highlighter_Renderer_Html(array('tabsize' => 4));
+                $renderer = new Text_Highlighter_Renderer_Html(['tabsize' => 4]);
                 $reporting = error_reporting(E_ALL & ~E_STRICT);
                 /** @noinspection PhpDynamicAsStaticMethodCallInspection */
                 $hlHtml = Text_Highlighter::factory('HTML');
@@ -85,7 +85,7 @@ class BEAR_Ro_Debug extends BEAR_Base
         $labelVaules = ($config['values']) ? '?' . http_build_query($config['values']) : '';
         $linkLabel = '';
         if ($chainLinks) {
-            $linkLabels = array();
+            $linkLabels = [];
             foreach ($chainLinks as $links) {
                 $linkLabels[] .= (count($links) > 1 ? implode(':', $links) : $links[0]);
             }
@@ -123,14 +123,14 @@ class BEAR_Ro_Debug extends BEAR_Base
         $body = $ro->getBody();
         if (is_array($body) && isset($body[0]) && is_array($body[0])) {
             // bodyが表構造と仮定
-            $table = array();
+            $table = [];
             $table[] = (array_values(array_keys($body[0])));
             foreach ((array) $body as $val) {
                 $table[] = array_values((array) $val);
             }
             FB::table($labelUri, $table);
         } else {
-            FB::group("$labelUri", array('Collapsed' => true));
+            FB::group("${labelUri}", ['Collapsed' => true]);
             FB::log($body);
             FB::groupEnd();
         }
@@ -160,8 +160,7 @@ class BEAR_Ro_Debug extends BEAR_Base
     {
         $ref = new ReflectionClass($class);
         $file = $ref->getFileName();
-        $classEditorLink = "<a href=\"/__panda/edit/?file={$file}\">{$uri}</a>";
 
-        return $classEditorLink;
+        return "<a href=\"/__panda/edit/?file={$file}\">{$uri}</a>";
     }
 }

@@ -59,8 +59,6 @@ abstract class BEAR_Cache_Adapter extends BEAR_Base
      *
      * @param string $key     キャッシュキー
      * @param mixed  $default デフォルト値
-     *
-     * @return mixed
      */
     abstract public function get($key, $default = null);
 

@@ -30,6 +30,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
      * @var int
      */
     const SUPPORT_CONV = 2;
+
     /**
      * @var string
      */
@@ -42,8 +43,6 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
 
     /**
      * Constructor.
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -54,7 +53,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
         $this->_config['header'] = 'Content-Type: ' . $contentType . '; charset=Shift_JIS';
         $this->_config['charset'] = 'utf-8';
         $this->_config['enable_js'] = false;
-        $this->_config['role'] = array(BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT);
+        $this->_config['role'] = [BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT];
     }
 
     /**
@@ -63,7 +62,7 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
     public function onInject()
     {
         $this->_header = BEAR::dependency('BEAR_Page_Header');
-        $this->_smarty = BEAR::dependency('BEAR_Smarty', array('ua' => $this->_config['ua']));
+        $this->_smarty = BEAR::dependency('BEAR_Smarty', ['ua' => $this->_config['ua']]);
     }
 
     /**
@@ -94,25 +93,27 @@ abstract class BEAR_Agent_Adapter_Mobile extends BEAR_Agent_Adapter_Default
     {
         if (! mb_check_encoding($value, $this->_codeFromMoble)) {
             $msg = 'Illegal Submit Values';
-            $info = array('value' => $value);
+            $info = ['value' => $value];
+
             throw $this->_exception(
                 $msg,
-                array(
+                [
                     'code' => BEAR::CODE_BAD_REQUEST,
                     'info' => $info
-                )
+                ]
             );
         }
         $value = mb_convert_encoding($value, 'utf-8', $this->_codeFromMoble);
         if (! mb_check_encoding($value, 'utf-8')) {
             $msg = 'Illegal UTF-8';
-            $info = array('value' => $value);
+            $info = ['value' => $value];
+
             throw $this->_exception(
                 $msg,
-                array(
+                [
                     'code' => BEAR::CODE_BAD_REQUEST,
                     'info' => $info
-                )
+                ]
             );
         }
     }

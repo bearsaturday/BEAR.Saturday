@@ -29,10 +29,6 @@
  *  'func' string ユーザー関数
  * </pre>
  *
- *
- *
- *
- *
  * @param string $params  パラメーター
  * @param string $content HTML
  * @param Smarty &$smarty &Smarty object
@@ -49,7 +45,7 @@ function smarty_block_agent(
 ) {
     $ua = strtolower(BEAR::dependency('BEAR_Agent')->getUa());
     //開始タグ
-    if (is_null($content)) {
+    if ($content === null) {
         $valid = false;
         if (array_key_exists('in', $params)) {
             $in = explode(',', $params['in']);

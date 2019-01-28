@@ -12,10 +12,6 @@
  * スタティックな絵文字を表示します。テンプレート生成時のみ動作します。
  * </pre>
  *
- *
- *
- *
- *
  * @param string $tagArg
  * @param Smarty &$smarty Smarty object
  *

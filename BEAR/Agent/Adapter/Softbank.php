@@ -12,8 +12,6 @@ class BEAR_Agent_Adapter_Softbank extends BEAR_Agent_Adapter_Mobile implements B
 {
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -22,6 +20,6 @@ class BEAR_Agent_Adapter_Softbank extends BEAR_Agent_Adapter_Mobile implements B
         $this->_config['agent_filter'] = true;
         $this->_config['header'] = 'Content-Type: ' . $contentType . '; charset=utf-8';
         $this->_config['charset'] = 'utf-8';
-        $this->_config['role'] = array(BEAR_Agent::UA_SOFTBANK, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT);
+        $this->_config['role'] = [BEAR_Agent::UA_SOFTBANK, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT];
     }
 }

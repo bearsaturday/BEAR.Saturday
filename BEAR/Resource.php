@@ -105,8 +105,6 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -138,9 +136,8 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
     public function getPager()
     {
         $links = $this->_ro->getLinks();
-        $result = array('links' => $links['pager'], 'info' => $this->_ro->getHeaders());
 
-        return $result;
+        return ['links' => $links['pager'], 'info' => $this->_ro->getHeaders()];
     }
 
     /**
@@ -162,8 +159,8 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
      */
     public function create(array $params)
     {
-        $values = isset($params['values']) ? $params['values'] : array();
-        $options = isset($params['options']) ? $params['options'] : array();
+        $values = isset($params['values']) ? $params['values'] : [];
+        $options = isset($params['options']) ? $params['options'] : [];
         $this->_ro = $this->request(self::METHOD_CREATE, $params['uri'], $values, $options);
 
         return $this->_ro;
@@ -191,8 +188,8 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
      */
     public function read(array $params)
     {
-        $values = isset($params['values']) ? $params['values'] : array();
-        $options = isset($params['options']) ? $params['options'] : array();
+        $values = isset($params['values']) ? $params['values'] : [];
+        $options = isset($params['options']) ? $params['options'] : [];
         $this->_ro = $this->request(self::METHOD_READ, $params['uri'], $values, $options);
 
         return $this->_ro;
@@ -222,8 +219,8 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
      */
     public function update(array $params)
     {
-        $values = isset($params['values']) ? $params['values'] : array();
-        $options = isset($params['options']) ? $params['options'] : array();
+        $values = isset($params['values']) ? $params['values'] : [];
+        $options = isset($params['options']) ? $params['options'] : [];
         $this->_ro = $this->request(self::METHOD_UPDATE, $params['uri'], $values, $options);
 
         return $this->_ro;
@@ -246,8 +243,8 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
      */
     public function delete(array $params)
     {
-        $values = isset($params['values']) ? $params['values'] : array();
-        $options = isset($params['options']) ? $params['options'] : array();
+        $values = isset($params['values']) ? $params['values'] : [];
+        $options = isset($params['options']) ? $params['options'] : [];
         $this->_ro = $this->request(self::METHOD_DELETE, $params['uri'], $values, $options);
 
         return $this->_ro;
@@ -279,12 +276,10 @@ class BEAR_Resource extends BEAR_Base implements BEAR_Resource_Request_Interface
      *
      * @return BEAR_Ro_Prototype
      */
-    public function request($method, $uri, array $values = array(), array $options = array())
+    public function request($method, $uri, array $values = [], array $options = [])
     {
         $config = compact('method', 'uri', 'values', 'options');
         /** @var BEAR_Ro_Prototype $ro */
-        $ro = BEAR::factory('BEAR_Ro_Prototype', array('request' => $config, 'path' => $this->_config['path']));
-
-        return $ro;
+        return BEAR::factory('BEAR_Ro_Prototype', ['request' => $config, 'path' => $this->_config['path']]);
     }
 }

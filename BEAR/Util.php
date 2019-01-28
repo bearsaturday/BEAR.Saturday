@@ -22,7 +22,7 @@ class BEAR_Util
      */
     public static function getFilesList($path)
     {
-        static $_files = array();
+        static $_files = [];
         $dir = opendir($path);
         while (($file = readdir($dir)) !== false) {
             if ($file[0] == '.') {
@@ -112,9 +112,10 @@ class BEAR_Util
         $code = BEAR::CODE_BAD_REQUEST
     ) {
         if (count(array_intersect($required, array_keys($values))) != count($required)) {
-            $info = array('required' => $required, 'values' => $values);
+            $info = ['required' => $required, 'values' => $values];
             $msg = 'Required Exception';
-            throw new BEAR_Exception($msg, array('info' => $info));
+
+            throw new BEAR_Exception($msg, ['info' => $info]);
         }
     }
 
@@ -125,7 +126,7 @@ class BEAR_Util
      *
      * @ignore
      *
-     * @link http://www.php.net/manual/ja/function.array-merge-recursive.php
+     * @see http://www.php.net/manual/ja/function.array-merge-recursive.php
      */
     public static function &arrayMergeRecursiveDistinct()
     {
@@ -161,7 +162,7 @@ class BEAR_Util
      */
     public static function unserialize($data)
     {
-        trigger_error('BEAR_Util::unserialize deprecated', E_USER_DEPRECATED);
+        @trigger_error('BEAR_Util::unserialize deprecated', E_USER_DEPRECATED);
 
         return unserialize($data);
     }
@@ -175,14 +176,15 @@ class BEAR_Util
      */
     public static function getObjectVarsRecursive($data)
     {
-        $ret = array();
+        $ret = [];
         if (is_object($data)) {
             foreach (get_object_vars($data) as $key => $val) {
                 $ret[$key] = self::getObjectVarsRecursive($val);
             }
 
             return $ret;
-        } elseif (is_array($data)) {
+        }
+        if (is_array($data)) {
             foreach ($data as $key => $val) {
                 $ret[$key] = self::getObjectVarsRecursive($val);
             }

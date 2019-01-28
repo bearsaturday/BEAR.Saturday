@@ -82,12 +82,10 @@ class BEAR_Emoji extends BEAR_Base
      *
      * @var array
      */
-    private static $_staticConfig = array();
+    private static $_staticConfig = [];
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -123,7 +121,7 @@ class BEAR_Emoji extends BEAR_Base
      */
     public function encodeWebCode($utfEight)
     {
-        $result = array();
+        $result = [];
         $unicodes = I18N_UnicodeString::utf8ToUnicode($utfEight);
         foreach ($unicodes as $unicodeDecimal) {
             // 絵文字処理
@@ -178,10 +176,12 @@ class BEAR_Emoji extends BEAR_Base
                 $iEighteen = new I18N_UnicodeString($unicodes, 'Unicode');
                 $string = $iEighteen->toUtf8String();
                 $string = mb_encode_numericentity($string, $converterMap, 'utf-8');
+
                 break;
             case BEAR_Agent::UA_DOCOMO:
                 $emojiRegex = '[\xF8\xF9][\x40-\x7E\x80-\xFC]';
                 $string = $this->_makeEntityBySjisRegex($string, $emojiRegex);
+
                 break;
             case BEAR_Agent::UA_EZWEB:
                 // AUの文字範囲
@@ -191,9 +191,11 @@ class BEAR_Emoji extends BEAR_Base
                 // F740～F7FC
                 $emojiRegex = '[\xF3\xF6\xF7][\x40-\xFC]|[\xF4][\x40-\x93]';
                 $string = $this->_makeEntityBySjisRegex($string, $emojiRegex);
+
                 break;
             default:
                 trigger_error('Agent is not mobile.', E_USER_NOTICE);
+
                 break;
         }
 
@@ -208,19 +210,16 @@ class BEAR_Emoji extends BEAR_Base
      * _stringプロパティに格納して返します
      *
      * @param $string
-     *
-     * @return mixed
      */
     public function makeHexEntity($string)
     {
         $regex = '/&#(\d{5});/is';
-        $string = preg_replace_callback(
+
+        return preg_replace_callback(
             $regex,
-            array(__CLASS__, '_onHexEntity'),
+            [__CLASS__, '_onHexEntity'],
             $string
         );
-
-        return $string;
     }
 
     /**
@@ -246,7 +245,7 @@ class BEAR_Emoji extends BEAR_Base
         } else {
             $regex = '/&#(\d{5});/is';
         }
-        $this->_string = preg_replace_callback($regex, array(__CLASS__, '_onConvertEmoji'), $this->_string);
+        $this->_string = preg_replace_callback($regex, [__CLASS__, '_onConvertEmoji'], $this->_string);
 
         return $this->_string;
     }
@@ -259,15 +258,11 @@ class BEAR_Emoji extends BEAR_Base
      * PC(_BAER_UA_DEFAULT)を指定すると全ての絵文字がイメージタグ表示されます。
      *
      * @param $string
-     *
-     * @return mixed
      */
     public function convertEmojiImage($string)
     {
         //Docomo/Au変換
-        $string = preg_replace_callback('/&#(\d+);/is', array(__CLASS__, '_onEmojiImage'), $string);
-
-        return $string;
+        return preg_replace_callback('/&#(\d+);/is', [__CLASS__, '_onEmojiImage'], $string);
     }
 
     //    /**
@@ -302,11 +297,13 @@ class BEAR_Emoji extends BEAR_Base
                 $decEntity = $this->makeDecEntity($string);
                 $regex = '/&#(\d{5});/is';
                 $string = preg_replace($regex, '', $decEntity);
+
                 break;
             // SBモバイル
             case BEAR_Agent::UA_SOFTBANK:
                 $regex = '/\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f/is';
                 $string = preg_replace($regex, '', $string);
+
                 break;
             default:
                 break;
@@ -334,9 +331,8 @@ class BEAR_Emoji extends BEAR_Base
     public function unescapeSbEmoji($html)
     {
         $regex = '/\x1b\x24(.*?)\x0f/is';
-        $result = preg_replace_callback($regex, array(__CLASS__, '_onSbEmoji'), $html);
 
-        return $result;
+        return preg_replace_callback($regex, [__CLASS__, '_onSbEmoji'], $html);
     }
 
     /**
@@ -354,9 +350,8 @@ class BEAR_Emoji extends BEAR_Base
         // EZ絵文字消去
         // SB絵文字消去
         $regex = '/(&#(\d{5});)|(\x1b\x24[GEFOPQ][\x21-\x7a]*\x0f)/is';
-        $string = preg_replace($regex, '', $string);
 
-        return $string;
+        return preg_replace($regex, '', $string);
     }
 
     /**
@@ -384,7 +379,7 @@ class BEAR_Emoji extends BEAR_Base
      */
     public function getAgentEmoji($emoji)
     {
-        static $emojiChars = array();
+        static $emojiChars = [];
 
         if (! $emojiChars) {
             $ua = BEAR::dependency('BEAR_Agent')->getUa();
@@ -415,13 +410,13 @@ class BEAR_Emoji extends BEAR_Base
         $mbRegexEncoding = mb_regex_encoding();
         mb_regex_encoding('SJIS');
         $sjis = '[\x81-\x9F\xE0-\xEF][\x40-\x7E\x80-\xFC]|[\x00-\x7F]|[\xA1-\xDF]';
-        $pattern = "/\G((?:$sjis)*)(?:($emoji))/";
+        $pattern = "/\\G((?:${sjis})*)(?:(${emoji}))/";
         // 絵文字を検索
         preg_match_all($pattern, $string, $arr); // $arr[2]に対象絵文字が格納される
         // 絵文字を置換
         $converted = $string;
         foreach ($arr[2] as $value) {
-            $patternRep = "$value";
+            $patternRep = "${value}";
             $emojiCd = unpack('C*', $value);
             $hex = dechex($emojiCd[1]) . dechex($emojiCd[2]);
             $replacement = '&#' . hexdec($hex) . ';';
@@ -443,9 +438,7 @@ class BEAR_Emoji extends BEAR_Base
     /** @noinspection PhpUnusedPrivateMethodInspection */
     private function _onHexEntity($matches)
     {
-        $result = '&#x' . dechex($matches[1]) . ';';
-
-        return $result;
+        return '&#x' . dechex($matches[1]) . ';';
     }
 
     /**
@@ -477,7 +470,7 @@ class BEAR_Emoji extends BEAR_Base
         $ua = self::$_staticConfig['ua'];
         if ($ua !== $emojiUa && $emojiUa !== false) {
             $emojiPath = isset(self::$_staticConfig['emoji_path']) ? self::$_staticConfig['emoji_path'] : '/emoji';
-            $emojiFontSize = ($ua === BEAR_Agent::UA_DEFAULT && isset(self::$_staticConfig['emoji_path']) && isset(self::$_staticConfig['pc_emoji_size']) && self::$_staticConfig['pc_emoji_size'] !== 20) ? '12' : '20';
+            $emojiFontSize = ($ua === BEAR_Agent::UA_DEFAULT && isset(self::$_staticConfig['emoji_path'], self::$_staticConfig['pc_emoji_size']) && self::$_staticConfig['pc_emoji_size'] !== 20) ? '12' : '20';
             $result = '<img src="' . $emojiPath . '/' . strtolower($emojiUa) . '/' . $emojiFontSize . '/' . dechex(
                 $emojiId
             ) . '.gif" class="bear_emoji" border="0" />';
@@ -509,7 +502,7 @@ class BEAR_Emoji extends BEAR_Base
         }
         switch ($ua) {
             case BEAR_Agent::UA_DOCOMO:
-                $result = array(
+                $result = [
                     0xE63E,
                     0xE69B,
                     0x1261,
@@ -526,10 +519,11 @@ class BEAR_Emoji extends BEAR_Base
                     0xE757,
                     0x12A5,
                     0xFFFF
-                );
+                ];
+
                 break;
             case BEAR_Agent::UA_EZWEB:
-                $result = array(
+                $result = [
                     0xE468,
                     0xE4A6,
                     0x11D8,
@@ -578,10 +572,11 @@ class BEAR_Emoji extends BEAR_Base
                     0xEB88,
                     0x0905,
                     0xFFFF
-                );
+                ];
+
                 break;
             case BEAR_Agent::UA_SOFTBANK:
-                $result = array(
+                $result = [
                     0xE001,
                     0xE05A,
                     0,
@@ -606,7 +601,8 @@ class BEAR_Emoji extends BEAR_Base
                     0xE53E,
                     0,
                     0xFFF
-                );
+                ];
+
                 break;
             default:
                 break;
@@ -638,12 +634,12 @@ class BEAR_Emoji extends BEAR_Base
         //
         if (substr($matches[0], 0, 1) == chr((0x1b)) && (strlen($matches[0]) > 5)) {
             $stirng = $matches[0];
-            $sbEmoji = array();
+            $sbEmoji = [];
             $max = strlen($stirng) - 1;
             for ($i = 3; $i < $max; $i++) {
                 $sbEmoji[] = $stirng[$i];
             }
-            $emojis = array();
+            $emojis = [];
             $j = 0;
             foreach ($sbEmoji as $emoji) {
                 $webcodeDecimalHigh = ord($stirng[2]);
@@ -703,8 +699,7 @@ class BEAR_Emoji extends BEAR_Base
     private static function _onSbEmoji($match)
     {
         $emoji = $match[1];
-        $result = pack('c*', 0x1b, 0x24) . html_entity_decode($emoji) . pack('c*', 0x0f);
 
-        return $result;
+        return pack('c*', 0x1b, 0x24) . html_entity_decode($emoji) . pack('c*', 0x0f);
     }
 }

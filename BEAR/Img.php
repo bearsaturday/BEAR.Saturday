@@ -73,8 +73,6 @@ class BEAR_Img extends BEAR_Factory
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -119,24 +117,29 @@ class BEAR_Img extends BEAR_Factory
         if (self::$_instance) {
             return self::$_instance;
         }
-        PEAR::registerShutdownFunc(array('BEAR_Img', 'onShutdown'));
+        PEAR::registerShutdownFunc(['BEAR_Img', 'onShutdown']);
         $adapter = $this->_config['adapter'];
         switch ($this->_config['adapter']) {
             case self::ADAPTER_GD:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
+
                 break;
             case self::ADAPTER_MAGICK:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
+
                 break;
             case self::ADAPTER_CAIRO:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
+
                 break;
             default:
                 if (is_string($adapter)) {
                     self::$_instance = BEAR::dependency('App_Img_Adapter_' . $this->_config['adapter']);
+
                     break;
                 }
-                $options = array('config' => $this->_config);
+                $options = ['config' => $this->_config];
+
                 throw $this->_exception('Invalid Image Adapter', $options);
         }
 
@@ -165,15 +168,18 @@ class BEAR_Img extends BEAR_Factory
         switch ($adapter) {
             case self::ADAPTER_GD:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_GD');
+
                 break;
             case self::ADAPTER_MAGICK:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Magick');
+
                 break;
             case self::ADAPTER_CAIRO:
                 self::$_instance = BEAR::dependency('BEAR_Img_Adapter_Cairo');
+
                 break;
             default:
-                trigger_error("No engine supported $adapter");
+                trigger_error("No engine supported ${adapter}");
         }
         self::$_instance->load($tmpFile);
 

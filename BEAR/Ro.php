@@ -91,7 +91,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      *
      * @var array
      */
-    protected $_config = array();
+    protected $_config = [];
 
     /**
      * ボディ
@@ -139,8 +139,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -170,17 +168,12 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
 
     /**
      * 関数としての振る舞い
-     *
-     * @param array $values
-     *
-     * @return mixed
      */
     public function __invoke(array $values)
     {
-        $config = array_merge($this->_config, array('values' => $values));
-        $ro = BEAR::factory('BEAR_Resource_Request', $config)->request();
+        $config = array_merge($this->_config, ['values' => $values]);
 
-        return $ro;
+        return BEAR::factory('BEAR_Resource_Request', $config)->request();
     }
 
     /**
@@ -197,14 +190,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * リソースを作成します。このメソッドはキャッシュオプションが使えます。
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onCreate($values)
     {
-        $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
-
-        return $ro;
+        return BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
     }
 
     /**
@@ -213,14 +202,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * オプションにcacheが使えます
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onRead($values)
     {
-        $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
-
-        return $ro;
+        return BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
     }
 
     /**
@@ -230,14 +215,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * （一度だけ実行する）オプションが使えます。
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onUpdate($values)
     {
-        $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
-
-        return $ro;
+        return BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
     }
 
     /**
@@ -247,14 +228,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * （一度だけ実行する）オプションが使えます。
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     public function onDelete($values)
     {
-        $ro = BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
-
-        return $ro;
+        return BEAR::factory('BEAR_Ro')->setCode(BEAR::CODE_BAD_REQUEST);
     }
 
     /**
@@ -268,7 +245,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         /* @noinspection PhpUnusedParameterInspection */
         $values
     ) {
-        return array();
+        return [];
     }
 
     /**
@@ -291,10 +268,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         if (! $bool) {
             throw $this->_exception(
                 $msg,
-                array(
+                [
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => array('request' => (string) $this)
-                )
+                    'info' => ['request' => (string) $this]
+                ]
             );
         }
     }
@@ -321,10 +298,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         if (count(array_intersect($keys, array_keys($values))) != count($keys)) {
             throw $this->_exception(
                 'Bad Resource Request (@required)',
-                array(
+                [
                     'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => array('request' => $this->toString())
-                )
+                    'info' => ['request' => $this->toString()]
+                ]
             );
         }
     }
@@ -333,8 +310,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * リソースボディの取得
      *
      * ボディ（リソース取得結果本体）を取得します。
-     *
-     * @return mixed
      */
     public function getBody()
     {
@@ -358,9 +333,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function getHeader($headerKey)
     {
-        $result = isset($this->_headers[$headerKey]) ? $this->_headers[$headerKey] : null;
-
-        return $result;
+        return isset($this->_headers[$headerKey]) ? $this->_headers[$headerKey] : null;
     }
 
     /**
@@ -526,9 +499,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         // リソースプロトタイプなら実リクエスト
         if ($this instanceof BEAR_Ro_Prototype) {
             if (isset($this->_config['is_ajax_set'])) {
-                $html = BEAR::factory('BEAR_Resource_Request_Ajax', $this->_config['request'])->getJs();
-
-                return $html;
+                return BEAR::factory('BEAR_Resource_Request_Ajax', $this->_config['request'])->getJs();
             }
             $ro = $this->request();
             $html = $ro->getHtml();
@@ -561,12 +532,14 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
                 if (! $this->_body) {
                     $this->setBody('400 Bad Request (BEAR)');
                 }
+
                 break;
             case BEAR::CODE_ERROR:
                 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Server Error');
                 if (! $this->_body) {
                     $this->setBody('500 Server Error (BEAR)');
                 }
+
                 break;
             case BEAR::CODE_OK:
             default:
@@ -584,10 +557,10 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
         $log = BEAR::dependency('BEAR_Log');
         $log->log(
             'HTTP Output',
-            array(
+            [
                 'header' => headers_list(),
                 'body' => $this->_body
-            )
+            ]
         );
         echo $this->_body;
     }
@@ -601,8 +574,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * </pre>
      *
      * @param mixed $offset オフセット
-     *
-     * @return mixed
      *
      * @ignore
      */
@@ -671,13 +642,12 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function getIterator()
     {
-        $this->_body = is_array($this->_body) ? $this->_body : array();
+        $this->_body = is_array($this->_body) ? $this->_body : [];
         $iterator = (isset($this->_config['options']['iterator']) && class_exists(
             $this->_config['options']['iterator']
         )) ? $this->_config['iterator'] : 'ArrayIterator';
-        $obj = new $iterator($this->_body);
 
-        return $obj;
+        return new $iterator($this->_body);
     }
 
     /**
@@ -687,10 +657,9 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function getIterator1()
     {
-        $body = is_array($this->body) ? $this->body : array();
-        $obj = new $this->iterator($body);
+        $body = is_array($this->body) ? $this->body : [];
 
-        return $obj;
+        return new $this->iterator($body);
     }
 
     /**
@@ -709,11 +678,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * array関数の適用
      *
      * array関数適用用のインターフェイスです。
-     *
-     * @param string $fname 関数名
-     * @param mixed  $args  関数の引数
-     *
-     * @return mixed
      */
 
     /**
@@ -802,8 +766,6 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
     /**
      * コンフィグ取得
      *
-     * @param null $key
-     *
      * @return array|mixed
      */
     public function getConfig($key = null)
@@ -823,7 +785,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function setService($name, $service)
     {
-        $this->$name = $service;
+        $this->{$name} = $service;
     }
 
     /**
@@ -856,18 +818,15 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      */
     public function getRequestText()
     {
-        $result = ("{$this->_config['method']} {$this->_config['uri']}") . ($this->_config['values'] ? '?' . http_build_query(
+        return ("{$this->_config['method']} {$this->_config['uri']}") . ($this->_config['values'] ? '?' . http_build_query(
             $this->_config['values']
         ) : '');
-
-        return $result;
     }
 
     /**
      * 例外の作成
      *
      * @param string $msg
-     * @param array  $config
      *
      * @return Exception
      */

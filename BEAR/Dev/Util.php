@@ -27,8 +27,6 @@ class BEAR_Dev_Util
      * </url>
      *
      * @param $html
-     *
-     * @return mixed
      */
     public static function onOutpuHtmlDebug($html)
     {
@@ -72,7 +70,7 @@ class BEAR_Dev_Util
         }
         // リソースBoxリンク
         $color = 'blue';
-        $res = array();
+        $res = [];
         if (! isset($_GET['_resource'])) {
             $mode = 'box';
             $title = 'Resource Box';
@@ -88,7 +86,7 @@ class BEAR_Dev_Util
             $title = 'No Resource Box';
         }
         $currentMode = isset($_GET['_resource']) ? $_GET['_resource'] : 'none';
-        $res = $mode ? array('_resource' => $mode) : array();
+        $res = $mode ? ['_resource' => $mode] : [];
         unset($_GET['_resource']);
         $resourceBoxUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '?' . http_build_query(
             array_merge($_GET, $res)
@@ -104,7 +102,7 @@ class BEAR_Dev_Util
         $budgeHtml .= '">' . $bear . '</a><a href="?_bearinfo" class="bear_info">i</a></div>';
         $budgeHtml = str_replace(
             '</body>',
-            "$budgeHtml" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . '</body>',
+            "${budgeHtml}" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . '</body>',
             $html
         );
 
@@ -129,20 +127,24 @@ class BEAR_Dev_Util
     {
         if (function_exists('FB')) {
             $errors = Panda::getOuterPathErrors();
-            FB::group('errors', array('Collapsed' => true, 'Color' => 'gray'));
+            FB::group('errors', ['Collapsed' => true, 'Color' => 'gray']);
             foreach ($errors as $code => $error) {
                 switch (true) {
                     case $code == E_WARNING || $code == E_USER_WARNING:
                         $fireLevel = FirePHP::WARN;
+
                         break;
                     case $code == E_NOTICE || $code == E_USER_NOTICE:
                         $fireLevel = FirePHP::INFO;
+
                         break;
                     case $code == E_STRICT || $code == E_DEPRECATED:
                         $fireLevel = FirePHP::LOG;
+
                         break;
                     default:
                         $fireLevel = FirePHP::ERROR;
+
                         break;
                 }
                 FB::send($error, '', $fireLevel);
@@ -155,15 +157,16 @@ class BEAR_Dev_Util
             $errorTo = $_GET['_error'];
             if ($errorTo == '') {
                 $errorCode = Panda::$phpError[$lastError['type']];
-                Panda::error("$errorCode (Last Error)", "{$lastError['message']}", '', (array) $lastError);
+                Panda::error("${errorCode} (Last Error)", "{$lastError['message']}", '', (array) $lastError);
 
                 return;
-            } elseif (strpos($errorTo, '@')) {
+            }
+            if (strpos($errorTo, '@')) {
                 error_log($err, 1, $errorTo);
             } elseif (is_writable(dirname($errorTo))) {
-                error_log("$err\n\n", 3, $errorTo);
+                error_log("${err}\n\n", 3, $errorTo);
             } else {
-                echo "<p style=\"color:red\">Error: Invalid destination for _error [$errorTo]</p>";
+                echo "<p style=\"color:red\">Error: Invalid destination for _error [${errorTo}]</p>";
             }
         }
     }

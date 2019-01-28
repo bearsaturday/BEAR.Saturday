@@ -30,15 +30,11 @@ abstract class BEAR_Aspect extends BEAR_Base
      * アドバイス織り込み対象元のメソッドを実行します。
      *
      * @param array $values 引数
-     *
-     * @return mixed
      */
     protected function proceed(array $values)
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        $result = $this->_config['ref']['method']->invoke($this->_config['obj'], $values);
-
-        return $result;
+        return $this->_config['ref']['method']->invoke($this->_config['obj'], $values);
     }
 
     /**

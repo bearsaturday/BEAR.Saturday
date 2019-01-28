@@ -54,7 +54,7 @@ class BEAR_Resource_Server_Client
      *
      * @return mixed BEAR_Ro | array
      */
-    public function send($method, $uri, array $values = array())
+    public function send($method, $uri, array $values = [])
     {
         $socket = new Net_Socket();
         // 接続を確立する
@@ -80,11 +80,11 @@ class BEAR_Resource_Server_Client
             $ro->setCode($code);
             $result = $ro;
         } else {
-            $result = array(
+            $result = [
                 'code' => $code,
                 'headers' => $headers,
                 'body' => $body
-            );
+            ];
         }
 
         return $result;
@@ -103,7 +103,7 @@ class BEAR_Resource_Server_Client
      *
      * @return string
      */
-    private function _mergeQueryAndArray($uri, array $values = array())
+    private function _mergeQueryAndArray($uri, array $values = [])
     {
         $parse = parse_url($uri);
         if (isset($parse['query'])) {
@@ -115,8 +115,7 @@ class BEAR_Resource_Server_Client
             }
         }
         $queryStrings = ($values) ? '?' . http_build_query($values) : '';
-        $result = $parse['path'] . $queryStrings;
 
-        return $result;
+        return $parse['path'] . $queryStrings;
     }
 }

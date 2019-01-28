@@ -17,8 +17,6 @@ class BEAR_View extends BEAR_Factory
 {
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -34,7 +32,7 @@ class BEAR_View extends BEAR_Factory
      */
     public function factory()
     {
-        $options = $this->_config['enable_ua_sniffing'] ? array('injector' => 'onInjectUaSniffing') : array();
+        $options = $this->_config['enable_ua_sniffing'] ? ['injector' => 'onInjectUaSniffing'] : [];
         // 'BEAR_View_Smarty_Adapter' as default
         return BEAR::factory($this->_config['adapter'], $this->_config, $options);
     }

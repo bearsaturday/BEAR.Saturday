@@ -12,8 +12,6 @@ class BEAR_Agent_Adapter_Docomo extends BEAR_Agent_Adapter_Mobile implements BEA
 {
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -29,6 +27,6 @@ class BEAR_Agent_Adapter_Docomo extends BEAR_Agent_Adapter_Mobile implements BEA
         $this->_config['enable_css'] = true;
         $this->_config['enable_inline_css'] = false;
         /* @todo inline CSS */
-        $this->_config['role'] = array(BEAR_Agent::UA_DOCOMO, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT);
+        $this->_config['role'] = [BEAR_Agent::UA_DOCOMO, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT];
     }
 }

@@ -29,12 +29,10 @@ class BEAR_Resource_Execute_Mock extends BEAR_Resource_Execute_Adapter
      * リソースリクエスト実行
      *
      * リソースを使用します。
-     *
-     * @return mixed
      */
     public function request()
     {
-        $mock = array();
+        $mock = [];
         $extra = (isset($this->_config['options']['mock']['name'])) ? $this->_config['options']['mock']['name'] : $this->_config['uri'];
         $y = (isset($this->_config['options']['mock']['y'])) ? $this->_config['options']['mock']['y'] : self::Y_DEFAULT;
         if (isset($this->_config['options']['mock']['x'])) {

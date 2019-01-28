@@ -84,7 +84,7 @@ class BEAR_Form extends BEAR_Factory
      *
      * @var array
      */
-    public static $submitHeader = array();
+    public static $submitHeader = [];
 
     /**
      * エラーテンプレート
@@ -119,7 +119,7 @@ class BEAR_Form extends BEAR_Factory
      *
      * @var array
      */
-    public static $formNames = array();
+    public static $formNames = [];
 
     /**
      * 送信方法
@@ -151,7 +151,7 @@ class BEAR_Form extends BEAR_Factory
      * @var array
      */
     /** @noinspection PhpUnusedPrivateFieldInspection */
-    private static $_usedToken = array();
+    private static $_usedToken = [];
 
     /**
      * シングルトンインスタンス
@@ -173,7 +173,7 @@ class BEAR_Form extends BEAR_Factory
      *
      * @var array
      */
-    private static $_renderConfig = array();
+    private static $_renderConfig = [];
 
     public function __construct(array $config)
     {
@@ -194,20 +194,21 @@ class BEAR_Form extends BEAR_Factory
      *
      * Quick_Formオブエクトを生成して設定します。
      *
-     * @return HTML_QuickForm
      * @throws HTML_QuickForm_Error
+     *
+     * @return HTML_QuickForm
      */
     public function factory()
     {
         $this->_config['action'] = (! isset($this->_config['action']) || $this->_config['action'] == '') ? $_SERVER['REQUEST_URI'] : $this->_config['action'];
-        $options = array(
+        $options = [
             'formName' => 'form',
             'method' => 'post',
             'action' => '',
             'target' => '',
             'attributes' => null,
             'callback' => false
-        );
+        ];
         if ($this->_config) {
             $options = array_merge($options, $this->_config);
         }
@@ -301,7 +302,7 @@ class BEAR_Form extends BEAR_Factory
      */
     public static function getSubmitHeader($submitHeaderKey = null)
     {
-        $post = array();
+        $post = [];
         foreach ($_POST as $key => $value) {
             if (substr($key, 0, 1) === '_') {
                 $post[substr($key, 1)] = $value;
@@ -330,6 +331,7 @@ class BEAR_Form extends BEAR_Factory
         foreach ($submits as $postName => $postValue) {
             if (preg_match('/^_qf__(.+)/', $postName, $match) > 0) {
                 $formName = $match[1];
+
                 break;
             }
         }
@@ -344,8 +346,9 @@ class BEAR_Form extends BEAR_Factory
      * @param string $ua       UAコード
      * @param bool   $enableJs JS有効?
      *
-     * @return string
      * @throws Exception
+     *
+     * @return string
      */
     public static function renderForms(Smarty &$smarty, $ua, $enableJs = false)
     {
@@ -357,7 +360,7 @@ class BEAR_Form extends BEAR_Factory
         }
         $removeJs = ! $enableJs;
         $done = true;
-        $result = array();
+        $result = [];
         foreach (self::$formNames as $formName) {
             $renderConfig = self::$_renderConfig[$formName];
             $adapter = isset($renderConfig['adapter']) ? $renderConfig['adapter'] : self::RENDERER_APP;
@@ -388,6 +391,7 @@ class BEAR_Form extends BEAR_Factory
                     $form->removeAttribute('name');
                     $formValue = $renderer->toHtml();
                     $formErrors = $form->_errors;
+
                     break;
                 case self::RENDERER_DHTML_TABLELESS:
                     // DHTMLRulesTablelessレンダラ
@@ -403,6 +407,7 @@ class BEAR_Form extends BEAR_Factory
                     }
                     $formValue = $renderer->toHtml();
                     $formErrors = $form->_errors;
+
                     break;
                 case self::RENDERER_SMARTY_ARRAY:
                 default:
@@ -416,6 +421,7 @@ class BEAR_Form extends BEAR_Factory
                     }
                     $form->accept($renderer);
                     $formValue = $renderer->toArray();
+
                     break;
             }
             // エラーサマリー

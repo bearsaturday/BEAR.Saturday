@@ -56,42 +56,42 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @var array
      */
-    protected $_headers = array();
+    protected $_headers = [];
 
     /**
      * Pageリソースボディ
      *
      * @var string
      */
-    protected $_body = null;
+    protected $_body;
 
     /**
      * onInit()等の引数
      *
      * @var array
      */
-    protected $_args = array();
+    protected $_args = [];
 
     /**
      * ページ実行ログ
      *
      * @var array
      */
-    protected $_pageLog = array();
+    protected $_pageLog = [];
 
     /**
      * ページにセットされたリソース
      *
      * @var array
      */
-    protected $_ro = array();
+    protected $_ro = [];
 
     /**
      * 出力されたページをリソースオブジェクトにしたもの
      *
      * @var BEAR_Ro
      */
-    protected $_pageRo = array();
+    protected $_pageRo = [];
 
     /**
      * UAコード
@@ -126,7 +126,7 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @var string
      */
-    private $_onClick = null;
+    private $_onClick;
 
     //    /**
     //     * 文字コード変換の場合のモバイルの文字コード
@@ -140,14 +140,12 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @var array
      */
-    private $_values = array();
+    private $_values = [];
 
     /**
      * Constructor
      *
      * BEAR_MainからのUA情報があればPageにセットします。
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -265,7 +263,7 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @internal  $this->_config['mode']がself::CONFIG_MODE_HTMLでないときはunit test用にHTTP出力されません
      */
-    public function display($tplName = null, array $options = array())
+    public function display($tplName = null, array $options = [])
     {
         if (BEAR::exists('pager')) {
             $pager = (array) BEAR::get('pager');
@@ -344,12 +342,10 @@ abstract class BEAR_Page extends BEAR_Base
      * ページ変数取得
      *
      * @param string $key 変数キー
-     *
-     * @return mixed
      */
     public function get($key = null)
     {
-        if (is_null($key)) {
+        if ($key === null) {
             return $this->_values;
         }
         if (isset($this->_values[$key])) {
@@ -408,7 +404,7 @@ abstract class BEAR_Page extends BEAR_Base
      *
      * @throws BEAR_Exception
      */
-    public function output($format = 'print', array $options = array())
+    public function output($format = 'print', array $options = [])
     {
         $isValid = true;
 
@@ -422,9 +418,10 @@ abstract class BEAR_Page extends BEAR_Base
         /** @noinspection PhpIncludeInspection */
         include_once $formatFile;
         if (! $isValid || ! function_exists('output' . $format)) {
-            $info = array('format' => $format);
+            $info = ['format' => $format];
             $msg = 'Output format is unavailable.（アウトプットフォーマットが利用できません)';
-            throw $this->_exception($msg, array('info' => $info));
+
+            throw $this->_exception($msg, ['info' => $info]);
         }
         $ro = call_user_func('output' . $format, $this->_values, $options);
         $this->_outputHttp($ro);
@@ -439,7 +436,7 @@ abstract class BEAR_Page extends BEAR_Base
      */
     public function injectArg($key, $val, $default = null)
     {
-        $this->_args[$key] = ! is_null($val) ? $val : $default;
+        $this->_args[$key] = $val !== null ? $val : $default;
     }
 
     /**
@@ -524,6 +521,7 @@ abstract class BEAR_Page extends BEAR_Base
             BEAR::dependency('App_Main')->end();
         } else {
             ob_clean();
+
             throw new Panda_Exception($msg, $httpCode);
         }
     }
@@ -558,7 +556,7 @@ abstract class BEAR_Page extends BEAR_Base
     public function getCacheKey()
     {
         $ua = (isset($this->_config['ua'])) ? $this->_config['ua'] : '';
-        $pageConfig = $ua . serialize(array($this->getArgs(), $this->_config));
+        $pageConfig = $ua . serialize([$this->getArgs(), $this->_config]);
         $pagerKey = isset($_GET['_start']) ? $_GET['_start'] : '';
         $sortKey = isset($_GET['_sort']) ? $_GET['_sort'] : '';
         $result = get_class($this) . '-' . $pagerKey . '-' . $sortKey . '-' . $pageConfig;
@@ -598,16 +596,20 @@ abstract class BEAR_Page extends BEAR_Base
                 switch ($setOption) {
                     case 'ajax':
                         $prototypeRo->setConfig('is_ajax_set', true);
+
                         break;
                     case 'lazy':
                         $this->set($key, $prototypeRo);
+
                         break;
                     case 'object':
                         $ro = $prototypeRo->request();
                         $this->set($key, $ro);
+
                         break;
                     case 'shutdown':
                         BEAR::dependency('BEAR_Ro_Shutdown')->register()->set($prototypeRo);
+
                         break;
                     case 'value':
                     default:
@@ -635,13 +637,13 @@ abstract class BEAR_Page extends BEAR_Base
         if (isset($this->_config['enable_ua_sniffing']) && $this->_config['enable_ua_sniffing'] === true) {
             $adapter = BEAR::dependency(
                 'BEAR_Agent_Adapter_' . $this->_config['ua'],
-                array('ua' => $this->_config['ua'])
+                ['ua' => $this->_config['ua']]
             );
             $agentConfig = $adapter->getConfig();
             $config['agent_config'] = $agentConfig;
             $config['enable_ua_sniffing'] = true;
         } else {
-            $config = array();
+            $config = [];
             $config['enable_ua_sniffing'] = false;
             $config['ua'] = 'Default';
         }
@@ -655,8 +657,6 @@ abstract class BEAR_Page extends BEAR_Base
 
     /**
      * ページリソースをHTTP出力します
-     *
-     * @param BEAR_Ro $ro
      */
     protected function _outputHttp(BEAR_Ro $ro)
     {

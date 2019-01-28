@@ -96,9 +96,8 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
         $sessToken = $this->_tokenStrage->get(self::SESSION_TOKEN);
         $sessToken = substr($sessToken, 0, self::SESSION_POE_LEN);
         $submitToken = substr($this->_submitToken, 0, self::SESSION_CSRF_LEN);
-        $isValid = is_string($sessToken) && ($sessToken === $submitToken);
 
-        return $isValid;
+        return is_string($sessToken) && ($sessToken === $submitToken);
     }
 
     /**
@@ -107,7 +106,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
     public function isTokenPoeValid()
     {
         $poes = $this->_tokenStrage->get(self::SESSION_POE);
-        $poes = is_array($poes) ? $poes : array();
+        $poes = is_array($poes) ? $poes : [];
         $isDoubleSubmit = in_array($this->_submitToken, $poes, true);
         if ($isDoubleSubmit) {
             return false;
@@ -136,8 +135,7 @@ class BEAR_Form_Token extends BEAR_Base implements BEAR_Form_Token_Interface
         if ($length === null) {
             return $sha;
         }
-        $token = substr($sha, 0, $length);
 
-        return $token;
+        return substr($sha, 0, $length);
     }
 }

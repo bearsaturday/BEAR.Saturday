@@ -15,7 +15,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
     /**
      * @var array
      */
-    protected $_chain = array();
+    protected $_chain = [];
 
     protected $_links;
 
@@ -24,14 +24,11 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      *
      * リソースをリンクした結果をHEADER_LINK_BODYヘッダーに付加します
      *
-     * @param BEAR_Ro $rootRo
-     * @param array   $chain
-     *
      * @return array
      */
     public function chainLink(BEAR_Ro $rootRo, array $chain)
     {
-        if ($chain === array()) {
+        if ($chain === []) {
             /* @noinspection PhpInconsistentReturnPointsInspection */
             return;
         }
@@ -58,9 +55,6 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      *
      * リソースをリンクした結果をHEADER_LINK_BODYヘッダーに付加します
      *
-     * @param BEAR_Ro $rootRo
-     * @param array   $chain
-     *
      * @return array
      */
     private function _chainLink(BEAR_Ro $rootRo, array $chain)
@@ -78,13 +72,13 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
             $sourceBody = $body;
             self::_makeCollectionChain($sourceBody, $firstUri, $rootRo);
             $linkFrom = $firstUri;
-            $linked = array($firstUri => $sourceBody);
+            $linked = [$firstUri => $sourceBody];
             $linked[$firstUri] = $sourceBody;
             $body = $sourceBody;
             $isCollectionRoot = true;
         } else {
             $body = $sourceBody = $body;
-            $linked = array($firstUri => $sourceBody);
+            $linked = [$firstUri => $sourceBody];
             $isCollectionRoot = false;
         }
         $ro = $rootRo;
@@ -163,7 +157,7 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
      */
     private function _cleanUpLink(&$data)
     {
-        $this->_chain = array();
+        $this->_chain = [];
         if (! is_array($data)) {
             return;
         }
@@ -191,9 +185,9 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
     {
         foreach ($body as &$row) {
             if (is_array($row)) {
-                $row['_link'][$link] = array('values' => $row, 'class' => get_class($ro));
-            } elseif (!isset($body['_link'][$link])) {
-                $body['_link'][$link] = array('values' => $body, 'class' => get_class($ro));
+                $row['_link'][$link] = ['values' => $row, 'class' => get_class($ro)];
+            } elseif (! isset($body['_link'][$link])) {
+                $body['_link'][$link] = ['values' => $body, 'class' => get_class($ro)];
             }
         }
     }
@@ -214,30 +208,31 @@ class BEAR_Ro_Prototype_Link extends BEAR_Base
     private static function _makeRequestConfig($onLinks, $link)
     {
         if (! isset($onLinks[$link])) {
-            $info = array(
+            $info = [
                 'link uri' => $link,
                 'available links' => $onLinks
-            );
-            throw new BEAR_Ro_Prototype_Link_Exception('Resource link key is not exist.', array(
-                    'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => $info
-                ));
+            ];
+
+            throw new BEAR_Ro_Prototype_Link_Exception('Resource link key is not exist.', [
+                'code' => BEAR::CODE_BAD_REQUEST,
+                'info' => $info
+            ]);
         }
         if (is_array($onLinks[$link])) {
-            $emptyParams = array(
+            $emptyParams = [
                 'method' => 'read',
                 'uri' => '',
-                'values' => array(),
-                'options' => array()
-            );
+                'values' => [],
+                'options' => []
+            ];
             $result = array_merge($emptyParams, $onLinks[$link]);
         } else {
-            $result = array(
+            $result = [
                 'method' => 'read',
                 'uri' => $onLinks[$link],
-                'values' => array(),
-                'options' => array()
-            );
+                'values' => [],
+                'options' => []
+            ];
         }
 
         return $result;

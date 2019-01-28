@@ -18,7 +18,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * @var string
      */
-    protected static $_stack = array();
+    protected static $_stack = [];
 
     /**
      * リソースリンク
@@ -32,14 +32,14 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * @var array
      */
-    protected $_chainLink = array();
+    protected $_chainLink = [];
 
     /**
      * BEAR_Ro_Prototype_Link
      *
      * @var mixed
      */
-    protected $_prototypeLink = array();
+    protected $_prototypeLink = [];
 
     /**
      * setオプション
@@ -80,7 +80,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function popAll()
     {
         $result = self::$_stack;
-        self::$_stack = array();
+        self::$_stack = [];
 
         return $result;
     }
@@ -101,13 +101,11 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      * リソースのリンクを取得します。
      * リンクはリンクキーをキーにリンクURIを値にした配列をROリソースの中のonLinkメソッドで返す事で実現できます。
      *
-     * @param mixed $link
-     *
      * @return BEAR_Ro_Prototype
      */
     public function link($link)
     {
-        $this->_chainLink[] = is_array($link) ? $link : array($link);
+        $this->_chainLink[] = is_array($link) ? $link : [$link];
 
         return $this;
     }
@@ -130,8 +128,6 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      *
      * リソースリクエストを行いテンプレートオプションが適用した文字列が、
      * そうでなければリソースボディを返します。
-     *
-     * @return mixed
      */
     public function getValue()
     {
@@ -180,7 +176,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         }
         $this->_setOption = $setOption;
         // push prototype
-        self::$_stack[] = array($key => $this);
+        self::$_stack[] = [$key => $this];
 
         return $this;
     }
@@ -216,9 +212,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function getHeader($headerKey)
     {
         $this->_doRequest();
-        $result = $this->_ro->getHeader($headerKey);
 
-        return $result;
+        return $this->_ro->getHeader($headerKey);
     }
 
     /**
@@ -231,9 +226,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function getHeaders()
     {
         $this->_doRequest();
-        $result = $this->_ro->getHeaders();
 
-        return $result;
+        return $this->_ro->getHeaders();
     }
 
     /**
@@ -243,7 +237,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
      */
     public function hasChainLink()
     {
-        return $this->_chainLink !== array();
+        return $this->_chainLink !== [];
     }
 
     /**
@@ -254,12 +248,11 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function getLinkedBody()
     {
         $this->_doRequest();
-        $result = BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink)->chainLink(
+
+        return BEAR::dependency('BEAR_Ro_Prototype_Link', $this->_prototypeLink)->chainLink(
             $this->_ro,
             $this->_chainLink
         );
-
-        return $result;
     }
 
     /**
@@ -270,9 +263,8 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     public function getRo()
     {
         $this->_doRequest();
-        $ro = $this->_ro->getRo();
 
-        return $ro;
+        return $this->_ro->getRo();
     }
 
     /**
@@ -329,7 +321,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         $isLinkCache = isset($this->_config['request']['options']['cache']['link']) && $this->_config['request']['options']['cache']['link'];
         if ($isLinked && $isLinkCache === true) {
             $life = $this->_config['request']['options']['cache']['life'];
-        } elseif (! $isLinked && isset($this->_config['request']['options']['cache']['life']) && isset($this->_config['request']['options']['template'])) {
+        } elseif (! $isLinked && isset($this->_config['request']['options']['cache']['life'], $this->_config['request']['options']['template'])) {
             $life = $this->_config['request']['options']['cache']['life'];
         } else {
             $life = false;
@@ -442,17 +434,17 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         if (isset($linkBody)) {
             print_a($linkBody);
         } else {
-            $resource = array(
+            $resource = [
                 'code' => $this->getCode(),
                 'header' => $headers,
                 'body' => $this->getBody(),
                 'link' => $this->getLinks()
-            );
+            ];
             print_a($resource);
         }
         echo '</fieldset>';
         $linkLabel = $linkLabel ? ' and link(s)' : '';
-        echo "by \"{$request}\"$linkLabel {$place}<br /><br />";
+        echo "by \"{$request}\"${linkLabel} {$place}<br /><br />";
 
         return $this;
     }
