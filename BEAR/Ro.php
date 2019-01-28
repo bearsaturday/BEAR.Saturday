@@ -312,6 +312,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
      * @param array $values テストする配列
      *
      * @throws BEAR_Exception
+     * @throws Exception
      *
      * @deprecated @requierdを用います
      */
