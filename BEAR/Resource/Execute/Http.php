@@ -22,7 +22,7 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
      */
     public function request()
     {
-        $reqMethod = array();
+        $reqMethod = [];
         $reqMethod[BEAR_Resource::METHOD_CREATE] = HTTP_Request2::METHOD_POST;
         $reqMethod[BEAR_Resource::METHOD_READ] = HTTP_Request2::METHOD_GET;
         $reqMethod[BEAR_Resource::METHOD_UPDATE] = HTTP_Request2::METHOD_PUT;
@@ -45,10 +45,11 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
             if ($code == 200) {
                 $body = $response->getBody();
             } else {
-                $info = array(
+                $info = [
                     'code' => $code,
                     'headers' => $headers
-                );
+                ];
+
                 throw $this->_exception($response->getBody(), $info);
             }
         } catch (HTTP_Request2_Exception $e) {
@@ -66,14 +67,14 @@ class BEAR_Resource_Execute_Http extends BEAR_Resource_Execute_Adapter
             $headers['type'] = 'rss';
         } else {
             $headers['type'] = 'string';
-            $body = array($body);
+            $body = [$body];
         }
         // UTF-8に
         mb_convert_variables('UTF-8', 'auto', $body);
         /* @var $ro BEAR_Ro */
         /** @noinspection PhpUndefinedMethodInspection */
         $ro = BEAR::factory('BEAR_Ro')->setBody($body)->setHeaders($headers);
-        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array('Panda', 'onPearError'));
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, ['Panda', 'onPearError']);
 
         return $ro;
     }

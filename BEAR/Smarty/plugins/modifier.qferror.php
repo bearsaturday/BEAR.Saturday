@@ -17,10 +17,6 @@
  * {$form.errors|qferror}
  * </code>
  *
- *
- *
- *
- *
  * @param array $errors QuickFormエラー
  *
  * @return string

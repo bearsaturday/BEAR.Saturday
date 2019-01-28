@@ -73,20 +73,23 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
                 // 絵文字をエンティティに変換
                 // 3GCsエンコード変換必須
                 if ($this->_config['is_mobile']) {
-                    array_walk_recursive($input, array('BEAR_Emoji', 'onEntityEmoji'), BEAR::dependency('BEAR_Emoji'));
+                    array_walk_recursive($input, ['BEAR_Emoji', 'onEntityEmoji'], BEAR::dependency('BEAR_Emoji'));
                 }
+
                 break;
             // 絵文字除去
             case 'remove':
-                array_walk_recursive($input, array('BEAR_Emoji', 'removeEmoji'), BEAR::dependency('BEAR_Emoji'));
+                array_walk_recursive($input, ['BEAR_Emoji', 'removeEmoji'], BEAR::dependency('BEAR_Emoji'));
+
                 break;
             default:
                 trigger_error('Illegal $this->_config[\'agent\'] error', E_USER_WARNING);
+
                 break;
         }
         // UTF8に文字コード変換
         if (isset($this->_config['input_encode'])) {
-            array_walk_recursive($input, array(__CLASS__, 'onUTF8'), $this->_config['input_encode']);
+            array_walk_recursive($input, [__CLASS__, 'onUTF8'], $this->_config['input_encode']);
         }
     }
 
@@ -112,20 +115,22 @@ abstract class BEAR_Agent_Adapter extends BEAR_Base
     ) {
         if (! mb_check_encoding($value, $inputEncode)) {
             $msg = 'Illegal Submit Values';
-            $info = array('value' => $value);
-            throw new BEAR_Agent_Exception($msg, array(
-                    'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => $info
-                ));
+            $info = ['value' => $value];
+
+            throw new BEAR_Agent_Exception($msg, [
+                'code' => BEAR::CODE_BAD_REQUEST,
+                'info' => $info
+            ]);
         }
         $value = mb_convert_encoding($value, 'utf-8', $inputEncode);
         if (! mb_check_encoding($value, 'utf-8')) {
             $msg = 'Illegal UTF-8';
-            $info = array('value' => $value);
-            throw new BEAR_Agent_Exception($msg, array(
-                    'code' => BEAR::CODE_BAD_REQUEST,
-                    'info' => $info
-                ));
+            $info = ['value' => $value];
+
+            throw new BEAR_Agent_Exception($msg, [
+                'code' => BEAR::CODE_BAD_REQUEST,
+                'info' => $info
+            ]);
         }
     }
 }

@@ -23,7 +23,7 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
      *
      * @var array
      */
-    public static $deleteFiles = array();
+    public static $deleteFiles = [];
 
     /**
      * 画像ライブラリオブジェクト
@@ -82,8 +82,6 @@ abstract class BEAR_Img_Adapter extends BEAR_Base
 
     /**
      * Constructor.
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {

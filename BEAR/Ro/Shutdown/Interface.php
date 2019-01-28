@@ -14,8 +14,6 @@ interface BEAR_Ro_Shutdown_Interface
      * Shutdown時に実行されるリソースプロトタイプをセット
      *
      * スクリプトShutdown時に実行されるタスクまたはリソースリクエストをセットします。
-     *
-     * @param BEAR_Ro_Prototype $prototypeRo
      */
     public function set(BEAR_Ro_Prototype $prototypeRo);
 

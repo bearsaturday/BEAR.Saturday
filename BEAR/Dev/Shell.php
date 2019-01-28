@@ -85,178 +85,178 @@ class BEAR_Dev_Shell extends BEAR_Base
         }
         // parse
         $cli = $this->_config['cli'];
-        $parser = new Console_CommandLine(array(
+        $parser = new Console_CommandLine([
             'name' => 'bear',
             'description' => 'BEAR command line interface',
             'version' => BEAR::VERSION,
             'add_help_option' => true,
             'add_version_option' => true
-        ));
+        ]);
         // create resource
         $subCmd = $parser->addCommand(
             self::CMD_CREATE,
-            array('description' => 'create resource.')
+            ['description' => 'create resource.']
         );
         $subCmd->addOption(
             'file',
-            array(
+            [
                 'short_name' => '-g',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
-            )
+            ]
         );
         $subCmd->addOption(
             'app',
-            array(
+            [
                 'short_name' => '-a',
                 'long_name' => '--app',
                 'action' => 'StoreString',
                 'description' => 'specify application path. *Notice* use this on the end of line.'
-            )
+            ]
         );
         $subCmd->addArgument(
             'uri',
-            array('description' => 'resource URI')
+            ['description' => 'resource URI']
         );
         // read resource
         $subCmd = $parser->addCommand(
             self::CMD_READ,
-            array('description' => 'show resource.')
+            ['description' => 'show resource.']
         );
         $subCmd->addOption(
             'file',
-            array(
+            [
                 'short_name' => '-g',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
-            )
+            ]
         );
         $subCmd->addOption(
             'length',
-            array(
+            [
                 'short_name' => '-l',
                 'long_name' => '--len',
                 'action' => 'StoreInt',
                 'description' => 'filter specific lenght each data.'
-            )
+            ]
         );
         $subCmd->addOption(
             'format',
-            array(
+            [
                 'short_name' => '-f',
                 'long_name' => '--format',
                 'action' => 'StoreString',
                 'description' => 'default | table | php | json | csv | printa '
-            )
+            ]
         );
         $subCmd->addOption(
             'app',
-            array(
+            [
                 'short_name' => '-a',
                 'long_name' => '--app',
                 'action' => 'StoreString',
                 'description' => 'specify application path. *Notice* use this on the end of line.'
-            )
+            ]
         );
         $subCmd->addArgument(
             'uri',
-            array('description' => 'resource URI')
+            ['description' => 'resource URI']
         );
         // update resource
         $subCmd = $parser->addCommand(
             self::CMD_UPDATE,
-            array('description' => 'update resource.')
+            ['description' => 'update resource.']
         );
         $subCmd->addOption(
             'file',
-            array(
+            [
                 'short_name' => '-g',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
-            )
+            ]
         );
         $subCmd->addOption(
             'app',
-            array(
+            [
                 'short_name' => '-a',
                 'long_name' => '--app',
                 'action' => 'StoreString',
                 'description' => 'specify application path. *Notice* use this on the end of line.'
-            )
+            ]
         );
         $subCmd->addArgument(
             'uri',
-            array('description' => 'resource URI')
+            ['description' => 'resource URI']
         );
         // delete resource
         $subCmd = $parser->addCommand(
             self::CMD_DELETE,
-            array('description' => 'delete resource.')
+            ['description' => 'delete resource.']
         );
         $subCmd->addOption(
             'file',
-            array(
+            [
                 'short_name' => '-a',
                 'long_name' => '--file',
                 'action' => 'StoreString',
                 'description' => 'load arguments file.'
-            )
+            ]
         );
         $subCmd->addOption(
             'app',
-            array(
+            [
                 'short_name' => '-a',
                 'long_name' => '--app',
                 'action' => 'StoreString',
                 'description' => 'specify application path. *Notice* use this on the end of line.'
-            )
+            ]
         );
-        $subCmd->addArgument('uri', array('description' => 'resource URI'));
+        $subCmd->addArgument('uri', ['description' => 'resource URI']);
         // clear-cache
         $parser->addCommand(
             'clear-cache',
-            array('description' => 'clear all cache.')
+            ['description' => 'clear all cache.']
         );
         // clear-log
         $parser->addCommand(
             'clear-log',
-            array('description' => 'clear all log.')
+            ['description' => 'clear all log.']
         );
         // clear-all
         $parser->addCommand(
             'clear-all',
-            array('description' => 'clear cache and log.')
+            ['description' => 'clear cache and log.']
         );
         if ($cli) {
             $subCmd->addArgument(
                 'path',
-                array('description' => 'destination path. ex) /var/www/bear.test')
+                ['description' => 'destination path. ex) /var/www/bear.test']
             );
             $subCmd->addOption(
                 'pearrc',
-                array(
+                [
                     'short_name' => '-c',
                     'long_name' => '--pearrc',
                     'action' => 'StoreString',
                     'description' => 'find user configuration in `file`'
-                )
+                ]
             );
             // set app
             $subCmd = $parser->addCommand(
                 self::CMD_SET_APP,
-                array('description' => 'set application path.')
+                ['description' => 'set application path.']
             );
             $subCmd->addArgument(
                 'path',
-                array('description' => 'application path. ex) /var/www/bear.test')
+                ['description' => 'application path. ex) /var/www/bear.test']
             );
             // show app
             $subCmd = $parser->addCommand(
                 self::CMD_SHOW_APP,
-                array('description' => 'show application path.')
+                ['description' => 'show application path.']
             );
         }
         //exec
@@ -270,23 +270,28 @@ class BEAR_Dev_Shell extends BEAR_Base
                     $path = $this->_command->command->args['path'];
                     $path = $this->_makeFullPath($path);
                     $this->_setApp($path);
+
                     break;
                 case self::CMD_SHOW_APP:
                     $this->_checkAppExists();
                     $this->_showApp();
+
                     break;
                 case self::CMD_CLEAR_CACHE:
                     $this->_checkAppExists();
                     $this->clearCache();
+
                     break;
                 case self::CMD_CLEAR_LOG:
                     $this->_checkAppExists();
                     $this->clearLog();
+
                     break;
                 case self::CMD_CLEAR_ALL:
                     $this->_checkAppExists();
                     $this->clearCache();
                     $this->clearLog();
+
                     break;
                 case self::CMD_CREATE:
                 case self::CMD_READ:
@@ -296,9 +301,10 @@ class BEAR_Dev_Shell extends BEAR_Base
                     $uri = $this->_command->command->args['uri'];
                     $values = $this->_command->command->options['file'] ? BEAR::loadValues(
                         $this->_command->command->options['file']
-                    ) : array();
+                    ) : [];
                     $this->_result = $this->_request($commandName, $uri, $values)->getRo();
                     $this->_config['debug'] = true;
+
                     break;
                 default:
                     if ($this->_config['cli']) {
@@ -339,7 +345,7 @@ class BEAR_Dev_Shell extends BEAR_Base
                 }
             }
             $result .= $this->printStrong("code\n");
-            $result .= "$code\n";
+            $result .= "${code}\n";
             $result .= $this->printStrong("header\n");
             $result .= ($header) ? $this->_printR($header) : "n/a\n";
             $result .= $this->printStrong("body\n");
@@ -359,21 +365,27 @@ class BEAR_Dev_Shell extends BEAR_Base
                 switch ($this->_command->command->options['format']) {
                     case 'var':
                         $result = var_export($body, true);
+
                         break;
                     case 'php':
                         $result = serialize($body);
+
                         break;
                     case 'json':
                         $result = json_encode($body, true);
+
                         break;
                     case 'table':
                         $result = $this->_getTextTable($body);
+
                         break;
                     case 'csv':
                         $result = $this->_getCsv($body);
+
                         break;
                     case 'printa':
                         $result .= print_a($body, 'return:1');
+
                         break;
                     case 'default':
                     default:
@@ -383,6 +395,7 @@ class BEAR_Dev_Shell extends BEAR_Base
                         } else {
                             $result .= $this->_getVarExport($body);
                         }
+
                         break;
                 }
             } elseif (is_scalar($body)) {
@@ -471,9 +484,9 @@ class BEAR_Dev_Shell extends BEAR_Base
         $exec .= _BEAR_APP_HOME . ',tmp/';
         $exec .= ' --directory ' . _BEAR_APP_HOME;
         $exec .= ' --target ' . $path;
-        echo "$exec\n";
+        echo "${exec}\n";
         ob_flush();
-        shell_exec("$exec &");
+        shell_exec("${exec} &");
     }
 
     /**
@@ -529,26 +542,21 @@ class BEAR_Dev_Shell extends BEAR_Base
         }
         $table = new Console_Table();
         $table->setAlign(0, CONSOLE_TABLE_ALIGN_LEFT);
-        $data = ($this->isList($data) !== true) ? array($data) : $data;
+        $data = ($this->isList($data) !== true) ? [$data] : $data;
         $table->setHeaders(array_keys($data[0]));
         foreach ($data as $row) {
             $table->addRow($row);
         }
-        $result = $table->getTable();
 
-        return $result;
+        return $table->getTable();
     }
 
     /**
      * Is array list ?
-     *
-     * @param mixed $data
      */
     private function isList($data)
     {
-        $isList = isset($data[0]) && is_array(array_keys($data[0]));
-
-        return $isList;
+        return isset($data[0]) && is_array(array_keys($data[0]));
     }
 
     /**
@@ -562,9 +570,8 @@ class BEAR_Dev_Shell extends BEAR_Base
     {
         ob_start();
         var_export($str);
-        $result = ob_get_clean();
 
-        return $result;
+        return ob_get_clean();
     }
 
     /**
@@ -578,7 +585,7 @@ class BEAR_Dev_Shell extends BEAR_Base
      */
     private function _getCsv($data)
     {
-        $data = ($this->isList($data) !== true) ? array($data) : $data;
+        $data = ($this->isList($data) !== true) ? [$data] : $data;
         $outstream = fopen('php://temp', 'r+');
         foreach ($data as $row) {
             fputcsv($outstream, $row);
@@ -625,10 +632,9 @@ class BEAR_Dev_Shell extends BEAR_Base
     {
         $resource = BEAR::dependency('BEAR_Resource');
         /* @var $resource BEAR_Resource */
-        $params = array('uri' => $uri, 'values' => $values);
-        $ro = $resource->request($method, $uri, $values)->getRo();
+        $params = ['uri' => $uri, 'values' => $values];
 
-        return $ro;
+        return $resource->request($method, $uri, $values)->getRo();
     }
 
     /**
@@ -643,7 +649,7 @@ class BEAR_Dev_Shell extends BEAR_Base
             throw new ErrorException('App path is not valid', 0, 0, __FILE__, __LINE__);
         }
         $bearrc = getenv('HOME') . '/.bearrc';
-        $config = (file_exists($bearrc)) ? unserialize(file_get_contents($bearrc)) : array();
+        $config = (file_exists($bearrc)) ? unserialize(file_get_contents($bearrc)) : [];
         $config['app'] = realpath($path);
 
         file_put_contents($bearrc, serialize($config));

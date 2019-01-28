@@ -19,14 +19,12 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
      *
      * @var array BEAR_Ro_Prototypeのコレクション
      */
-    private $_ro = array();
+    private $_ro = [];
 
     /**
      * Shutdown時に実行されるリソースプロトタイプをセット
      *
      * スクリプトShutdown時に実行されるタスクまたはリソースリクエストをセットします。
-     *
-     * @param BEAR_Ro_Prototype $prototypeRo
      */
     public function set(BEAR_Ro_Prototype $prototypeRo)
     {
@@ -63,7 +61,7 @@ class BEAR_Ro_Shutdown extends BEAR_Base implements BEAR_Ro_Shutdown_Interface
      */
     public function register()
     {
-        register_shutdown_function(array(__CLASS__, 'onShutdown'));
+        register_shutdown_function([__CLASS__, 'onShutdown']);
 
         return $this;
     }

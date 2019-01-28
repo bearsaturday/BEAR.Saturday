@@ -8,7 +8,7 @@
 /**
  * スタティック絵文字データ for Softbank
  */
-$emojiChars = array(
+$emojiChars = [
     'SUN' => '$Gj',
     'CLOUD' => '$Gi',
     'RAIN' => '$Gk',
@@ -259,4 +259,4 @@ $emojiChars = array(
     'PIG' => '$E+',
     'WINE' => '$Gd',
     'FACE20' => '$E\''
-);
+];

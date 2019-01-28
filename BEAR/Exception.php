@@ -31,7 +31,7 @@ class BEAR_Exception extends Exception
      *
      * @var array
      */
-    protected $_info = array();
+    protected $_info = [];
 
     /**
      * クラス
@@ -52,20 +52,19 @@ class BEAR_Exception extends Exception
      *
      * @var array
      */
-    protected $_default = array(
+    protected $_default = [
         'class' => null,
         'code' => BEAR::CODE_ERROR,
-        'info' => array(),
+        'info' => [],
         'redirect' => null
-    );
+    ];
 
     /**
      * Constructor
      *
      * @param string $msg
-     * @param array  $config
      */
-    public function __construct($msg, array $config = array())
+    public function __construct($msg, array $config = [])
     {
         $config = array_merge($this->_default, (array) $config);
         parent::__construct($msg);

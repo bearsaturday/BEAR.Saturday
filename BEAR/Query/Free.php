@@ -16,13 +16,11 @@
 class BEAR_Query_Free extends BEAR_Query
 {
     //prepareステートメント結果を使いまわすために使用
-    protected $_stmt = null;
-    protected $_count_stmt = null;
+    protected $_stmt;
+    protected $_count_stmt;
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -51,7 +49,7 @@ class BEAR_Query_Free extends BEAR_Query
      *
      * @return BEAR_Ro
      */
-    public function selectSharePrepare($query, array $params = array(), array $values = null, $id = 'id', $free = false)
+    public function selectSharePrepare($query, array $params = [], array $values = null, $id = 'id', $free = false)
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
@@ -60,12 +58,12 @@ class BEAR_Query_Free extends BEAR_Query
         $sth = null;
 
         // Row取得
-        if (! is_null($values)) {
+        if ($values !== null) {
             if (is_object($this->_stmt)) {
                 $sth = $this->_stmt;
             }
             $result = $this->_selectRow($db, $query, $params, $values, $id, $sth);
-            if (! is_object($sth) && is_null($this->_stmt)) {
+            if (! is_object($sth) && $this->_stmt === null) {
                 $this->_stmt = $sth;
             }
             if ($free) {
@@ -99,7 +97,7 @@ class BEAR_Query_Free extends BEAR_Query
                 $query .= ' LIMIT ' . $this->_config['perPage'];
             }
             if ($params) {
-                if (! is_object($sth) && is_null($this->_stmt)) {
+                if (! is_object($sth) && $this->_stmt === null) {
                     $sth = $db->prepare($query);
                     $this->_stmt = $sth;
                 } else {
@@ -124,7 +122,7 @@ class BEAR_Query_Free extends BEAR_Query
                 $count_sth = $this->_count_stmt;
             }
             $pagerOptions['totalItems'] = $this->_countQuery($query, $params, $count_sth);
-            if (! is_object($count_sth) && is_null($this->_count_stmt)) {
+            if (! is_object($count_sth) && $this->_count_stmt === null) {
                 $this->_count_stmt = $count_sth;
             }
             if ($free) {
@@ -144,15 +142,15 @@ class BEAR_Query_Free extends BEAR_Query
         $info['totalItems'] = $pagerOptions['totalItems'];
         $pager->makeLinks($pagerOptions['delta'], $pagerOptions['totalItems']);
         $links = $pager->pager->getLinks();
-        $info['page_numbers'] = array(
-                'current' => $pager->pager->getCurrentPageID(),
-                'total' => $pager->pager->numPages()
-        );
+        $info['page_numbers'] = [
+            'current' => $pager->pager->getCurrentPageID(),
+            'total' => $pager->pager->numPages()
+        ];
         list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
         $info['limit'] = $info['to'] - $info['from'] + 1;
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
         if ($params) {
-            if (! is_object($sth) && is_null($this->_stmt)) {
+            if (! is_object($sth) && $this->_stmt === null) {
                 $sth = $db->prepare($query);
                 $this->_stmt = $sth;
             } else {
@@ -174,8 +172,8 @@ class BEAR_Query_Free extends BEAR_Query
         $ro->setBody($result);
         $ro->setHeaders($info);
         $pager->setPagerLinks($links, $info);
-        $pager = array('links' => $links, 'info' => $info);
-        $ro->setLinks(array('pager' => $pager));
+        $pager = ['links' => $links, 'info' => $info];
+        $ro->setLinks(['pager' => $pager]);
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
 
         return $ro;
@@ -202,7 +200,7 @@ class BEAR_Query_Free extends BEAR_Query
      *
      * @return BEAR_Ro
      */
-    public function select($query, array $params = array(), array $values = null, $id = 'id')
+    public function select($query, array $params = [], array $values = null, $id = 'id')
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
@@ -211,7 +209,7 @@ class BEAR_Query_Free extends BEAR_Query
         $prepare_free = (isset($this->_config['prepare_free'])) ? $this->_config['prepare_free'] : 1;
 
         // Row取得
-        if (! is_null($values)) {
+        if ($values !== null) {
             $result = $this->_selectRow($db, $query, $params, $values, $id, $stmt);
             // prepareステートメントをfree
             $stmt->free();
@@ -272,10 +270,10 @@ class BEAR_Query_Free extends BEAR_Query
         $info['totalItems'] = $pagerOptions['totalItems'];
         $pager->makeLinks($pagerOptions['delta'], $pagerOptions['totalItems']);
         $links = $pager->pager->getLinks();
-        $info['page_numbers'] = array(
+        $info['page_numbers'] = [
             'current' => $pager->pager->getCurrentPageID(),
             'total' => $pager->pager->numPages()
-        );
+        ];
         list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
         $info['limit'] = $info['to'] - $info['from'] + 1;
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
@@ -295,8 +293,8 @@ class BEAR_Query_Free extends BEAR_Query
         $ro->setBody($result);
         $ro->setHeaders($info);
         $pager->setPagerLinks($links, $info);
-        $pager = array('links' => $links, 'info' => $info);
-        $ro->setLinks(array('pager' => $pager));
+        $pager = ['links' => $links, 'info' => $info];
+        $ro->setLinks(['pager' => $pager]);
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
 
         return $ro;
@@ -306,7 +304,6 @@ class BEAR_Query_Free extends BEAR_Query
      * カウントクエリー
      *
      * @param string $query
-     * @param array  $params
      * @param object &$sth
      *
      * @return int
@@ -357,16 +354,11 @@ class BEAR_Query_Free extends BEAR_Query
      *
      * @param object &$db
      * @param string $query
-     * @param array  $params
-     * @param array  $values
-     * @param mixed  $id
-     * @param object &$sth   prepareステートメントオブジェクト
-     *
-     * @return mixed
+     * @param object &$sth  prepareステートメントオブジェクト
      */
     private function _selectRow(&$db, $query, array $params, array $values, $id, &$sth)
     {
-        $where = array();
+        $where = [];
         if (is_string($id) && array_key_exists($id, $values)) {
             $where[] = $id . ' = ' . self::quote($values[$id], 'text');
         } elseif (is_array($id) && (count(array_intersect($id, array_keys($values))) === count($id))) {

@@ -117,7 +117,7 @@ class BEAR_Agent extends BEAR_Base
      *
      * @var mixed
      */
-    protected $_agentMobile = array('user_agent' => null);
+    protected $_agentMobile = ['user_agent' => null];
 
     /**
      * UAコード
@@ -152,10 +152,10 @@ class BEAR_Agent extends BEAR_Base
     {
         $this->_agentMobile = $this->_config;
         $injectUa = isset($this->_config['ua_inject']) && is_callable(
-            array($this->_config['ua_inject'], 'inject')
+            [$this->_config['ua_inject'], 'inject']
         ) ? $this->_config['ua_inject'] : 'BEAR_Agent_Ua';
         // _uaを注入
-        call_user_func(array($injectUa, 'inject'), $this, $this->_config);
+        call_user_func([$injectUa, 'inject'], $this, $this->_config);
         $this->_config['ua'] = $this->_ua;
         try {
             $this->adapter = BEAR::dependency('BEAR_Agent_Adapter_' . $this->_ua, $this->_config);
@@ -193,16 +193,19 @@ class BEAR_Agent extends BEAR_Base
                     /** @noinspection PhpUndefinedMethodInspection */
                     $serial = $this->agentMobile->getSerialNumber();
                 }
+
                 break;
             case self::UA_EZWEB:
                 /** @noinspection PhpUndefinedMethodInspection */
                 /** @noinspection PhpUndefinedMethodInspection */
                 $serial = $this->agentMobile->getHeader('X-UP-SUBNO');
+
                 break;
             case self::UA_SOFTBANK:
                 /** @noinspection PhpUndefinedMethodInspection */
                 /** @noinspection PhpUndefinedMethodInspection */
                 $serial = $this->agentMobile->getSerialNumber();
+
                 break;
             default:
                 // error
@@ -247,7 +250,7 @@ class BEAR_Agent extends BEAR_Base
             /** @noinspection PhpUndefinedMethodInspection */
             $display = BEAR::dependency('BEAR_Agent_Mobile', $this->_agentMobile)->getDisplay();
             /** @noinspection PhpUndefinedMethodInspection */
-            $byteSize = array($display->getWidthBytes(), $display->getHeightBytes());
+            $byteSize = [$display->getWidthBytes(), $display->getHeightBytes()];
         }
 
         return $byteSize;
@@ -294,6 +297,7 @@ class BEAR_Agent extends BEAR_Base
             $fullPath = $dir . '/' . $fileNameBase . '.' . strtolower($uaCode) . '.' . $ext;
             if (file_exists($fullPath)) {
                 $result = $fullPath;
+
                 break;
             }
         }

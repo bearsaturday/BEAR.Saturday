@@ -25,5 +25,5 @@ interface BEAR_View_Interface
      * @param string $tplName テンプレート名
      * @param array  $options オプション
      */
-    public function display($tplName = null, array $options = array());
+    public function display($tplName = null, array $options = []);
 }

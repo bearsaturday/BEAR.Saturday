@@ -26,7 +26,7 @@ class BEAR_Test_Query extends Zend_Dom_Query
     {
         $this->setDocumentHtml($html);
         $results = $this->query($selecter);
-        $xml = array();
+        $xml = [];
         foreach ($results as $result) {
             $xml[] = $results->getDocument()->saveXML($result);
         }

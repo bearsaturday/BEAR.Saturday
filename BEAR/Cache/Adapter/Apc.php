@@ -15,8 +15,6 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     /**
      * Constructor
      *
-     * @param array $config
-     *
      * @see http://jp.php.net/manual/ja/function.Apc-addserver.php
      *
      * @throws BEAR_Cache_Exception
@@ -46,7 +44,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
     public function set($key, $value)
     {
         $result = apc_store($this->_config['prefix'] . $key, $value, $this->_life);
-        $this->_log->log('APC[W]', array('key' => $key, 'result' => $result));
+        $this->_log->log('APC[W]', ['key' => $key, 'result' => $result]);
 
         return $result;
     }
@@ -58,13 +56,11 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
      *
      * @param string $key     キー
      * @param mixed  $default デフォルト
-     *
-     * @return mixed
      */
     public function get($key, $default = null)
     {
         $result = apc_fetch($this->_config['prefix'] . $key);
-        if ($result === false && ! is_null($default)) {
+        if ($result === false && $default !== null) {
             $result = $default;
         }
         if ($result instanceof BEAR_Ro_Container) {
@@ -91,9 +87,7 @@ class BEAR_Cache_Adapter_Apc extends BEAR_Cache_Adapter
      */
     public function delete($key)
     {
-        $result = apc_delete($this->_config['prefix'] . $key);
-
-        return $result;
+        return apc_delete($this->_config['prefix'] . $key);
     }
 
     /**

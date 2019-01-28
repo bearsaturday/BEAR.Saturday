@@ -27,19 +27,12 @@ interface BEAR_Base_Interface
     /**
      * コンフィグセット
      *
-     * @param      $config
-     * @param null $values
-     *
-     * @return mixed
+     * @param $config
      */
     public function setConfig($config, $values = null);
 
     /**
      * コンフィグ取得
-     *
-     * @param null $key
-     *
-     * @return mixed
      */
     public function getConfig($key = null);
 }

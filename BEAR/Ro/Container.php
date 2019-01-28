@@ -50,8 +50,6 @@ class BEAR_Ro_Container
 
     /**
      * Constructor
-     *
-     * @param BEAR_Ro $ro
      */
     public function __construct(BEAR_Ro $ro)
     {

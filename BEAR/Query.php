@@ -107,8 +107,6 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
 {
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -136,14 +134,14 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return BEAR_Ro
      */
-    public function select($query, array $params = array(), array $values = null, $id = 'id')
+    public function select($query, array $params = [], array $values = null, $id = 'id')
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
         $db = &$this->_config['db'];
         $ro = $this->_config['ro'];
         // Row取得
-        if (! is_null($values)) {
+        if ($values !== null) {
             $result = $this->_selectRow($db, $query, $params, $values, $id);
             if ($result !== false) {
                 return $result;
@@ -199,10 +197,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $info['totalItems'] = $pagerOptions['totalItems'];
         $pager->makeLinks($pagerOptions['delta'], $pagerOptions['totalItems']);
         $links = $pager->pager->getLinks();
-        $info['page_numbers'] = array(
+        $info['page_numbers'] = [
             'current' => $pager->pager->getCurrentPageID(),
             'total' => $pager->pager->numPages()
-        );
+        ];
         list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
         $info['limit'] = $info['to'] - $info['from'] + 1;
         $db->setLimit($pagerOptions['perPage'], $info['from'] - 1);
@@ -220,8 +218,8 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         $ro->setBody($result);
         $ro->setHeaders($info);
         $pager->setPagerLinks($links, $info);
-        $pager = array('links' => $links, 'info' => $info);
-        $ro->setLinks(array('pager' => $pager));
+        $pager = ['links' => $links, 'info' => $info];
+        $ro->setLinks(['pager' => $pager]);
         BEAR::dependency('BEAR_Log')->log('DB Pager', $info);
 
         return $ro;
@@ -251,12 +249,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * アップデート
      *
-     * @param array  $values
      * @param string $where
-     * @param null   $table
-     * @param null   $types
-     *
-     * @return mixed
      */
     public function update(array $values, $where, $table = null, $types = null)
     {
@@ -271,10 +264,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
     /**
      * デリート
      *
-     * @param      $where
-     * @param null $table
-     *
-     * @return mixed
+     * @param $where
      */
     public function delete($where, $table = null)
     {
@@ -290,8 +280,6 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @param $value
      * @param $type
-     *
-     * @return mixed
      */
     public function quote($value, $type)
     {
@@ -302,8 +290,6 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      * エラー？
      *
      * @param mixed $result DB結果
-     *
-     * @return mixed
      */
     public function isError($result)
     {
@@ -335,7 +321,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
         if (stripos($sql, 'ORDER BY') !== false) {
             return $sql;
         }
-        $orders = array();
+        $orders = [];
         $get = $this->_sortGetQuery();
         foreach ($this->_config['sort'] as $item) {
             assert(count($item) === 3);
@@ -347,7 +333,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
             }
         }
         // 文字列作成
-        $arr = array();
+        $arr = [];
         foreach ($orders as $column => &$dir) {
             /** @var MDB2_Driver_Common $db */
             $db = &$this->_config['db'];
@@ -368,8 +354,8 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      */
     protected function _sortGetQuery()
     {
-        $get = (isset($_GET['_sort'])) ? explode(',', $_GET['_sort']) : array();
-        $result = array();
+        $get = (isset($_GET['_sort'])) ? explode(',', $_GET['_sort']) : [];
+        $result = [];
         foreach ($get as $item) {
             if ($item[0] === '-') {
                 $item = substr($item, 1);
@@ -387,11 +373,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      * カウントクエリー
      *
      * @param string $query
-     * @param array  $params
      *
      * @return int
      */
-    protected function _countQuery($query, array $params = array())
+    protected function _countQuery($query, array $params = [])
     {
         // be smart and try to guess the total number of records
         $countQuery = $this->_rewriteCountQuery($query);
@@ -439,15 +424,10 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @param object &$db
      * @param string $query
-     * @param array  $params
-     * @param array  $values
-     * @param mixed  $id
-     *
-     * @return mixed
      */
     private function _selectRow(&$db, $query, array $params, array $values, $id)
     {
-        $where = array();
+        $where = [];
         if (is_string($id) && array_key_exists($id, $values)) {
             $where[] = $id . ' = ' . self::quote($values[$id], 'text');
         } elseif (is_array($id) && (count(array_intersect($id, array_keys($values))) === count($id))) {

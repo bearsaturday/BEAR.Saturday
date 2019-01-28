@@ -14,13 +14,9 @@ class BEAR_Resource_Execute_Function extends BEAR_Resource_Execute_Adapter
      * リソースリクエスト実行
      *
      * 関数をリソースとして扱うクラスです。リクエストメソッドは無視されます。
-     *
-     * @return mixed
      */
     public function request()
     {
-        $result = call_user_func($this->_config['function'], $this->_config['values']);
-
-        return $result;
+        return call_user_func($this->_config['function'], $this->_config['values']);
     }
 }

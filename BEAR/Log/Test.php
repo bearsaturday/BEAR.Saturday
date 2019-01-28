@@ -15,14 +15,14 @@ class BEAR_Log_Test extends BEAR_Log
      *
      * @var array
      */
-    private $_resourceLog = array();
+    private $_resourceLog = [];
 
     /**
      * フォームログ
      *
      * @var array
      */
-    private $_formLog = array();
+    private $_formLog = [];
 
     /**
      * ヘッダーにtest用ログを出力
@@ -37,7 +37,6 @@ class BEAR_Log_Test extends BEAR_Log
      * TEST用にformとresourceだけ別に記録
      *
      * @param string $logKey
-     * @param null   $logValue
      */
     public function log($logKey, $logValue = null)
     {

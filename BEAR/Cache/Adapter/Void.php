@@ -30,7 +30,7 @@ final class BEAR_Cache_Adapter_Void extends BEAR_Base
     public function __call($name, $args)
     {
         if ($this->_config['debug']) {
-            $log = array('name' => $name, 'args' => $args);
+            $log = ['name' => $name, 'args' => $args];
             $this->_log->log('BEAR_Cache_Adapter_None', $log);
         }
 

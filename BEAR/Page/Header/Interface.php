@@ -87,7 +87,7 @@ interface BEAR_Page_Header_Interface extends BEAR_Base_Interface
      * @param string $url     URL
      * @param array  $options オプション
      */
-    public function redirect($url, array $options = array('val' => null, 'click' => null, 'permanent' => false));
+    public function redirect($url, array $options = ['val' => null, 'click' => null, 'permanent' => false]);
 
     /**
      * リクエストヘッダーの取得

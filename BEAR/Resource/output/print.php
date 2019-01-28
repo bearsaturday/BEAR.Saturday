@@ -19,7 +19,7 @@ function outputPrint(
     array $options
 ) {
     $body = print_a($values, 'return:1');
-    $headers = array('X-BEAR-Output: PRINT' => 'Content-Type: text/html; charset=utf-8');
+    $headers = ['X-BEAR-Output: PRINT' => 'Content-Type: text/html; charset=utf-8'];
     $ro = BEAR::factory('BEAR_Ro');
     $ro->setBody($body);
     $ro->setHeaders($headers);

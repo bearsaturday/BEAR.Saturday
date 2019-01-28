@@ -27,14 +27,10 @@ interface BEAR_Query_Interface
      *
      * @return BEAR_Ro
      */
-    public function select($query, array $params = array());
+    public function select($query, array $params = []);
 
     /**
      * インサート
-     *
-     * @param array $values
-     * @param null  $table
-     * @param null  $types
      *
      * @return mixed|mixeds
      */
@@ -43,22 +39,14 @@ interface BEAR_Query_Interface
     /**
      * アップデート
      *
-     * @param array  $values
      * @param string $where
-     * @param null   $table
-     * @param null   $types
-     *
-     * @return mixed
      */
     public function update(array $values, $where, $table, $types = null);
 
     /**
      * デリート
      *
-     * @param      $where
-     * @param null $table
-     *
-     * @return mixed
+     * @param $where
      */
     public function delete($where, $table = null);
 
@@ -67,8 +55,6 @@ interface BEAR_Query_Interface
      *
      * @param $value
      * @param $type
-     *
-     * @return mixed
      */
     public function quote($value, $type);
 
@@ -76,8 +62,6 @@ interface BEAR_Query_Interface
      * エラー？
      *
      * @param MDB2_Result $result DB結果
-     *
-     * @return mixed
      */
     public function isError($result);
 }

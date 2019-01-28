@@ -12,8 +12,6 @@ class BEAR_Agent_Adapter_Ezweb extends BEAR_Agent_Adapter_Mobile implements BEAR
 {
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -24,6 +22,6 @@ class BEAR_Agent_Adapter_Ezweb extends BEAR_Agent_Adapter_Mobile implements BEAR
         $this->_config['output_encode'] = 'SJIS-win';
         $this->_config['header'] = 'Content-Type: ' . $contentType . '; charset=Shift_JIS';
         $this->_config['charset'] = 'Shift_JIS';
-        $this->_config['role'] = array(BEAR_Agent::UA_EZWEB, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT);
+        $this->_config['role'] = [BEAR_Agent::UA_EZWEB, BEAR_Agent::UA_MOBILE, BEAR_Agent::UA_DEFAULT];
     }
 }

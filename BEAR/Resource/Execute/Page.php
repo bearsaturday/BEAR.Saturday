@@ -40,8 +40,6 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      * </pre>
      *
      * @throws BEAR_Exception
-     *
-     * @return mixed
      */
     public function request()
     {
@@ -55,9 +53,9 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
             BEAR_Main::includePage($pageFile);
         }
         if (! class_exists($pageClass, false)) {
-            throw new BEAR_Exception("Page class[$pageClass] is not exist.");
+            throw new BEAR_Exception("Page class[${pageClass}] is not exist.");
         }
-        $pageConfig = array('resource_id' => $pageClass, 'mode' => BEAR_Page::CONFIG_MODE_RESOURCE);
+        $pageConfig = ['resource_id' => $pageClass, 'mode' => BEAR_Page::CONFIG_MODE_RESOURCE];
         $pageOptions = $this->_config['options'];
         if (isset($this->_config['options']['page'])) {
             $pageConfig = array_merge($pageConfig, (array) $this->_config['options']['page']);
@@ -70,25 +68,29 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
         $method = ($this->_config['method'] === 'read') ? 'onInit' : 'onAction';
         $args = array_merge($page->getArgs(), $this->_config['values']);
         $cnt = $this->_roPrototye->countStack();
-        $page->$method($args);
+        $page->{$method}($args);
         $cnt = $this->_roPrototye->countStack() - $cnt;
         // リソースモード
         switch (true) {
             // resource
             case ! isset($this->_config['options']['output']) || $this->_config['options']['output'] === 'resource':
                 $result = $this->_outputResource($page, $cnt);
+
                 break;
             // html
             case $this->_config['options']['output'] === 'html':
                 $result = $this->_outputHtml($page);
+
                 break;
             default:
-                $info = array('output option' => $this->_config['options']['output']);
+                $info = ['output option' => $this->_config['options']['output']];
+
                 throw $this->_exception('Unknown page resource options', compact('info'));
+
                 break;
         }
         if (! ($result instanceof BEAR_Ro)) {
-            $result = BEAR::factory('BEAR_Ro', array())->setBody($result);
+            $result = BEAR::factory('BEAR_Ro', [])->setBody($result);
         }
 
         return $result;
@@ -104,8 +106,6 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
      * <li>'get'   array $_GET</li>
      * <li>'post'  array $_POST</li>
      * </ul>
-     *
-     * @param array $options
      */
     protected function _setGetPost(array $options)
     {
@@ -134,7 +134,7 @@ class BEAR_Resource_Execute_Page extends BEAR_Resource_Execute_Adapter
     {
         // BEAR_Page::set()でsetされた値
         $pageValues = $page->getValues();
-        $result = array();
+        $result = [];
         for ($i = 0; $i < $cnt; $i++) {
             $item = $this->_roPrototye->pop();
             $key = key($item);

@@ -10,7 +10,7 @@
  */
 
 /** @noinspection PhpDuplicateArrayKeysInspection */
-$emojiChars = array(
+$emojiChars = [
     'SUN' => '&#63072;',
     'CLOUD' => '&#63077;',
     'RAIN' => '&#63076;',
@@ -264,4 +264,4 @@ $emojiChars = array(
     'WINE' => '&#63130;',
     'FACE20' => '&#63477;',
     'COMMENT' => '&#63190;'
-);
+];

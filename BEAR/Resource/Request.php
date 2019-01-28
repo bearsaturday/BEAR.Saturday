@@ -68,7 +68,7 @@ class BEAR_Resource_Request extends BEAR_Base
             }
             $isTokenPoeValid = $hasPoeOption ? $formToken->isTokenPoeValid() : true;
             if ($isTokenPoeValid !== true) {
-                $headers = array('request config' => $this->_config, 'msg' => 'invalid token');
+                $headers = ['request config' => $this->_config, 'msg' => 'invalid token'];
                 $code = BEAR::CODE_BAD_REQUEST;
                 $config = compact('headers', 'code');
                 $ro = BEAR::factory('BEAR_Ro', $config);
@@ -113,6 +113,7 @@ class BEAR_Resource_Request extends BEAR_Base
             if (get_class($e) === 'Panda_Exception') {
                 // HTTPエラー画面
                 Panda::onException($e);
+
                 throw($e);
             }
 
@@ -137,13 +138,13 @@ class BEAR_Resource_Request extends BEAR_Base
                 /** @noinspection PhpUnusedLocalVariableInspection */
                 $args = '';
             }
-            $headers = array();
-            $exception = array(
+            $headers = [];
+            $exception = [
                 'class' => get_class($e),
                 'msg' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine()
-            );
+            ];
             $headers['_exception'] = $exception;
             if (method_exists($e, 'getInfo')) {
                 $headers['_info'] = $e->getInfo();
@@ -170,14 +171,12 @@ class BEAR_Resource_Request extends BEAR_Base
      * @param BEAR_Ro &$ro BEAR_Roオブジェクト
      *
      * @throws BEAR_Resource_Execute_Exception
-     *
-     * @return mixed
      */
     private function _actionPostProcess(BEAR_Ro &$ro)
     {
         $body = $ro->getBody();
         /** @noinspection PhpUnusedLocalVariableInspection */
-        $Info = array();
+        $Info = [];
         $info['totalItems'] = count($body);
         $options = $this->_config['options'];
         // ページャーリザルト処理
@@ -191,19 +190,19 @@ class BEAR_Resource_Request extends BEAR_Base
             $pager->setOptions($pagerOptions);
             $pager->makePager($body);
             $body = $pager->getResult();
-            $info['page_numbers'] = array(
+            $info['page_numbers'] = [
                 'current' => $pager->pager->getCurrentPageID(),
                 'total' => $pager->pager->numPages()
-            );
+            ];
             list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
             $links = $pager->getLinks();
             $ro->setLink(BEAR_Resource::LINK_PAGER, $links);
             $ro->setHeaders($info);
 
-            $info['page_numbers'] = array(
+            $info['page_numbers'] = [
                 'current' => $pager->pager->getCurrentPageID(),
                 'total' => $pager->pager->numPages()
-            );
+            ];
             list($info['from'], $info['to']) = $pager->pager->getOffsetByPageId();
             $info['limit'] = $info['to'] - $info['from'] + 1;
             $pager->setPagerLinks($links, $info);
@@ -214,10 +213,11 @@ class BEAR_Resource_Request extends BEAR_Base
                 call_user_func($options['callback'], $body);
             } else {
                 $msg = 'BEAR_Resource callback failed.';
-                $info = array(
+                $info = [
                     'callback' => $options['callback']
-                );
-                throw $this->_exception($msg, array('info' => $info));
+                ];
+
+                throw $this->_exception($msg, ['info' => $info]);
             }
         }
         // コールバックオプション rec
@@ -226,10 +226,11 @@ class BEAR_Resource_Request extends BEAR_Base
                 array_walk_recursive($body, $options['callbackr']);
             } else {
                 $msg = 'BEAR_Resource callback_r failed.';
-                $info = array(
+                $info = [
                     'callbackr' => $options['callback_r']
-                );
-                throw $this->_exception($msg, array('info' => $info));
+                ];
+
+                throw $this->_exception($msg, ['info' => $info]);
             }
         }
         $ro->setBody($body);
@@ -243,7 +244,7 @@ class BEAR_Resource_Request extends BEAR_Base
      * @param string &$uri    URI
      * @param array  &$values 引数
      */
-    private function _mergeQuery(&$uri, array &$values = array())
+    private function _mergeQuery(&$uri, array &$values = [])
     {
         $newValues = null;
         $parse = parse_url($uri);

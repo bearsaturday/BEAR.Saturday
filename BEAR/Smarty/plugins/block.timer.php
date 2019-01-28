@@ -22,10 +22,6 @@
  * 'to'   string 終了時間
  * </pre>
  *
- *
- *
- *
- *
  * @param string $params  パラメーター
  * @param string $content HTML
  * @param Smarty &$smarty &Smarty object

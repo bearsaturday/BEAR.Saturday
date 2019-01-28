@@ -41,18 +41,17 @@ class BEAR_Test_Client extends HTTP_Request2
      *
      * @param string $method
      * @param string $url
-     * @param array  $submit
      * @param string $formName
      *
      * @return HTTP_Request2_Response
      */
-    public function request($method, $url, array $submit = array(), $formName = 'form')
+    public function request($method, $url, array $submit = [], $formName = 'form')
     {
         $this->request->setMethod($method);
         $this->request->setUrl(new Net_URL2($url));
 
         if ($submit) {
-            $submit = array_merge(array('_token' => '0dc59902014b6', '_qf__' . $formName => ''), $submit);
+            $submit = array_merge(['_token' => '0dc59902014b6', '_qf__' . $formName => ''], $submit);
         }
         if ($submit && $this->request->getMethod() === HTTP_Request2::METHOD_POST) {
             $this->request->addPostParameter($submit);
@@ -74,9 +73,8 @@ class BEAR_Test_Client extends HTTP_Request2
     {
         $header = $this->response->getHeader();
         $formInfo = json_decode($header['x-bear-form-log'], true);
-        $result = isset($formInfo[0]) ? $formInfo[0] : null;
 
-        return $result;
+        return isset($formInfo[0]) ? $formInfo[0] : null;
     }
 
     /**
@@ -87,9 +85,8 @@ class BEAR_Test_Client extends HTTP_Request2
     public function isValidSubmit()
     {
         $formLog = $this->getFormLog();
-        $result = (isset($formLog['valid']) && $formLog['valid'] === true) ? true : false;
 
-        return $result;
+        return (isset($formLog['valid']) && $formLog['valid'] === true) ? true : false;
     }
 
     /**
@@ -100,9 +97,8 @@ class BEAR_Test_Client extends HTTP_Request2
     public function getFormErrors()
     {
         $formLog = $this->getFormLog();
-        $result = isset($formLog['errors']) ? $formLog['errors'] : array();
 
-        return $result;
+        return isset($formLog['errors']) ? $formLog['errors'] : [];
     }
 
     /**
@@ -113,8 +109,7 @@ class BEAR_Test_Client extends HTTP_Request2
     public function getResourceRequestLog()
     {
         $header = $this->response->getHeader();
-        $result = isset($header['x-bear-resource-log']) ? json_decode($header['x-bear-resource-log'], true) : array();
 
-        return $result;
+        return isset($header['x-bear-resource-log']) ? json_decode($header['x-bear-resource-log'], true) : [];
     }
 }

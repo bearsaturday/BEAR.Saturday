@@ -13,7 +13,7 @@
 /**
  * HTML class for a "bradio" element
  *
- * @link       http://pear.php.net/package/HTML_QuickForm
+ * @see       http://pear.php.net/package/HTML_QuickForm
  * @since      1.0
  */
 class HTML_QuickForm_bradio extends HTML_QuickForm_radio
@@ -34,12 +34,6 @@ class HTML_QuickForm_bradio extends HTML_QuickForm_radio
 
     /**
      * Constructor
-     *
-     * @param null $elementName
-     * @param null $elementLabel
-     * @param null $text
-     * @param null $value
-     * @param null $attributes
      */
     public function __construct(
         $elementName = null,

@@ -15,18 +15,16 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
     /**
      * Constructor取得
      *
-     * @param array $config
-     *
      * @see http://jp.php.net/manual/ja/function.memcache-addserver.php
      */
     public function __construct(array $config)
     {
         parent::__construct($config);
-        $options = array(
+        $options = [
             'cacheDir' => _BEAR_APP_HOME . '/tmp/cache_lite/',
             'automaticSerialization' => true,
             'automaticCleaningFactor' => 100
-        );
+        ];
         // _adapterをCache_Liteに
         $this->_adapter = BEAR::dependency('Cache_Lite', $options);
     }
@@ -38,10 +36,8 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
      *
      * @param string $key     キー
      * @param mixed  $options オプション
-     *
-     * @return mixed
      */
-    public function get($key, $options = array('default' => null))
+    public function get($key, $options = ['default' => null])
     {
         $result = $this->_adapter->get($this->_config['prefix'] . $key);
         // 結果がなくてデフォルトが用意されていればデフォルト
@@ -78,7 +74,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
             $values = new BEAR_Ro_Container($values);
         }
         $result = $this->_adapter->save($values, $this->_config['prefix'] . $key);
-        $log = array('key' => $key, 'result' => $result);
+        $log = ['key' => $key, 'result' => $result];
         $this->_log->log('Cache Lite[W]', $log);
 
         return $result;
@@ -106,9 +102,7 @@ class BEAR_Cache_Adapter_Lite extends BEAR_Cache_Adapter
      */
     public function deleteAll()
     {
-        $result = $this->_adapter->clean();
-
-        return $result;
+        return $this->_adapter->clean();
     }
 
     /**

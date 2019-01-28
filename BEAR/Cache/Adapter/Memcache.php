@@ -22,8 +22,6 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
     /**
      * Constructor
      *
-     * @param array $config
-     *
      * @see http://jp.php.net/manual/ja/function.memcache-addserver.php
      *
      * @throws BEAR_Cache_Exception
@@ -45,7 +43,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
                 $this->_adapter->connect($this->_config['path']);
             }
         }
-        $log = array();
+        $log = [];
         if ($this->_config['debug'] && isset($this->_config['path'])) {
             /* @noinspection PhpVoidFunctionResultUsedInspection */
             $log['Ver'] = $this->_adapter->getVersion();
@@ -71,7 +69,7 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
         if (! $result) {
             $result = $this->_adapter->set($this->_config['prefix'] . $key, $value, MEMCACHE_COMPRESSED, $this->_life);
         }
-        $this->_log->log('Memcache[W]', array('key' => $key, 'result' => $result));
+        $this->_log->log('Memcache[W]', ['key' => $key, 'result' => $result]);
 
         return $result;
     }
@@ -83,13 +81,11 @@ class BEAR_Cache_Adapter_Memcache extends BEAR_Cache_Adapter
      *
      * @param string $key     キー
      * @param mixed  $default 値
-     *
-     * @return mixed
      */
     public function get($key, $default = null)
     {
         $result = $this->_adapter->get($this->_config['prefix'] . $key);
-        if ($result === false && ! is_null($default)) {
+        if ($result === false && $default !== null) {
             $result = $default;
         }
         if ($result instanceof BEAR_Ro_Container) {

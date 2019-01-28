@@ -10,10 +10,6 @@
  *
  * 画像ライブラリGDを取り扱うクラスです。
  *
- *
- *
- *
- *
  * @Singleton
  */
 class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
@@ -71,8 +67,6 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
     /**
      * Constructor
      *
-     * @param array $config
-     *
      * @throws BEAR_Img_Adapter_GD_Exception
      */
     public function __construct(array $config)
@@ -114,9 +108,10 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
             //unknown file format
             } else {
                 $info = compact($file, $format);
+
                 throw $this->_exception(
                     'Unknown file format',
-                    array('info' => $info)
+                    ['info' => $info]
                 );
             }
         }
@@ -125,31 +120,36 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         switch ($this->format) {
             case 'gif':
                 $this->_imgResource = imagecreatefromgif($this->file);
+
                 break;
             case 'jpeg':
             case 'jpg':
                 $this->_imgResource = imagecreatefromjpeg($this->file);
+
                 break;
             case 'png':
                 $this->_imgResource = imagecreatefrompng($this->file);
+
                 break;
             default:
-                $info = array('format' => $this->format);
+                $info = ['format' => $this->format];
+
                 throw $this->_exception('load format error', compact('info'));
         }
         list($width, $height, $type, $attr) = $info = getimagesize($this->file);
         if (! $info) {
             $this->_log->log('IMG load error', $file);
-            $info = array('file' => $file);
-            throw $this->_exception('Image Load Error', array('info' => $info));
+            $info = ['file' => $file];
+
+            throw $this->_exception('Image Load Error', ['info' => $info]);
         }
         $this->_srcWidth = $width;
         $this->_srcHeight = $height;
         $this->_srcType = $type;
         $this->_srcAttr = $attr;
-        $log = array();
-        $log['load'] = array('load' => $file, 'format' => $format);
-        $log['result'] = array('info' => $info, 'rsc' => (string) $this->_imgResource);
+        $log = [];
+        $log['load'] = ['load' => $file, 'format' => $format];
+        $log['result'] = ['info' => $info, 'rsc' => (string) $this->_imgResource];
         $this->_log->log('IMG load', $log);
     }
 
@@ -232,23 +232,26 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         switch ($format) {
             case 'gif':
                 $this->result = imagegif($this->_imgResource);
+
                 break;
             case 'jpeg':
                 $this->result = imagejpeg($this->_imgResource);
+
                 break;
             case 'png':
                 $this->result = imagepng($this->_imgResource);
+
                 break;
             default:
                 trigger_error('format error', $format, E_USER_ERROR);
         }
         $this->_log->log(
             'IMG show',
-            array(
+            [
                 'format' => $format,
                 'rsc' => (string) $this->_imgResource,
                 'result' => $this->result
-            )
+            ]
         );
         parent::header($format);
     }
@@ -272,32 +275,36 @@ class BEAR_Img_Adapter_GD extends BEAR_Img_Adapter
         switch ($format) {
             case 'gif':
                 $result = imagegif($this->_imgResource, $filePath);
+
                 break;
             case 'jpg':
             case 'jpeg':
                 $result = imagejpeg($this->_imgResource, $filePath);
                 $format = 'jpeg';
+
                 break;
             case 'png':
                 $result = imagepng($this->_imgResource, $filePath);
+
                 break;
             default:
                 $info = compact('formart');
+
                 throw $this->_exception(
                     'save formart error',
-                    array(
+                    [
                         'info' => $info
-                    )
+                    ]
                 );
         }
         $this->_log->log(
             'IMG saved',
-            array(
+            [
                 'format' => $format,
                 'file' => $filePath,
                 'rsc' => (string) $this->_imgResource,
                 'result' => $result
-            )
+            ]
         );
     }
 }

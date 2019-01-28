@@ -13,10 +13,11 @@ class BEAR_Resource_Request_Test extends BEAR_Resource_Request
     /**
      * Resource request
      *
+     * @throws Exception
+     *
      * @return BEAR_Ro
      *
      * @see BEAR_Resource_Request::request()
-     * @throws Exception
      */
     public function request()
     {
@@ -26,8 +27,7 @@ class BEAR_Resource_Request_Test extends BEAR_Resource_Request
         }
         $resurceQuery = $this->_config['method'] . ' ' . $this->_config['uri'] . (string) $query;
         BEAR::dependency('BEAR_Log')->log('resource', $resurceQuery);
-        $result = parent::request();
 
-        return $result;
+        return parent::request();
     }
 }

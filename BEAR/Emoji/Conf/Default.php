@@ -8,7 +8,7 @@
 /**
  * スタティック絵文字データ for Default(PC)
  */
-$emojiChars = array(
+$emojiChars = [
     'SUN' => '<font color=#FF0000>&#63647;</font>',
     'CLOUD' => '<font color=#0000FF>&#63648;</font>',
     'RAIN' => '<font color=#0000FF>&#63649;</font>',
@@ -259,4 +259,4 @@ $emojiChars = array(
     'PIG' => '<font color=#FF8C00>&#63994;</font>',
     'WINE' => '<font color=#6A5ACD>&#63995;</font>',
     'FACE20' => '<font color=#6A5ACD>&#63996;</font>',
-);
+];

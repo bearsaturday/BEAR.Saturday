@@ -23,7 +23,7 @@
  */
 function outputXml($values, array $options)
 {
-    $defaultOptions = array(
+    $defaultOptions = [
         'mode' => '',
         'indent' => '    ',
         'linebreak' => "\n",
@@ -33,7 +33,7 @@ function outputXml($values, array $options)
         'addDecl' => true,
         'encoding' => 'UTF-8',
         'rootName' => 'rdf:RDF',
-        'rootAttributes' => array(
+        'rootAttributes' => [
             'xmlns' => 'http://purl.org/rss/1.0/',
             'xmlns:rdf' => 'http://www.e3.org/1999/02/22-rdf-syntax-ns#',
             'xmlns:dc' => 'http://purl.org/dc/elements/1.1/',
@@ -41,10 +41,10 @@ function outputXml($values, array $options)
             'xmlns:admin' => 'http://webns.net/mvcb/',
             'xmlns:content' => 'http://purl.org/rss/1.0/modules/content/',
             'xml:lang' => 'ja'
-        ),
+        ],
         'defaultTagName' => 'item',
         'attributesArray' => '_attributes'
-    );
+    ];
     if (is_array($options)) {
         $options = $options + $defaultOptions;
     } else {
@@ -60,7 +60,7 @@ function outputXml($values, array $options)
     }
     //　return
     $body = $xmlString;
-    $headers = array('X-BEAR-Output: XML' => 'Content-Type: application/xml');
+    $headers = ['X-BEAR-Output: XML' => 'Content-Type: application/xml'];
     $ro = BEAR::factory('BEAR_Ro');
     $ro->setBody($body);
     $ro->setHeaders($headers);

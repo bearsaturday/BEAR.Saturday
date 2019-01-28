@@ -58,12 +58,10 @@ class BEAR_Aspect_Weaver extends BEAR_Base
      * @param array  $values メソッド引数
      *
      * @throws Exception $e
-     *
-     * @return mixed
      */
     public function invoke($obj, array $values)
     {
-        $result = array();
+        $result = [];
         $this->_config['object'] = $obj;
         $this->_config['values'] = $values;
         $this->_config['entry_values'] = $values;
@@ -164,8 +162,9 @@ class BEAR_Aspect_Weaver extends BEAR_Base
         );
         if ($isValid === false) {
             $msg = "{$adviceClass} is not valid advice.";
-            $info = array('advice' => $adviceClass, 'aspects' => $this->_config['aspects']);
-            throw $this->_exception($msg, array('info' => $info));
+            $info = ['advice' => $adviceClass, 'aspects' => $this->_config['aspects']];
+
+            throw $this->_exception($msg, ['info' => $info]);
         }
     }
 }

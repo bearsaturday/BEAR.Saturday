@@ -24,7 +24,7 @@ class BEAR_Page_Ajax extends BEAR_Base
     /**
      * Ajaxコマンド
      */
-    private $_ajax = array();
+    private $_ajax = [];
 
     /**
      * ヘッダーオブジェクト
@@ -63,11 +63,12 @@ class BEAR_Page_Ajax extends BEAR_Base
         // AJAXセキュリティチェック
         $isOk = $this->_isValidAjaxDoubleSubmitionCookie();
         if ($isOk === false) {
-            $info = array(
+            $info = [
                 'verify' => $this->_header->getRequestHeader('X_BEAR_AJAX_ARGS'),
                 'session_id' => session_id(),
                 '$_SERVER' => $_SERVER
-            );
+            ];
+
             throw $this->_exception('Ajax Validation NG or This is not AJAX', compact('info'));
         }
     }
@@ -104,10 +105,10 @@ class BEAR_Page_Ajax extends BEAR_Base
     public function getAjaxRequest()
     {
         if ($this->isAjaxRequest()) {
-            $result = $form = $arr = array();
+            $result = $form = $arr = [];
             $form = $_POST['_form'];
             parse_str($form, $form);
-            $formArr = array();
+            $formArr = [];
             foreach ($form as $key => &$value) {
                 parse_str($value, $arr);
                 $formArr[$key] = $arr;
@@ -115,7 +116,7 @@ class BEAR_Page_Ajax extends BEAR_Base
             $result['form'] = $formArr;
             $this->_log->log('AJAX Req', $result);
         } else {
-            $result = array();
+            $result = [];
         }
 
         return $result;
@@ -123,7 +124,6 @@ class BEAR_Page_Ajax extends BEAR_Base
 
     /**
      * AJAXコマンドを追加
-     *
      *
      * <code>
      *  // リソースをアサイン
@@ -142,7 +142,7 @@ class BEAR_Page_Ajax extends BEAR_Base
      * @param array  $data        AJAXコマンド引数
      * @param array  $options     AJAXコマンドオプション
      */
-    public function addAjax($ajaxCommand, array $data, array $options = array())
+    public function addAjax($ajaxCommand, array $data, array $options = [])
     {
         switch ($ajaxCommand) {
             case 'resource':
@@ -153,18 +153,21 @@ class BEAR_Page_Ajax extends BEAR_Base
                     $init = $page->get();
                     $ajaxDivBody[$div] = $init[$initValueKey];
                 }
-                $htmlData = array(
+                $htmlData = [
                     'body' => $ajaxDivBody,
                     'options' => $options
-                );
+                ];
                 $this->_ajax['html'][] = $htmlData;
+
                 break;
             case 'html':
-                $htmlData = array('body' => $data, 'options' => $options);
+                $htmlData = ['body' => $data, 'options' => $options];
                 $this->_ajax['html'][] = $htmlData;
+
                 break;
             default:
                 $this->_ajax[$ajaxCommand][] = $data;
+
                 break;
         }
     }
@@ -190,8 +193,7 @@ class BEAR_Page_Ajax extends BEAR_Base
     private function _isValidAjaxDoubleSubmitionCookie()
     {
         $sessionVerify = $this->_header->getRequestHeader('X_BEAR_SESSION_VERIFY');
-        $isValid = ($sessionVerify === session_id());
 
-        return $isValid;
+        return ($sessionVerify === session_id());
     }
 }

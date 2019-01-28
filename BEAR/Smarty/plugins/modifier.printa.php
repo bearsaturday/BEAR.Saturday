@@ -17,10 +17,6 @@
  * {$body|printa}
  * </code>
  *
- *
- *
- *
- *
  * @param string $string 文字列
  *
  * @return string

@@ -57,8 +57,6 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     /**
      * Constructor
      *
-     * @param array $config
-     *
      * @throws BEAR_Img_Adapter_Magick_Exception
      */
     public function __construct(array $config)
@@ -96,8 +94,9 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
             $result = file_put_contents($file, $remoteFile);
             if ($result === false) {
                 $msg = 'file_put_contents error.（ファイル作成ができません)';
-                $info = array('$file' => $file);
-                throw $this->_exception($msg, array('info' => $info));
+                $info = ['$file' => $file];
+
+                throw $this->_exception($msg, ['info' => $info]);
             }
         }
         //ファイルサイズのチェック
@@ -124,15 +123,12 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
      * イメージリソースの内容をみてHTTPヘッダーを出力します。
      * 他の画像タイプと違い画像タイプを出力する必要がありません
      * imagick_getmimetypeを使用
-     *
-     * @param null $format
-     * @param null $expire
      */
     public function header($format = null, $expire = null)
     {
         $linenum = $filename = '';
         if (headers_sent($filename, $linenum)) {
-            $msg = "header is send in [$filename] , line [{$linenum}]";
+            $msg = "header is send in [${filename}] , line [{$linenum}]";
             $this->_thisError('header', $msg);
         }
         if ($this->_isAnimGif) {
@@ -211,7 +207,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         $this->adapter->setFormat($format);
         $result = $this->adapter->writeImage($filePath);
         if (! $result) {
-            trigger_error("iMagick: Image file write error [$filePath]", E_USER_ERROR);
+            trigger_error("iMagick: Image file write error [${filePath}]", E_USER_ERROR);
         }
     }
 
@@ -235,7 +231,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         $result = '';
         system($command, $result);
         if ($result) {
-            trigger_error("imagemagick convert error result=[$result]", E_USER_WARNING);
+            trigger_error("imagemagick convert error result=[${result}]", E_USER_WARNING);
         }
         $this->_animGifFile = $toFile;
     }
@@ -261,12 +257,13 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         $description = (is_resource($this->image)) ? imagick_faileddescription($this->image) : 'no image resource';
         $isResource = (is_resource($this->image)) ? 'true' : 'false';
         $msg .= 'iMagcik Error:' . $msg;
-        $info = array(
+        $info = [
             'func' => $func,
             'isResource' => $isResource,
             'reason' => $reason,
             'description' => $description
-        );
-        throw $this->_exception($msg, array('info' => $info));
+        ];
+
+        throw $this->_exception($msg, ['info' => $info]);
     }
 }

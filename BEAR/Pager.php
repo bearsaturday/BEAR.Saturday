@@ -38,14 +38,14 @@ class BEAR_Pager extends BEAR_Base
      *
      * @var array
      */
-    public static $optionsPc = array();
+    public static $optionsPc = [];
 
     /**
      * モバイル用ページャーオプション
      *
      * @var array
      */
-    public static $optionsMobile = array();
+    public static $optionsMobile = [];
 
     /**
      * ページャーオプション
@@ -54,7 +54,7 @@ class BEAR_Pager extends BEAR_Base
      *
      * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
      */
-    private $_options = array();
+    private $_options = [];
 
     /**
      * ページャーでスライスされたビュー
@@ -75,8 +75,6 @@ class BEAR_Pager extends BEAR_Base
      *
      * エージェントに応じて（PC,携帯）ページャーオプションを変えます。
      *
-     * @param array $config
-     *
      * @see http://pear.php.net/manual/ja/package.html.pager.factory.php
      */
     public function __construct(array $config)
@@ -94,7 +92,7 @@ class BEAR_Pager extends BEAR_Base
         switch ($ua) {
             // PC
             case BEAR_Agent::UA_DEFAULT:
-                $this->_options = array(
+                $this->_options = [
                     'perPage' => 10, // ページごとに表示するアイテムの数
                     'delta' => 10, // 現在のページの前後に表示するページ番号の数
                     'urlVar' => self::PAGER_NUM, // ページ番号を示すためのURL変数名
@@ -103,12 +101,13 @@ class BEAR_Pager extends BEAR_Base
                     'separator' => ' ', // セパレーター
                     'linkClass' => self::PAGER_CLASS, // リンクスタイルのためのCSSクラス名
                     'totalItems' => 100, // アイテム総数
-                    'excludeVars' => array($sessionId)
-                );
+                    'excludeVars' => [$sessionId]
+                ];
+
                 break;
             // Mobile
             default:
-                $this->_options = array(
+                $this->_options = [
                     'perPage' => 10,
                     'delta' => 5,
                     'altNext' => 'Next',
@@ -117,8 +116,9 @@ class BEAR_Pager extends BEAR_Base
                     'nextImg' => '>>(#)',
                     'separator' => ' ',
                     'totalItems' => 100,
-                    'excludeVars' => array($sessionId)
-                );
+                    'excludeVars' => [$sessionId]
+                ];
+
                 break;
         }
         // オプションを指定されていれば値があればオーバーライド
@@ -153,7 +153,7 @@ class BEAR_Pager extends BEAR_Base
      */
     public function makePager(array $view)
     {
-        if (is_null($view)) {
+        if ($view === null) {
             // $viewが無い
             $this->_links = null;
 
@@ -270,16 +270,19 @@ class BEAR_Pager extends BEAR_Base
         /* @var $this->pager Pager */
         $current = $this->pager->getCurrentPageID();
         $total = $this->pager->numPages();
-        switch (array($hasBack, $hasNext)) {
-            case array(false, true):
-                $links['all'] = "<font color=gray >{$this->_options['prevImg']} $current/$total</font> {$next}";
+        switch ([$hasBack, $hasNext]) {
+            case [false, true]:
+                $links['all'] = "<font color=gray >{$this->_options['prevImg']} ${current}/${total}</font> {$next}";
+
                 break;
-            case array(true, false):
-                $links['all'] = "{$back} <font color=gray>$current/$total {$this->_options['nextImg']}</font>";
+            case [true, false]:
+                $links['all'] = "{$back} <font color=gray>${current}/${total} {$this->_options['nextImg']}</font>";
+
                 break;
-            case array(true, true):
+            case [true, true]:
                 $links['all'] = "{$back} | {$next}";
-                $links['all'] = "{$back} <font color=gray>$current/$total</font> {$next}";
+                $links['all'] = "{$back} <font color=gray>${current}/${total}</font> {$next}";
+
                 break;
             default:
                 // middle
@@ -313,15 +316,12 @@ class BEAR_Pager extends BEAR_Base
      * ページャーリンクのHTMLとメタ情報を'pager'というキーでサービスに登録します。
      * 登録済みの場合は何もしません。
      *
-     * @param array $links
-     * @param array $info
-     *
      * @return BEAR_Pager
      */
     public function setPagerLinks(array $links, array $info)
     {
         if (! BEAR::exists('pager')) {
-            BEAR::set('pager', new ArrayObject(array('links' => $links, 'info' => $info)));
+            BEAR::set('pager', new ArrayObject(['links' => $links, 'info' => $info]));
         }
 
         return $this;

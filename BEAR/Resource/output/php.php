@@ -19,7 +19,7 @@ function outputPhp(
     array $options
 ) {
     $body = serialize($values);
-    $headers = array('X-BEAR-Output: PHP' => 'Content-Type: text/html; charset=utf-8');
+    $headers = ['X-BEAR-Output: PHP' => 'Content-Type: text/html; charset=utf-8'];
     $ro = BEAR::factory('BEAR_Ro');
     $ro->setBody($body);
     $ro->setHeaders($headers);

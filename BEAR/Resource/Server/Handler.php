@@ -39,7 +39,7 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      */
     public function onConnect($clientId = 0)
     {
-        echo "$clientId is connecetd." . PHP_EOL;
+        echo "${clientId} is connecetd." . PHP_EOL;
     }
 
     /**
@@ -71,26 +71,31 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
             default:
         }
         $resource = BEAR::dependency('BEAR_Resource');
-        $params = array('uri' => $uri);
+        $params = ['uri' => $uri];
         switch ($method) {
             case 'create':
             case 'post':
                 $resource->create($params);
+
                 break;
             case 'read':
             case 'broadcast':
             case 'get':
                 $resource->read($params);
+
                 break;
             case 'update':
             case 'put':
                 $resource->update($params);
+
                 break;
             case 'delete':
                 $resource->delete($params);
+
                 break;
             default:
                 $resource = false;
+
                 break;
         }
         if ($resource !== false) {
@@ -120,13 +125,13 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
         $code = $ro->getCode();
         $hearders = $ro->getHeaders();
         if (isset($hearders['broadcast'])) {
-            $this->_server->broadcastData($code . PHP_EOL, array($clientId));
-            $this->_server->broadcastData('Content-Type: text/php' . PHP_EOL, array($clientId));
+            $this->_server->broadcastData($code . PHP_EOL, [$clientId]);
+            $this->_server->broadcastData('Content-Type: text/php' . PHP_EOL, [$clientId]);
             $type = 'X-Socket-Type: broadcast' . PHP_EOL;
-            $this->_server->broadcastData($type, array($clientId));
-            $this->_server->broadcastData(PHP_EOL, array($clientId));
+            $this->_server->broadcastData($type, [$clientId]);
+            $this->_server->broadcastData(PHP_EOL, [$clientId]);
             $data = serialize($hearders['broadcast']) . PHP_EOL;
-            $this->_server->broadcastData($data, array($clientId));
+            $this->_server->broadcastData($data, [$clientId]);
         }
         $this->_server->sendData($clientId, $code . PHP_EOL);
         $this->_server->sendData($clientId, 'Content-Type: text/php' . PHP_EOL);

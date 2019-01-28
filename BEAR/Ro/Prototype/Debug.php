@@ -33,7 +33,7 @@ class BEAR_Ro_Prototype_Debug extends BEAR_Ro_Prototype
         parent::request();
         $time = microtime(true) - $start;
         $this->_ro->setHeader('_time', $time);
-        $log = array('Time' => $time);
+        $log = ['Time' => $time];
         $appLog = $this->_log->stop();
         if ($appLog) {
             $log['Log'] = array_values($appLog);

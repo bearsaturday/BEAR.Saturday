@@ -32,14 +32,14 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
      *
      * @var array
      */
-    protected $_values = array();
+    protected $_values = [];
 
     /**
      * エージェントロール
      *
      * @var array
      */
-    private $_role = array();
+    private $_role = [];
 
     /**
      * JS有効スイッチ
@@ -56,7 +56,7 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         if (! isset($this->_config['ua'])) {
             $this->_config['ua'] = '';
         }
-        $smartyConfig = array('ua' => $this->_config['ua']);
+        $smartyConfig = ['ua' => $this->_config['ua']];
         $this->_smarty = BEAR::dependency('BEAR_Smarty', $smartyConfig);
         $this->set($this->_config['values']);
         $this->_log = BEAR::dependency('BEAR_Log');
@@ -96,7 +96,7 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
      *
      * @return BEAR_Ro
      */
-    public function display($tplName = null, array $options = array())
+    public function display($tplName = null, array $options = [])
     {
         // Pageバリューアサイン
         $this->_smarty->assign($this->_values);
@@ -148,18 +148,18 @@ class BEAR_View_Adapter_Smarty extends BEAR_View_Adapter implements BEAR_View_In
         }
         if (! file_exists($file)) {
             //テンプレートファイルがない
-            $info = array(
+            $info = [
                 'tpl name' => $tplName,
                 'template_file' => $file,
                 'set' => $this->_values
-            );
+            ];
             $msg = 'Template file is missing.（テンプレートファイルがありません)';
-            throw $this->_exception($msg, array('info' => $info));
+
+            throw $this->_exception($msg, ['info' => $info]);
         }
         // ページバリューアサイン
         $this->_smarty->assign($this->_values);
-        $html = $this->_smarty->fetch($file);
 
-        return $html;
+        return $this->_smarty->fetch($file);
     }
 }

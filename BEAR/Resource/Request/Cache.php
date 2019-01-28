@@ -65,7 +65,7 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
             // キャッシュ読み込み
             $ro = BEAR::factory($saved['class'], $saved['config']);
             $ro->setCode($saved['code']);
-            $headers = is_array($saved['headers']) ? $saved['headers'] : array();
+            $headers = is_array($saved['headers']) ? $saved['headers'] : [];
             $ro->setHeaders($headers);
             $ro->setBody($saved['body']);
             $ro->setLinks($saved['links']);
@@ -86,14 +86,14 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
                 $this->_config['options']
             );
             if (! PEAR::isError($ro)) {
-                $save = array(
+                $save = [
                     'class' => get_class($ro),
                     'config' => $this->_config,
                     'code' => $ro->getCode(),
                     'headers' => $ro->getHeaders(),
                     'body' => $ro->getBody(),
                     'links' => $ro->getLinks()
-                );
+                ];
                 if (isset($options['cache']['life'])) {
                     $cache->setLife($options['cache']['life']);
                 }
@@ -101,8 +101,9 @@ class BEAR_Resource_Request_Cache extends BEAR_Factory
             } else {
                 // キャッシュ生成エラー
                 $msg = 'Resource Cache Write Failed';
-                $info = array('ro class' => get_class($ro));
-                throw $this->_exception($msg, array('info' => $info));
+                $info = ['ro class' => get_class($ro)];
+
+                throw $this->_exception($msg, ['info' => $info]);
             }
         }
 

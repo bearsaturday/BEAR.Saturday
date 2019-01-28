@@ -23,10 +23,8 @@ class BEAR_Query_Count extends BEAR_Query implements BEAR_Query_Interface
      *
      * @return int カウント数
      */
-    public function select($query, array $params = array())
+    public function select($query, array $params = [])
     {
-        $count = $this->_countQuery($query, $params);
-
-        return $count;
+        return $this->_countQuery($query, $params);
     }
 }

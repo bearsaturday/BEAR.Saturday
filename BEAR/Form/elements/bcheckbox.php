@@ -13,7 +13,7 @@
 /**
  * HTML class for a "bcheckbox" element
  *
- * @link       http://pear.php.net/package/HTML_QuickForm
+ * @see       http://pear.php.net/package/HTML_QuickForm
  * @since      1.0
  */
 class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
@@ -35,7 +35,7 @@ class HTML_QuickForm_bcheckbox extends HTML_QuickForm_checkbox
         $this->_persistantFreeze = true;
         $this->_text = $text;
         $this->setType('checkbox');
-        $this->updateAttributes(array('value' => 1));
+        $this->updateAttributes(['value' => 1]);
         $this->_generateId();
     }
 
