@@ -345,6 +345,7 @@ class BEAR_Form extends BEAR_Factory
      * @param bool   $enableJs JS有効?
      *
      * @return string
+     * @throws Exception
      */
     public static function renderForms(Smarty &$smarty, $ua, $enableJs = false)
     {
