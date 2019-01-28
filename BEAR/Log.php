@@ -178,7 +178,6 @@ ____SQL;
     {
         if (! class_exists('SQLiteDatabase', false)) {
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
-            include_once 'BEAR/Util.php';
             $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : array();
 
             return $pageLog;
