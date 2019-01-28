@@ -251,7 +251,7 @@ class BEAR_Session extends BEAR_Base
      *
      * @param array $config
      *
-     * @throws BEAR_Session_Exception
+     * @throws HTTP_Session2_Exception
      */
     private function _setAdapter(array $config)
     {
