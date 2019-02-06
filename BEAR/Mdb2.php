@@ -155,7 +155,7 @@ class BEAR_Mdb2 extends BEAR_Factory
         }
         $mdb2 = MDB2::factory($this->_config['dsn'], $options);
         if (PEAR::isError($mdb2)) {
-            throw $this->_exception('db connection error', 503, ['dsn' => $this->_config['dsn']]);
+            throw $this->_exception('db connection error', ['code' => 503 , 'info' => ['dsn' => $this->_config['dsn']]]);
         }
         $mdb2->setFetchMode(MDB2_FETCHMODE_ASSOC);
         $_instance[$this->_config['dsn']] = $mdb2;
