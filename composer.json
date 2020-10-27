@@ -30,7 +30,7 @@
         "pear/console_commandline": "^1.2",
         "pear/console_table": "^1.3",
         "mustangostang/spyc": "^0.6.2",
-        "pear/xml_rpc": "tags/RELEASE_1_0_1",
+        "pear/xml_rpc": "RELEASE_1_0_1",
         "pear/i18n_unicodestring": "dev-master",
         "pear/xml_rss": "dev-master",
         "pear/mdb2": "dev-master",
