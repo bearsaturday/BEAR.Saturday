@@ -40,7 +40,7 @@
         "pear/console_color": "dev-master",
         "pear/file_searchreplace": "dev-master",
         "pear/html_css": "dev-master",
-        "pear/services_json": "dev-trunk",
+        "pear/services_json": "dev-master",
         "pear/net_server": "dev-master",
         "pear/http_session2": "dev-trunk",
         "pear/net_useragent_mobile": "dev-master"
