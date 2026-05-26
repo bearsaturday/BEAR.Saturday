@@ -6,6 +6,9 @@
 
 ## はじめに
 
+> **AIレビューについて**
+> 本稿は Opus 7.3 によるレビューを ChatGPT 5.5 が別AIとしてクロスチェックした、完全なAIレビューです。作成者本人による自己評価でも、人間による評価確定でもありません。
+
 BEAR.Saturday が公開されたのは 2008 年 7 月 31 日。PHP 5.2 が現役、PEAR が事実上の標準ライブラリ、Composer はまだ存在せず、名前空間（PHP 5.3）すら使えなかった時代である。
 
 CakePHP 1.x、Symfony 1.x、CodeIgniter — そして登場直後の Zend Framework 1。当時の PHP フレームワーク市場は Rails の影響を受けた MVC 一辺倒で、「リソース」「DI」「AOP」といった概念は Java の世界の話だった。
@@ -14,7 +17,49 @@ CakePHP 1.x、Symfony 1.x、CodeIgniter — そして登場直後の Zend Framew
 
 ---
 
-## 1. 時代背景 — 2008 年の PHP フレームワーク勢力図
+## 1. BEAR.Saturday はどのようなものだったか
+
+BEAR.Saturday は、単に「REST を意識した MVC フレームワーク」ではなかった。PHP 5.2、PEAR、Apache `.htaccess`、Smarty、そして日本の携帯電話サイト運用を前提に、Web アプリケーションの実行環境そのものをまとめて扱うフレームワークだった。
+
+### 1.1 単一 front controller ではなく、ページ PHP を入口にする
+
+現代の Laravel / Symfony のように、単一の `index.php` に全リクエストを集約し、Router が Controller に dispatch する構成ではない。BEAR.Saturday では、ページは `htdocs/` 以下の PHP ファイルとして置かれ、そのファイルがページクラスを定義し、末尾で `BEAR_Main::run('Index')` のように実行する。
+
+`BEAR_Main::includePage()` も `_BEAR_APP_HOME . '/htdocs/' . $pageFile` を直接 include する。つまり URL 空間、ページファイル、ページクラスの距離が近い。アプリケーション全体を 1 つの front controller に閉じ込めるのではなく、「公開ディレクトリにあるページ PHP」がそのまま実行単位になる設計だった。
+
+これは現代から見ると古いが、当時の PHP では自然でもあった。Apache + mod_php の環境では、PHP ファイルそのものがリクエストの入口だったからである。
+
+### 1.2 ルーティングはフレームワーク内 Router ではなく mod_rewrite / `.htaccess` 側に寄っていた
+
+BEAR.Saturday には、現代的な意味での Router クラスが中心にあるわけではない。URL の正規化や見せ方は Apache の `.htaccess` / `mod_rewrite` とページファイル配置に寄っており、フレームワーク側は `BEAR_Main` がページライフサイクルを実行し、`page://`, `file://`, `http(s)://`, `socket://` などの URI scheme と、scheme なしのローカルリソース名で実行戦略を切り替える。
+
+`BEAR/BEAR/bin/bear.php` が `htdocs/.htaccess` から `bearmode` を読むことも、この時代性をよく示している。ルーター設定を PHP の設定配列や属性で完結させるのではなく、Web サーバー設定とフレームワーク設定が接続されていた。
+
+### 1.3 携帯電話対応が第一級の機能だった
+
+BEAR.Saturday の最も時代を感じる特徴の一つは、日本の携帯電話対応がフレームワークの周辺機能ではなく、中核機能として組み込まれている点である。
+
+`BEAR_Agent` は `Docomo`, `Ezweb`, `Softbank`, `Iphone`, `Android` などの UA コードを持ち、`Net_UserAgent_Mobile` を使って携帯端末を識別する。`BEAR/Agent/Adapter/Docomo.php`, `BEAR/Agent/Adapter/Ezweb.php`, `BEAR/Agent/Adapter/Softbank.php` といったキャリア別 adapter があり、フォームレンダラーも `BEAR/Form/Renderer/Docomo.php`, `Ezweb.php`, `Softbank.php` に分かれている。
+
+Smarty には `{agent in='docomo,au'}` のようにキャリアごとに表示を出し分ける block plugin があり、`{emoji}` compiler plugin と `BEAR_Emoji` はキャリア絵文字を扱う。さらに `BEAR/View/Adapter.php` には DoCoMo 向けに CSS を inline 化する処理まである。
+
+これは、スマートフォン前夜の日本の Web 開発を強く反映している。PC、i-mode、EZweb、SoftBank 3G、初期 iPhone / Android が同じサービス内に共存し、それぞれに HTML、CSS、絵文字、フォーム表現を調整する必要があった時代のフレームワークである。
+
+### 1.4 ページライフサイクルとリソースライフサイクルが並存していた
+
+ページ側には `onInit()`, `onAction()`, `onOutput()` というライフサイクルがあり、フォーム送信時にはトークンやバリデーションを経由して `onAction()` が呼ばれる。一方で、データ取得や外部 API 呼び出しは `onRead()`, `onCreate()`, `onUpdate()`, `onDelete()` を持つ Resource Object として扱われる。
+
+つまり BEAR.Saturday は、画面単位の Page と、HTTP メソッドに対応する Resource Object を併存させていた。現代の視点では「ページコントローラー」と「API リソース」が混ざっているようにも見えるが、当時の画面中心 Web と REST 指向への移行期として見ると、むしろその混在こそが特徴だった。
+
+### 1.5 開発支援ツールまで同梱するフレームワークだった
+
+`data/htdocs/__bear`, `__edit`, `bearshell`, コードブラウザ、ログビューア、APC / Memcache / XHProf 画面など、開発時の可視化ツールが同梱されている。Composer package としてライブラリを入れるだけでなく、PEAR package としてフレームワーク、公開用 assets、デバッグ UI、CLI をまとめて配布する発想である。
+
+この「全部入り」感は、現在の軽量ライブラリ志向や PSR 前提の疎結合パッケージとはかなり違う。BEAR.Saturday はアプリケーションの土台であると同時に、当時の PHP 開発現場の運用環境でもあった。
+
+---
+
+## 2. 時代背景 — 2008 年の PHP フレームワーク勢力図
 
 BEAR.Saturday の立ち位置を理解するため、まず当時の二大勢力を整理する。
 
@@ -67,9 +112,9 @@ BEAR.Saturday の立ち位置を理解するため、まず当時の二大勢力
 
 ---
 
-## 2. 時代を先取りした設計判断
+## 3. 時代を先取りした設計判断
 
-### 2.1 リソース指向アーキテクチャ — REST 普及前夜の決断
+### 3.1 リソース指向アーキテクチャ — REST 普及前夜の決断
 
 `BEAR_Ro` クラス（`BEAR/Ro.php`）は、`body / headers / links / code` という HTTP に同型のプロパティを持つ「リソースオブジェクト」である。
 
@@ -94,7 +139,7 @@ class BEAR_Ro extends ArrayObject implements ...
 
 さらに `BEAR_Ro` が `ArrayObject` を継承し `__invoke()` まで実装している点 — **「配列でもあり関数でもあるオブジェクト」** という発想は、PHP 5.3 で `__invoke` が追加された直後にこれを設計に組み込んだことになる。
 
-### 2.2 ハイパーメディア（HATEOAS）の組み込み
+### 3.2 ハイパーメディア（HATEOAS）の組み込み
 
 ```php
 $ro->setLinks(['pager' => $pager, 'next' => $nextUri]);
@@ -102,7 +147,7 @@ $ro->setLinks(['pager' => $pager, 'next' => $nextUri]);
 
 リソースが「リンク関係」を必須プロパティとして持つ設計は、HAL（2011）/ JSON:API（2013）より数年早い。当時の PHP で「レスポンスにリンクを埋め込む」発想を標準化しようとした例は、筆者の知る限り他に存在しない。
 
-### 2.3 アノテーション AOP — Doctrine Annotations より早く
+### 3.3 アノテーション AOP — Doctrine Annotations より早く
 
 ```php
 /**
@@ -118,7 +163,7 @@ public function onRead($values) { ... }
 - **Doctrine Annotations**：2009
 - **Go! AOP（PHP の本格的 AOP ライブラリ）**：2012
 
-### 2.4 DI コンテナ — Symfony DI や Pimple より早く
+### 3.4 DI コンテナ — Symfony DI や Pimple より早く
 
 ```php
 BEAR::dependency('BEAR_Log');           // サービスロケータ
@@ -133,7 +178,7 @@ BEAR::factory('BEAR_Cache', $config);   // 設定マージ＋生成
 
 ZF1 の `Zend_Registry` が単なる値の入れ物だった当時、依存解決機能を持つコンテナを PHP で実装した先駆けの一つだった。
 
-### 2.5 遅延リソース（Lazy Resource）
+### 3.5 遅延リソース（Lazy Resource）
 
 `BEAR_Ro_Prototype` は、リソースリクエストの「記述」だけを先に組み立て、**テンプレート評価時に初めて実体化**する。
 
@@ -144,7 +189,7 @@ $resource->read($params)->set('user');  // この時点では未実行
 
 「宣言してから実体化」というメンタルモデル自体は Doctrine ORM の Lazy Loading 等と同時期だが、それを **HTTP リソース層に持ち込んだ**点が独自である。
 
-### 2.6 URI スキームによるリソース所在の抽象化
+### 3.6 URI スキームによるリソース所在の抽象化
 
 ```php
 $resource->read(['uri' => 'user/profile']);              // ローカル Ro クラス
@@ -155,7 +200,7 @@ $resource->read(['uri' => 'page://blog/list']);          // 別ページ
 
 `BEAR/Resource/Execute.php` の factory は URI スキームで実行戦略を切り替える。**DB クエリも外部 API も静的 YAML も同じインターフェイスで取得できる**この抽象は、同時代の PHP フレームワーク（DB は ORM、API は別クライアント、ファイルは `fopen`）が完全に分断していた中で、極めて独自性が高い。
 
-### 2.7 CSRF + POE 統合トークン
+### 3.7 CSRF + POE 統合トークン
 
 `BEAR/Form/Token.php` は CSRF（Cross-Site Request Forgery）と POE（Post Once Exactly = 二重サブミット防止）を 1 つのトークンに統合し、リソースリクエスト時にオプションで宣言的に有効化できる。
 
@@ -167,7 +212,7 @@ $resource->create($params, $options);
 
 Symfony1 が CSRF Protection を入れたのが同じ 2008 年。**二重送信防止までフレームワーク側で管理する**例は当時、極めて希少だった。
 
-### 2.8 ページキャッシュと init キャッシュの分離
+### 3.8 ページキャッシュと init キャッシュの分離
 
 `BEAR/Main.php:177-186` には 2 種類のキャッシュ戦略が並ぶ。
 
@@ -178,9 +223,9 @@ Symfony1 が CSRF Protection を入れたのが同じ 2008 年。**二重送信�
 
 ---
 
-## 3. 当時の制約下で「ぎりぎり許容」だった選択
+## 4. 当時の制約下で「ぎりぎり許容」だった選択
 
-### 3.1 グローバル静的レジストリ
+### 4.1 グローバル静的レジストリ
 
 ```php
 class BEAR {
@@ -193,7 +238,7 @@ class BEAR {
 
 **現代の視点**：テストが極端に書きづらい。プロセス全体が単一状態に縛られ、並列テストや順序非依存テストが構造的に不可能になる。これは後の保守性に最も効いた負債である。
 
-### 3.2 PEAR 全面採用
+### 4.2 PEAR 全面採用
 
 `composer.json` には 20 以上の PEAR パッケージ（MDB2、HTML_QuickForm、HTTP_Session2、Cache_Lite、Pager、XML_RPC...）が並ぶ。
 
@@ -201,7 +246,7 @@ class BEAR {
 
 **現代の視点**：PEAR は 2020 年代に事実上メンテ停止。`dev-master` / `dev-trunk` での pin が多く、再現ビルドが極めて困難。README が「新規利用は BEAR.Sunday を推奨」と明記しているのは妥当な誘導だ。
 
-### 3.3 トークン強度
+### 4.3 トークン強度
 
 ```php
 $csrfToken = sha1(session_id());
@@ -214,7 +259,7 @@ $poeToken  = sha1(uniqid(mt_rand(), true));
 
 ---
 
-## 4. 時代を超えた負債
+## 5. 時代を超えた負債
 
 - **`unserialize` を信頼ベースで使用**（`BEAR/Log.php`, `BEAR/Dev/Shell.php`）— PHP オブジェクトインジェクションが OWASP で広く知られたのは 2010 年前後。当時から警戒すべきだった。
 - **`create_function` の使用**（`BEAR/Dev/Shell.php`, `vendors/debuglib.php`）— PHP 7.2 で deprecated、7.4 で削除。`composer.json` の `php >=5.4` 宣言と実態が乖離。
@@ -224,7 +269,7 @@ $poeToken  = sha1(uniqid(mt_rand(), true));
 
 ---
 
-## 5. では、本質的に何が先進的だったのか
+## 6. では、本質的に何が先進的だったのか
 
 一言でいえば：
 
@@ -238,7 +283,7 @@ $poeToken  = sha1(uniqid(mt_rand(), true));
 
 ---
 
-## 6. 総合評価
+## 7. 総合評価
 
 | 観点 | 評価 |
 |---|---|
@@ -265,4 +310,4 @@ CakePHP は「**書きやすさ**」、Zend Framework は「**使いやすい部
 
 ---
 
-*本稿は BEAR.Saturday v0.9.24 のコードを基にした技術レビューです。*
+*本稿は BEAR.Saturday 0.10.x のコードを基に、AIのみで作成・検証した技術レビューです。人間による評価・監修・追認は含みません。*
