@@ -177,7 +177,7 @@ ____SQL;
         if (! class_exists('SQLiteDatabase', false)) {
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
 
-            return file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : [];
+            return file_exists($pageLogPath) ? unserialize(file_get_contents($pageLogPath)) : [];
         }
         $db = $this->getPageLogDb();
         if (isset($get['id'])) {
@@ -190,7 +190,7 @@ ____SQL;
             $result = $db->query('SELECT log FROM pagelog ORDER BY rowid DESC LIMIT 1');
         }
         if ($result === false) {
-            die('Log db is not avalilabe.');
+            die('Log db is not available.');
         }
         $log = $result->fetchAll();
 
@@ -202,7 +202,7 @@ ____SQL;
      *
      * アプリケーションログ、smartyアサインログ、グローバル変数ログ、
      * リクエストURIをシリアライズしてファイル保存します。
-     * デバックモードの時のみ使用します。
+     * デバッグモードの時のみ使用します。
      * 保存されたログは/__bear/のLogタブでブラウズできます。
      * シャットダウン時実行のメソッドとしてフレームワーク内で登録され、
      * スクリプト終了時に実行されます。
@@ -235,12 +235,12 @@ ____SQL;
             $pageLogPath = _BEAR_APP_HOME . '/logs/page.log';
             if (file_exists($pageLogPath) && ! is_writable($pageLogPath)) {
                 // 書き込み権限のエラー
-                Panda::error('Permission denied.', "[${pageLogPath}] is not writable.");
+                Panda::error('Permission denied.', "[{$pageLogPath}] is not writable.");
 
                 return;
             }
             // page ログ
-            $pageLog = file_exists($pageLogPath) ? BEAR_Util::unserialize(file_get_contents($pageLogPath)) : '';
+            $pageLog = file_exists($pageLogPath) ? unserialize(file_get_contents($pageLogPath)) : '';
             // show_vars
             if (! function_exists('show_vars')) {
                 include 'BEAR/vendors/debuglib.php';

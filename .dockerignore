@@ -1,0 +1,7 @@
+.git
+vendor
+.phpunit.cache
+.php_cs.cache
+.idea
+build
+*.log

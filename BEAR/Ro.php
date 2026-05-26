@@ -503,7 +503,7 @@ class BEAR_Ro extends ArrayObject implements IteratorAggregate, BEAR_Ro_Interfac
             }
             $ro = $this->request();
             $html = $ro->getHtml();
-            // リソースデバック
+            // リソースデバッグ
             if ($this->_config['debug'] === true) {
                 $html = BEAR::dependency('BEAR_Ro_Debug')->getResourceToString($ro);
             }

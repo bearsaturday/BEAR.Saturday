@@ -9,7 +9,7 @@
  * print_a表示
  *
  * <pre>
- * デバック用表示（print_a）します
+ * デバッグ用表示（print_a）します
  *
  * Example
  * </pre>

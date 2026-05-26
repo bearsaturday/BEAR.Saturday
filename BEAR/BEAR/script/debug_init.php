@@ -20,25 +20,36 @@ if (isset($_SERVER, $_SERVER['REQUEST_URI']) && substr($_SERVER['REQUEST_URI'], 
 }
 
 // エラー初期化(Panda)
+if (! defined('ASSERT_QUIET_EVAL')) {
+    // ASSERT_QUIET_EVAL was removed from PHP 8, but Panda still references it.
+    define('ASSERT_QUIET_EVAL', 5);
+}
 if (defined('_BEAR_APP_HOME')) {
     $validPath = [_BEAR_APP_HOME . '/htdocs', _BEAR_APP_HOME . '/App'];
 } else {
     $validPath = [];
 }
-// BEAR developperのみBEAR内のエラー表示
+// BEAR developerのみBEAR内のエラー表示
 if (isset($_SERVER['beardev']) && $_SERVER['beardev']) {
     $validPath[] = _BEAR_BEAR_HOME;
 }
 $pandaConfig = [
-    Panda::CONFIG_DEBUG => $appConfig['core']['debug'], // デバックモード
+    Panda::CONFIG_DEBUG => $appConfig['core']['debug'], // デバッグモード
     Panda::CONFIG_VALID_PATH => $validPath, // エラーレポートするファイルパス
     Panda::CONFIG_LOG_PATH => _BEAR_APP_HOME . '/logs/' // fatalエラーログを保存するパス
 ];
 if (isset($appConfig['Panda'])) {
     $pandaConfig = array_merge($pandaConfig, $appConfig['Panda']);
 }
+if (PHP_VERSION_ID >= 80000) {
+    // Panda's PHP error handler still expects the removed PHP 7 $errcontext argument.
+    $pandaConfig[Panda::CONFIG_CATCH_STRICT] = false;
+}
 Panda::init($pandaConfig);
-// デバック用画面
+if (PHP_VERSION_ID >= 80000 && ! empty($pandaConfig[Panda::CONFIG_DEBUG])) {
+    restore_error_handler();
+}
+// デバッグ用画面
 include _BEAR_BEAR_HOME . '/BEAR/BEAR/script/dev_info_screen.php';
 
 // _preクエリー
@@ -60,7 +71,7 @@ if ($exit === true) {
     exit();
 }
 
-// デバック用キャッシュクリア
+// デバッグ用キャッシュクリア
 if (isset($_GET['_cc'])) {
     BEAR_Util::clearAllCache(true);
     exit();

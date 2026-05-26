@@ -1429,7 +1429,7 @@ break;
                 return $Object;
             }
 
-            return utf8_encode($Object);
+            return mb_convert_encoding($Object, 'UTF-8', 'ISO-8859-1');
         }
 
         return $return;

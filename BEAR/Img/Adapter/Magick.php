@@ -128,7 +128,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
     {
         $linenum = $filename = '';
         if (headers_sent($filename, $linenum)) {
-            $msg = "header is send in [${filename}] , line [{$linenum}]";
+            $msg = "header is send in [{$filename}] , line [{$linenum}]";
             $this->_thisError('header', $msg);
         }
         if ($this->_isAnimGif) {
@@ -207,7 +207,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         $this->adapter->setFormat($format);
         $result = $this->adapter->writeImage($filePath);
         if (! $result) {
-            trigger_error("iMagick: Image file write error [${filePath}]", E_USER_ERROR);
+            trigger_error("iMagick: Image file write error [{$filePath}]", E_USER_ERROR);
         }
     }
 
@@ -231,7 +231,7 @@ class BEAR_Img_Adapter_Magick extends BEAR_Img_Adapter
         $result = '';
         system($command, $result);
         if ($result) {
-            trigger_error("imagemagick convert error result=[${result}]", E_USER_WARNING);
+            trigger_error("imagemagick convert error result=[{$result}]", E_USER_WARNING);
         }
         $this->_animGifFile = $toFile;
     }

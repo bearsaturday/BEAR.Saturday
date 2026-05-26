@@ -338,14 +338,16 @@ class BEAR_Dev_Shell extends BEAR_Base
                 if (is_array($body)) {
                     array_walk_recursive(
                         $body,
-                        create_function('&$val, $key', '$val = htmlspecialchars($val);')
+                        function (&$val, $key) {
+                            $val = htmlspecialchars($val);
+                        }
                     );
                 } elseif (is_string($body)) {
                     $body = htmlspecialchars($body);
                 }
             }
             $result .= $this->printStrong("code\n");
-            $result .= "${code}\n";
+            $result .= "{$code}\n";
             $result .= $this->printStrong("header\n");
             $result .= ($header) ? $this->_printR($header) : "n/a\n";
             $result .= $this->printStrong("body\n");
@@ -353,12 +355,10 @@ class BEAR_Dev_Shell extends BEAR_Base
             if (is_array($body)) {
                 array_walk_recursive(
                     $body,
-                    create_function(
-                        '&$val,
-                        $key',
-                        '$val = (is_string($val) && strlen($val) >= ' . $len . ')?
-                        substr($val, 0, ' . $len . ' - 2) . "…" : $val;'
-                    )
+                    function (&$val, $key) use ($len) {
+                        $val = (is_string($val) && strlen($val) >= $len) ?
+                            substr($val, 0, $len - 2) . '…' : $val;
+                    }
                 );
             }
             if (is_array($body) || is_object($body)) {
@@ -484,9 +484,9 @@ class BEAR_Dev_Shell extends BEAR_Base
         $exec .= _BEAR_APP_HOME . ',tmp/';
         $exec .= ' --directory ' . _BEAR_APP_HOME;
         $exec .= ' --target ' . $path;
-        echo "${exec}\n";
+        echo "{$exec}\n";
         ob_flush();
-        shell_exec("${exec} &");
+        shell_exec("{$exec} &");
     }
 
     /**

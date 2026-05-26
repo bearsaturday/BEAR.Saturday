@@ -2,14 +2,36 @@
 
 © 2008-2019
 
-## What is BEAR.Satruday ?
+## What is BEAR.Saturday ?
 
-BEAR.Saturday is a resource oriented web framework for PHP5.2+
+2008年から2019年にかけて、エキサイト翻訳、エキサイトブログ、エキサイトニュース、エキサイトレシピなど、当時のエキサイトの主要サービスを支えていたPHP 5.2+用のフレームワークBEAR.SaturdayをPHP 8.4/8.5で動作するようにしました。
 
 Requirements
 ------------
 
- * PHP 5.2 - 7.2 
+ * PHP 8.4.1+
+ * Composer 2
+
+
+Development
+-----------
+
+Install dependencies and run the compatibility checks:
+
+```bash
+composer install
+composer ci
+```
+
+Docker
+------
+
+Run the same checks in PHP 8.4 and PHP 8.5 containers:
+
+```bash
+docker compose run --rm php84
+docker compose run --rm php85
+```
 
 Documentation
 -------------
@@ -18,7 +40,7 @@ Documentation
 
 ## Upgrade from PEAR installed project
 
-Here is the minimum `composer.json` to convert composer based project for exisitng PEAR-installed base project.
+Here is the minimum `composer.json` to convert composer based project for existing PEAR-installed base project.
 
 ```json
 {
@@ -26,7 +48,7 @@ Here is the minimum `composer.json` to convert composer based project for exisit
     "description": "",
     "license": "proprietary",
     "require": {
-        "php": ">=5.4",
+        "php": ">=8.4.1",
         "bearsaturday/bearsaturday": "^0.10"
     },
     "repositories": [

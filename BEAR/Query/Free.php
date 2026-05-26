@@ -49,7 +49,7 @@ class BEAR_Query_Free extends BEAR_Query
      *
      * @return BEAR_Ro
      */
-    public function selectSharePrepare($query, array $params = [], array $values = null, $id = 'id', $free = false)
+    public function selectSharePrepare($query, array $params = [], ?array $values = null, $id = 'id', $free = false)
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));
@@ -200,7 +200,7 @@ class BEAR_Query_Free extends BEAR_Query
      *
      * @return BEAR_Ro
      */
-    public function select($query, array $params = [], array $values = null, $id = 'id')
+    public function select($query, array $params = [], ?array $values = null, $id = 'id')
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));

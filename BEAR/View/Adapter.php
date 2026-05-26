@@ -187,8 +187,8 @@ abstract class BEAR_View_Adapter extends BEAR_Base
         }
         foreach ($role as $agent) {
             $agentExtention = '.' . strtolower($agent);
-            $agentFile = str_replace(".{$ext}", "${agentExtention}.{$ext}", $fileName);
-            $fullPath = "${dir}/{$agentFile}";
+            $agentFile = str_replace(".{$ext}", "{$agentExtention}.{$ext}", $fileName);
+            $fullPath = "{$dir}/{$agentFile}";
             if (file_exists($fullPath)) {
                 break;
             }

@@ -280,7 +280,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     }
 
     /**
-     * デバック表示
+     * デバッグ表示
      *
      * <code>
      * $resource->$read($params)->p();
@@ -399,7 +399,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
     }
 
     /**
-     * デバック表示描画
+     * デバッグ表示描画
      *
      * @return BEAR_Ro
      * @ignore
@@ -444,7 +444,7 @@ class BEAR_Ro_Prototype extends BEAR_Ro
         }
         echo '</fieldset>';
         $linkLabel = $linkLabel ? ' and link(s)' : '';
-        echo "by \"{$request}\"${linkLabel} {$place}<br /><br />";
+        echo "by \"{$request}\"{$linkLabel} {$place}<br /><br />";
 
         return $this;
     }
