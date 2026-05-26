@@ -14,7 +14,7 @@ class BEAR_Dev_Util
      * BEARバッジ表示
      *
      * <pre>
-     * エラー状態を表し、__bearページにリンクするデバック時に
+     * エラー状態を表し、__bearページにリンクするデバッグ時に
      * 画面右上に現れる「BEARバッジ」を表示します。
      *
      * ページの状態によって色が変わります。
@@ -58,7 +58,7 @@ class BEAR_Dev_Util
             $errorMsg = "{$errorMsg}";
             $bear = 'BEAR';
         }
-        // デバック情報表示HTML
+        // デバッグ情報表示HTML
         // bear.jsを使用する場合はbear_debuggingがtrueになる
         if (file_exists(_BEAR_APP_HOME . '/htdocs/__edit')) {
             $editHtml = '<a href="/__edit/?id=@@@log_id@@@"';
@@ -102,7 +102,7 @@ class BEAR_Dev_Util
         $budgeHtml .= '">' . $bear . '</a><a href="?_bearinfo" class="bear_info">i</a></div>';
         $budgeHtml = str_replace(
             '</body>',
-            "${budgeHtml}" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . '</body>',
+            "{$budgeHtml}" . '<link rel="stylesheet" href="/__bear/css/debug.css" type="text/css">' . '</body>',
             $html
         );
 
@@ -157,16 +157,16 @@ class BEAR_Dev_Util
             $errorTo = $_GET['_error'];
             if ($errorTo == '') {
                 $errorCode = Panda::$phpError[$lastError['type']];
-                Panda::error("${errorCode} (Last Error)", "{$lastError['message']}", '', (array) $lastError);
+                Panda::error("{$errorCode} (Last Error)", "{$lastError['message']}", '', (array) $lastError);
 
                 return;
             }
             if (strpos($errorTo, '@')) {
                 error_log($err, 1, $errorTo);
             } elseif (is_writable(dirname($errorTo))) {
-                error_log("${err}\n\n", 3, $errorTo);
+                error_log("{$err}\n\n", 3, $errorTo);
             } else {
-                echo "<p style=\"color:red\">Error: Invalid destination for _error [${errorTo}]</p>";
+                echo "<p style=\"color:red\">Error: Invalid destination for _error [{$errorTo}]</p>";
             }
         }
     }

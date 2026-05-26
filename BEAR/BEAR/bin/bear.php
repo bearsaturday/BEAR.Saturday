@@ -138,7 +138,7 @@ class BEAR_bin_bear
             E_USER_NOTICE => 'User Notice'
         ];
         $prefix = $errortype[$errno];
-        error_log("{$prefix}[{$errno}]: ${errmsg} in ${file} on line ${line}\n", 0);
+        error_log("{$prefix}[{$errno}]: {$errmsg} in {$file} on line {$line}\n", 0);
     }
 
     /**

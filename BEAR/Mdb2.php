@@ -180,7 +180,7 @@ class BEAR_Mdb2 extends BEAR_Factory
     //    }
 
     /**
-     * デバック用ハンドラ
+     * デバッグ用ハンドラ
      *
      * @param object &$db     MDB2オブジェクト
      * @param string $scope   スコープ

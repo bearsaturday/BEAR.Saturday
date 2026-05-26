@@ -39,7 +39,7 @@ class BEAR_Resource_Server_Handler extends Net_Server_Handler
      */
     public function onConnect($clientId = 0)
     {
-        echo "${clientId} is connecetd." . PHP_EOL;
+        echo "{$clientId} is connected." . PHP_EOL;
     }
 
     /**

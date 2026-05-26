@@ -31,7 +31,7 @@ class BEAR_Test_Client extends HTTP_Request2
     /**
      * @param HTTP_Request2 $request
      */
-    public function __construct(HTTP_Request2 $request = null)
+    public function __construct(?HTTP_Request2 $request = null)
     {
         $this->request = $request ? $request : new HTTP_Request2;
     }

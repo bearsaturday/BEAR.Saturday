@@ -11,7 +11,7 @@ BEAR_Cache:
   adapter: 0
 
 BEAR_Session:
-  # mixed アダプター 0 なし | 1 File | 2 DB | 3 memchache
+  # mixed アダプター 0 なし | 1 File | 2 DB | 3 memcache
   adapter: 1
   # string セッションキーにつけるプリフィックス
   prefix: ''

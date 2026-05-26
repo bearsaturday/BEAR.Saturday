@@ -9,11 +9,11 @@ if (isset($_GET['_pear_dir'])) {
     $config = new PEAR_Config();
     $pearDataPath = $config->get('data_dir');
     if (strpos(_BEAR_BEAR_HOME, $pearDataPath)) {
-        $dataDir = "${pearDataPath}/BEAR";
+        $dataDir = "{$pearDataPath}/BEAR";
     } else {
         $dataDir = _BEAR_BEAR_HOME . '/data/';
     }
-    if (file_exists("${pearDataPath}/BEAR")) {
+    if (file_exists("{$pearDataPath}/BEAR")) {
         $dataDir = '$pearDataPath/BEAR';
     } elseif (file_exists($pearDataPath . '/data')) {
         $dataDir = 'BEAR/data';
@@ -48,7 +48,7 @@ if (PHP_SAPI !== 'cli') {
         $info .= '<h3>Others</h3><div><ul>';
         $info .= '<li><a href="?_cc">キャッシュクリア</a></li>';
         $info .= '<li><a href="?_beardebug_setting">開発環境のセットアップ</a></li>';
-        $info .= '<li><a href="?_beardebug_query">デバック用クエリー</a></li>';
+        $info .= '<li><a href="?_beardebug_query">デバッグ用クエリー</a></li>';
         $info .= '<li><a href="http://code.google.com/p/bear-project/wiki/manual?tm=6" target="bearmanual">';
         $info .= 'BEARマニュアル</a></li>';
         $info .= '<li><a href="/__bear/bearshell/" target="bearshell">BEARシェル</a></li></ul>';
@@ -56,7 +56,7 @@ if (PHP_SAPI !== 'cli') {
         $exit = true;
     }
     if (isset($_GET['_beardebug_setting'])) {
-        $infoDir = '<h3>デバック画面の設置</h3>';
+        $infoDir = '<h3>デバッグ画面の設置</h3>';
         $infoDir .= '<div><code>sudo ln -s ' . _BEAR_BEAR_HOME . '/data/htdocs/__bear ';
         $infoDir .= _BEAR_APP_HOME . '/htdocs; </code></div>';
         $infoDir .= '<div><code>sudo ln -s ' . $pearDataPath . '/Panda/data/htdocs/__panda ';
@@ -71,10 +71,10 @@ if (PHP_SAPI !== 'cli') {
         Panda::message('開発環境のセットアップ', $subHeading, $infoDir);
         $exit = true;
     } elseif (isset($_GET['_beardebug_query'])) {
-        $subHeading = 'デバックモードでクエリーによるデバッグコマンドが使えます';
+        $subHeading = 'デバッグモードでクエリーによるデバッグコマンドが使えます';
         $infoDir = '<h3>キャッシュクリア</h3>';
         $infoDir .= '<div><p>?_cc</p></div>';
-        $infoDir .= '<h3>リソースデバック</h3>';
+        $infoDir .= '<h3>リソースデバッグ</h3>';
         $infoDir .= '<div><p>?_resource</p></div>';
         $infoDir .= '<h3>全てのエラー表示</h3>';
         $infoDir .= '<div><p>?_error</p></div>';
@@ -88,7 +88,7 @@ if (PHP_SAPI !== 'cli') {
         $infoDir .= '<div> ※エラーメッセージが表示されないときなど</div>';
         $infoDir .= '<h3>プロファイリング</h3>';
         $infoDir .= '<div><p>?_prof</p></div><div> ※xdebug, xhprofの機能拡張とApp.phpでApp/prof.phpの読み込みが必要です</div>';
-        Panda::message('デバック用クエリー', $subHeading, $infoDir);
+        Panda::message('デバッグ用クエリー', $subHeading, $infoDir);
         $exit = true;
     }
 }

@@ -54,7 +54,7 @@ class BEAR_Annotation extends BEAR_Base
                     'values' => $values,
                     'doc' => $this->_config['doc']['method']
                 ];
-                $required = implode($match[1], ',');
+                $required = implode(',', $match[1]);
                 $msg = "@required item[{$required}] is missing.";
 
                 throw $this->_exception($msg, ['code' => BEAR::CODE_BAD_REQUEST, 'info' => $info]);

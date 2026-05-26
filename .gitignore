@@ -7,6 +7,6 @@ build
 .idea
 *.log
 /vendor/
-composer.lock
 
 .php_cs.cache
+.phpunit.cache/

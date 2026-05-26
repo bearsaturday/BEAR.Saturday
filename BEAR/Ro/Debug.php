@@ -6,14 +6,14 @@
  */
 
 /**
- * リソースオブジェクトデバッククラス
+ * リソースオブジェクトデバッグクラス
  *
  * リソース可視化などを行います
  */
 class BEAR_Ro_Debug extends BEAR_Base
 {
     /**
-     * デバック用リソース表示フラグ
+     * デバッグ用リソース表示フラグ
      *
      * @var bool
      */
@@ -29,11 +29,11 @@ class BEAR_Ro_Debug extends BEAR_Base
     }
 
     /**
-     * デバック用にリソースを表示
+     * デバッグ用にリソースを表示
      *
      * <pre>
      * テンプレート付リソースの時、リソースの詳細情報が画面上に表示されます。
-     * デバックモード時に_resourceクエリーを付加すれば有効になります。
+     * デバッグモード時に_resourceクエリーを付加すれば有効になります。
      *
      * _resource=html リソーステンプレート適用されたHTML表示
      * _resource=body リソースのBodyをprinta形式で表示
@@ -105,7 +105,7 @@ class BEAR_Ro_Debug extends BEAR_Base
     }
 
     /**
-     * リソースのデバック表示
+     * リソースのデバッグ表示
      *
      * firePHPコンソールにリソースを表示します。
      *
@@ -130,14 +130,14 @@ class BEAR_Ro_Debug extends BEAR_Base
             }
             FB::table($labelUri, $table);
         } else {
-            FB::group("${labelUri}", ['Collapsed' => true]);
+            FB::group("{$labelUri}", ['Collapsed' => true]);
             FB::log($body);
             FB::groupEnd();
         }
     }
 
     /**
-     * デバックモードでリソース表示しているか？
+     * デバッグモードでリソース表示しているか？
      *
      * フレームワーク用
      *

@@ -410,13 +410,13 @@ class BEAR_Emoji extends BEAR_Base
         $mbRegexEncoding = mb_regex_encoding();
         mb_regex_encoding('SJIS');
         $sjis = '[\x81-\x9F\xE0-\xEF][\x40-\x7E\x80-\xFC]|[\x00-\x7F]|[\xA1-\xDF]';
-        $pattern = "/\\G((?:${sjis})*)(?:(${emoji}))/";
+        $pattern = "/\\G((?:{$sjis})*)(?:({$emoji}))/";
         // 絵文字を検索
         preg_match_all($pattern, $string, $arr); // $arr[2]に対象絵文字が格納される
         // 絵文字を置換
         $converted = $string;
         foreach ($arr[2] as $value) {
-            $patternRep = "${value}";
+            $patternRep = "{$value}";
             $emojiCd = unpack('C*', $value);
             $hex = dechex($emojiCd[1]) . dechex($emojiCd[2]);
             $replacement = '&#' . hexdec($hex) . ';';

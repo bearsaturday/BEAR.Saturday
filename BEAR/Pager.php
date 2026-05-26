@@ -272,16 +272,16 @@ class BEAR_Pager extends BEAR_Base
         $total = $this->pager->numPages();
         switch ([$hasBack, $hasNext]) {
             case [false, true]:
-                $links['all'] = "<font color=gray >{$this->_options['prevImg']} ${current}/${total}</font> {$next}";
+                $links['all'] = "<font color=gray >{$this->_options['prevImg']} {$current}/{$total}</font> {$next}";
 
                 break;
             case [true, false]:
-                $links['all'] = "{$back} <font color=gray>${current}/${total} {$this->_options['nextImg']}</font>";
+                $links['all'] = "{$back} <font color=gray>{$current}/{$total} {$this->_options['nextImg']}</font>";
 
                 break;
             case [true, true]:
                 $links['all'] = "{$back} | {$next}";
-                $links['all'] = "{$back} <font color=gray>${current}/${total}</font> {$next}";
+                $links['all'] = "{$back} <font color=gray>{$current}/{$total}</font> {$next}";
 
                 break;
             default:

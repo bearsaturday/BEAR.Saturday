@@ -20,7 +20,7 @@ class BEAR_Resource_Request_Ajax extends BEAR_Base
         $requestId = md5(serialize($this->_config) . session_id());
         $params = ['key' => $requestId];
         $json = json_encode($params);
-        $js = "<script type=\"text/javascript\">$(\"#{$requestId}\").ready(function(){ $(\"#{$requestId}\").load(\"/bear/r/\", ${json}); });</scprit>";
+        $js = "<script type=\"text/javascript\">$(\"#{$requestId}\").ready(function(){ $(\"#{$requestId}\").load(\"/bear/r/\", {$json}); });</script>";
 
         return "<span id=\"{$requestId}\">*</span>" . $js;
     }

@@ -134,7 +134,7 @@ class BEAR_Query extends BEAR_Base implements BEAR_Query_Interface
      *
      * @return BEAR_Ro
      */
-    public function select($query, array $params = [], array $values = null, $id = 'id')
+    public function select($query, array $params = [], ?array $values = null, $id = 'id')
     {
         assert(is_object($this->_config['db']));
         assert(is_object($this->_config['ro']));

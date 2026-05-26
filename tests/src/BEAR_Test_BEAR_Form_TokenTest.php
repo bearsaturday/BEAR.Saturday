@@ -1,13 +1,15 @@
 <?php
 
-class BEAR_Test_BEAR_Form_TokenTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class BEAR_Test_BEAR_Form_TokenTest extends TestCase
 {
     /**
      * @var BEAR_Form_Token
      */
     private $_token;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_token = new BEAR_Form_Token(array());
         $this->_token->onInject();

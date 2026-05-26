@@ -179,7 +179,7 @@ class BEAR_Img extends BEAR_Factory
 
                 break;
             default:
-                trigger_error("No engine supported ${adapter}");
+                trigger_error("No engine supported {$adapter}");
         }
         self::$_instance->load($tmpFile);
 
