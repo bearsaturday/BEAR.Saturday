@@ -4,7 +4,7 @@
 
 ## What is BEAR.Saturday ?
 
-BEAR.Saturday is a resource oriented web framework. It is currently maintained for PHP 8.4+ runtime preservation.
+2008年から2019年にかけて、エキサイト翻訳、エキサイトブログ、エキサイトニュース、エキサイトレシピなど、当時のエキサイトの主要サービスを支えていたPHP 5.2+用のフレームワークBEAR.SaturdayをPHP 8.4/8.5で動作するようにしました。
 
 Requirements
 ------------
